@@ -66,11 +66,23 @@ never-block.json, popup/, whitelist/{manual,community}.json (Sheet E is exclusio
 each backend's short/long.php was internal derivation, replaced by rules.json readers —
 resurrect a flat popup artifact only if access logs ever show external short.php callers).
 
-Still to do: push to GitHub + secret `USER_WHITELIST_DOMAINS` (token =
-`$whitelist_export_token` in the Ninja backend's config.php) · server shims (each backend's
-generate_compiled_rules.php becomes a thin dist/network/rules.json reader; check access logs
-for external short/long.php callers before deleting those endpoints) + extension changes
-(client-side extid substitution) · keep shadow-diffing daily during the shadow window ·
+PUSHED + LIVE 2026-09-08: repo = github.com/meganerasam/blocklist-v4, secret set, full CI
+chain green from a data-free cold start. Whitelist tightened same day (3 user-caught fixes:
+redirect-twin initiators, wildcard anchors, generic main_frame initiator blocks — all with
+fail-closed final asserts). Regional rollups latam/apac/nordics restored to the Sheet-B
+split (24 market files — v3's generator derived them; the verbatim split had dropped them).
+SHIM PHASE STARTED — Ad Block Pro (12) is the template, 3 files edited on disk (not yet on
+the server): generate_compiled_rules.php = mirror dist/network/rules.json + rebrand the
+whole redirect substitution to the brand page (close.html#\0; target must be in the
+extension's web_accessible_resources) + last-good mirror + hard-abort; NEVER re-compile the
+artifact — it is finished (re-running the old STEP-3 logic re-creates the hijack twins and
+ships [] on fetch failure). generate_cosmetic_rules.php keeps the per-brand merge, only its
+3 source URLs move to v4. Remaining brands: StopAds (24) · Wonder (23) · Ghost (26) ·
+North (21), each with its own substitution string.
+
+Still to do: upload the Ad Block Pro trio + repeat the shim for the other 4 brands (log-check
+before deleting short/long/blocklist.php) · extension changes (client-side extid
+substitution) · keep shadow-diffing daily during the shadow window ·
 review the Sheet-A conflicts (`state/review/whitelist-conflicts.json` + compile's
 `state/review/compile-drops.json`) · decide dist/static-rulesets (only compile-adjacent item
 left) · at the very end: write the full V2 documentation (user explicitly wants this).
