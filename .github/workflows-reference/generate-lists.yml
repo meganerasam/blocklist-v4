@@ -1,0 +1,37 @@
+name: Generate and Merge Blocklists
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # Runs automatically every day at midnight UTC
+  workflow_dispatch: # Allows you to manually trigger the action from the GitHub UI
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.2'
+
+    - name: Generate and Merge All Categories
+      run: |
+        cd all-in-one
+        php generate_all.php
+
+    - name: Compile Master DNR File
+      run: |
+        cd all-in-one/merged-dnr
+        php merge_dnr.php
+
+    - name: Commit and Push Changes
+      run: |
+        git config --global user.name 'github-actions[bot]'
+        git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+        git add .
+        # Only commit and push if there are actual changes
+        git diff --quiet && git diff --staged --quiet || (git commit -m "Auto-compile and merge blocklists" && git push)

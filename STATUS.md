@@ -1,0 +1,54 @@
+# Port map — what was copied, from where, and what each file still needs
+
+Origins snapshot: repos cloned 2026-09-07 (`blocklist-v2` @ 8e7fe3d, `blocklist-v3` @ f836ff2),
+server files from `backend/infomaniak` working copy (2026-09-03 builds).
+
+Legend: **verbatim** = runs as-is once inputs exist · **adapt** = logic kept, plumbing changes ·
+**reference** = logic to be lifted into new code, file itself won't ship · **blocked** = waiting
+on a pre-flight decision (Atlas §09).
+
+## build/compile/ — the surgical pipe (from blocklist-v3)
+
+| File | Status | Needed changes |
+|---|---|---|
+| `{adult,easylist,easyprivacy,fanboy}/{allow,block,css}/generate_*.php` | **done · adapted 2026-09-07** | Read `sources/easylist/` snapshots (all 59, mapped 1:1 — zero live URLs), write to `build/compile/.work/<cat>/<kind>/` (gitignored), abort fail-closed on a missing/empty snapshot. Parsing logic byte-identical to v3. `adult/css` + `easyprivacy/css` **deleted** (empty `$sourceUrls` placeholders — upstream ships no cosmetic files for them; the cosmetic merge just skips absent categories). |
+| `compile.php` + `lib/{util,scrub}.php` | **done · live-run 2026-09-07** | The orchestrator (absorbs `all-in-one/generate_all.php` + `merged-dnr/merge_dnr.php`, both deleted). Atlas §08 order: exclusion set → ledger dead-filter + retention (`(snapshot − dead) ∪ ledger-alive` replaces the last-50k slice) → feeds → scrub/H/veto policy → appends D+F+fleet-BL → band re-ID (redirect 11000 · block 21000 · modifyHeaders 31000 · allow 41000) with overflow asserts → budgets (≤30k · ≤5k unsafe · ≤1k regex) → change-budget gate (>30% rules or >20% domain drop holds publish; `COMPILE_FORCE=1` confirms) → staged atomic writes → `manifest.json` (content-derived version; byte-deterministic across runs). `lib/scrub.php` = v3's scrub engine verbatim (URL fetcher dropped); `lib/util.php` mirrors `ledger.php`'s domain helpers — keep in sync. Drop lists → `state/review/compile-drops.json` (timestamp-free — unchanged content never churns a commit). Current run: 10,147 rules · 132.7k shipped domains · 1.2 s. Fleet community threshold `COMMUNITY_MIN_VOTES = 200` (2026-09-08): exclusion fleet component = all-extension.csv merged votes ≥200 (266 domains; ≥20/6-mo is only the export contract) — mirrored in `ledger.php` + `shadow_diff.php`, keep the three in sync. Watch item: block band at 30,013/31,000 (987 IDs of headroom before the modifyHeaders band). Hardened after a 17-agent adversarial review: generator OUTPUT writes fail-closed too (json_encode/write failure = exit 1), `.work/` cleared before every run (stale intermediates can never be merged), append-conflict guard flags BOTH directions (append ∩ whitelist AND whitelisted-subdomain-under-append-parent — caught `ad.doubleclick.net` both ways), Sheets I–M published to `dist/standalone/`, cosmetic merge splits on `",\n"` (comma-safe selectors), mirror rows trailing-dot-trimmed. |
+| `build/review/shadow_diff.php` | **done · gate CLEAR 2026-09-07** | Staging `dist/network/rules.json` vs production `compiled_rules_cache.json` (Aug 2, 10,348 rules): 9,619 surgical rules identical; every domain divergence cause-classified (ledger-dead · whitelist-excluded · never-block-floor · still-covered · role-change · source-delisted = the no-graveyard seed decision) — **0 unexplained**. Hardened after adversarial review (two reproduced gate bypasses fixed): shape-aware coverage (broad vs main_frame-only/conditional batches → `narrowed-conditions` gated bucket), role-change buckets bounded to the designed populations, any missing D/F/fleet-BL domain = UNEXPLAINED (deliberate appends may never be explained away), population floors (staging ≥75% of prod total · allow ≥90% · prod-only surgical ≤10%). Both attack repros (allow+surgical wipe → 206 rules; sub-resource batch wipe) now exit 1. Report → `state/review/shadow-diff.json`. Re-run before cutover, then daily during the shadow window. |
+
+## build/verify/ — the DNS factory (from blocklist-v2)
+
+| File | Status | Needed changes |
+|---|---|---|
+| `ledger.php` | **done · seeded 2026-09-08** | The tiered verifier. Candidates = 4 hosts snapshots + Sheet A (Sheets D/F never verified — user decision). Seed trusted v2's same-day working/inactive for snapshot-listed domains (no 863k graveyard import). Skip rules: H (subdomain match) skips every lane; exclusion set (C ∪ E ∪ fleet) − G (exact-host match) skips hosts lanes; Sheet A ∩ exclusion tested + flagged. Schedule: active +7d, fails 1d/7d/30d/quarterly; purge dead+delisted 180d or delisted 365d. Sheets never modified — dead Sheet-A entries in report only. |
+| `update_domains.php` · `retest_domains.php` · `split_domains.php` · `merge_chunks.php` | reference only | Absorbed by `ledger.php` (candidate ingestion, A/AAAA/CNAME checks via checkdnsrr, "inactive wins" as dead-records-with-backoff). Kept as logic donors; the chunk/matrix/git-push-per-batch protocol is gone. |
+
+## build/ingest/
+
+| File | Status | Needed changes |
+|---|---|---|
+| `fetch_extension_whitelists.php` | **done · live-tested 2026-09-07** | Pulls the 4 backends into `sources/extension/whitelist/raw/extension-*.csv` (endpoint CSV kept verbatim — no backend changes needed), merges to `raw/all-extension.csv` + flat `user-extension-whitelist.json` (1,470 unique domains on first live run). `?type=` category param when backends ship blocklists. |
+| `generate_trackers_files.php` (was v3 `whitelist/generate_whitelist_files.php`) | **deleted 2026-09-07** | Superseded by the ingest split in `fetch_sheets.php` (→ `sources/traffic_quality/`, 21 files live); removed because it still carried v3's stale published-to-web sheet URL — no code outside `upstream.yml` may hold a source URL. |
+| `fetch_sheets.php` (Sheets A–M mirrors) | **done · live-tested 2026-09-07** | All 13 sheets green: A 4,754 (pivot parser) · B → `sources/traffic_quality/` 21 market files · C 174 · D 23 · H 13 · I 344 · L 316 · M 307. Domain mirrors = flat string arrays, rows kept exactly as entered. Guards: HTML/login detection, header check, validation, dedupe, shrink guard (C/E/H), ±30% delta (A/B), `INGEST_FORCE` override. |
+| `fetch_upstreams.php` (hosts + EasyList snapshots) | **done · live-tested 2026-09-07** | 63/63 mirrored (4 hosts lists 6.1 MB + 59 EasyList files 3.3 MB) into `sources/hosts/` + `sources/easylist/`. Guards: HTML detection, min-size, ±40% size delta vs previous snapshot, fail-closed per file. The 59 URLs now live in `upstream.yml` (`easylist_snapshots:`). |
+
+## build/compile/server-reference/ — logic donors (from backend/infomaniak)
+
+| File | Status | What to lift |
+|---|---|---|
+| `generate_compiled_rules.php` | reference | Chunking (5,000/rule), ID bands (redirect 11000+ / block 21000+ / allow 41000+ …), `__EXT_ID__` placeholder (kept — substitution moves client-side), main-frame redirect duplication, atomic tmp+rename writes, hard-abort doctrine. Drop: last-50k truncation (replaced by ledger retention), traffic-driven trigger machinery. |
+| `generate_cosmetic_rules.php` | reference | specific+unhide merge and flip-flop guard → cosmetic step of compile.yml. |
+| `short.php` / `long.php` | reference only | Retire after migration; kept for the normalizeDomain() rules and as the shim spec (they must proxy `dist/` during cutover — Wonder/Claw backends consume them too). |
+
+## Other
+
+| Item | Status | Notes |
+|---|---|---|
+| `curated/vetoes.txt` | **done** | Seeded with the three twimg patterns from the live compiler. |
+| `sources/upstream.yml` | done (sheets C–G TBD) | Single registry of every external URL. |
+| `.github/workflows/ingest.yml` + `extension.yml` | **done** | Cron 0 */12 + manual dispatch with `force` input; commits successful mirrors even when a sheet fails; red run on any rejection. |
+| verify.yml | **done** | 00:30 UTC daily ledger pass (MAX_TESTS 60k, 24 workers). |
+| compile.yml | **done 2026-09-07** | 07:00 UTC + `workflow_run` after every green Ingest + dispatch with `force`. Distribution decided: **dist/ ships as commits; the fleet fetches via the backend mirrors** (raw GitHub only as fallback). Explicit budget-assert step (jq over manifest + `__EXT_ID__` grep) so the caps are visible in the YAML; commits `dist/` + `state/review/`. |
+| `dist/static-rulesets/` | **new** | No generator existed anywhere — needs to be written (or the bundles stay vendored, decided later). Only compile-adjacent item still open. |
+| Shadow-diff harness | **done** | `build/review/shadow_diff.php` (see build/compile section) — the phase-3 gate; keep diffing during the shadow window. |
+| dist/ tree as-built | **final 2026-09-08** | Only called artifacts ship: `network/rules.json` (extension) · `whitelist/default.json` (backend sync; C −G) · `cosmetic/` generic.css · specific · extended · unhide · `traffic_quality/` per-market · `standalone/` Sheets I–M verbatim · `derived/` community.json (all-extension.csv votes ≥200, −G) + exclusion-set.json (the 431-domain set rules.json was scrubbed with) — helpers, called by nothing · `manifest.json` (hash+bytes+count; keys are the relative-path API — base URL belongs to the backend mirrors). KILLED after the dist-contract discussion: `feeds/` (unconsumed source copies), `network/{popup,domains,filters}.json` (derivation stages, regenerable), `never-block.json` (H is compile-floor only — self-vendor 99999 static allows already protect own domains client-side, the rest is server-side traffic), `whitelist/{manual,community}.json` (E + fleet are exclusion-side only), `popup/` (each backend's short/long.php was internal derivation — resurrect one flat file only if access logs show external callers). compile.php prunes managed dirs, so retired artifacts disappear on the next run. |
+| Full V2 documentation | **done 2026-09-07** | `~/Desktop/Dev/00 - Architecture/BLOCKLIST_WHITELIST_SYSTEM.md` — the definitive three-audience doc (plain-language · exact mechanics · machine-oriented invariants + coupling edges), 8 mermaid diagrams, every fact verified against this repo + the legacy backend on 2026-09-07. Update it when the architecture moves (its §22 lists the staleness/deviation notes, incl. the two standing rule-1 URL violations DEV-1/DEV-8). |

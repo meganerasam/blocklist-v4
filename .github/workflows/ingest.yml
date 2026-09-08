@@ -1,0 +1,65 @@
+name: Ingest — mirror Sheets A–G
+
+# Mirrors the seven Google Sheets into sources/gsheet/*.json (validated, fail-closed per
+# sheet). Successes are committed even when another sheet fails; a failed sheet keeps its
+# previous mirror and turns the run red.
+# Later: upstream easylist/hosts snapshots move here too; compile.yml will chain via
+# workflow_run once it exists.
+
+on:
+  schedule:
+    - cron: "0 */12 * * *"
+  workflow_dispatch:
+    inputs:
+      force:
+        description: "Override shrink/size-delta guards (the confirming re-run)"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ingest
+  cancel-in-progress: false
+
+jobs:
+  sheets:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.2"
+          extensions: intl
+
+      - name: Fetch + validate sheet mirrors
+        id: fetch
+        continue-on-error: true
+        env:
+          INGEST_FORCE: ${{ inputs.force == true && '1' || '' }}
+        run: php build/ingest/fetch_sheets.php
+
+      - name: Snapshot upstreams (hosts + 59 EasyList files)
+        id: upstreams
+        continue-on-error: true
+        run: php build/ingest/fetch_upstreams.php
+
+      - name: Commit changed mirrors
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add sources/gsheet/*.json sources/traffic_quality/ sources/hosts/ sources/easylist/
+          if git diff --cached --quiet; then
+            echo "No mirror changes."
+          else
+            git commit -m "ingest: refresh sheet mirrors $(date -u '+%Y-%m-%d %H:%M')"
+            git push
+          fi
+
+      - name: Fail run if any sheet or upstream was rejected
+        if: steps.fetch.outcome == 'failure' || steps.upstreams.outcome == 'failure'
+        run: |
+          echo "::error::At least one sheet/upstream failed its gates — previous mirror kept. See summary."
+          exit 1

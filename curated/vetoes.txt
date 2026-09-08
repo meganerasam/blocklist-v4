@@ -1,0 +1,7 @@
+# First-party-infrastructure veto — block rules whose urlFilter/regexFilter CONTAINS one of
+# these patterns are dropped at compile time, whatever upstream says. Pattern = substring
+# (host or host/path fragment), one per line. Break-glass file: stays in git on purpose.
+# Origin: 2026-07 twimg incident (upstream blocked x.com's own app bundle).
+abs.twimg.com
+abs-0.twimg.com
+twimg.com/responsive-web

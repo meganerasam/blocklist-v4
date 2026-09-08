@@ -1,0 +1,36 @@
+name: Fetch Extension Whitelists
+
+on:
+  schedule:
+    - cron: '0 23 * * *' # Daily at 23:00 UTC — one hour before the blocklist compile, so its outputs can consume fresh CSVs
+  workflow_dispatch: # Allows you to manually trigger the action from the GitHub UI
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.2'
+
+    - name: Fetch whitelist CSVs from extension endpoints
+      env:
+        # One shared token for ALL extension backends (each server's config.php
+        # holds the same $whitelist_export_token value). Repository secret in
+        # Settings -> Secrets and variables -> Actions; adding a new extension
+        # only touches the $EXTENSIONS array in fetch_extension_whitelists.php.
+        USER_WHITELIST_DOMAINS: ${{ secrets.USER_WHITELIST_DOMAINS }}
+      run: php whitelist/from-extension/fetch_extension_whitelists.php
+
+    - name: Commit and Push Changes
+      run: |
+        git config --global user.name 'github-actions[bot]'
+        git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+        git add whitelist/from-extension
+        # Only commit and push if there are actual changes
+        git diff --quiet && git diff --staged --quiet || (git commit -m "Auto-fetch extension whitelists" && git push)

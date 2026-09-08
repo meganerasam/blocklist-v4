@@ -1,0 +1,56 @@
+name: Verify — domain ledger (tiered DNS)
+
+# Maintains state/domain-ledger.json: one record per domain across the 4 hosts
+# snapshots + Sheet A. Tiered scheduling replaces v2's daily full retest —
+# new domains now, active weekly, dead on backoff (1d/7d/30d/quarterly),
+# purged when dead+delisted 180d (or delisted 365d). Sheets are never modified;
+# dead Sheet-A domains surface in the run summary only.
+# Runs at 00:30 UTC — after ingest's midnight snapshot refresh, well before
+# compile. The first run on a fresh clone auto-seeds (all candidates "new"),
+# so the initial backlog drains over a few runs under MAX_TESTS.
+
+on:
+  schedule:
+    - cron: "30 0 * * *"
+  workflow_dispatch:
+    inputs:
+      max_tests:
+        description: "Cap on DNS tests this run"
+        default: "60000"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: verify-ledger
+  cancel-in-progress: false
+
+jobs:
+  ledger:
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.2"
+          extensions: pcntl
+
+      - name: Run ledger verify pass
+        env:
+          MAX_TESTS: ${{ inputs.max_tests || '60000' }}
+          WORKERS: "24"
+        run: php build/verify/ledger.php
+
+      - name: Commit ledger
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add state/
+          if git diff --cached --quiet; then
+            echo "No ledger changes."
+          else
+            git commit -m "verify: ledger pass $(date -u '+%Y-%m-%d %H:%M')"
+            git push
+          fi

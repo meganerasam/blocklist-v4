@@ -1,0 +1,50 @@
+name: Extension — pull fleet whitelists
+
+# Pulls the per-brand user-whitelist CSVs from the four backends (fail-closed:
+# a dead endpoint keeps its previous file), merges into all-extension.csv +
+# user-extension-whitelist.json, and commits. 06:00 UTC = after verify.yml's
+# window, one hour before compile.yml — the merge feeds the exclusion set.
+# When backends ship the ?type=blocklist category, a second pull writes
+# sources/extension/blocklist/ with the same contract.
+
+on:
+  schedule:
+    - cron: "0 6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: extension-pull
+  cancel-in-progress: false
+
+jobs:
+  whitelists:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.2"
+
+      - name: Pull per-brand whitelists + merge
+        env:
+          USER_WHITELIST_DOMAINS: ${{ secrets.USER_WHITELIST_DOMAINS }}
+        run: php build/ingest/fetch_extension_whitelists.php
+
+      - name: Regenerate votes-vs-plausibility review
+        run: php build/review/whitelist_conflicts.php
+
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add sources/extension/ state/review/
+          if git diff --cached --quiet; then
+            echo "No changes."
+          else
+            git commit -m "extension: refresh fleet whitelists $(date -u '+%Y-%m-%d %H:%M')"
+            git push
+          fi

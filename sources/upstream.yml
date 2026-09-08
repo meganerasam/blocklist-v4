@@ -1,0 +1,183 @@
+# Every external input of the factory, in one reviewable file.
+# ingest.yml reads this; nothing else may hardcode a source URL.
+# (The 59 EasyList URLs migrated here 2026-09-07; the ported generators under build/compile/
+#  still fetch live until the compile adaptation switches them to sources/easylist/ snapshots.)
+
+# SHEET ACCESS (decide before ingest.yml is written):
+#   The /export?format=csv URLs below only work unauthenticated if a sheet is shared as
+#   "Anyone with the link - Viewer" (a restricted sheet returns a Google login HTML page —
+#   the blocklist-prev.csv failure mode). To keep sheets fully restricted (recommended):
+#   share each sheet with a GCP service account (Viewer), key in Actions secret GSHEET_SA_KEY,
+#   and ingest calls the Sheets API v4 with a Bearer token using the same spreadsheet IDs —
+#   it returns JSON rows directly. Sheet B click counts never leave the sheet — the
+#   ingest split (sources/traffic_quality/, published as dist/traffic_quality/) is domains only.
+sheets:
+  A_popup:
+    name: popup
+    mirror: sources/gsheet/popup.json
+    # KEPT in its current pivot format ("Block List v3" column) — the fetcher parses it as-is
+    export_url: "https://docs.google.com/spreadsheets/d/18Q86cyLgrDXrPCI3NrFlJTiLwU4JQ3QCFYRVR1_WDpc/export?format=csv&gid=1932785084"
+  B_trackers:
+    name: traffic-quality-trackers
+    mirror: sources/traffic_quality # DIRECTORY — split per market at ingest: global.json, fr.json, us.json, …
+    export_url: "https://docs.google.com/spreadsheets/d/1QQEymysUlufJ12oTbr1ILdpZy8PdO-OHSTyxnkdhDSQ/export?format=csv&gid=1704568972"
+  C_default_whitelist:
+    name: default-whitelist
+    mirror: sources/gsheet/default-whitelist.json
+    export_url: "https://docs.google.com/spreadsheets/d/1io0IqiXUc8VBERQvdWuUkh4pwJz6sxxZ7QqGL8i7YTk/export?format=csv&gid=0#gid=0" # bootstrapped: the 174 default_excluded_domains() from ninja-adb21.php
+  D_default_blocklist:
+    name: default-blocklist
+    mirror: sources/gsheet/default-blocklist.json
+    export_url: "https://docs.google.com/spreadsheets/d/1io0IqiXUc8VBERQvdWuUkh4pwJz6sxxZ7QqGL8i7YTk/export?format=csv&gid=735128469#gid=735128469" # NEW — org default block domains, appended as block rules; bootstrap candidate: the 23 default_blockdom() entries
+  E_manual_whitelist:
+    name: manual-whitelist
+    mirror: sources/gsheet/manual-whitelist.json
+    export_url: "https://docs.google.com/spreadsheets/d/1hPdvfQBkXWTb8dU0w_x0XA1NJBylADfd20MP5PCNOjw/export?format=csv&gid=0#gid=0" # starts empty — future manual whitelist additions
+  F_manual_blocklist:
+    name: manual-blocklist
+    mirror: sources/gsheet/manual-blocklist.json
+    export_url: "https://docs.google.com/spreadsheets/d/1hPdvfQBkXWTb8dU0w_x0XA1NJBylADfd20MP5PCNOjw/export?format=csv&gid=1649415842#gid=1649415842" # starts empty
+  G_omit_from_whitelist:
+    name: omit-from-whitelist
+    mirror: sources/gsheet/omit-from-whitelist.json
+    export_url: "https://docs.google.com/spreadsheets/d/1IS72yj64N7RVIT_kXOmE-67Q0dg1hqXgzY9Y6oSyA-0/export?format=csv&gid=1360553846#gid=1360553846" # holds the protected search hosts (google.com, search.yahoo.com, …)
+  H_omit_from_blocklist:
+    name: omit-from-blocklist
+    mirror: sources/gsheet/omit-from-blocklist.json
+    export_url: "https://docs.google.com/spreadsheets/d/1IS72yj64N7RVIT_kXOmE-67Q0dg1hqXgzY9Y6oSyA-0/export?format=csv&gid=0#gid=0" # bootstrapped 2026-09-07 with whitelistes3.txt's 13 ecosystem/partner domains
+    note: never-block floor — tightest edit access of all sheets
+
+  # ---- standalone sheets (I–M): mirrored + published as on-demand JSON, NEVER merged ----
+  # These carry the remaining hardcoded arrays out of ninja-adb21.php; the backends fetch
+  # them on demand (like Sheet B). Bootstrap TSVs generated from the live server file.
+  I_whitelisted_domains_injection_enabled:
+    name: whitelisted-domains-injection-enabled
+    mirror: sources/gsheet/whitelisted-domains-injection-enabled.json
+    export_url: "https://docs.google.com/spreadsheets/d/1eVY_rEJ9fNZVwQTPns6isM4bv5ggLmpkEcQ-VzBqF5M/export?format=csv&gid=0#gid=0" # was $whitelistedDomainsInjectionEnabled (344 entries)
+  J_tracking_whitelist:
+    name: tracking-whitelist
+    mirror: sources/gsheet/tracking-whitelist.json
+    export_url: "https://docs.google.com/spreadsheets/d/1eVY_rEJ9fNZVwQTPns6isM4bv5ggLmpkEcQ-VzBqF5M/export?format=csv&gid=331010199#gid=331010199" # was $tracking_whitelist (46 entries, DNR rule 5005)
+  K_allow_request_domains:
+    name: allow-request-domains
+    mirror: sources/gsheet/allow-request-domains.json
+    export_url: "https://docs.google.com/spreadsheets/d/1eVY_rEJ9fNZVwQTPns6isM4bv5ggLmpkEcQ-VzBqF5M/export?format=csv&gid=110294896#gid=110294896" # was $allowReqDomains (19 entries, DNR rule 5006)
+  L_initiator_allowed_domains:
+    name: initiator-allowed-domains
+    mirror: sources/gsheet/initiator-allowed-domains.json
+    export_url: "https://docs.google.com/spreadsheets/d/1eVY_rEJ9fNZVwQTPns6isM4bv5ggLmpkEcQ-VzBqF5M/export?format=csv&gid=920400328#gid=920400328" # was $initiatorAllowedDomains (316 entries, DNR rule 5006)
+  M_rule101xtra:
+    name: rule101xtra
+    mirror: sources/gsheet/rule101xtra.json
+    export_url: "https://docs.google.com/spreadsheets/d/1eVY_rEJ9fNZVwQTPns6isM4bv5ggLmpkEcQ-VzBqF5M/export?format=csv&gid=2001657757#gid=2001657757" # was $rule101xtraDomainsNew (307 entries, CSP-strip rule 33)
+
+hosts:
+  # measured 2026-09-07 vs the EasyList-side covered set (129,955 domains):
+  # dropped: Firebog Easylist (99.6% duplicate) and Firebog Admiral (92.4% duplicate)
+  anudeep:
+    url: "https://raw.githubusercontent.com/anudeepND/blacklist/master/adservers.txt"
+    snapshot: sources/hosts/anudeep.txt
+    role: domains # -> dist/feeds/anudeep.json -> network/domains.json
+  peterlowe:
+    url: "https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=0&mimetype=plaintext"
+    snapshot: sources/hosts/peterlowe.txt
+    role: domains # -> dist/feeds/peterlowe.json -> network/domains.json
+  adguarddns:
+    url: "https://v.firebog.net/hosts/AdguardDNS.txt"
+    snapshot: sources/hosts/adguarddns.txt
+    role: domains # biggest unique contributor (97.7k uncovered) -> feeds/adguarddns.json
+  kadhosts:
+    url: "https://raw.githubusercontent.com/StevenBlack/hosts/refs/heads/master/data/KADhosts/hosts"
+    snapshot: sources/hosts/kadhosts.txt
+    role: popup # scam/fraud class (1% EasyList overlap) -> feeds/kadhosts.json -> network/popup.json
+
+easylist_snapshots:
+  # the 59 EasyList-family filter files, mirrored verbatim into sources/easylist/<path>
+  # by fetch_upstreams.php — compile reads SNAPSHOTS, never live URLs (last-good built in)
+  base_url: "https://raw.githubusercontent.com/easylist/easylist/refs/heads/master/"
+  dir: sources/easylist
+  files:
+    - easylist/easylist_adservers.txt
+    - easylist/easylist_adservers_popup.txt
+    - easylist/easylist_allowlist.txt
+    - easylist/easylist_allowlist_dimensions.txt
+    - easylist/easylist_allowlist_general_hide.txt
+    - easylist/easylist_allowlist_popup.txt
+    - easylist/easylist_general_block.txt
+    - easylist/easylist_general_block_dimensions.txt
+    - easylist/easylist_general_block_popup.txt
+    - easylist/easylist_general_hide.txt
+    - easylist/easylist_specific_block_popup.txt
+    - easylist/easylist_specific_hide.txt
+    - easylist/easylist_specific_hide_abp.txt
+    - easylist/easylist_thirdparty.txt
+    - easylist/easylist_thirdparty_popup.txt
+    - easylist_adult/adult_adservers.txt
+    - easylist_adult/adult_adservers_popup.txt
+    - easylist_adult/adult_allowlist.txt
+    - easylist_adult/adult_specific_block.txt
+    - easylist_adult/adult_specific_block_popup.txt
+    - easylist_adult/adult_thirdparty.txt
+    - easylist_adult/adult_thirdparty_popup.txt
+    - easyprivacy/easyprivacy_allowlist.txt
+    - easyprivacy/easyprivacy_general.txt
+    - easyprivacy/easyprivacy_specific.txt
+    - easyprivacy/easyprivacy_specific_abp.txt
+    - easyprivacy/easyprivacy_specific_cname_a8net.txt
+    - easyprivacy/easyprivacy_specific_cname_acton.txt
+    - easyprivacy/easyprivacy_specific_cname_ad-ebis.txt
+    - easyprivacy/easyprivacy_specific_cname_adobe.txt
+    - easyprivacy/easyprivacy_specific_cname_at-internet.txt
+    - easyprivacy/easyprivacy_specific_cname_branch.txt
+    - easyprivacy/easyprivacy_specific_cname_commanders-act.txt
+    - easyprivacy/easyprivacy_specific_cname_criteo.txt
+    - easyprivacy/easyprivacy_specific_cname_dataunlocker.txt
+    - easyprivacy/easyprivacy_specific_cname_eulerian.txt
+    - easyprivacy/easyprivacy_specific_cname_ingenious-technologies.txt
+    - easyprivacy/easyprivacy_specific_cname_keyade.txt
+    - easyprivacy/easyprivacy_specific_cname_lead-forensics.txt
+    - easyprivacy/easyprivacy_specific_cname_np6.txt
+    - easyprivacy/easyprivacy_specific_cname_oracle.txt
+    - easyprivacy/easyprivacy_specific_cname_plausible.txt
+    - easyprivacy/easyprivacy_specific_uBO.txt
+    - easyprivacy/easyprivacy_thirdparty.txt
+    - fanboy-addon/fanboy_agegate_allowlist.txt
+    - fanboy-addon/fanboy_agegate_general_block.txt
+    - fanboy-addon/fanboy_agegate_general_hide.txt
+    - fanboy-addon/fanboy_agegate_specific_block.txt
+    - fanboy-addon/fanboy_agegate_specific_hide.txt
+    - fanboy-addon/fanboy_agegate_specific_uBO.txt
+    - fanboy-addon/fanboy_agegate_thirdparty.txt
+    - fanboy-addon/fanboy_annoyance_allowlist.txt
+    - fanboy-addon/fanboy_annoyance_allowlist_general_hide.txt
+    - fanboy-addon/fanboy_annoyance_general_block.txt
+    - fanboy-addon/fanboy_annoyance_general_hide.txt
+    - fanboy-addon/fanboy_annoyance_specific_block.txt
+    - fanboy-addon/fanboy_annoyance_specific_hide.txt
+    - fanboy-addon/fanboy_annoyance_specific_uBO.txt
+    - fanboy-addon/fanboy_annoyance_thirdparty.txt
+
+extension_endpoints:
+  # fleet feedback — pulled into sources/extension/<category>/ by extension.yml
+  # X-Whitelist-Token from repo secret USER_WHITELIST_DOMAINS; fail-closed; JSON output
+  # category param (?type=whitelist|blocklist) once backends ship it
+  - {
+      id: 23,
+      brand: "Ad Block Wonder",
+      url: "https://wonderupdates.com/user-whitelisted-domains.php",
+    }
+  - {
+      id: 24,
+      brand: "Stop Ads Now",
+      url: "https://stopads-now.com/user-whitelisted-domains.php",
+    }
+  - {
+      id: 25,
+      brand: "Ninja Block",
+      url: "https://ninja-block.com/user-whitelisted-domains.php",
+    }
+  - {
+      id: 26,
+      brand: "Ad Block Ghost",
+      url: "https://adblockghost.com/user-whitelisted-domains.php",
+    }

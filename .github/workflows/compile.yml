@@ -1,0 +1,72 @@
+name: Compile — assemble dist/
+
+# One compile in the Atlas §08 order: exclusion set (C ∪ E ∪ fleet) − G first, ledger
+# dead-filter, per-source feeds, whitelist enforcement pass, appends (D + F + fleet-BL),
+# omit H + veto, band re-ID, DNR budget assertions, manifest.json.
+# dist/ is published as commits (user decision 2026-09-07); the fleet fetches it through
+# the backend mirrors, never from GitHub directly.
+# Fail-closed: any gate/assertion failure exits non-zero BEFORE dist/ is touched, so the
+# previous dist/ keeps being served. The change-budget gate (>30% rule delta or >20%
+# shipped-domain drop) holds publishes for a confirming re-run with force=true.
+# Runs daily at 07:00 UTC — after verify (00:30) and the fleet pull (06:00) — and after
+# every successful ingest so sheet edits ship the same half-day.
+
+on:
+  schedule:
+    - cron: "0 7 * * *"
+  workflow_run:
+    workflows: ["Ingest — mirror Sheets A–G"]
+    types: [completed]
+  workflow_dispatch:
+    inputs:
+      force:
+        description: "Override the change-budget gate (the confirming re-run)"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: compile
+  cancel-in-progress: false
+
+jobs:
+  compile:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    # workflow_run fires on failed ingests too — never compile from a red mirror refresh
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.2"
+
+      - name: Compile dist/
+        env:
+          COMPILE_FORCE: ${{ inputs.force == true && '1' || '' }}
+        run: php build/compile/compile.php
+
+      - name: Assert DNR budgets (≤30,000 rules · ≤5,000 redirect/modifyHeaders)
+        run: |
+          total=$(jq '.counts.network_rules_total' dist/manifest.json)
+          unsafe=$(jq '.counts.unsafe_rules' dist/manifest.json)
+          echo "rules: $total / 30000 · redirect+modifyHeaders: $unsafe / 5000"
+          [ "$total" -le 30000 ] || { echo "::error::DNR budget: $total rules > 30000"; exit 1; }
+          [ "$unsafe" -le 5000 ] || { echo "::error::DNR budget: $unsafe redirect/modifyHeaders > 5000"; exit 1; }
+          grep -q '__EXT_ID__' dist/network/rules.json || { echo "::error::__EXT_ID__ placeholder missing from rules.json — substitution is client-side"; exit 1; }
+
+      - name: Commit dist
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add dist/ state/review/
+          if git diff --cached --quiet; then
+            echo "No dist changes."
+          else
+            git commit -m "compile: publish dist $(date -u '+%Y-%m-%d %H:%M')"
+            # ingest/verify/extension may have pushed since checkout — rebase once and retry
+            git push || { git pull --rebase origin "${GITHUB_REF_NAME}" && git push; }
+          fi
