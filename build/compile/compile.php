@@ -403,6 +403,8 @@ foreach ($domainRules as $rule) {
     $rules[] = $rule;
 }
 $dupAsRedirect = 0;
+$dupInitStripped = 0;
+$dupSkippedWhitelisted = 0;
 foreach ($filters as $rule) {
     $type = $rule['action']['type'] ?? 'block';
     $rule['id'] = $assignId($type);
@@ -411,21 +413,37 @@ foreach ($filters as $rule) {
         if (!isset($rule['condition'])) $rule['condition'] = [];
         // Domain-level main_frame-only blocks are duplicated as redirect rules —
         // production behavior: the navigation lands on the extension's blocked page.
+        // 2026-09-08: the twin CANNOT carry the source rule's urlFilter (regexSubstitution
+        // needs a regexFilter), so an initiator-scoped twin redirects EVERY navigation
+        // from those pages — a whitelisted/never-block site must never be widened into
+        // that (the live pornhub breakage this fixes; production rule 11018 still has it).
+        // Whitelist-covered initiators are stripped; a twin left with no scope is skipped.
         $hasReq  = isset($rule['condition']['requestDomains'])   && is_array($rule['condition']['requestDomains']);
         $hasInit = isset($rule['condition']['initiatorDomains']) && is_array($rule['condition']['initiatorDomains']);
         if (($hasReq || $hasInit) && ($rule['condition']['resourceTypes'] ?? null) === ['main_frame']) {
-            $redirCond = ['regexFilter' => '^http.+', 'resourceTypes' => ['main_frame']];
-            if ($hasReq)  $redirCond['requestDomains']   = $rule['condition']['requestDomains'];
-            if ($hasInit) $redirCond['initiatorDomains'] = $rule['condition']['initiatorDomains'];
-            if (isset($rule['condition']['excludedRequestDomains'])) {
-                $redirCond['excludedRequestDomains'] = $rule['condition']['excludedRequestDomains'];
+            $keptInit = [];
+            if ($hasInit) {
+                foreach ($rule['condition']['initiatorDomains'] as $d) {
+                    if (isWhitelistCovered(strtolower((string) $d), $carveSet)) { $dupInitStripped++; continue; }
+                    $keptInit[] = $d;
+                }
             }
-            $rules[] = [
-                'id' => $assignId('redirect'), 'priority' => 3,
-                'action' => ['type' => 'redirect', 'redirect' => ['regexSubstitution' => REDIRECT_SUBSTITUTION]],
-                'condition' => $redirCond,
-            ];
-            $dupAsRedirect++;
+            if ($hasReq || $keptInit) {
+                $redirCond = ['regexFilter' => '^http.+', 'resourceTypes' => ['main_frame']];
+                if ($hasReq)   $redirCond['requestDomains']   = $rule['condition']['requestDomains'];
+                if ($keptInit) $redirCond['initiatorDomains'] = $keptInit;
+                if (isset($rule['condition']['excludedRequestDomains'])) {
+                    $redirCond['excludedRequestDomains'] = $rule['condition']['excludedRequestDomains'];
+                }
+                $rules[] = [
+                    'id' => $assignId('redirect'), 'priority' => 3,
+                    'action' => ['type' => 'redirect', 'redirect' => ['regexSubstitution' => REDIRECT_SUBSTITUTION]],
+                    'condition' => $redirCond,
+                ];
+                $dupAsRedirect++;
+            } else {
+                $dupSkippedWhitelisted++;
+            }
         }
     }
     $rules[] = $rule;
@@ -702,7 +720,7 @@ $rep[] = '| ④ veto (curated/vetoes.txt) | ' . $vetoed . ' block rules dropped 
 $rep[] = '| ④ popup lane | ' . count($popupDomains) . ' domains → ' . count($popupRules) . ' redirect rules · excluded by whitelist: ' . count($popupExcluded) . ' |';
 $rep[] = '| ④ domains lane | ' . count($trackerDomains) . ' domains → ' . count($domainRules) . ' rules (excl −' . $trackerStats['excl'] . ' · H −' . $trackerStats['never'] . ' · easylist-covered −' . $trackerStats['covered'] . ') |';
 $rep[] = '| ⑤ appends (D + F + fleet-BL) | ' . count($appendShipped) . ' domains → ' . count($appendRules) . ' rules · H −' . $appendNeverDropped . ' · **conflicts vs whitelist: ' . count($appendConflicts) . '** · **whitelisted subdomains overridden by an append parent: ' . count($appendParentOverrides) . '** |';
-$rep[] = '| ⑥ rules.json | **' . $totalRules . ' rules** (' . implode(' · ', array_map(fn ($k, $v) => "$k $v", array_keys($byAction), $byAction)) . ') · main-frame dup→redirect ' . $dupAsRedirect . ' |';
+$rep[] = '| ⑥ rules.json | **' . $totalRules . ' rules** (' . implode(' · ', array_map(fn ($k, $v) => "$k $v", array_keys($byAction), $byAction)) . ') · main-frame dup→redirect ' . $dupAsRedirect . ' (whitelisted initiators stripped ' . $dupInitStripped . ' · twins skipped ' . $dupSkippedWhitelisted . ') |';
 $rep[] = '| budgets | total ' . $totalRules . '/' . BUDGET_TOTAL_RULES . ' · unsafe ' . $unsafeRules . '/' . BUDGET_UNSAFE_RULES . ' · regex ' . $regexRules . '/' . BUDGET_REGEX_RULES . ' |';
 $rep[] = '| shipped block domains | ' . $shippedBlockDomains . ' |';
 $rep[] = '| manifest version | `' . substr($version, 0, 12) . '…` |';

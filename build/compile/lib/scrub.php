@@ -102,6 +102,20 @@ function scrubBlockRules(array $rules, array $whitelist, array &$stats): array {
             if (preg_match('/^\|\|([a-z0-9.-]+)/i', $cond['urlFilter'], $m)) {
                 $anchor = strtolower(trim($m[1], '.'));
 
+                // Wildcard-TLD anchor (||pornhub.*): '*' matches anything, so the
+                // rule covers every whitelisted domain sharing the prefix — drop it
+                // when one exists (2026-09-08; the plain-anchor case always did this).
+                if (substr($cond['urlFilter'], 2 + strlen($m[1]), 1) === '*'
+                    && str_ends_with($m[1], '.')) {
+                    $prefix = strtolower($m[1]);
+                    foreach ($whitelist as $w => $_) {
+                        if (str_starts_with($w, $prefix)) {
+                            $stats['rulesDropped']++;
+                            continue 2;   // next $rule of the outer scrub loop
+                        }
+                    }
+                }
+
                 if (isWhitelistCovered($anchor, $whitelist)) {
                     $stats['rulesDropped']++;
                     continue;

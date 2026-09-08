@@ -28,6 +28,13 @@ sections 08–09 → https://claude.ai/code/artifact/6291c622-79d0-4fd5-b269-0ad
 5. **Exclusion set = (C ∪ E ∪ fleet community) − G**, built before ANY rule generation.
    Fleet community = all-extension.csv merged votes ≥ 200 (decision 2026-09-08); the
    ≥20-users/6-month floor is only the backends' EXPORT contract, never the trust bar.
+   The exclusion covers ALL blocking axes (2026-09-08, deviates from production in the safe
+   direction): wildcard-anchored block filters (`||name.*`) are dropped when a member matches
+   the prefix, and whitelisted domains are stripped from redirect-twin initiatorDomains —
+   the main-frame twin loses its source urlFilter by construction, so an initiator-scoped
+   twin would hijack EVERY navigation from the site (the live pornhub breakage, prod rule
+   11018 — likely manufacturing part of its own coerced Allow-votes). Allow rules are NEVER
+   scrubbed: they only ever help a whitelisted domain against the other rule populations.
    Appends = Sheets D + F + fleet blocklists (after the whitelist pass, never scrubbed).
    Final pass = omit H → veto (`curated/vetoes.txt`) → re-ID → `dist/` + `manifest.json`.
 6. **Sheets D and F are never DNS-verified** (user decision). The ledger covers the 4 hosts
