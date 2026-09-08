@@ -1,8 +1,9 @@
 <?php
 /**
- * lib/scrub.php — the whitelist scrub engine (verbatim from v3's
+ * lib/scrub.php — the whitelist scrub engine (from v3's
  * all-in-one/scrub_whitelist.php; only the URL fetcher was dropped — the
- * input is now the locally-assembled exclusion set, never a fetched file).
+ * input is now the CURATION SET assembled by build/curate/curate.php,
+ * never a fetched file; since 2026-09-08 the scrub runs at the curate stage).
  *
  * Guarantees that no domain of the given set can be matched by a block rule:
  *   1. requestDomains entries equal to a set member (or living under one,
@@ -114,6 +115,28 @@ function scrubBlockRules(array $rules, array $whitelist, array &$stats): array {
                             continue 2;   // next $rule of the outer scrub loop
                         }
                     }
+                    // 2026-09-08 (adversarial review): a || anchor matches at EVERY
+                    // subdomain boundary, so a member sitting DEEPER in the family —
+                    // mail.google.com under ||google.* while apex google.com is G-vetoed —
+                    // dodges the prefix test above AND the parent-carve below (the bare
+                    // anchor label never appears in domainAncestors). Carve those members.
+                    $carve = [];
+                    foreach ($whitelist as $w => $_) {
+                        foreach (domainAncestors($w) as $anc) {
+                            if (str_starts_with($anc, $prefix)) { $carve[$w] = true; break; }
+                        }
+                    }
+                    if (!empty($carve)) {
+                        $excl = isset($cond['excludedRequestDomains']) ? $cond['excludedRequestDomains'] : [];
+                        foreach (array_keys($carve) as $w) {
+                            if (!in_array($w, $excl, true)) {
+                                $excl[] = $w;
+                                $stats['exclusionsAdded']++;
+                            }
+                        }
+                        sort($excl);
+                        $cond['excludedRequestDomains'] = $excl;
+                    }
                 }
 
                 if (isWhitelistCovered($anchor, $whitelist)) {
@@ -168,6 +191,63 @@ function scrubBlockRules(array $rules, array $whitelist, array &$stats): array {
                 continue;
             }
             $cond['initiatorDomains'] = $keptInit;
+        }
+
+        $rule['condition'] = $cond;
+        $out[] = $rule;
+    }
+
+    return $out;
+}
+
+/**
+ * Curate ALLOW rules — the SELF-PROTECTION policy (user decision 2026-09-08, revised the
+ * same evening after adversarial-review evidence; cosmetic rules never pass through here).
+ *
+ * An allow rule whose destination IS a curated domain is an unbreakage exception ON the
+ * very site curation protects: generic path-pattern blocks (not domain-scoped, invisible
+ * to domain curation) still match on its pages, and dropping the exception would INCREASE
+ * blocking there (live regression pair: the nytimes.com EventTracker.js exception,
+ * anchor @@||nytimes.com^, vs a generic EventTracker path block). So:
+ *
+ *   · ||-anchored / wildcard-family allows: NEVER dropped, NEVER carved — an anchor on
+ *     (or over) a curated domain is self-protection.
+ *   · initiatorDomains: never touched — initiator-scoped exceptions protect the curated
+ *     site's pages.
+ *   · requestDomains batches: a batch made ENTIRELY of curated destinations is kept
+ *     untouched (pure self-protection). A MIXED batch strips its curated members — the
+ *     rule exists for the other destinations, and a leftover allow entry could
+ *     neutralize a deliberate Sheet-D/F append on the curated domain.
+ *
+ * The cardinal safety rule still holds: scope is never widened — stripping only happens
+ * while other entries remain.
+ *
+ * $stats accumulates: domainsRemoved, rulesDropped, exclusionsAdded (the latter two stay
+ * 0 under this policy; kept for report-schema stability).
+ */
+function scrubAllowRules(array $rules, array $whitelist, array &$stats): array {
+    $out = [];
+
+    foreach ($rules as $rule) {
+        $isAllow = ($rule['action']['type'] ?? '') === 'allow';
+        if (!$isAllow || !isset($rule['condition']) || empty($whitelist)) {
+            $out[] = $rule;
+            continue;
+        }
+        $cond = $rule['condition'];
+
+        if (isset($cond['requestDomains']) && is_array($cond['requestDomains'])) {
+            $covered = [];
+            $kept = [];
+            foreach ($cond['requestDomains'] as $d) {
+                if (isWhitelistCovered(strtolower($d), $whitelist)) $covered[] = $d;
+                else $kept[] = $d;
+            }
+            if ($covered && $kept) {          // mixed batch: strip the curated members
+                $stats['domainsRemoved'] += count($covered);
+                $cond['requestDomains'] = $kept;
+            }
+            // all-covered => pure self-protection, kept untouched
         }
 
         $rule['condition'] = $cond;

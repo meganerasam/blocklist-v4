@@ -1,10 +1,11 @@
 name: Ingest — mirror Sheets A–G
 
-# Mirrors the seven Google Sheets into sources/gsheet/*.json (validated, fail-closed per
-# sheet). Successes are committed even when another sheet fails; a failed sheet keeps its
-# previous mirror and turns the run red.
-# Later: upstream easylist/hosts snapshots move here too; compile.yml will chain via
-# workflow_run once it exists.
+# Mirrors the 14 Google Sheets A–N into sources/gsheet/*.json (validated, fail-closed per
+# sheet) plus the hosts + easylist snapshots. Successes are committed even when another
+# sheet fails; a failed sheet keeps its previous mirror and turns the run red.
+# NOTE: the workflow `name:` above is a FROZEN string — curate.yml's workflow_run trigger
+# matches it literally ("Sheets A–G" is historical; renaming it silently breaks the
+# Ingest → Curate → Compile chain).
 
 on:
   schedule:

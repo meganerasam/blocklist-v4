@@ -1,10 +1,10 @@
-# Sheet schemas — FROZEN 2026-09-07 (lettering updated same day)
+# Sheet schemas — FROZEN 2026-09-07 (Sheet I inserted + I–M re-lettered J–N 2026-09-08)
 
 Every sheet is mirrored to a JSON array by `build/ingest/fetch_sheets.php`. Ingest parses
 exactly these layouts.
 
 ## Mirror format — flat string arrays
-Every **domain** sheet (A, C–H, I–M) mirrors as a flat, sorted, deduped JSON array of
+Every **domain** sheet (A, C–I, J–N) mirrors as a flat, sorted, deduped JSON array of
 domain strings: `["adblockghost.com", "ninja-block.com", …]`. The `added`/`reason` columns
 are sheet-side audit trail only — they never enter the mirror. Only Sheet B mirrors as
 objects (it's data, not a domain list). Rows are preserved exactly as entered — `www.x.com`
@@ -29,7 +29,7 @@ backends request them by region key): `latam.json`, `apac.json`, `nordics.json`,
 UNION of its member markets (member lists in `fetch_sheets.php`, copied from v3's
 generator). A literal sheet market sharing a rollup name merges into the union.
 
-## C–H · pipeline domain sheets · I–M · standalone domain sheets
+## C–I · pipeline domain sheets · J–N · standalone domain sheets
 | domain | added | reason |
 |---|---|---|
 Only the `domain` column is required (header cell must be `domain`); `added`/`reason` are
@@ -38,23 +38,24 @@ subdomains.
 
 | Sheet | Name | Contract |
 |---|---|---|
-| C | default-whitelist | exclusion set member (excluded conditions + easylist/hosts scrub) |
+| C | default-whitelist | product-only (2026-09-08): published as `dist/whitelist/default.json` (−G) — takes part in NO curation or scrub |
 | D | default-blocklist | org default blocks, appended as block rules (bootstrap: the 23 default_blockdom) |
-| E | manual-whitelist | exclusion set member, like C |
+| E | manual-whitelist | mirrored; part of NO recipe for now (user decision 2026-09-08: role to be decided) |
 | F | manual-blocklist | appended block rules, like D |
-| G | omit-from-whitelist | subtracted from the exclusion set (holds the protected search hosts) |
-| H | omit-from-blocklist | never-block floor — drops block rules from every source |
-| I | whitelisted-domains-injection-enabled | standalone · on-demand JSON, never merged |
-| J | tracking-whitelist | standalone · on-demand (was rule 5005) |
-| K | allow-request-domains | standalone · on-demand (was rule 5006) |
-| L | initiator-allowed-domains | standalone · on-demand (was rule 5006) |
-| M | rule101xtra | standalone · on-demand (was CSP-strip rule 33) |
+| G | omit-from-whitelist | step-2 veto on the user whitelist, EXACT host (holds the protected search hosts + gamed-vote vetoes) |
+| H | omit-from-blocklist | never-block floor — curation-set member + append floor at compile |
+| I | download-sites | NEW 2026-09-08 (live, 50 rows), dual role: ① curation-set member — subtracted from every blocking source by curate.php; ② source — normalized (invalid rows warn) − G → `sanitized/download-sites.txt` (ABP allow list, exact 7-option template) → DNR allow lane at priority 2 (guards: $document/$~third-party/non-@@ = fail) |
+| J | whitelisted-domains-injection-enabled | standalone · on-demand JSON, never merged |
+| K | tracking-whitelist | standalone · on-demand (was rule 5005) |
+| L | allow-request-domains | standalone · on-demand (was rule 5006) |
+| M | initiator-allowed-domains | standalone · on-demand (was rule 5006) |
+| N | rule101xtra | standalone · on-demand (was CSP-strip rule 33) |
 
 ## Ingest gates (per sheet, fail-closed — keep previous mirror on violation)
 - fetch error / HTML login page / empty body
 - header mismatch vs the layouts above
 - row-level: invalid domains rejected + reported (IPs, localhost, no-dot, bad syntax)
-- shrink guard on C / E / H (any shrink → hold; `force` dispatch input = the confirming re-run)
+- shrink guard on C / E / H / I (any shrink → hold; `force` dispatch input = the confirming re-run)
 - ±30% size-delta guard on A / B (when previous mirror ≥ 20 rows)
 - `TBD` export_url → sheet skipped without failing the run
 - every run posts a per-sheet diff summary (added/removed, rejects with line numbers)

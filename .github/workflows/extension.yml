@@ -3,7 +3,8 @@ name: Extension — pull fleet whitelists
 # Pulls the per-brand user-whitelist CSVs from the four backends (fail-closed:
 # a dead endpoint keeps its previous file), merges into all-extension.csv +
 # user-extension-whitelist.json, and commits. 06:00 UTC = after verify.yml's
-# window, one hour before compile.yml — the merge feeds the exclusion set.
+# window, one hour before compile.yml — the merge feeds the curation stage
+# (curate.yml chains off this workflow's green runs).
 # When backends ship the ?type=blocklist category, a second pull writes
 # sources/extension/blocklist/ with the same contract.
 
@@ -46,5 +47,7 @@ jobs:
             echo "No changes."
           else
             git commit -m "extension: refresh fleet whitelists $(date -u '+%Y-%m-%d %H:%M')"
-            git push
+            # verify's ledger commit can land during this run — rebase and retry, a lost
+            # push here would skip the chained curate and stale the whole day's whitelist
+            git push || { git pull --rebase origin "${GITHUB_REF_NAME}" && git push; }
           fi

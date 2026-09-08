@@ -1,7 +1,7 @@
 # Every external input of the factory, in one reviewable file.
 # ingest.yml reads this; nothing else may hardcode a source URL.
-# (The 59 EasyList URLs migrated here 2026-09-07; the ported generators under build/compile/
-#  still fetch live until the compile adaptation switches them to sources/easylist/ snapshots.)
+# (The 59 EasyList URLs migrated here 2026-09-07; the category generators read ONLY the
+#  sources/easylist/ snapshots — zero live URLs — and run inside build/curate/curate.php.)
 
 # SHEET ACCESS (decide before ingest.yml is written):
 #   The /export?format=csv URLs below only work unauthenticated if a sheet is shared as
@@ -46,27 +46,31 @@ sheets:
     mirror: sources/gsheet/omit-from-blocklist.json
     export_url: "https://docs.google.com/spreadsheets/d/1IS72yj64N7RVIT_kXOmE-67Q0dg1hqXgzY9Y6oSyA-0/export?format=csv&gid=0#gid=0" # bootstrapped 2026-09-07 with whitelistes3.txt's 13 ecosystem/partner domains
     note: never-block floor — tightest edit access of all sheets
+  I_download_sites:
+    name: download-sites
+    mirror: sources/gsheet/download-sites.json
+    export_url: "https://docs.google.com/spreadsheets/d/1IS72yj64N7RVIT_kXOmE-67Q0dg1hqXgzY9Y6oSyA-0/export?format=csv&gid=43296086#gid=43296086" # NEW 2026-09-08 — download sites, omit-style domain list; curation input: subtracted from the blocking sources (Sheet A, KADhosts, hosts lanes, easylist family)
 
-  # ---- standalone sheets (I–M): mirrored + published as on-demand JSON, NEVER merged ----
+  # ---- standalone sheets (J–N): mirrored + published as on-demand JSON, NEVER merged ----
   # These carry the remaining hardcoded arrays out of ninja-adb21.php; the backends fetch
   # them on demand (like Sheet B). Bootstrap TSVs generated from the live server file.
-  I_whitelisted_domains_injection_enabled:
+  J_whitelisted_domains_injection_enabled:
     name: whitelisted-domains-injection-enabled
     mirror: sources/gsheet/whitelisted-domains-injection-enabled.json
     export_url: "https://docs.google.com/spreadsheets/d/1eVY_rEJ9fNZVwQTPns6isM4bv5ggLmpkEcQ-VzBqF5M/export?format=csv&gid=0#gid=0" # was $whitelistedDomainsInjectionEnabled (344 entries)
-  J_tracking_whitelist:
+  K_tracking_whitelist:
     name: tracking-whitelist
     mirror: sources/gsheet/tracking-whitelist.json
     export_url: "https://docs.google.com/spreadsheets/d/1eVY_rEJ9fNZVwQTPns6isM4bv5ggLmpkEcQ-VzBqF5M/export?format=csv&gid=331010199#gid=331010199" # was $tracking_whitelist (46 entries, DNR rule 5005)
-  K_allow_request_domains:
+  L_allow_request_domains:
     name: allow-request-domains
     mirror: sources/gsheet/allow-request-domains.json
     export_url: "https://docs.google.com/spreadsheets/d/1eVY_rEJ9fNZVwQTPns6isM4bv5ggLmpkEcQ-VzBqF5M/export?format=csv&gid=110294896#gid=110294896" # was $allowReqDomains (19 entries, DNR rule 5006)
-  L_initiator_allowed_domains:
+  M_initiator_allowed_domains:
     name: initiator-allowed-domains
     mirror: sources/gsheet/initiator-allowed-domains.json
     export_url: "https://docs.google.com/spreadsheets/d/1eVY_rEJ9fNZVwQTPns6isM4bv5ggLmpkEcQ-VzBqF5M/export?format=csv&gid=920400328#gid=920400328" # was $initiatorAllowedDomains (316 entries, DNR rule 5006)
-  M_rule101xtra:
+  N_rule101xtra:
     name: rule101xtra
     mirror: sources/gsheet/rule101xtra.json
     export_url: "https://docs.google.com/spreadsheets/d/1eVY_rEJ9fNZVwQTPns6isM4bv5ggLmpkEcQ-VzBqF5M/export?format=csv&gid=2001657757#gid=2001657757" # was $rule101xtraDomainsNew (307 entries, CSP-strip rule 33)
@@ -77,19 +81,19 @@ hosts:
   anudeep:
     url: "https://raw.githubusercontent.com/anudeepND/blacklist/master/adservers.txt"
     snapshot: sources/hosts/anudeep.txt
-    role: domains # -> dist/feeds/anudeep.json -> network/domains.json
+    role: domains # curated at curate → sanitized/hosts/anudeep.txt → the domains lane of rules.json
   peterlowe:
     url: "https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=0&mimetype=plaintext"
     snapshot: sources/hosts/peterlowe.txt
-    role: domains # -> dist/feeds/peterlowe.json -> network/domains.json
+    role: domains # curated at curate → sanitized/hosts/peterlowe.txt → the domains lane of rules.json
   adguarddns:
     url: "https://v.firebog.net/hosts/AdguardDNS.txt"
     snapshot: sources/hosts/adguarddns.txt
-    role: domains # biggest unique contributor (97.7k uncovered) -> feeds/adguarddns.json
+    role: domains # biggest unique contributor (97.7k uncovered) → sanitized/hosts/adguarddns.txt → the domains lane
   kadhosts:
     url: "https://raw.githubusercontent.com/StevenBlack/hosts/refs/heads/master/data/KADhosts/hosts"
     snapshot: sources/hosts/kadhosts.txt
-    role: popup # scam/fraud class (1% EasyList overlap) -> feeds/kadhosts.json -> network/popup.json
+    role: popup # scam/fraud class (1% EasyList overlap) → sanitized/hosts/kadhosts.txt → the popup (redirect) lane
 
 easylist_snapshots:
   # the 59 EasyList-family filter files, mirrored verbatim into sources/easylist/<path>

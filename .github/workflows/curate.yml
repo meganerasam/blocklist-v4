@@ -1,0 +1,59 @@
+name: Curate — sanitize sources
+
+# The curation stage (user re-conception, 2026-09-08 evening). Mirrors stay VERBATIM in
+# sources/; every per-source subtraction happens here and lands in sanitized/ —
+# machine-owned, committed, so each curation decision is a reviewable git diff.
+#   user whitelist = all-extension.csv merged votes ≥ 50 (step 1) − Sheet G (step 2)
+#   curation set   = Sheet H ∪ Sheet I (download sites) ∪ user whitelist
+#   recipes:  Sheet A − set · hosts lanes − set · easylist DNR lanes scrubbed (block on
+#   every axis, allow on the DESTINATION axis; cosmetic passes through uncurated) ·
+#   Sheets D/F + fleet blocklist stay ABOVE curation (deliberate blocks, H floor only)
+# Fail-closed: any bad input aborts before sanitized/ is touched — the previous
+# sanitized/ tree keeps feeding verify + compile.
+# Chain: Ingest → Curate → Compile and Extension → Curate → Compile (workflow_run);
+# verify (00:30) reads the committed sanitized/ tree directly.
+
+on:
+  workflow_run:
+    workflows:
+      - "Ingest — mirror Sheets A–G"
+      - "Extension — pull fleet whitelists"
+    types: [completed]
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: curate
+  cancel-in-progress: false
+
+jobs:
+  curate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    # workflow_run fires on failed upstreams too — never curate from a red refresh
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.2"
+
+      - name: Curate → sanitized/
+        run: php build/curate/curate.php
+
+      - name: Commit sanitized
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add sanitized/ state/review/
+          if git diff --cached --quiet; then
+            echo "No sanitized changes."
+          else
+            git commit -m "curate: refresh sanitized sources $(date -u '+%Y-%m-%d %H:%M')"
+            # ingest/verify/extension may have pushed since checkout — rebase once and retry
+            git push || { git pull --rebase origin "${GITHUB_REF_NAME}" && git push; }
+          fi

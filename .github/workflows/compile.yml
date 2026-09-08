@@ -1,22 +1,25 @@
 name: Compile — assemble dist/
 
-# One compile in the Atlas §08 order: exclusion set (C ∪ E ∪ fleet) − G first, ledger
-# dead-filter, per-source feeds, whitelist enforcement pass, appends (D + F + fleet-BL),
-# omit H + veto, band re-ID, DNR budget assertions, manifest.json.
+# One compile = ASSEMBLY of the sanitized sources (curation re-conception 2026-09-08:
+# every per-source subtraction happens in build/curate/curate.php → sanitized/; Sheet C
+# is product-only — published as whitelist/default.json, never merged). Compile reads
+# sanitized/ lanes + the curation set, applies the veto and H floor guards, appends
+# D + F + fleet-BL (above curation), band re-ID, DNR budget assertions, manifest.json.
 # dist/ is published as commits (user decision 2026-09-07); the fleet fetches it through
 # the backend mirrors, never from GitHub directly.
 # Fail-closed: any gate/assertion failure exits non-zero BEFORE dist/ is touched, so the
 # previous dist/ keeps being served. The change-budget gate (>30% rule delta or >20%
 # shipped-domain drop) holds publishes for a confirming re-run with force=true.
-# Runs daily at 07:00 UTC — after verify (00:30) and the fleet pull (06:00) — and after
-# every successful ingest so sheet edits ship the same half-day.
+# Runs daily at 07:00 UTC — after verify (00:30), the fleet pull (06:00) and its curate —
+# and after every successful curate so sheet edits ship the same half-day.
 
 on:
   schedule:
     - cron: "0 7 * * *"
   workflow_run:
-    workflows: ["Ingest — mirror Sheets A–G"]
+    workflows: ["Curate — sanitize sources"]
     types: [completed]
+    branches: [main]
   workflow_dispatch:
     inputs:
       force:
@@ -35,7 +38,7 @@ jobs:
   compile:
     runs-on: ubuntu-latest
     timeout-minutes: 30
-    # workflow_run fires on failed ingests too — never compile from a red mirror refresh
+    # workflow_run fires on failed curates too — never compile from a red curation
     if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     steps:
       - uses: actions/checkout@v4

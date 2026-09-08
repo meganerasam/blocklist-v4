@@ -1,27 +1,33 @@
 <?php
-// build/compile/compile.php — one compile, in the Atlas §08 order of operations.
+// build/compile/compile.php — one compile: ASSEMBLY of the sanitized sources.
 //
-//   ① exclusion set = (C ∪ E ∪ fleet community) − G   — built before ANY rule generation
-//      (G matches EXACT host only; H, the never-block floor, matches domain + subdomains;
-//       fleet community = all-extension.csv merged votes ≥ 200 — the ≥20-users/6-month
-//       floor is only the backends' EXPORT contract, not the factory's trust bar)
+// Since the curation re-conception (2026-09-08 evening) all per-source subtraction
+// happens in build/curate/curate.php, which publishes the sanitized/ tree. Compile
+// consumes sanitized/ and never re-derives a whitelist:
+//
+//   ① curation set — READ from sanitized/curation-set.json (H ∪ I ∪ user whitelist,
+//      the single derivation; used here only for carve-outs, twin-initiator stripping,
+//      retention-leak guards and the final asserts). Sheet C stays PRODUCT-ONLY: it
+//      ships as whitelist/default.json (−G) and takes no part in any subtraction.
 //   ② ledger read — dead domains (st = 'd') never ship; sheets are never modified
-//   ③ per-source generation → internal lanes (nothing per-source is published)
-//   ④ whitelist enforcement pass over the lanes
-//      (exclusion scrub + carve-outs · H omit · veto — H is a compile-time floor ONLY:
-//       own-brand domains are protected client-side by the static self-vendor allow rules
-//       at priority 99999, and the rest of Sheet H is server-to-server traffic DNR never
-//       sees — verified 2026-09-08, so no never-block artifact ships)
-//   ⑤ append explicit blocks (Sheets D + F + fleet blocklists) — after the pass, never
-//      scrubbed; conflicts vs the exclusion set are FLAGGED, not silently resolved
+//   ③ lanes from sanitized/: gsheet/popup.json · hosts/<tag>.txt · easylist/<cat>/
+//      DNR lanes (already curated; cosmetic passed through uncurated)
+//   ④ policy pass: veto (curated/vetoes.txt) · H floor guards — H is a compile-time
+//      floor ONLY: own-brand domains are protected client-side by the static
+//      self-vendor allow rules at priority 99999, and the rest of Sheet H is
+//      server-to-server traffic DNR never sees — verified 2026-09-08, so no
+//      never-block artifact ships
+//   ⑤ append explicit blocks (Sheets D + F + fleet blocklists) — ABOVE curation, never
+//      scrubbed (only the H floor); conflicts vs the curation set are FLAGGED, not
+//      silently resolved
 //   ⑥ merge → dist/network/rules.json — re-ID into the production bands, assert DNR
 //      budgets, keep __EXT_ID__ placeholders — then cosmetic, whitelist, traffic_quality,
 //      standalone, derived/ helpers, manifest.json
 //
 // dist/ contract (2026-09-08): ONLY what a consumer actually calls is published —
 //   network/rules.json (extension) · whitelist/default.json (backend sync) · cosmetic/ ·
-//   traffic_quality/ · standalone/ (Sheets I–M) — plus derived/ (community.json,
-//   exclusion-set.json): compile helpers committed for inspection, called by nothing.
+//   traffic_quality/ · standalone/ (Sheets J–N) — plus derived/ (community.json,
+//   curation-set.json): compile helpers committed for inspection, called by nothing.
 //
 // Fail-closed doctrine: every artifact is computed and every assertion passes BEFORE the
 // first byte lands in dist/ (staged writes, tmp+rename). A failed run leaves the previous
@@ -55,7 +61,8 @@ const BUDGET_UNSAFE_RULES = 5000;         // redirect + modifyHeaders cap
 const BUDGET_REGEX_RULES  = 1000;         // regexFilter rule cap
 const GATE_RULES_DELTA_PCT   = 30;        // change-budget gate vs previous manifest
 const GATE_DOMAIN_DROP_PCT   = 20;
-const COMMUNITY_MIN_VOTES    = 200;       // fleet trust bar — keep in sync with ledger.php
+// The fleet trust bar (COMMUNITY_MIN_VOTES) lives in build/curate/curate.php — the only
+// place the user whitelist and curation set are derived; compile just reads sanitized/.
 
 $FORCE = getenv('COMPILE_FORCE') === '1';
 $t0 = microtime(true);
@@ -90,36 +97,65 @@ function load_mirror(string $path, string $label, bool $mustBeNonEmpty): array
 }
 
 // ============================================================================
-// ① INPUTS + EXCLUSION SET — before any rule is generated
+// ① INPUTS — compile-side mirrors + the sanitized curation products
 // ============================================================================
 $G  = load_mirror("$ROOT/sources/gsheet/omit-from-whitelist.json",  'Sheet G', false);
 $C  = load_mirror("$ROOT/sources/gsheet/default-whitelist.json",    'Sheet C', true);
-$E  = load_mirror("$ROOT/sources/gsheet/manual-whitelist.json",     'Sheet E', false);
 $H  = load_mirror("$ROOT/sources/gsheet/omit-from-blocklist.json",  'Sheet H', true);
 $D  = load_mirror("$ROOT/sources/gsheet/default-blocklist.json",    'Sheet D', true);
 $F  = load_mirror("$ROOT/sources/gsheet/manual-blocklist.json",     'Sheet F', false);
-$A  = load_mirror("$ROOT/sources/gsheet/popup.json",                'Sheet A', true);
 $fleetBLPath = "$ROOT/sources/extension/blocklist/user-extension-blocklist.json";
 $fleetBL = is_file($fleetBLPath) ? load_mirror($fleetBLPath, 'Fleet blocklist', false) : [];
 
-// Fleet community = merged fleet votes ≥ COMMUNITY_MIN_VOTES. The flat ≥20 export
-// (user-extension-whitelist.json) stays an ingest product; the factory trusts counts.
-$fleetCsv = "$ROOT/sources/extension/whitelist/raw/all-extension.csv";
-if (!is_file($fleetCsv)) fail("fleet votes CSV missing: $fleetCsv");
-$fleetWL = [];
-foreach (array_slice(file($fleetCsv, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES) ?: [], 1) as $line) {
-    [$d, $c] = array_pad(explode(',', $line, 2), 2, '0');
-    $d = rtrim(strtolower(trim($d)), '.');
-    if ($d !== '' && (int) $c >= COMMUNITY_MIN_VOTES) $fleetWL[] = $d;
+// The sanitized layer — build/curate/curate.php is the ONLY writer. The curation set is
+// read, never re-derived; compile uses it for carve-outs, twin-initiator stripping,
+// retention-leak guards and the final asserts.
+$SAN = "$ROOT/sanitized";
+if (!is_dir($SAN)) fail('sanitized/ missing — run build/curate/curate.php first');
+// Provenance gate (2026-09-08, adversarial review): sanitized/ must have been built from
+// the CURRENT mirrors. Mirrors that moved since the last green curate (a red ingest still
+// commits per-sheet successes but skips curate) = a mixed generation — never publish it.
+$prov = json_decode((string) @file_get_contents("$SAN/provenance.json"), true);
+if (!is_array($prov) || !$prov) fail('sanitized/provenance.json missing/invalid — run build/curate/curate.php');
+foreach ($prov as $rel => $sha) {
+    $cur = is_file("$ROOT/$rel") ? hash_file('sha256', "$ROOT/$rel") : 'MISSING';
+    if ($cur !== $sha) {
+        fail("sanitized/ is STALE vs $rel — the mirror moved since the last curate; run build/curate/curate.php first");
+    }
 }
-if (!$fleetWL) fail("fleet community empty — no domain reaches " . COMMUNITY_MIN_VOTES . " votes in $fleetCsv?");
-
-$excl = [];
-foreach ([$C, $E, $fleetWL] as $src) foreach ($src as $d) $excl[$d] = true;
-foreach ($G as $g) unset($excl[$g]);       // G: EXACT host only — the editorial veto
-if (!$excl) fail('exclusion set is empty — C/E/fleet mirrors broken?');
+$curationList = load_mirror("$SAN/curation-set.json", 'curation set (sanitized)', true);
+$curation = [];
+foreach ($curationList as $d) $curation[$d] = true;
+$userWL = load_mirror("$SAN/extension/user-whitelist.json", 'user whitelist (sanitized)', true);
+$A = load_mirror("$SAN/gsheet/popup.json", 'Sheet A (sanitized)', true);
 $never = [];
 foreach ($H as $d) $never[$d] = true;      // H: never-block floor, domain + subdomains
+
+// Download-sites allow lane (Sheet I as a SOURCE, user spec 2026-09-08): the compiler
+// VERIFIES the contract the curate stage promises before merging a single rule —
+//   · action is allow, priority strictly above every block (blocks are priority 1)
+//   · resourceTypes contain ONLY the mapped sub-resource set (subdocument→sub_frame,
+//     websocket/other included — a lane that lost them fails, never ships narrowed)
+//   · ||domain^ anchor form; no main_frame ($document-class) coverage can ever appear
+$DL_LANE_TYPES = ['font', 'media', 'other', 'stylesheet', 'sub_frame', 'websocket', 'xmlhttprequest'];
+$dlLanePath = "$SAN/download-sites/allow.json";
+if (!is_file($dlLanePath)) fail('sanitized download-sites lane missing (run build/curate/curate.php): ' . $dlLanePath);
+$dlAllow = json_decode((string) file_get_contents($dlLanePath), true);
+if (!is_array($dlAllow)) fail('download-sites lane is not valid JSON: ' . $dlLanePath);
+foreach ($dlAllow as $i => $r) {
+    if (($r['action']['type'] ?? '') !== 'allow') fail("download-sites lane rule #$i: action is not allow");
+    if ((int) ($r['priority'] ?? 0) <= 1) fail("download-sites lane rule #$i: priority must be strictly above blocks (>1)");
+    $types = $r['condition']['resourceTypes'] ?? [];
+    if (!is_array($types) || !$types) fail("download-sites lane rule #$i: resourceTypes missing");
+    if (array_diff($types, $DL_LANE_TYPES)) {
+        fail("download-sites lane rule #$i: unexpected resourceTypes " . implode(',', array_diff($types, $DL_LANE_TYPES)));
+    }
+    if (count(array_unique($types)) !== count($DL_LANE_TYPES)) {
+        fail("download-sites lane rule #$i: resourceTypes narrowed to " . implode(',', $types) . ' — websocket/other-class types must never be dropped');
+    }
+    $uf = (string) ($r['condition']['urlFilter'] ?? '');
+    if (!preg_match('/^\|\|[a-z0-9.-]+\^$/', $uf)) fail("download-sites lane rule #$i: urlFilter is not a ||domain^ anchor: $uf");
+}
 
 $vetoes = [];
 foreach (file("$ROOT/curated/vetoes.txt", FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES) ?: [] as $line) {
@@ -147,38 +183,17 @@ foreach ($ledgerRaw as $d => $r) {
 unset($ledgerRaw);
 
 // ============================================================================
-// ③ PER-SOURCE GENERATION
+// ③ LANES — everything already generated + curated by build/curate/curate.php
 // ============================================================================
 $CATS = ['adult', 'easylist', 'easyprivacy', 'fanboy'];
-$WORK = __DIR__ . '/.work';
-// Stale outputs must never survive into a merge: a generator that dies after this point
-// leaves a HOLE (which work_json turns into a hard fail), never last run's data.
-if (is_dir($WORK)) {
-    $it = new RecursiveIteratorIterator(
-        new RecursiveDirectoryIterator($WORK, FilesystemIterator::SKIP_DOTS),
-        RecursiveIteratorIterator::CHILD_FIRST
-    );
-    foreach ($it as $f) { $f->isDir() ? rmdir($f->getPathname()) : unlink($f->getPathname()); }
-}
-$GENERATORS = [];
-foreach ($CATS as $cat) {
-    $GENERATORS[] = "$cat/allow/generate_allow.php";
-    $GENERATORS[] = "$cat/block/generate_dnr.php";
-    if (is_file(__DIR__ . "/$cat/css/generate_css.php")) $GENERATORS[] = "$cat/css/generate_css.php";
-}
-foreach ($GENERATORS as $gen) {
-    $out = [];
-    $code = 1;
-    exec(escapeshellarg(PHP_BINARY) . ' ' . escapeshellarg(__DIR__ . "/$gen") . ' 2>&1', $out, $code);
-    if ($code !== 0) {
-        fail("generator $gen exited $code:\n" . implode("\n", array_slice($out, -15)));
-    }
-}
+// The generators (build/compile/<cat>/...) now run inside the CURATE stage; their
+// curated DNR lanes and pass-through cosmetic outputs live under sanitized/easylist/.
+$WORK = "$SAN/easylist";
 function work_json(string $path): array
 {
-    if (!is_file($path)) fail('expected generator output missing: ' . $path);
+    if (!is_file($path)) fail('expected sanitized lane missing (run build/curate/curate.php): ' . $path);
     $data = json_decode((string) file_get_contents($path), true);
-    if (!is_array($data)) fail('generator output is not valid JSON: ' . $path);
+    if (!is_array($data)) fail('sanitized lane is not valid JSON: ' . $path);
     return $data;
 }
 
@@ -221,29 +236,35 @@ foreach ($A as $row) {
 }
 ksort($popupSheet, SORT_STRING);
 
-// ---- hosts snapshots: parse, dead-filter ----
+// ---- hosts lanes: sanitized (already curated), dead-filter here ----
 $HOSTS = [
-    'anudeep'    => "$ROOT/sources/hosts/anudeep.txt",
-    'peterlowe'  => "$ROOT/sources/hosts/peterlowe.txt",
-    'adguarddns' => "$ROOT/sources/hosts/adguarddns.txt",
-    'kadhosts'   => "$ROOT/sources/hosts/kadhosts.txt",
+    'anudeep'    => "$SAN/hosts/anudeep.txt",
+    'peterlowe'  => "$SAN/hosts/peterlowe.txt",
+    'adguarddns' => "$SAN/hosts/adguarddns.txt",
+    'kadhosts'   => "$SAN/hosts/kadhosts.txt",
 ];
 $hostsFeeds = [];
 $hostsDeadDropped = [];
 $hostsRetained = [];
+$hostsRetainedCurated = 0;
 foreach ($HOSTS as $tag => $path) {
     $all = load_hosts_file($path);
-    if (!$all) fail("hosts snapshot empty/missing: $path");
+    if (!$all) fail("sanitized hosts lane empty/missing (run build/curate/curate.php): $path");
     $kept = [];
     $droppedDead = 0;
     foreach ($all as $d => $_) {
         if (isset($dead[$d])) { $droppedDead++; continue; }
         $kept[$d] = true;
     }
-    // retention: delisted-but-alive ledger domains for this lane keep shipping
+    // retention: delisted-but-alive ledger domains for this lane keep shipping.
+    // These re-adds BYPASS the curate stage (they come from the ledger, not a snapshot),
+    // so the curation set must hold right here.
     $retained = 0;
     foreach ($ledgerAlive[$tag] as $d => $_) {
-        if (!isset($kept[$d])) { $kept[$d] = true; $retained++; }
+        if (isset($kept[$d])) continue;
+        if (isWhitelistCovered($d, $curation)) { $hostsRetainedCurated++; continue; }
+        $kept[$d] = true;
+        $retained++;
     }
     ksort($kept, SORT_STRING);
     $hostsFeeds[$tag] = $kept;
@@ -252,13 +273,13 @@ foreach ($HOSTS as $tag => $path) {
 }
 
 // ============================================================================
-// ④ POLICY PASS — exclusion scrub · H omit · veto → dist/network/
+// ④ POLICY PASS — veto → dist/network/ (curation already happened upstream)
 // ============================================================================
-// filters.json — the surgical EasyList DNR, scrubbed
-$scrubStats = ['domainsRemoved' => 0, 'rulesDropped' => 0, 'exclusionsAdded' => 0];
-$hStats     = ['domainsRemoved' => 0, 'rulesDropped' => 0, 'exclusionsAdded' => 0];
-$filters = scrubBlockRules(merge_category_dnr($WORK, $CATS), $excl, $scrubStats);
-$filters = scrubBlockRules($filters, $never, $hStats);
+// filters.json — the surgical EasyList DNR, pre-curated by curate.php; only the
+// break-glass veto applies here. The download-sites allow lane (validated above) joins
+// the surgical population — the veto only ever drops blocks, so it passes through.
+$filters = merge_category_dnr($WORK, $CATS);
+foreach ($dlAllow as $r) $filters[] = $r;
 $vetoed = 0;
 $filters = array_values(array_filter($filters, function ($rule) use ($vetoes, &$vetoed) {
     if (($rule['action']['type'] ?? 'block') !== 'block') return true;
@@ -275,10 +296,12 @@ $filters = reid_sequential($filters);
 $popupExcluded = [];
 $popupDomains = [];
 $popupNeverDropped = 0;
+// Lanes arrive pre-curated; these checks are GUARDS against what bypasses curate
+// (ledger retention re-adds, normalization edge cases) — expect counts near zero.
 foreach ([array_keys($popupSheet), array_keys($hostsFeeds['kadhosts'])] as $lane) {
     foreach ($lane as $d) {
         if (isWhitelistCovered($d, $never)) { $popupNeverDropped++; continue; }   // H floor
-        if (isWhitelistCovered($d, $excl)) { $popupExcluded[$d] = true; continue; }
+        if (isWhitelistCovered($d, $curation)) { $popupExcluded[$d] = true; continue; }
         $popupDomains[$d] = true;
     }
 }
@@ -287,7 +310,7 @@ sort($popupDomains, SORT_STRING);
 $popupExcluded = array_keys($popupExcluded);
 sort($popupExcluded, SORT_STRING);
 
-$carveSet = $excl + $never;   // carve-outs protect both whitelisted + never-block subdomains
+$carveSet = $curation + $never;   // carve-outs protect curated + never-block subdomains
 $popupRules = [];
 foreach (array_chunk($popupDomains, CHUNK) as $domains) {
     $cond = [
@@ -320,7 +343,7 @@ $trackerDomains = [];
 foreach (['adguarddns', 'anudeep', 'peterlowe'] as $tag) {
     foreach ($hostsFeeds[$tag] as $d => $_) {
         if (isWhitelistCovered($d, $never))          { $trackerStats['never']++;   continue; }
-        if (isWhitelistCovered($d, $excl))           { $trackerStats['excl']++;    continue; }
+        if (isWhitelistCovered($d, $curation))       { $trackerStats['excl']++;    continue; }
         if (covered_subdomain($d, $easylistCovered)) { $trackerStats['covered']++; continue; }
         $trackerDomains[$d] = true;
     }
@@ -358,16 +381,16 @@ $appendShipped = [];
 $appendNeverDropped = 0;
 foreach ($appendAll as $d => $_) {
     if (isWhitelistCovered($d, $never)) { $appendNeverDropped++; continue; }  // H outranks all
-    if (isWhitelistCovered($d, $excl)) $appendConflicts[] = $d;
+    if (isWhitelistCovered($d, $curation)) $appendConflicts[] = $d;
     $appendShipped[$d] = true;
 }
 $appendShipped = array_keys($appendShipped);
 sort($appendShipped, SORT_STRING);
 sort($appendConflicts, SORT_STRING);
-// The other conflict direction: a whitelisted domain living UNDER an append domain —
+// The other conflict direction: a curated domain living UNDER an append domain —
 // requestDomains matches subdomains, appends carve only against H, so the block wins.
 // Deliberate-block-outranks-whitelist is the design; silence is not. Flag it.
-$appendParentOverrides = carve_for_chunk($appendShipped, $excl);
+$appendParentOverrides = carve_for_chunk($appendShipped, $curation);
 
 $appendRules = [];
 foreach (array_chunk($appendShipped, CHUNK) as $domains) {
@@ -428,7 +451,13 @@ foreach ($filters as $rule) {
                     $keptInit[] = $d;
                 }
             }
-            if ($hasReq || $keptInit) {
+            // 2026-09-08 (adversarial review): if the source rule was initiator-scoped and
+            // EVERY initiator is curation-covered, the twin must be SKIPPED — building it
+            // from requestDomains alone would silently WIDEN it to navigations from every
+            // site (and still hijack the curated initiator's own navigations).
+            if ($hasInit && !$keptInit) {
+                $dupSkippedWhitelisted++;
+            } elseif ($hasReq || $keptInit) {
                 $redirCond = ['regexFilter' => '^http.+', 'resourceTypes' => ['main_frame']];
                 if ($hasReq)   $redirCond['requestDomains']   = $rule['condition']['requestDomains'];
                 if ($keptInit) $redirCond['initiatorDomains'] = $keptInit;
@@ -441,8 +470,6 @@ foreach ($filters as $rule) {
                     'condition' => $redirCond,
                 ];
                 $dupAsRedirect++;
-            } else {
-                $dupSkippedWhitelisted++;
             }
         }
     }
@@ -464,12 +491,12 @@ foreach ($rules as $rule) {
         }
     }
     if ($type === 'redirect') {
-        // a whitelisted site's navigation may never be hijacked — the twin builder
+        // a curated site's navigation may never be hijacked — the twin builder
         // strips these, this assert makes sure nothing else can ever emit one
         foreach ($rule['condition']['initiatorDomains'] ?? [] as $d) {
             $ld = strtolower((string) $d);
-            if (isWhitelistCovered($ld, $excl) || isWhitelistCovered($ld, $never)) {
-                fail("whitelist-covered initiator survived on redirect rule {$rule['id']}: $d");
+            if (isWhitelistCovered($ld, $curation) || isWhitelistCovered($ld, $never)) {
+                fail("curation-covered initiator survived on redirect rule {$rule['id']}: $d");
             }
         }
     }
@@ -481,8 +508,8 @@ foreach ($rules as $rule) {
         && !(isset($rule['condition']['urlFilter']) && strpos($rule['condition']['urlFilter'], '||') === 0)) {
         foreach ($rule['condition']['initiatorDomains'] ?? [] as $d) {
             $ld = strtolower((string) $d);
-            if (isWhitelistCovered($ld, $excl) || isWhitelistCovered($ld, $never)) {
-                fail("whitelist-covered initiator survived on generic main_frame block {$rule['id']}: $d");
+            if (isWhitelistCovered($ld, $curation) || isWhitelistCovered($ld, $never)) {
+                fail("curation-covered initiator survived on generic main_frame block {$rule['id']}: $d");
             }
         }
     }
@@ -495,6 +522,91 @@ foreach ($rules as $rule) {
             }
         }
     }
+    // The urlFilter-ANCHOR axis (2026-09-08, adversarial review): a || anchor matches at
+    // every subdomain boundary, so a block anchored on (or wildcard-covering) a curated
+    // domain reaches it even with no requestDomains. Every curated domain reachable
+    // through an anchor must be carved via excludedRequestDomains — mirror of the scrub.
+    if ($type === 'block'
+        && isset($rule['condition']['urlFilter'])
+        && strpos($rule['condition']['urlFilter'], '||') === 0
+        && preg_match('/^\|\|([a-z0-9.-]+)/i', $rule['condition']['urlFilter'], $mA)) {
+        $anchorRaw = strtolower($mA[1]);
+        $anchor    = trim($anchorRaw, '.');
+        $exSet = [];
+        foreach ($rule['condition']['excludedRequestDomains'] ?? [] as $x) $exSet[strtolower($x)] = true;
+        $isWild = substr($rule['condition']['urlFilter'], 2 + strlen($mA[1]), 1) === '*'
+               && str_ends_with($anchorRaw, '.');
+        if ($isWild) {
+            foreach ($curation as $w => $_) {
+                $hit = str_starts_with($w, $anchorRaw);
+                if (!$hit) {
+                    foreach (domainAncestors($w) as $anc) {
+                        if (str_starts_with($anc, $anchorRaw)) { $hit = true; break; }
+                    }
+                }
+                if ($hit && !isWhitelistCovered($w, $exSet)) {
+                    fail("curation-covered domain reachable via wildcard block anchor (rule {$rule['id']}, {$rule['condition']['urlFilter']}): $w");
+                }
+            }
+        } else {
+            if (isWhitelistCovered($anchor, $curation)) {
+                fail("block anchor is curation-covered (rule {$rule['id']}): {$rule['condition']['urlFilter']}");
+            }
+            foreach ($curation as $w => $_) {
+                if (in_array($anchor, domainAncestors($w), true) && !isWhitelistCovered($w, $exSet)) {
+                    fail("curation-covered domain under block anchor without carve (rule {$rule['id']}, anchor $anchor): $w");
+                }
+            }
+        }
+    }
+}
+
+// Sheet C is product-only: it never scrubs, but a served-whitelist domain that still
+// ships as a block/redirect target is a CONTRADICTION between two dist artifacts
+// (rules.json vs whitelist/default.json) — flagged, never silently resolved. The
+// redirect-INITIATOR axis is called out separately: a redirect scoped to a C-covered
+// initiator would hijack EVERY navigation from a default-whitelisted site, the one
+// axis a request-level client whitelist cannot counter (pornhub-class breakage).
+$cSet = [];
+foreach ($C as $d) $cSet[$d] = true;
+$cShippedBlock = $cShippedRedirect = $cHijackInitiators = [];
+foreach ($rules as $rule) {
+    $type = $rule['action']['type'] ?? '';
+    if ($type !== 'block' && $type !== 'redirect') continue;
+    foreach ($rule['condition']['requestDomains'] ?? [] as $d) {
+        $ld = strtolower($d);
+        if (isWhitelistCovered($ld, $cSet)) {
+            if ($type === 'block') $cShippedBlock[$ld] = true;
+            else                   $cShippedRedirect[$ld] = true;
+        }
+    }
+    if ($type === 'redirect') {
+        foreach ($rule['condition']['initiatorDomains'] ?? [] as $d) {
+            $ld = strtolower((string) $d);
+            if (isWhitelistCovered($ld, $cSet)) $cHijackInitiators[$rule['id'] . ' ' . $ld] = true;
+        }
+    }
+}
+$cShippedBlock = array_keys($cShippedBlock);
+sort($cShippedBlock, SORT_STRING);
+$cShippedRedirect = array_keys($cShippedRedirect);
+sort($cShippedRedirect, SORT_STRING);
+$cHijackInitiators = array_keys($cHijackInitiators);
+sort($cHijackInitiators, SORT_STRING);
+
+// Allow must outrank block EVERYWHERE (user guarantee 2026-09-08): a block that ties or
+// beats an allow on priority would re-block the traffic the allows exist to protect
+// (DNR resolves equal priority in the allow's favor, but "strictly above" is the contract).
+$maxBlockPrio = 0;
+$minAllowPrio = PHP_INT_MAX;
+foreach ($rules as $rule) {
+    $p = (int) ($rule['priority'] ?? 1);
+    $t = $rule['action']['type'] ?? '';
+    if ($t === 'block') $maxBlockPrio = max($maxBlockPrio, $p);
+    elseif ($t === 'allow') $minAllowPrio = min($minAllowPrio, $p);
+}
+if ($minAllowPrio !== PHP_INT_MAX && $minAllowPrio <= $maxBlockPrio) {
+    fail("allow/block priority inversion: min allow priority $minAllowPrio ≤ max block priority $maxBlockPrio");
 }
 
 // DNR budgets — growth may never brick clients silently.
@@ -569,15 +681,18 @@ $cssUnhide   = merge_css_maps($WORK, $CATS, 'allow', 'unhide.json');
 $minusG = function (array $list) use ($G): array {
     $set = [];
     foreach ($list as $d) $set[$d] = true;
-    foreach ($G as $g) unset($set[$g]);          // same exact-host veto as the exclusion set
+    foreach ($G as $g) unset($set[$g]);          // same exact-host veto as user-WL step 2
     $out = array_keys($set);
     sort($out, SORT_STRING);
     return $out;
 };
-$wlDefault   = $minusG($C);                      // the only SERVED whitelist (backend sync)
-$wlCommunity = $minusG($fleetWL);                // derived/ helper — called by nothing
-$exclusionOut = array_keys($excl);
-sort($exclusionOut, SORT_STRING);
+$wlDefault   = $minusG($C);                      // Sheet C as a product — the only SERVED
+                                                 // whitelist (backend sync); C∩G is empty
+                                                 // today, so −G is a standing veto hook
+$wlCommunity = $userWL;                          // = sanitized user whitelist (≥50 −G),
+sort($wlCommunity, SORT_STRING);                 //   derived once, in curate.php
+$curationOut = $curationList;
+sort($curationOut, SORT_STRING);
 
 $tqDir = "$ROOT/sources/traffic_quality";
 $tqFiles = [];
@@ -586,7 +701,7 @@ foreach (glob("$tqDir/*.json") ?: [] as $path) {
 }
 if (!$tqFiles) fail('sources/traffic_quality/ has no market files');
 
-// Sheets I–M: standalone, published as on-demand JSON, never merged (mirror bytes verbatim)
+// Sheets J–N: standalone, published as on-demand JSON, never merged (mirror bytes verbatim)
 $STANDALONE = ['whitelisted-domains-injection-enabled', 'tracking-whitelist',
                'allow-request-domains', 'initiator-allowed-domains', 'rule101xtra'];
 $standaloneFiles = [];
@@ -639,7 +754,7 @@ $stage = function (string $rel, string $content, ?int $count) use (&$artifacts) 
 $stage('network/rules.json',        json_out($rules, false), $totalRules);
 $stage('whitelist/default.json',    json_out($wlDefault, true), count($wlDefault));
 $stage('derived/community.json',    json_out($wlCommunity, true), count($wlCommunity));
-$stage('derived/exclusion-set.json', json_out($exclusionOut, true), count($exclusionOut));
+$stage('derived/curation-set.json', json_out($curationOut, true), count($curationOut));
 
 $stage('cosmetic/generic.css',     $genericCss, count($selectorsList));
 $stage('cosmetic/specific.json',   json_out($cssSpecific, true), count($cssSpecific));
@@ -677,7 +792,7 @@ $manifest = [
         'unsafe_rules'          => $unsafeRules,
         'regex_rules'           => $regexRules,
         'shipped_block_domains' => $shippedBlockDomains,
-        'exclusion_set'         => count($excl),
+        'curation_set'          => count($curation),
     ],
     'budgets'      => [
         'total_rules'  => BUDGET_TOTAL_RULES,
@@ -718,6 +833,16 @@ $review = [
     'popup_excluded_by_whitelist' => $popupExcluded,
     'append_vs_whitelist_conflicts' => $appendConflicts,
     'append_parent_overrides' => $appendParentOverrides,
+    'default_whitelist_vs_shipped' => [
+        'note' => 'Sheet C is product-only (2026-09-08): these whitelist/default.json-covered'
+            . ' domains ship as rule targets anyway; only client-side enforcement protects them.'
+            . ' redirect_initiators would hijack every navigation FROM a default-whitelisted'
+            . ' site — the axis a request-level client whitelist cannot counter. Resolutions'
+            . ' belong in the Sheets (or in the client), never here.',
+        'block_targets'       => $cShippedBlock,
+        'redirect_targets'    => $cShippedRedirect,
+        'redirect_initiators' => $cHijackInitiators,
+    ],
 ];
 atomic_write("$ROOT/state/review/compile-drops.json", json_out($review, true) . "\n");
 
@@ -730,7 +855,7 @@ $rep[] = '# Compile — ' . gmdate('Y-m-d H:i') . " UTC · {$elapsed}s" . ($FORC
 $rep[] = '';
 $rep[] = '| stage | result |';
 $rep[] = '|---|---|';
-$rep[] = '| ① exclusion set (C ∪ E ∪ fleet≥' . COMMUNITY_MIN_VOTES . ') − G | ' . count($excl) . ' domains (C ' . count($C) . ' · E ' . count($E) . ' · fleet≥' . COMMUNITY_MIN_VOTES . ' ' . count($fleetWL) . ' · G −' . count($G) . ') |';
+$rep[] = '| ① curation set (sanitized/) | ' . count($curation) . ' domains (H ∪ I ∪ userWL — derived by curate.php) · user whitelist ' . count($wlCommunity) . ' · C product-only: ' . count($wlDefault) . ' → whitelist/default.json |';
 $rep[] = '| ② ledger dead set | ' . count($dead) . ' domains never ship |';
 $feedCell = 'sheet-A ' . count($popupSheet) . ' (dead −' . count($sheetADead) . ')';
 foreach (['kadhosts', 'adguarddns', 'anudeep', 'peterlowe'] as $tag) {
@@ -738,20 +863,21 @@ foreach (['kadhosts', 'adguarddns', 'anudeep', 'peterlowe'] as $tag) {
         . ' (dead −' . $hostsDeadDropped[$tag] . ' · retained +' . $hostsRetained[$tag] . ')';
 }
 $rep[] = '| ③ lanes (internal) | ' . $feedCell . ' |';
-$rep[] = '| ④ scrub (exclusion) | ' . $scrubStats['domainsRemoved'] . ' domains removed · ' . $scrubStats['rulesDropped'] . ' rules dropped · ' . $scrubStats['exclusionsAdded'] . ' carve-outs · ' . ($scrubStats['initiatorsStripped'] ?? 0) . ' generic main_frame initiators stripped |';
-$rep[] = '| ④ omit H (never-block floor) | filters: ' . $hStats['domainsRemoved'] . ' removed / ' . $hStats['rulesDropped'] . ' dropped · popup lane: ' . $popupNeverDropped . ' · domains lane: ' . $trackerStats['never'] . ' · appends: ' . $appendNeverDropped . ' |';
+$rep[] = '| ④ guards (post-curation leaks: retention re-adds, edge cases) | popup lane: curation ' . count($popupExcluded) . ' · H ' . $popupNeverDropped . ' · domains lane: curation ' . $trackerStats['excl'] . ' · H ' . $trackerStats['never'] . ' · retention blocked by curation: ' . $hostsRetainedCurated . ' · appends H −' . $appendNeverDropped . ' |';
 $rep[] = '| ④ veto (curated/vetoes.txt) | ' . $vetoed . ' block rules dropped |';
-$rep[] = '| ④ popup lane | ' . count($popupDomains) . ' domains → ' . count($popupRules) . ' redirect rules · excluded by whitelist: ' . count($popupExcluded) . ' |';
-$rep[] = '| ④ domains lane | ' . count($trackerDomains) . ' domains → ' . count($domainRules) . ' rules (excl −' . $trackerStats['excl'] . ' · H −' . $trackerStats['never'] . ' · easylist-covered −' . $trackerStats['covered'] . ') |';
+$rep[] = '| ④ popup lane | ' . count($popupDomains) . ' domains → ' . count($popupRules) . ' redirect rules |';
+$rep[] = '| ④ domains lane | ' . count($trackerDomains) . ' domains → ' . count($domainRules) . ' rules (easylist-covered −' . $trackerStats['covered'] . ') |';
 $rep[] = '| ⑤ appends (D + F + fleet-BL) | ' . count($appendShipped) . ' domains → ' . count($appendRules) . ' rules · H −' . $appendNeverDropped . ' · **conflicts vs whitelist: ' . count($appendConflicts) . '** · **whitelisted subdomains overridden by an append parent: ' . count($appendParentOverrides) . '** |';
 $rep[] = '| ⑥ rules.json | **' . $totalRules . ' rules** (' . implode(' · ', array_map(fn ($k, $v) => "$k $v", array_keys($byAction), $byAction)) . ') · main-frame dup→redirect ' . $dupAsRedirect . ' (whitelisted initiators stripped ' . $dupInitStripped . ' · twins skipped ' . $dupSkippedWhitelisted . ') |';
+$rep[] = '| ⑥ download-sites allow lane | ' . count($dlAllow) . ' rules merged (validated: allow · priority>blocks · full 7-type map incl. websocket/other) · global assert: min allow prio ' . ($minAllowPrio === PHP_INT_MAX ? '—' : $minAllowPrio) . ' > max block prio ' . $maxBlockPrio . ' |';
+$rep[] = '| ⑥ C (product-only) vs shipped | block targets ' . count($cShippedBlock) . ' · redirect targets ' . count($cShippedRedirect) . ' · **redirect initiators (navigation hijack): ' . count($cHijackInitiators) . '** |';
 $rep[] = '| budgets | total ' . $totalRules . '/' . BUDGET_TOTAL_RULES . ' · unsafe ' . $unsafeRules . '/' . BUDGET_UNSAFE_RULES . ' · regex ' . $regexRules . '/' . BUDGET_REGEX_RULES . ' |';
 $rep[] = '| shipped block domains | ' . $shippedBlockDomains . ' |';
 $rep[] = '| manifest version | `' . substr($version, 0, 12) . '…` |';
 foreach ($gateNotes as $note) $rep[] = '| ⚠ change gate | ' . $note . ' |';
 if ($appendConflicts) {
     $rep[] = '';
-    $rep[] = '**Append ∩ exclusion set** (deliberate block kept — review): '
+    $rep[] = '**Append ∩ curation set** (deliberate block kept — review): '
         . implode(', ', array_slice($appendConflicts, 0, 30))
         . (count($appendConflicts) > 30 ? ' … +' . (count($appendConflicts) - 30) : '');
 }
@@ -760,6 +886,13 @@ if ($appendParentOverrides) {
     $rep[] = '**Whitelisted domains blocked via an append PARENT** (deliberate block wins — review): '
         . implode(', ', array_slice($appendParentOverrides, 0, 30))
         . (count($appendParentOverrides) > 30 ? ' … +' . (count($appendParentOverrides) - 30) : '');
+}
+if ($cHijackInitiators) {
+    $rep[] = '';
+    $rep[] = '**Sheet C domains as redirect INITIATORS — every navigation from these default-whitelisted sites is hijacked, client whitelist cannot counter this axis** ('
+        . count($cHijackInitiators) . '): '
+        . implode(', ', array_slice($cHijackInitiators, 0, 30))
+        . (count($cHijackInitiators) > 30 ? ' … +' . (count($cHijackInitiators) - 30) : '');
 }
 if ($sheetADead) {
     $rep[] = '';

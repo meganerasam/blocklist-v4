@@ -1,13 +1,15 @@
 name: Verify — domain ledger (tiered DNS)
 
-# Maintains state/domain-ledger.json: one record per domain across the 4 hosts
-# snapshots + Sheet A. Tiered scheduling replaces v2's daily full retest —
-# new domains now, active weekly, dead on backoff (1d/7d/30d/quarterly),
-# purged when dead+delisted 180d (or delisted 365d). Sheets are never modified;
-# dead Sheet-A domains surface in the run summary only.
-# Runs at 00:30 UTC — after ingest's midnight snapshot refresh, well before
-# compile. The first run on a fresh clone auto-seeds (all candidates "new"),
-# so the initial backlog drains over a few runs under MAX_TESTS.
+# Maintains state/domain-ledger.json: one record per domain across the SANITIZED
+# candidates (sanitized/hosts/*.txt + sanitized/gsheet/popup.json — the curation
+# stage already subtracted H ∪ I ∪ user whitelist, so there are no skip rules;
+# the ledger tests exactly what can ship). Tiered scheduling replaces v2's daily
+# full retest — new domains now, active weekly, dead on backoff (1d/7d/30d/
+# quarterly), purged when dead+delisted 180d (or delisted 365d). Sheets are never
+# modified; dead Sheet-A domains surface in the run summary only.
+# Runs at 00:30 UTC — after ingest's midnight refresh and its chained curate,
+# well before compile. The first run on a fresh clone auto-seeds (all candidates
+# "new"), so the initial backlog drains over a few runs under MAX_TESTS.
 
 on:
   schedule:
@@ -52,5 +54,7 @@ jobs:
             echo "No ledger changes."
           else
             git commit -m "verify: ledger pass $(date -u '+%Y-%m-%d %H:%M')"
-            git push
+            # a multi-hour DNS pass must never be discarded by a non-fast-forward push —
+            # ingest/curate/compile all commit during this run's window; rebase and retry
+            git push || { git pull --rebase origin "${GITHUB_REF_NAME}" && git push; }
           fi

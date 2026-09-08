@@ -8,8 +8,11 @@
 // Explained-divergence vocabulary (staging no longer blocks a production domain):
 //   ledger-dead        — DNS-dead per state/domain-ledger.json (v2 kept testing daily; the
 //                        ledger's backoff keeps it out of the shipped set)
-//   whitelist-excluded — covered by the exclusion set (C ∪ E ∪ fleet) − G; production's
-//                        long lane never subtracted the fleet whitelist
+//   whitelist-excluded — covered by the CURATION SET (sanitized/curation-set.json =
+//                        H ∪ I download-sites ∪ user whitelist ≥50 −G, derived once by
+//                        build/curate/curate.php); production's long lane never
+//                        subtracted the fleet whitelist. Sheet C is product-only
+//                        (2026-09-08) and takes no part in this bucket.
 //   never-block-floor  — Sheet H (domain + subdomains)
 //   still-covered      — still blocked by a BROAD staging batch on a parent domain
 //   role-change        — bounded: redirect-instead-of-block only for the designed popup
@@ -62,18 +65,14 @@ $loadList = function (string $rel) use ($ROOT): array {
     foreach (is_array($arr) ? $arr : [] as $d) if (is_string($d)) $set[rtrim(strtolower(trim($d)), '.')] = true;
     return $set;
 };
-// fleet component = all-extension.csv votes ≥ 200 (keep in sync with compile.php)
-$fleet = [];
-foreach (array_slice(file("$ROOT/sources/extension/whitelist/raw/all-extension.csv",
-        FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES) ?: [], 1) as $line) {
-    [$fd, $fc] = array_pad(explode(',', $line, 2), 2, '0');
-    $fd = rtrim(strtolower(trim($fd)), '.');
-    if ($fd !== '' && (int) $fc >= 200) $fleet[$fd] = true;
+// the curation set — read from sanitized/, never re-derived (single source of truth;
+// build/curate/curate.php is the only writer). Sheet C is product-only and must not
+// explain anything away here.
+$excl = $loadList('sanitized/curation-set.json');
+if (!$excl) {
+    fwrite(STDERR, "sanitized/curation-set.json missing/empty — run build/curate/curate.php first\n");
+    exit(2);
 }
-$excl = $loadList('sources/gsheet/default-whitelist.json')
-      + $loadList('sources/gsheet/manual-whitelist.json')
-      + $fleet;
-foreach (array_keys($loadList('sources/gsheet/omit-from-whitelist.json')) as $g) unset($excl[$g]);
 $never = $loadList('sources/gsheet/omit-from-blocklist.json');
 
 $dead = [];

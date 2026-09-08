@@ -8,14 +8,14 @@
 //   lo = last_ok (DNS)     f  = consecutive fails
 //   nc = next_check        st = n(ew) | a(ctive) | d(ead)
 //
-// Scope (user decisions, 2026-09-08):
-//   candidates = 4 hosts snapshots + Sheet A. Sheets D/F are NEVER verified.
+// Scope (user decisions, 2026-09-08 — curation re-conception):
+//   candidates = the SANITIZED sources (sanitized/hosts/*.txt + sanitized/gsheet/
+//   popup.json), i.e. exactly what can ship. build/curate/curate.php already
+//   subtracted the curation set (H ∪ I download-sites ∪ user whitelist), so the old
+//   skip rules are gone — there is nothing left to skip. Sheets D/F are NEVER verified.
 //   Sheet A is verified but never modified — dead entries only surface in the report.
-// Skip rules:
-//   Sheet H (never-block floor)  -> skip EVERY lane, domain + subdomains.
-//   Exclusion set (C ∪ E ∪ fleet≥200) − G[exact-host] -> skip hosts lanes only
-//   (those domains can never ship as block rules; testing them is waste).
-//   Sheet A ∩ exclusion set -> tested anyway, flagged in the report.
+//   Sheet C is product-only (dist/whitelist/default.json): its domains CAN ship as
+//   blocks, so they get tested like any other candidate.
 // Scheduling: alive -> recheck +7 d. fail -> backoff 1d, 7d, 30d, then quarterly.
 // Retention: dead + delisted 180 d -> purged; delisted (any status) 365 d -> purged.
 //   A purged domain re-listed later returns as "new" and costs one test.
@@ -32,8 +32,9 @@ ini_set('memory_limit', '2048M'); // ~300k ledger records + seed files
 $ROOT   = dirname(__DIR__, 2);
 $LEDGER = $ROOT . '/state/domain-ledger.json';
 $TODAY  = gmdate('Y-m-d');
-$MAX_TESTS = max(0, (int) (getenv('MAX_TESTS') ?: 60000));
-$WORKERS   = max(1, (int) (getenv('WORKERS') ?: 16));
+// note: "0" is falsy in PHP — a plain ?: would silently turn MAX_TESTS=0 into the default
+$MAX_TESTS = max(0, (int) ((($v = getenv('MAX_TESTS')) === false || $v === '') ? 60000 : $v));
+$WORKERS   = max(1, (int) ((($v = getenv('WORKERS'))   === false || $v === '') ? 16    : $v));
 
 const BACKOFF_DAYS         = [1 => 1, 2 => 7, 3 => 30]; // fails => days; >3 => 90
 const ACTIVE_RECHECK_DAYS  = 7;
@@ -89,43 +90,33 @@ function covered_subdomain(string $d, array $set): bool
     return false;
 }
 
-// candidates: domain => [source, ...]
+// candidates: domain => [source, ...] — read from the SANITIZED layer only.
+// The curation set was already subtracted by build/curate/curate.php; testing anything
+// it removed would be waste, and nothing here needs a skip rule anymore.
 $SOURCES = [
-    'anudeep'    => "$ROOT/sources/hosts/anudeep.txt",
-    'peterlowe'  => "$ROOT/sources/hosts/peterlowe.txt",
-    'adguarddns' => "$ROOT/sources/hosts/adguarddns.txt",
-    'kadhosts'   => "$ROOT/sources/hosts/kadhosts.txt",
+    'anudeep'    => "$ROOT/sanitized/hosts/anudeep.txt",
+    'peterlowe'  => "$ROOT/sanitized/hosts/peterlowe.txt",
+    'adguarddns' => "$ROOT/sanitized/hosts/adguarddns.txt",
+    'kadhosts'   => "$ROOT/sanitized/hosts/kadhosts.txt",
 ];
 $cand = [];
 foreach ($SOURCES as $tag => $path) {
     foreach (load_hosts_file($path) as $d => $_) $cand[$d][] = $tag;
 }
-foreach (load_json_domains("$ROOT/sources/gsheet/popup.json") as $d => $_) $cand[$d][] = 'sheet-a';
-if (!$cand) { fwrite(STDERR, "FATAL: no candidates — are sources/ snapshots present?\n"); exit(1); }
-
-// exclusion set = (C ∪ E ∪ fleet≥200) − G[exact]  ·  H = never-block floor [subdomain]
-// Fleet component = all-extension.csv merged votes ≥ 200 (keep in sync with compile.php
-// COMMUNITY_MIN_VOTES — the flat ≥20 export is only the backends' export contract).
-// Missing CSV degrades gracefully: smaller skip set just means more DNS tests.
-$fleet = [];
-$fleetCsv = "$ROOT/sources/extension/whitelist/raw/all-extension.csv";
-if (is_file($fleetCsv)) {
-    foreach (array_slice(file($fleetCsv, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES) ?: [], 1) as $line) {
-        [$fd, $fc] = array_pad(explode(',', $line, 2), 2, '0');
-        if ((int) $fc >= 200 && ($fd = clean_domain($fd)) !== null) $fleet[$fd] = true;
-    }
-}
-$excl = load_json_domains("$ROOT/sources/gsheet/default-whitelist.json")
-      + load_json_domains("$ROOT/sources/gsheet/manual-whitelist.json")
-      + $fleet;
-foreach (load_json_domains("$ROOT/sources/gsheet/omit-from-whitelist.json") as $g => $_) unset($excl[$g]);
-$never = load_json_domains("$ROOT/sources/gsheet/omit-from-blocklist.json");
+foreach (load_json_domains("$ROOT/sanitized/gsheet/popup.json") as $d => $_) $cand[$d][] = 'sheet-a';
+if (!$cand) { fwrite(STDERR, "FATAL: no candidates — run build/curate/curate.php first (sanitized/ missing or empty)\n"); exit(1); }
 
 // ---------------------------------------------------------------- ledger ----
 $seeded = false;
 $ledger = [];
 if (is_file($LEDGER)) {
-    $ledger = json_decode((string) file_get_contents($LEDGER), true) ?: [];
+    $ledger = json_decode((string) file_get_contents($LEDGER), true);
+    if (!is_array($ledger) || !$ledger) {
+        // fail-closed (adversarial review): a corrupt/truncated ledger silently reseeding
+        // would wipe the dead-set memory the whole dead-never-ships guarantee depends on
+        fwrite(STDERR, "FATAL: $LEDGER exists but is invalid or empty — refusing the silent reseed (delete the file deliberately to reseed)\n");
+        exit(1);
+    }
 } else {
     $seeded = true;
     $working = $inactive = [];
@@ -158,7 +149,12 @@ foreach ($cand as $d => $srcs) {
         $newDomains++;
     } else {
         $ledger[$d]['ll'] = $TODAY;
-        $ledger[$d]['s'] = array_values(array_unique(array_merge($ledger[$d]['s'], $srcs)));
+        // REPLACE the tag set with today's truth (was append-only): a lane that delisted
+        // the domain must stop retaining it in compile's per-lane retention — role bleed
+        // (e.g. a stale kadhosts tag keeps redirecting a domain only hosts-lanes still
+        // list). Fully-delisted domains are not candidates, so their tags persist until
+        // the purge — exactly the retention memory the design wants.
+        $ledger[$d]['s'] = $srcs;
     }
 }
 
@@ -174,19 +170,13 @@ foreach ($ledger as $d => $r) {
 }
 
 // ------------------------------------------------------------- test plan ----
+// No skip rules: candidates come pre-curated from sanitized/, so every currently-listed,
+// due domain is worth a test. (Curated-out domains stop being listed → ll ages →
+// retention purges them.)
 $due = [];
-$skippedNever = $skippedExcl = 0;
-$sheetAFlagged = [];
 foreach ($ledger as $d => $r) {
     if ($r['ll'] !== $TODAY) continue;              // delisted: stop spending tests on it
     if ($r['nc'] > $TODAY) continue;
-    if (covered_subdomain($d, $never)) { $skippedNever++; continue; }
-    $isSheetA = in_array('sheet-a', $r['s'], true);
-    $inExcl = covered_subdomain($d, $excl);
-    if ($inExcl) {
-        if ($isSheetA) $sheetAFlagged[] = $d;       // tested anyway, but surfaced
-        else { $skippedExcl++; continue; }
-    }
     $due[] = $d;
 }
 usort($due, function ($a, $b) use ($ledger) {       // Sheet A first, then longest-overdue
@@ -279,15 +269,9 @@ $rep[] = '|---|---|';
 $rep[] = '| ledger size | ' . count($ledger) . ' (active ' . $byStatus['a'] . ' · dead ' . $byStatus['d'] . ' · never-tested ' . $byStatus['n'] . ') |';
 $rep[] = '| new domains admitted | ' . $newDomains . ' |';
 $rep[] = '| purged (retention) | ' . $purged . ' |';
-$rep[] = '| skipped — never-block floor (H) | ' . $skippedNever . ' |';
-$rep[] = '| skipped — exclusion set (hosts lanes) | ' . $skippedExcl . ' |';
 $rep[] = '| tested | ' . count($results) . ' (alive ' . $alive . ' · dead ' . (count($results) - $alive) . ' · newly-died ' . $died . ' · resurrected ' . $resurrected . ') |';
 $rep[] = '| deferred beyond MAX_TESTS | ' . $deferred . ' |';
 $rep[] = '| due by tomorrow | ' . $dueTomorrow . ' |';
-if ($sheetAFlagged) {
-    $rep[] = '';
-    $rep[] = '**Sheet A ∩ exclusion set** (tested anyway — review): ' . implode(', ', array_slice($sheetAFlagged, 0, 30)) . (count($sheetAFlagged) > 30 ? ' … +' . (count($sheetAFlagged) - 30) : '');
-}
 if ($sheetADead) {
     $rep[] = '';
     $rep[] = '**Sheet A domains that failed DNS** (' . count($sheetADead) . ' — clean the sheet when convenient): ' . implode(', ', array_slice($sheetADead, 0, 50)) . (count($sheetADead) > 50 ? ' … +' . (count($sheetADead) - 50) : '');

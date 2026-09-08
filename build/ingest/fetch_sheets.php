@@ -1,6 +1,6 @@
 <?php
 // build/ingest/fetch_sheets.php
-// Mirrors Google Sheets A–M into sources/gsheet/*.json. Domain sheets mirror as FLAT
+// Mirrors Google Sheets A–N into sources/gsheet/*.json. Domain sheets mirror as FLAT
 // sorted arrays of domain strings; only Sheet B (trackers) mirrors as objects.
 // Fail-closed PER SHEET: any gate violation keeps the previous mirror untouched and marks
 // the run red; sheets that pass are still written. Guards per sources/gsheet/SCHEMA.md.
@@ -54,7 +54,10 @@ const SPECS = [
     'manual-blocklist'         => ['header' => ['domain'],       'kind' => 'domains', 'shrink_guard' => false, 'delta_pct' => null],
     'omit-from-whitelist'      => ['header' => ['domain'],       'kind' => 'domains', 'shrink_guard' => false, 'delta_pct' => null],
     'omit-from-blocklist'      => ['header' => ['domain'],       'kind' => 'domains', 'shrink_guard' => true,  'delta_pct' => null],
-    // standalone (I–M): mirrored + published on demand, never merged into rules
+    // Sheet I (2026-09-08): download sites — omit-style curation input; a silent shrink
+    // would strip protection from download sites, so it gets the shrink guard like H
+    'download-sites'           => ['header' => ['domain'],       'kind' => 'domains', 'shrink_guard' => true,  'delta_pct' => null],
+    // standalone (J–N): mirrored + published on demand, never merged into rules
     'whitelisted-domains-injection-enabled' => ['header' => ['domain'], 'kind' => 'domains', 'shrink_guard' => false, 'delta_pct' => null],
     'tracking-whitelist'       => ['header' => ['domain'],       'kind' => 'domains', 'shrink_guard' => false, 'delta_pct' => null],
     'allow-request-domains'    => ['header' => ['domain'],       'kind' => 'domains', 'shrink_guard' => false, 'delta_pct' => null],

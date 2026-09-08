@@ -97,15 +97,23 @@ function json_out($data, bool $pretty): string
     return $json;
 }
 
-/** tmp + rename write — a killed run can never leave a half-written artifact. */
+/** tmp + rename write — a killed run can never leave a half-written artifact.
+ *  Hardened 2026-09-08 (adversarial review): a FAILED rename used to be silently
+ *  ignored, leaving the OLD file in place on a green run — the one fail-open path in
+ *  the staged-write design. The tmp name carries the pid so two local runs can't
+ *  clobber each other's staging file. */
 function atomic_write(string $path, string $content): void
 {
     $dir = dirname($path);
     if (!is_dir($dir)) mkdir($dir, 0777, true);
-    $tmp = $path . '.tmp';
+    $tmp = $path . '.tmp.' . getmypid();
     if (file_put_contents($tmp, $content) === false) {
         fwrite(STDERR, "FATAL: cannot write $tmp\n");
         exit(1);
     }
-    rename($tmp, $path);
+    if (!rename($tmp, $path)) {
+        @unlink($tmp);
+        fwrite(STDERR, "FATAL: rename failed — $path would have stayed STALE on a green run\n");
+        exit(1);
+    }
 }
