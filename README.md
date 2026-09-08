@@ -83,4 +83,5 @@ exclusion-set — compile helpers, called by nothing) · `manifest.json`.
 Decisions locked 2026-09-07: `dist/` is published **as commits**; the fleet fetches it
 **via the backend mirrors** (raw GitHub only as fallback). Workflows activate on push:
 ingest (0 */12) → verify (00:30) → extension (06:00) → compile (07:00 + after every green
-ingest). `.github/workflows-reference/` holds the previous generation's YAMLs for history.
+ingest). (The previous generation's reference YAMLs were removed 2026-09-08 — they live in the
+legacy repo clones.)

@@ -20,7 +20,7 @@ on a pre-flight decision (Atlas §09).
 | File | Status | Needed changes |
 |---|---|---|
 | `ledger.php` | **done · seeded 2026-09-08** | The tiered verifier. Candidates = 4 hosts snapshots + Sheet A (Sheets D/F never verified — user decision). Seed trusted v2's same-day working/inactive for snapshot-listed domains (no 863k graveyard import). Skip rules: H (subdomain match) skips every lane; exclusion set (C ∪ E ∪ fleet) − G (exact-host match) skips hosts lanes; Sheet A ∩ exclusion tested + flagged. Schedule: active +7d, fails 1d/7d/30d/quarterly; purge dead+delisted 180d or delisted 365d. Sheets never modified — dead Sheet-A entries in report only. |
-| `update_domains.php` · `retest_domains.php` · `split_domains.php` · `merge_chunks.php` | reference only | Absorbed by `ledger.php` (candidate ingestion, A/AAAA/CNAME checks via checkdnsrr, "inactive wins" as dead-records-with-backoff). Kept as logic donors; the chunk/matrix/git-push-per-batch protocol is gone. |
+| `update_domains.php` · `retest_domains.php` · `split_domains.php` · `merge_chunks.php` | **deleted 2026-09-08** | Legacy v2 chunk/matrix scripts, fully absorbed by `ledger.php` (candidate ingestion, A/AAAA/CNAME checks via checkdnsrr, "inactive wins" as dead-records-with-backoff). Never invoked by any V2 workflow; `update_domains.php` also still carried 10 hardcoded source URLs (a rule-1 violation). Removed — the originals remain in the `blocklist-v2` clone if the logic is ever needed. |
 
 ## build/ingest/
 
@@ -37,7 +37,7 @@ on a pre-flight decision (Atlas §09).
 |---|---|---|
 | `generate_compiled_rules.php` | reference | Chunking (5,000/rule), ID bands (redirect 11000+ / block 21000+ / allow 41000+ …), `__EXT_ID__` placeholder (kept — substitution moves client-side), main-frame redirect duplication, atomic tmp+rename writes, hard-abort doctrine. Drop: last-50k truncation (replaced by ledger retention), traffic-driven trigger machinery. |
 | `generate_cosmetic_rules.php` | reference | specific+unhide merge and flip-flop guard → cosmetic step of compile.yml. |
-| `short.php` / `long.php` | reference only | Retire after migration; kept for the normalizeDomain() rules and as the shim spec (they must proxy `dist/` during cutover — Wonder/Claw backends consume them too). |
+| `short.php` / `long.php` | reference only | Retire after migration; kept for the normalizeDomain() rules and as the shim spec. Re-examined 2026-09-08: these are each backend's *internal* derivation for its own compiler (copies found in the Ghost/StopAds/Pro/North backends), never called cross-backend — so the shim is simply to swap each backend's `generate_compiled_rules.php` for a `dist/network/rules.json` reader; resurrect a flat popup artifact only if access logs show external `short.php` callers. |
 
 ## Other
 

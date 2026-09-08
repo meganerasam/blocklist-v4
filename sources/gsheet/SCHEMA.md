@@ -56,4 +56,4 @@ subdomains.
 - every run posts a per-sheet diff summary (added/removed, rejects with line numbers)
 
 Bootstraps: C (174) · G (2 protected hosts) · H (13, whitelistes3) done and live.
-TSVs for D · I · J · K · L · M are in `bootstrap/` — paste, fill the export_urls, delete the folder.
+All sheets bootstrapped and live; the one-time `bootstrap/` TSV folder was removed 2026-09-08.
