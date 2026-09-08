@@ -453,13 +453,24 @@ foreach ($appendRules as $rule) {
     $rules[] = $rule;
 }
 
-// Final-pass safety asserts: H floor and veto must hold over the WHOLE merge.
+// Final-pass safety asserts: H floor, veto, and the redirect-initiator guarantee
+// must hold over the WHOLE merge, whatever produced the rule.
 foreach ($rules as $rule) {
     $type = $rule['action']['type'] ?? '';
     if ($type !== 'block' && $type !== 'redirect') continue;
     foreach ($rule['condition']['requestDomains'] ?? [] as $d) {
         if (isWhitelistCovered(strtolower($d), $never)) {
             fail("never-block violation survived the merge: $d (rule {$rule['id']})");
+        }
+    }
+    if ($type === 'redirect') {
+        // a whitelisted site's navigation may never be hijacked — the twin builder
+        // strips these, this assert makes sure nothing else can ever emit one
+        foreach ($rule['condition']['initiatorDomains'] ?? [] as $d) {
+            $ld = strtolower((string) $d);
+            if (isWhitelistCovered($ld, $excl) || isWhitelistCovered($ld, $never)) {
+                fail("whitelist-covered initiator survived on redirect rule {$rule['id']}: $d");
+            }
         }
     }
     if ($type === 'block') {
