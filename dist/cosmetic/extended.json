@@ -1,0 +1,2548 @@
+{
+    "2fa.live": [
+        {
+            "selector": "p:has-text(Advertising)",
+            "type": "extended"
+        }
+    ],
+    "404media.co": [
+        {
+            "selector": ".post__content > p:has-text(This segment is a paid ad)",
+            "type": "extended"
+        }
+    ],
+    "6abc.com": [
+        {
+            "selector": ".nav.sticky {top:0px;}",
+            "type": "css-injection"
+        }
+    ],
+    "abc11.com": [
+        {
+            "selector": ".nav.sticky {top:0px;}",
+            "type": "css-injection"
+        }
+    ],
+    "abc13.com": [
+        {
+            "selector": ".nav.sticky {top:0px;}",
+            "type": "css-injection"
+        }
+    ],
+    "abc30.com": [
+        {
+            "selector": ".nav.sticky {top:0px;}",
+            "type": "css-injection"
+        }
+    ],
+    "abc7.com": [
+        {
+            "selector": ".nav.sticky {top:0px;}",
+            "type": "css-injection"
+        }
+    ],
+    "abc7chicago.com": [
+        {
+            "selector": ".nav.sticky {top:0px;}",
+            "type": "css-injection"
+        }
+    ],
+    "abc7news.com": [
+        {
+            "selector": ".nav.sticky {top:0px;}",
+            "type": "css-injection"
+        }
+    ],
+    "abc7ny.com": [
+        {
+            "selector": ".nav.sticky {top:0px;}",
+            "type": "css-injection"
+        }
+    ],
+    "abcnews.com": [
+        {
+            "selector": ".navigation--has-subnav {top:0;}",
+            "type": "css-injection"
+        }
+    ],
+    "abcnews.go.com": [
+        {
+            "selector": ".navigation--has-subnav {top:0;}",
+            "type": "css-injection"
+        }
+    ],
+    "abcotvs.net": [
+        {
+            "selector": ".nav.sticky {top:0px;}",
+            "type": "css-injection"
+        }
+    ],
+    "acmemarkets.com": [
+        {
+            "selector": ".product-card-col:has-text(Sponsored)",
+            "type": "extended"
+        }
+    ],
+    "advocate.com": [
+        {
+            "selector": ".component.module-headline:has-text(FROM OUR SPONSORS)",
+            "type": "extended"
+        }
+    ],
+    "aeon.co": [
+        {
+            "selector": ".print\\:hidden.mb-9:has-text(I would like to donate)",
+            "type": "extended"
+        },
+        {
+            "selector": ".z-900:has-text(Join more than)",
+            "type": "extended"
+        }
+    ],
+    "agoda.com": [
+        {
+            "selector": ".PropertyCardItem:has(div:has-text(Promoted))",
+            "type": "extended"
+        }
+    ],
+    "albertsons.com": [
+        {
+            "selector": ".product-card-col:has-text(Sponsored)",
+            "type": "extended"
+        }
+    ],
+    "alibaba.com": [
+        {
+            "selector": ".J-offer-wrapper:has-text(Top sponsor listing)",
+            "type": "extended"
+        },
+        {
+            "selector": ".no-divider[style*=\"margin-bottom\"]:has([data-state=\"closed\"]:has-text(Ad))",
+            "type": "extended"
+        },
+        {
+            "selector": "div[data-search-floor] [data-supplier-card]:has-text(Ad)",
+            "type": "extended"
+        }
+    ],
+    "aliexpress.com": [
+        {
+            "selector": "#card-list > .search-item-card-wrapper-gallery:has(a.search-card-item[href*=\"&aem_p4p_detail=\"] div[class*=\"cards--image--\"] > div[class*=\"multi--ax--\"]:has-text(/^(?:AD|An[uú]ncio|광고|広告)$/)):has(+ .search-item-card-wrapper-gallery a.search-card-item:not([href*=\"&aem_p4p_detail=\"]))",
+            "type": "extended"
+        }
+    ],
+    "amusingplanet.com": [
+        {
+            "selector": ".blockTitle:has-text(Advertisement)",
+            "type": "extended"
+        }
+    ],
+    "androidauthority.com": [
+        {
+            "selector": "div[class=\"e_Qi\"]:has-text(Trending Tech Deals)",
+            "type": "extended"
+        },
+        {
+            "selector": "div[class=\"e_Rc e_d\"]:has-text(Affiliate links on Android Authority may earn us a commission)",
+            "type": "extended"
+        },
+        {
+            "selector": "div[class=\"e_ei\"]:has-text(Trending Tech Deals)",
+            "type": "extended"
+        },
+        {
+            "selector": "div[class=\"e_ic e_d\"]:has-text(Affiliate links on Android Authority may earn us a commission)",
+            "type": "extended"
+        }
+    ],
+    "andronicos.com": [
+        {
+            "selector": ".product-card-col:has-text(Sponsored)",
+            "type": "extended"
+        }
+    ],
+    "anfieldindex.com": [
+        {
+            "selector": "aside[data-animation-event]:has-text(PARTNERS)",
+            "type": "extended"
+        }
+    ],
+    "animalfunfacts.net": [
+        {
+            "selector": "center:has-text(ADVERT)",
+            "type": "extended"
+        }
+    ],
+    "app.daily.dev": [
+        {
+            "selector": "article:has-text(Promoted)",
+            "type": "extended"
+        }
+    ],
+    "appleinsider.com": [
+        {
+            "selector": "div.main-art:has-text(Sponsored Content)",
+            "type": "extended"
+        }
+    ],
+    "argos.co.uk": [
+        {
+            "selector": ".ds-c-grid-item:has-text(Sponsored)",
+            "type": "extended"
+        },
+        {
+            "selector": "[data-test^=\"component-slider-slide-\"]:has-text(SPONSORED)",
+            "type": "extended"
+        }
+    ],
+    "asuracomic.net": [
+        {
+            "selector": ".p-4.z-50:has-text(Upgrade to)",
+            "type": "extended"
+        }
+    ],
+    "atlanticsuperstore.ca": [
+        {
+            "selector": ".indiana-scroll-container > ul > li:has(.chakra-badge:has-text(/Sponsorisé|Sponsored/))",
+            "type": "extended"
+        },
+        {
+            "selector": ".product-tile-group__list__item:has-text(Sponsored)",
+            "type": "extended"
+        },
+        {
+            "selector": "[data-testid=\"card\"]:has-text(sponsored)",
+            "type": "extended"
+        }
+    ],
+    "autoevolution.com": [
+        {
+            "selector": ".mgtop_20.nxart:has-text(#ad)",
+            "type": "extended"
+        }
+    ],
+    "autotrader.co.uk": [
+        {
+            "selector": "[data-testid=\"desktop-search\"] li:has(span:has-text(Ad))",
+            "type": "extended"
+        }
+    ],
+    "autotrader.com": [
+        {
+            "selector": ".inventory-listing:has-text(Sponsored)",
+            "type": "extended"
+        },
+        {
+            "selector": "[data-cmp=\"PremiumSpotlightContainer\"]:has-text(Sponsored)",
+            "type": "extended"
+        },
+        {
+            "selector": "[data-cmp=\"delayedImpressionWaypoint\"]:has-text(SPONSORED)",
+            "type": "extended"
+        }
+    ],
+    "backpack.tf": [
+        {
+            "selector": ".panel:has-text(createAd)",
+            "type": "extended"
+        }
+    ],
+    "backpacktf.com": [
+        {
+            "selector": ".panel:has-text(createAd)",
+            "type": "extended"
+        }
+    ],
+    "bayequest.com": [
+        {
+            "selector": ".elementor-section:has-text(Advertisement)",
+            "type": "extended"
+        }
+    ],
+    "beaumontenterprise.com": [
+        {
+            "selector": ".mb32.b-gray300:has-text(Advertisement)",
+            "type": "extended"
+        },
+        {
+            "selector": ".b-gray300:has-text(Advertisement)",
+            "type": "extended"
+        }
+    ],
+    "beincrypto.com": [
+        {
+            "selector": ".before-author-block-bio:has-text(Sponsored)",
+            "type": "extended"
+        }
+    ],
+    "belloflostsouls.net": [
+        {
+            "selector": "span.text-secondary:has-text(Advertisement)",
+            "type": "extended"
+        }
+    ],
+    "benzinga.com": [
+        {
+            "selector": ".cUDaEv {margin-top:162px !important;}",
+            "type": "css-injection"
+        },
+        {
+            "selector": ".gZyLpV .mobile-header {margin-top:0 !important;}",
+            "type": "css-injection"
+        },
+        {
+            "selector": ".iOxiqE .mobile-header {margin-top:0 !important;}",
+            "type": "css-injection"
+        }
+    ],
+    "bestbuy.com": [
+        {
+            "selector": ".plp-ninja-carousel:has-text(Sponsored)",
+            "type": "extended"
+        },
+        {
+            "selector": "div[data-testid=\"Row_testID\"]:has(span:has-text(Sponsored))",
+            "type": "extended"
+        }
+    ],
+    "bing.com": [
+        {
+            "selector": ".ta_c:has-text(Sponsored)",
+            "type": "extended"
+        },
+        {
+            "selector": "li.b_algo:has(.rms_img[src*=\"id=ODLS.A2450BEC-5595-40BA-9F13-D9EC6AB74B9F\"]):has(.tptt:has-text(/^([Aa]mazon(\\.[acdefinps][aeglnorst]m?\\.?[abjmtu]?[kprux]?)?|Best Buy|Booking\\.com|eBay|eDreams|Lenovo US|Trip\\.com|Tripadvisor|Walmart)$/))",
+            "type": "extended"
+        }
+    ],
+    "birminghammail.co.uk": [
+        {
+            "selector": ".sticky ~ header {top:0;}",
+            "type": "css-injection"
+        }
+    ],
+    "bitchute.com": [
+        {
+            "selector": ".row.justify-center:has-text(Advertisement)",
+            "type": "extended"
+        }
+    ],
+    "bitcoinsensus.com": [
+        {
+            "selector": ".e-con-inner:has-text(Our Favourite Trading Platforms)",
+            "type": "extended"
+        }
+    ],
+    "bjs.com": [
+        {
+            "selector": "[data-cnstrc-recommendations]:has-text(Sponsored Products)",
+            "type": "extended"
+        }
+    ],
+    "bleepingcomputer.com": [
+        {
+            "selector": ".bc-heading:has-text(ponsor Posts)",
+            "type": "extended"
+        },
+        {
+            "selector": ".bc-heading:has-text(ponsor Posts) + ul",
+            "type": "extended"
+        },
+        {
+            "selector": ".cz-line-heading:has-text(Sponsor Posts)",
+            "type": "extended"
+        },
+        {
+            "selector": ".cz-line-heading:has-text(Sponsor Posts) + ul",
+            "type": "extended"
+        },
+        {
+            "selector": ".post_wrap:has-text(AdBot)",
+            "type": "extended"
+        },
+        {
+            "selector": "ul#bc-home-news-main-wrap > li:has-text(Sponsored)",
+            "type": "extended"
+        }
+    ],
+    "blockchair.com": [
+        {
+            "selector": ".fs-sm.flow:has-text(Sponsored)",
+            "type": "extended"
+        }
+    ],
+    "boatnews.com": [
+        {
+            "selector": "div.p:has-text(Advertising)",
+            "type": "extended"
+        }
+    ],
+    "bolnews.com": [
+        {
+            "selector": "[style*=\"center\"]:has-text(Ad)",
+            "type": "extended"
+        }
+    ],
+    "booking.com": [
+        {
+            "selector": "div[data-testid=\"property-card\"]:has(span:has-text(Promoted))",
+            "type": "extended"
+        }
+    ],
+    "boots.com": [
+        {
+            "selector": ".oct-listers-hits__item:has-text(Sponsored)",
+            "type": "extended"
+        }
+    ],
+    "bristolpost.co.uk": [
+        {
+            "selector": ".sticky ~ header {top:0;}",
+            "type": "css-injection"
+        }
+    ],
+    "businessday.co.za": [
+        {
+            "selector": ".content-list-block:has-text(News & insights from our commercial partners)",
+            "type": "extended"
+        }
+    ],
+    "capwages.com": [
+        {
+            "selector": ".gap-1.items-center.flex-col.flex:has-text(Remove Ads)",
+            "type": "extended"
+        }
+    ],
+    "carrsqc.com": [
+        {
+            "selector": ".product-card-col:has-text(Sponsored)",
+            "type": "extended"
+        }
+    ],
+    "character.ai": [
+        {
+            "selector": ".space-y-4 > .w-full:has-text(Advertisement)",
+            "type": "extended"
+        }
+    ],
+    "chatgpt.com": [
+        {
+            "selector": ".opacity-100.transition-opacity.ease-out:has-text(Sponsored options)",
+            "type": "extended"
+        },
+        {
+            "selector": "#thread [class^=\"border-\"]:has-text(/Ad|Sponsored/):not([class*=\"sidebar\"])",
+            "type": "extended"
+        },
+        {
+            "selector": ".fixed.bottom-0:has-text(Try Atlas)",
+            "type": "extended"
+        }
+    ],
+    "china.ahk.de": [
+        {
+            "selector": ".b-main__section:has(h2.homepage-headline:has-text(Advertisement))",
+            "type": "extended"
+        }
+    ],
+    "chromewebstore.google.com": [
+        {
+            "selector": "[aria-label=\"Info\"]:has-text(Switch to Chrome)",
+            "type": "extended"
+        }
+    ],
+    "chron.com": [
+        {
+            "selector": ".mb32.b-gray300:has-text(Advertisement)",
+            "type": "extended"
+        },
+        {
+            "selector": ".b-gray300:has-text(Advertisement)",
+            "type": "extended"
+        }
+    ],
+    "cjleo.com": [
+        {
+            "selector": ".alt-widget-title:has-text(advertisement)",
+            "type": "extended"
+        }
+    ],
+    "claude.ai": [
+        {
+            "selector": ".border-border-200:has-text(Try Claude Desktop now)",
+            "type": "extended"
+        }
+    ],
+    "cleantechnica.com": [
+        {
+            "selector": ".zox-side-widget:has-text(/^Advertis/)",
+            "type": "extended"
+        }
+    ],
+    "coincarp.com": [
+        {
+            "selector": ".border-bottom:has-text(Sponsored)",
+            "type": "extended"
+        }
+    ],
+    "coindesk.com": [
+        {
+            "selector": ".bg-white.flex.gap-6.w-full.shrink.justify-between.md\\:justify-normal.lg\\:flex-row-reverse:has(.font-metadata.mr-1.uppercase:has-text(Sponsored by))",
+            "type": "extended"
+        }
+    ],
+    "cointelegraph.com": [
+        {
+            "selector": "li.group-\\[\\.inline\\]\\:mb-8:has-text(Ad)",
+            "type": "extended"
+        }
+    ],
+    "coles.com.au": [
+        {
+            "selector": ".coles-targeting-UnitContainer:has(ul.product__top_messaging)",
+            "type": "extended"
+        },
+        {
+            "selector": ".list-item[role=\"presentation\"]:has([data-testid=\"product-tile\"]:has-text(Sponsored))",
+            "type": "extended"
+        }
+    ],
+    "comfig.app": [
+        {
+            "selector": ".card:has-text(Partnered)",
+            "type": "extended"
+        }
+    ],
+    "coolors.co": [
+        {
+            "selector": "a:has(div:last-child:has-text(Hide))",
+            "type": "extended"
+        }
+    ],
+    "corvetteblogger.com": [
+        {
+            "selector": "aside.td_block_template_1.widget.widget_text:has(> h4.block-title > span:has-text(Visit Our Sponsors))",
+            "type": "extended"
+        }
+    ],
+    "costco.com": [
+        {
+            "selector": "[data-testid=\"shoppable-list-container\"]:has-text(Spons)",
+            "type": "extended"
+        }
+    ],
+    "cruisecritic.co.uk": [
+        {
+            "selector": "div[role=\"group\"]:has-text(Sponsored)",
+            "type": "extended"
+        }
+    ],
+    "cruisecritic.com": [
+        {
+            "selector": "div[role=\"group\"]:has-text(Sponsored)",
+            "type": "extended"
+        },
+        {
+            "selector": ".block:has(a[data-tracking]:has-text(Sponsored))",
+            "type": "extended"
+        }
+    ],
+    "ctinsider.com": [
+        {
+            "selector": ".mb32.b-gray300:has-text(Advertisement)",
+            "type": "extended"
+        },
+        {
+            "selector": ".b-gray300:has-text(Advertisement)",
+            "type": "extended"
+        }
+    ],
+    "ctpost.com": [
+        {
+            "selector": ".mb32.b-gray300:has-text(Advertisement)",
+            "type": "extended"
+        },
+        {
+            "selector": ".b-gray300:has-text(Advertisement)",
+            "type": "extended"
+        }
+    ],
+    "cvs.com": [
+        {
+            "selector": "div[class*=\"flex-col\"]:has(>h2:has-text(Sponsored))",
+            "type": "extended"
+        }
+    ],
+    "cyberchef.org": [
+        {
+            "selector": "#workspace-wrapper > [id][style*=\"height\"] {height: 100% !important}",
+            "type": "css-injection"
+        }
+    ],
+    "dailyrecord.co.uk": [
+        {
+            "selector": ".sticky ~ header {top:0;}",
+            "type": "css-injection"
+        }
+    ],
+    "dailysignal.com": [
+        {
+            "selector": ".tds-content > p:has-text(Donate now)",
+            "type": "extended"
+        }
+    ],
+    "dailystar.co.uk": [
+        {
+            "selector": "[data-testid=\"commercial-above-header-box-1\"] {remove:true;}",
+            "type": "css-injection"
+        }
+    ],
+    "datanodes.to": [
+        {
+            "selector": ".bg-white\\/50.border.p-8 {visibility:hidden !important;}",
+            "type": "css-injection"
+        }
+    ],
+    "deccanherald.com": [
+        {
+            "selector": "div#container-text:has-text(ADVERTISEMENT)",
+            "type": "extended"
+        },
+        {
+            "selector": "span.container-text:has-text(ADVERTISEMENT)",
+            "type": "extended"
+        }
+    ],
+    "decrypt.co": [
+        {
+            "selector": "span:has-text(AD)",
+            "type": "extended"
+        }
+    ],
+    "defkey.com": [
+        {
+            "selector": ".visible-lg:has-text(Advertisement)",
+            "type": "extended"
+        }
+    ],
+    "deliveroo.*": [
+        {
+            "selector": "a[role=\"button\"]:has(p:has-text(Sponsored))",
+            "type": "extended"
+        },
+        {
+            "selector": "div[class^=\"HomeFeedScrollTracker-\"]:has(span[class^=\"HomeFeedUILines-\"]:has-text(Sponsored))",
+            "type": "extended"
+        }
+    ],
+    "dev.to": [
+        {
+            "selector": "div[data-display-unit]:has(span:has-text(Promoted))",
+            "type": "extended"
+        }
+    ],
+    "developer.android.com": [
+        {
+            "selector": ".devsite-snackbar-snack:has-text(Please help us)",
+            "type": "extended"
+        }
+    ],
+    "deviantart.com": [
+        {
+            "selector": "[role=\"complementary\"] ._ern3r:has-text(Promoted)",
+            "type": "extended"
+        }
+    ],
+    "dexscreener.com": [
+        {
+            "selector": ".chakra-link:has-text(Advertise)",
+            "type": "extended"
+        }
+    ],
+    "dictionary.com": [
+        {
+            "selector": "[class] > p:has-text(Advertisement)",
+            "type": "extended"
+        }
+    ],
+    "digg.com": [
+        {
+            "selector": "article.relative:has(div:has-text(SPONSORED))",
+            "type": "extended"
+        }
+    ],
+    "distrowatch.com": [
+        {
+            "selector": ".TablesTitle > div:not([style=\"padding\"]) {width:100%;}",
+            "type": "css-injection"
+        }
+    ],
+    "docs.openwebui.com": [
+        {
+            "selector": ".markdown > .w-full:has-text(Sponsored)",
+            "type": "extended"
+        },
+        {
+            "selector": ".pb-4 > .mb-2:has-text(Sponsored)",
+            "type": "extended"
+        }
+    ],
+    "dotesports.com": [
+        {
+            "selector": ".wp-block-gamurs-article-tile:has-text(Sponsored)",
+            "type": "extended"
+        }
+    ],
+    "downforeveryoneorjustme.com": [
+        {
+            "selector": ".relative.bg-white:has-text(PolyBuzz)",
+            "type": "extended"
+        }
+    ],
+    "downornot.net": [
+        {
+            "selector": ".border-blue-500\\/20:has-text(Special offer)",
+            "type": "extended"
+        }
+    ],
+    "dropstab.com": [
+        {
+            "selector": ".bg-slate-100:has-text(Ad)",
+            "type": "extended"
+        },
+        {
+            "selector": ".bottom-0.gap-2:has-text(/Stake Now|Invest Now/)",
+            "type": "extended"
+        }
+    ],
+    "engadget.com": [
+        {
+            "selector": ".justify-center:has-text(Advertisement)",
+            "type": "extended"
+        }
+    ],
+    "english.mathrubhumi.com": [
+        {
+            "selector": ".psd\\:px-0.px-\\[10px\\]:has-text(To advertise here)",
+            "type": "extended"
+        }
+    ],
+    "etherscan.io": [
+        {
+            "selector": "section.container-xxl > .py-4:has-text(Sponsored)",
+            "type": "extended"
+        }
+    ],
+    "euronews.com": [
+        {
+            "selector": ".m-object:has(.m-object__quote:has-text(/In partnership with|En partenariat avec|Mit Unterstützung von|In collaborazione con|En colaboración con|Em parceria com|Совместно с|ile birlikte|Σε συνεργασία με|Együttműködésben a|با همکاری|بالمشاركة مع/))",
+            "type": "extended"
+        },
+        {
+            "selector": ".the-media-object--has-sponsored:has-text(/In partnership with|In collaborazione con|En partenariat avec|Mit Unterstützung von|En colaboración con|Em parceria com|We współpracy z|Совместно с|ile birlikte|Σε συνεργασία με|Együttműködésben a|با همکاری|با همکاری/)",
+            "type": "extended"
+        },
+        {
+            "selector": "#o-site-hr__leaderboard-wallpaper.u-show-for-xlarge {remove:true;}",
+            "type": "css-injection"
+        }
+    ],
+    "expressnews.com": [
+        {
+            "selector": ".mb32.b-gray300:has-text(Advertisement)",
+            "type": "extended"
+        },
+        {
+            "selector": ".b-gray300:has-text(Advertisement)",
+            "type": "extended"
+        }
+    ],
+    "eztv.tf": [
+        {
+            "selector": "tbody:has-text(WARNING! Use a)",
+            "type": "extended"
+        }
+    ],
+    "eztv.yt": [
+        {
+            "selector": "tbody:has-text(WARNING! Use a)",
+            "type": "extended"
+        }
+    ],
+    "fdiintelligence.com": [
+        {
+            "selector": ".undefined:has-text(Advertisement)",
+            "type": "extended"
+        }
+    ],
+    "filehippo.com": [
+        {
+            "selector": "article.card-article:has(span.card-article__author:has-text(Sponsored Content))",
+            "type": "extended"
+        }
+    ],
+    "findagrave.com": [
+        {
+            "selector": ".rounded-pill:has-text(Remove Ads)",
+            "type": "extended"
+        }
+    ],
+    "fiverr.com": [
+        {
+            "selector": ".gig-card-layout:has-text(Ad by)",
+            "type": "extended"
+        }
+    ],
+    "flipkart.com": [
+        {
+            "selector": ".fWi7J_:has-text(Brands In Spotlight)",
+            "type": "extended"
+        },
+        {
+            "selector": ".grid-formation:has(div:has-text(AD))",
+            "type": "extended"
+        }
+    ],
+    "foobar2000.org": [
+        {
+            "selector": "caption:has-text(advertisement)",
+            "type": "extended"
+        }
+    ],
+    "foodlion.com": [
+        {
+            "selector": ".product-grid-cell:has-text(Sponsored)",
+            "type": "extended"
+        }
+    ],
+    "fortinos.ca": [
+        {
+            "selector": ".indiana-scroll-container > ul > li:has(.chakra-badge:has-text(/Sponsorisé|Sponsored/))",
+            "type": "extended"
+        },
+        {
+            "selector": ".product-tile-group__list__item:has-text(Sponsored)",
+            "type": "extended"
+        },
+        {
+            "selector": "[data-testid=\"card\"]:has-text(sponsored)",
+            "type": "extended"
+        }
+    ],
+    "freshdirect.com": [
+        {
+            "selector": ".swiper-slide:has-text(Sponsored)",
+            "type": "extended"
+        }
+    ],
+    "ftm.eu": [
+        {
+            "selector": ".trust-nugget-pp:has-text(Our journalism)",
+            "type": "extended"
+        }
+    ],
+    "fxempire.com": [
+        {
+            "selector": "span[display=\"inline-block\"]:has-text(Advertisement)",
+            "type": "extended"
+        }
+    ],
+    "gamedev.net": [
+        {
+            "selector": ".dark\\:border-gray-700:has-text(Advertisement)",
+            "type": "extended"
+        }
+    ],
+    "gamepadla.com": [
+        {
+            "selector": ".pMain:has-text(Partner)",
+            "type": "extended"
+        },
+        {
+            "selector": ".sliderBlock:has-text(ADS)",
+            "type": "extended"
+        },
+        {
+            "selector": ".pMain:has(div:-abp-properties(Partner))",
+            "type": "extended"
+        }
+    ],
+    "gamersnexus.net": [
+        {
+            "selector": ".moduleContent:has-text(Advertisement)",
+            "type": "extended"
+        }
+    ],
+    "ganjapreneur.com": [
+        {
+            "selector": ".has-background:has-text(Featured whitepaper)",
+            "type": "extended"
+        }
+    ],
+    "getyarn.io": [
+        {
+            "selector": ".pt3p > div > div:has-text(Advertisement)",
+            "type": "extended"
+        }
+    ],
+    "giantfood.com": [
+        {
+            "selector": ".pdl-generic-content_full:has-text(Sponsored)",
+            "type": "extended"
+        },
+        {
+            "selector": "[data-product-id]:has-text(Sponsored)",
+            "type": "extended"
+        }
+    ],
+    "giantfoodstores.com": [
+        {
+            "selector": ".pdl-generic-content_full:has-text(Sponsored)",
+            "type": "extended"
+        },
+        {
+            "selector": "[data-product-id]:has-text(Sponsored)",
+            "type": "extended"
+        }
+    ],
+    "github.com": [
+        {
+            "selector": ".dashboard-changelog:has-text(Latest from our changelog)",
+            "type": "extended"
+        }
+    ],
+    "globalchinaev.com": [
+        {
+            "selector": "p.content-center:has-text(ADVERTISEMENT)",
+            "type": "extended"
+        }
+    ],
+    "google.com": [
+        {
+            "selector": ".Ryrdad:has-text(Please help us improve)",
+            "type": "extended"
+        },
+        {
+            "selector": "[jscontroller=\"HCSvae\"]:has-text(/Sign in to Google|Build Android apps faster/)",
+            "type": "extended"
+        },
+        {
+            "selector": "div[jsname=\"wA2P2b\"]:has-text(How helpful were the results)",
+            "type": "extended"
+        }
+    ],
+    "greenwichtime.com": [
+        {
+            "selector": ".mb32.b-gray300:has-text(Advertisement)",
+            "type": "extended"
+        },
+        {
+            "selector": ".b-gray300:has-text(Advertisement)",
+            "type": "extended"
+        }
+    ],
+    "gsmarena.com": [
+        {
+            "selector": "#subHeader3:has-text(daily deals)",
+            "type": "extended"
+        }
+    ],
+    "haggen.com": [
+        {
+            "selector": ".product-card-col:has-text(Sponsored)",
+            "type": "extended"
+        }
+    ],
+    "hannaford.com": [
+        {
+            "selector": ".header-2:has-text(Sponsored Suggestions)",
+            "type": "extended"
+        }
+    ],
+    "haveibeenpwned.com": [
+        {
+            "selector": ".card-glow:has-text(Sponsored)",
+            "type": "extended"
+        }
+    ],
+    "health.harvard.edu": [
+        {
+            "selector": ".border-t:has-text(You might also be interested in)",
+            "type": "extended"
+        }
+    ],
+    "heb.com": [
+        {
+            "selector": "div:has(> div > div[class^=\"Carousel_wrapper\"]:has-text(Promoted))",
+            "type": "extended"
+        },
+        {
+            "selector": "div:has(> div > div[class^=\"ModuleSet_moduleSetContainer\"]:has-text(Promoted))",
+            "type": "extended"
+        },
+        {
+            "selector": "div[class^=\"sc-\"]:has(> div[data-qe-id=\"productCard\"]:has-text(Promoted))",
+            "type": "extended"
+        }
+    ],
+    "hindustantimes.com": [
+        {
+            "selector": "body {padding-top:0;}",
+            "type": "css-injection"
+        }
+    ],
+    "historic-uk.com": [
+        {
+            "selector": ".article-sidebar:has-text(Advertisement)",
+            "type": "extended"
+        }
+    ],
+    "houstonchronicle.com": [
+        {
+            "selector": ".mb32.b-gray300:has-text(Advertisement)",
+            "type": "extended"
+        },
+        {
+            "selector": ".b-gray300:has-text(Advertisement)",
+            "type": "extended"
+        }
+    ],
+    "hulldailymail.co.uk": [
+        {
+            "selector": ".sticky ~ header {top:0;}",
+            "type": "css-injection"
+        }
+    ],
+    "iflscience.com": [
+        {
+            "selector": "#Billboard {height:0px;}",
+            "type": "css-injection"
+        }
+    ],
+    "ign.com": [
+        {
+            "selector": ".promo-card:has-text(/Become a member|IGN Plus|IGN Store/)",
+            "type": "extended"
+        }
+    ],
+    "ilmeteo.it": [
+        {
+            "selector": "#banner-mnz-topleft {height:80px;}",
+            "type": "css-injection"
+        }
+    ],
+    "inc.com": [
+        {
+            "selector": ".pr-\\[25px\\].py-\\[27px\\]:has-text(Apply Now)",
+            "type": "extended"
+        }
+    ],
+    "infographicjournal.com": [
+        {
+            "selector": ".et_pb_module:has-text(Partners)",
+            "type": "extended"
+        },
+        {
+            "selector": ".et_pb_module:has-text(Partners) + .et_pb_module",
+            "type": "extended"
+        },
+        {
+            "selector": ".et_pb_widget:has-text(Partners)",
+            "type": "extended"
+        }
+    ],
+    "instagram.com": [
+        {
+            "selector": "div[style=\"max-height: inherit; max-width: inherit; display: none !important;\"]:has(span:has-text(Paid partnership with ))",
+            "type": "extended"
+        },
+        {
+            "selector": "div[style=\"max-height: inherit; max-width: inherit; display: none !important;\"]:has(span:has-text(Paid partnership))",
+            "type": "extended"
+        },
+        {
+            "selector": "div[style=\"max-height: inherit; max-width: inherit;\"]:has(span:has-text(Paid partnership with ))",
+            "type": "extended"
+        }
+    ],
+    "interestingengineering.com": [
+        {
+            "selector": ".overline-small:has-text(advertisement)",
+            "type": "extended"
+        }
+    ],
+    "jewelosco.com": [
+        {
+            "selector": ".product-card-col:has-text(Sponsored)",
+            "type": "extended"
+        }
+    ],
+    "justjared.com": [
+        {
+            "selector": ".banner-spacer-top {max-height: 50px !important;}",
+            "type": "css-injection"
+        },
+        {
+            "selector": "[role=\"banner\"] {top:0 !important}",
+            "type": "css-injection"
+        }
+    ],
+    "kaufland.*": [
+        {
+            "selector": ".recommender-wrapper:has-text(Gesponsert)",
+            "type": "extended"
+        }
+    ],
+    "kayak.com": [
+        {
+            "selector": ".c9h3U:has-text(Share feedback)",
+            "type": "extended"
+        }
+    ],
+    "kids-in-mind.com": [
+        {
+            "selector": ".et_pb_code_inner:has-text(advertisement)",
+            "type": "extended"
+        }
+    ],
+    "kijiji.ca": [
+        {
+            "selector": "[data-testid^=\"listing-card-list-item-\"]:has-text(TOP AD)",
+            "type": "extended"
+        }
+    ],
+    "kingsfoodmarkets.com": [
+        {
+            "selector": ".product-card-col:has-text(Sponsored)",
+            "type": "extended"
+        }
+    ],
+    "kogan.com": [
+        {
+            "selector": "._2EeeR:has-text(Sponsored)",
+            "type": "extended"
+        },
+        {
+            "selector": ".rs-infinite-scroll > div:has-text(Sponsored)",
+            "type": "extended"
+        },
+        {
+            "selector": ".slider-slide:has-text(Sponsored)",
+            "type": "extended"
+        }
+    ],
+    "kohls.com": [
+        {
+            "selector": "[component-export=\"KmnMarqueeBannerWrapper\"]:has-text(Sponsored)",
+            "type": "extended"
+        },
+        {
+            "selector": "[id^=\"kmn-leaderboard-\"]:has-text(Sponsored)",
+            "type": "extended"
+        }
+    ],
+    "kslnewsradio.com": [
+        {
+            "selector": ".wrapper:has-text(Sponsored Articles)",
+            "type": "extended"
+        }
+    ],
+    "ksltv.com": [
+        {
+            "selector": ".wrapper:has-text(Sponsored Articles)",
+            "type": "extended"
+        }
+    ],
+    "ktar.com": [
+        {
+            "selector": ".wrapper:has-text(Sponsored Articles)",
+            "type": "extended"
+        }
+    ],
+    "laravel-news.com": [
+        {
+            "selector": ".mt-10:has-text(Laravel Jobs)",
+            "type": "extended"
+        }
+    ],
+    "leadership.ng": [
+        {
+            "selector": ".jeg_postblock:has-text(SPONSORED)",
+            "type": "extended"
+        }
+    ],
+    "linkedin.com": [
+        {
+            "selector": ".msg-overlay-list-bubble__conversations-list:has-text(/Anzeige|Sponsored|Promoted|Dipromosikan|Propagováno|Promoveret|Gesponsert|Promocionado|促銷內容|Post sponsorisé|프로모션|Post sponsorizzato|广告|プロモーション|Treść promowana|Patrocinado|Promovat|Продвигается|Marknadsfört|Nai-promote|ได้รับการโปรโมท|Öne çıkarılan içerik|Gepromoot|الترويج/)",
+            "type": "extended"
+        },
+        {
+            "selector": "[componentkey*=\"MAIN_FEED_RECENT\"] > [data-display-contents]:has-text(/Anzeige|Sponsored|Promoted|Dipromosikan|Propagováno|Promoveret|Gesponsert|Promocionado|促銷內容|Post sponsorisé|프로모션|Post sponsorizzato|广告|プロモーション|Treść promowana|Patrocinado|Promovat|Продвигается|Marknadsfört|Nai-promote|ได้รับการโปรโมท|Öne çıkarılan içerik|Gepromoot|الترويج/)",
+            "type": "extended"
+        },
+        {
+            "selector": "[componentkey*=\"MAIN_FEED_RECENT\"] > div[role=\"listitem\"] > [data-display-contents]:has-text(/Anzeige|Sponsored|Promoted|Dipromosikan|Propagováno|Promoveret|Gesponsert|Promocionado|促銷內容|Post sponsorisé|프로모션|Post sponsorizzato|广告|プロモーション|Treść promowana|Patrocinado|Promovat|Продвигается|Marknadsfört|Nai-promote|ได้รับการโปรโมท|Öne çıkarılan içerik|Gepromoot|الترويج/)",
+            "type": "extended"
+        },
+        {
+            "selector": "[componentkey*=\"MAIN_FEED_RELEVANCE\"] > [data-display-contents]:has-text(/Anzeige|Sponsored|Promoted|Dipromosikan|Propagováno|Promoveret|Gesponsert|Promocionado|促銷內容|Post sponsorisé|프로모션|Post sponsorizzato|广告|プロモーション|Treść promowana|Patrocinado|Promovat|Продвигается|Marknadsfört|Nai-promote|ได้รับการโปรโมท|Öne çıkarılan içerik|Gepromoot|الترويج/)",
+            "type": "extended"
+        },
+        {
+            "selector": "[componentkey*=\"MAIN_FEED_RELEVANCE\"]> div[role=\"listitem\"] > [data-display-contents]:has-text(/Anzeige|Sponsored|Promoted|Dipromosikan|Propagováno|Promoveret|Gesponsert|Promocionado|促銷內容|Post sponsorisé|프로모션|Post sponsorizzato|广告|プロモーション|Treść promowana|Patrocinado|Promovat|Продвигается|Marknadsfört|Nai-promote|ได้รับการโปรโมท|Öne çıkarılan içerik|Gepromoot|الترويج/)",
+            "type": "extended"
+        },
+        {
+            "selector": "div.feed-shared-update-v2:has(span.update-components-actor__description:has-text(/Anzeige|Sponsored|Promoted|Dipromosikan|Propagováno|Promoveret|Gesponsert|Promocionado|促銷內容|Post sponsorisé|프로모션|Post sponsorizzato|广告|プロモーション|Treść promowana|Patrocinado|Promovat|Продвигается|Marknadsfört|Nai-promote|ได้รับการโปรโมท|Öne çıkarılan içerik|Gepromoot|الترويج/))",
+            "type": "extended"
+        },
+        {
+            "selector": "div.feed-shared-update-v2:has(span.update-components-actor__sub-description--tla:has-text(/Anzeige|Sponsored|Promoted|Dipromosikan|Propagováno|Promoveret|Gesponsert|Promocionado|促銷內容|Post sponsorisé|프로모션|Post sponsorizzato|广告|プロモーション|Treść promowana|Patrocinado|Promovat|Продвигается|Marknadsfört|Nai-promote|ได้รับการโปรโมท|Öne çıkarılan içerik|Gepromoot|الترويج/))",
+            "type": "extended"
+        },
+        {
+            "selector": "div.feed-shared-update-v2:has(span.update-components-actor__sub-description:has-text(/Anzeige|Sponsored|Promoted|Dipromosikan|Propagováno|Promoveret|Gesponsert|Promocionado|促銷內容|Post sponsorisé|프로모션|Post sponsorizzato|广告|プロモーション|Treść promowana|Patrocinado|Promovat|Продвигается|Marknadsfört|Nai-promote|ได้รับการโปรโมท|Öne çıkarılan içerik|Gepromoot|الترويج/))",
+            "type": "extended"
+        },
+        {
+            "selector": "div[data-testid=\"mainFeed\"] > div[data-display-contents=\"true\"]:has(p:has-text(/Anzeige|Sponsored|Promoted|Dipromosikan|Propagováno|Promoveret|Gesponsert|Promocionado|促銷內容|Post sponsorisé|프로모션|Post sponsorizzato|广告|プロモーション|Treść promowana|Patrocinado|Promovat|Продвигается|Marknadsfört|Nai-promote|ได้รับการโปรโมท|Öne çıkarılan içerik|Gepromoot|الترويج/))",
+            "type": "extended"
+        }
+    ],
+    "liverpoolecho.co.uk": [
+        {
+            "selector": ".sticky ~ header {top:0;}",
+            "type": "css-injection"
+        }
+    ],
+    "livpost.co.uk": [
+        {
+            "selector": ".kg-cta-link-accent:has-text(SPONSORED)",
+            "type": "extended"
+        }
+    ],
+    "lmtonline.com": [
+        {
+            "selector": ".mb32.b-gray300:has-text(Advertisement)",
+            "type": "extended"
+        },
+        {
+            "selector": ".b-gray300:has-text(Advertisement)",
+            "type": "extended"
+        }
+    ],
+    "loblaws.ca": [
+        {
+            "selector": ".indiana-scroll-container > ul > li:has(.chakra-badge:has-text(/Sponsorisé|Sponsored/))",
+            "type": "extended"
+        },
+        {
+            "selector": ".product-tile-group__list__item:has-text(Sponsored)",
+            "type": "extended"
+        },
+        {
+            "selector": "[data-testid=\"product-grid\"]>div:has-text(Sponsored)",
+            "type": "extended"
+        },
+        {
+            "selector": ".chakra-container:has-text(Featured Items)",
+            "type": "extended"
+        }
+    ],
+    "lovenovels.net": [
+        {
+            "selector": "center:has-text(Advertisement)",
+            "type": "extended"
+        }
+    ],
+    "lyngsat.com": [
+        {
+            "selector": "font > [href] > font:has-text(Advertisements)",
+            "type": "extended"
+        }
+    ],
+    "magazine.raspberrypi.com": [
+        {
+            "selector": ".bg-rpi-grey-100:has-text(Advertisement)",
+            "type": "extended"
+        }
+    ],
+    "manchestereveningnews.co.uk": [
+        {
+            "selector": ".sticky ~ header {top:0;}",
+            "type": "css-injection"
+        }
+    ],
+    "manisteenews.com": [
+        {
+            "selector": ".mb32.b-gray300:has-text(Advertisement)",
+            "type": "extended"
+        },
+        {
+            "selector": ".b-gray300:has-text(Advertisement)",
+            "type": "extended"
+        }
+    ],
+    "manomano.*": [
+        {
+            "selector": ".Ssfiu-:has-text(/Patrocinado|Gesponsert|Sponsorisé|Sponsorizzato/)",
+            "type": "extended"
+        },
+        {
+            "selector": "[data-testid=\"productCardListing\"]:has-text(/Patrocinado|Gesponsert|Sponsorisé|Sponsorizzato/)",
+            "type": "extended"
+        }
+    ],
+    "mapchart.net": [
+        {
+            "selector": ".row:has-text(Advertisement)",
+            "type": "extended"
+        }
+    ],
+    "mapquest.co.uk": [
+        {
+            "selector": ".z-10.justify-center:has-text(Advertisement)",
+            "type": "extended"
+        }
+    ],
+    "martinsfoods.com": [
+        {
+            "selector": ".pdl-generic-content_full:has-text(Sponsored)",
+            "type": "extended"
+        },
+        {
+            "selector": "[data-product-id]:has-text(Sponsored)",
+            "type": "extended"
+        }
+    ],
+    "maxi.ca": [
+        {
+            "selector": ".indiana-scroll-container > ul > li:has(.chakra-badge:has-text(/Sponsorisé|Sponsored/))",
+            "type": "extended"
+        },
+        {
+            "selector": ".product-tile-group__list__item:has-text(Sponsored)",
+            "type": "extended"
+        },
+        {
+            "selector": "[data-testid=\"card\"]:has-text(sponsored)",
+            "type": "extended"
+        }
+    ],
+    "metoffice.gov.uk": [
+        {
+            "selector": ".header {top:0;}",
+            "type": "css-injection"
+        },
+        {
+            "selector": ".map {top:52px;}",
+            "type": "css-injection"
+        }
+    ],
+    "michigansthumb.com": [
+        {
+            "selector": ".mb32.b-gray300:has-text(Advertisement)",
+            "type": "extended"
+        },
+        {
+            "selector": ".b-gray300:has-text(Advertisement)",
+            "type": "extended"
+        }
+    ],
+    "middletownpress.com": [
+        {
+            "selector": ".mb32.b-gray300:has-text(Advertisement)",
+            "type": "extended"
+        },
+        {
+            "selector": ".b-gray300:has-text(Advertisement)",
+            "type": "extended"
+        }
+    ],
+    "mindbodygreen.com": [
+        {
+            "selector": "aside {background:transparent;}",
+            "type": "css-injection"
+        }
+    ],
+    "mirror.co.uk": [
+        {
+            "selector": ".sticky ~ header {top:0px;}",
+            "type": "css-injection"
+        }
+    ],
+    "mobalytics.gg": [
+        {
+            "selector": "aside > [class]:has-text(Advertisement)",
+            "type": "extended"
+        }
+    ],
+    "modivo.*": [
+        {
+            "selector": ".banner:has-text(/Sponsorizzato|Sponsorowane|Sponsorizat|Sponzorováno|Szponzorált|Спонсорирани|Sponsored|Gesponsert/)",
+            "type": "extended"
+        },
+        {
+            "selector": ".product:has-text(/Sponsorizzato|Sponsorowane|Sponsorizat|Sponzorováno|Szponzorált|Спонсорирани|Sponsored|Gesponsert/)",
+            "type": "extended"
+        }
+    ],
+    "motortrend.com": [
+        {
+            "selector": ".lg\\:p-8.p-6:has-text(ADVERTISEMENT)",
+            "type": "extended"
+        }
+    ],
+    "moviebite.cc": [
+        {
+            "selector": ".transition-all.overflow-hidden.w-full:has-text(Advertisement)",
+            "type": "extended"
+        }
+    ],
+    "mrt.com": [
+        {
+            "selector": ".mb32.b-gray300:has-text(Advertisement)",
+            "type": "extended"
+        },
+        {
+            "selector": ".b-gray300:has-text(Advertisement)",
+            "type": "extended"
+        }
+    ],
+    "music.youtube.com": [
+        {
+            "selector": "tp-yt-paper-dialog.ytmusic-popup-container:has-text(/We’re listening!|family plan|Premium|ad-free|background play|kept playing|month free|without the ads|Try YouTube Music/)",
+            "type": "extended"
+        }
+    ],
+    "myjournalcourier.com": [
+        {
+            "selector": ".mb32.b-gray300:has-text(Advertisement)",
+            "type": "extended"
+        },
+        {
+            "selector": ".b-gray300:has-text(Advertisement)",
+            "type": "extended"
+        }
+    ],
+    "myplainview.com": [
+        {
+            "selector": ".mb32.b-gray300:has-text(Advertisement)",
+            "type": "extended"
+        },
+        {
+            "selector": ".b-gray300:has-text(Advertisement)",
+            "type": "extended"
+        }
+    ],
+    "mysanantonio.com": [
+        {
+            "selector": ".mb32.b-gray300:has-text(Advertisement)",
+            "type": "extended"
+        },
+        {
+            "selector": ".b-gray300:has-text(Advertisement)",
+            "type": "extended"
+        }
+    ],
+    "navylookout.com": [
+        {
+            "selector": ".wp-block-template-part:has-text(Support us)",
+            "type": "extended"
+        }
+    ],
+    "neowin.net": [
+        {
+            "selector": ".ipsColumns_collapsePhone.classes:has-text(Our Sponsors)",
+            "type": "extended"
+        }
+    ],
+    "nerdwallet.com": [
+        {
+            "selector": "._3JhNDX:has-text(Advertisement)",
+            "type": "extended"
+        }
+    ],
+    "netflixjunkie.com": [
+        {
+            "selector": "[style=\"text-align:center\"]:has-text(ADVERTISEMENT)",
+            "type": "extended"
+        }
+    ],
+    "netmoms.de": [
+        {
+            "selector": "#G32 {grid-template-rows:unset;}",
+            "type": "css-injection"
+        }
+    ],
+    "newegg.com": [
+        {
+            "selector": ".product-banner:has-text(Sponsored)",
+            "type": "extended"
+        }
+    ],
+    "newfoundlandgrocerystores.ca": [
+        {
+            "selector": ".indiana-scroll-container > ul > li:has(.chakra-badge:has-text(/Sponsorisé|Sponsored/))",
+            "type": "extended"
+        },
+        {
+            "selector": ".product-tile-group__list__item:has-text(Sponsored)",
+            "type": "extended"
+        },
+        {
+            "selector": "[data-testid=\"card\"]:has-text(sponsored)",
+            "type": "extended"
+        }
+    ],
+    "news.yahoo.com": [
+        {
+            "selector": "div.md\\:block:has-text(Advertisement)",
+            "type": "extended"
+        }
+    ],
+    "newstimes.com": [
+        {
+            "selector": ".mb32.b-gray300:has-text(Advertisement)",
+            "type": "extended"
+        },
+        {
+            "selector": ".b-gray300:has-text(Advertisement)",
+            "type": "extended"
+        }
+    ],
+    "nextdoor.com": [
+        {
+            "selector": "[data-testid*=\"searchFeedItem\"]:has-text(Sponsored by)",
+            "type": "extended"
+        },
+        {
+            "selector": "[data-v3-view-type=\"V3Wrapper\"]:has(> [data-testid=\"feed-item-visibility-tracker\"]:has-text(Sponsored))",
+            "type": "extended"
+        },
+        {
+            "selector": "div[data-testid=\"feed-item-card\"]:has(span[class^=\"reset_\"]:has-text(А⁠d))",
+            "type": "extended"
+        }
+    ],
+    "nhregister.com": [
+        {
+            "selector": ".mb32.b-gray300:has-text(Advertisement)",
+            "type": "extended"
+        },
+        {
+            "selector": ".b-gray300:has-text(Advertisement)",
+            "type": "extended"
+        }
+    ],
+    "noelleeming.co.nz": [
+        {
+            "selector": "div.product-tile:has(span:has-text(Sponsored))",
+            "type": "extended"
+        }
+    ],
+    "nofrills.ca": [
+        {
+            "selector": ".indiana-scroll-container > ul > li:has(.chakra-badge:has-text(/Sponsorisé|Sponsored/))",
+            "type": "extended"
+        },
+        {
+            "selector": ".product-tile-group__list__item:has-text(Sponsored)",
+            "type": "extended"
+        },
+        {
+            "selector": "[data-testid=\"card\"]:has-text(sponsored)",
+            "type": "extended"
+        }
+    ],
+    "noon.com": [
+        {
+            "selector": ".swiper-slide:has-text(Sponsored)",
+            "type": "extended"
+        },
+        {
+            "selector": "span[class*=\"productContaine\"]:has(div:has-text(Sponsored))",
+            "type": "extended"
+        }
+    ],
+    "nordstrom.com": [
+        {
+            "selector": "article:has(.Yw5es:has-text(Sponsored))",
+            "type": "extended"
+        },
+        {
+            "selector": "ul[style^=\"padding: 0px; position: relative;\"] > li[class]:has-text(Sponsored)",
+            "type": "extended"
+        }
+    ],
+    "nzherald.co.nz": [
+        {
+            "selector": "section.section-chain--triple-image:has-text(Property news from OneRoof)",
+            "type": "extended"
+        },
+        {
+            "selector": "section:has-text(Partner content)",
+            "type": "extended"
+        },
+        {
+            "selector": ".element-action-button:has-text(DO YOU KNOW MORE)",
+            "type": "extended"
+        },
+        {
+            "selector": ".element-action-button:has-text(SHARE YOUR STORY)",
+            "type": "extended"
+        }
+    ],
+    "ourmidland.com": [
+        {
+            "selector": ".mb32.b-gray300:has-text(Advertisement)",
+            "type": "extended"
+        },
+        {
+            "selector": ".b-gray300:has-text(Advertisement)",
+            "type": "extended"
+        }
+    ],
+    "out.com": [
+        {
+            "selector": ".component.module-headline:has-text(FROM OUR SPONSORS)",
+            "type": "extended"
+        }
+    ],
+    "pavilions.com": [
+        {
+            "selector": ".product-card-col:has-text(Sponsored)",
+            "type": "extended"
+        }
+    ],
+    "perplexity.ai": [
+        {
+            "selector": ".py-sm.group:has-text(Sponsored)",
+            "type": "extended"
+        }
+    ],
+    "pexels.com": [
+        {
+            "selector": "[data-testid=\"column\"] [data-testid=\"item\"]:has-text(Sponsored)",
+            "type": "extended"
+        }
+    ],
+    "positive.news": [
+        {
+            "selector": ".pb--medium:has-text(Be part of the solution)",
+            "type": "extended"
+        }
+    ],
+    "praxistipps.chip.de": [
+        {
+            "selector": "#G32 {grid-template-rows:unset;}",
+            "type": "css-injection"
+        }
+    ],
+    "praxistipps.focus.de": [
+        {
+            "selector": "#G32 {grid-template-rows:unset;}",
+            "type": "css-injection"
+        }
+    ],
+    "pride.com": [
+        {
+            "selector": ".component.module-headline:has-text(FROM OUR SPONSORS)",
+            "type": "extended"
+        }
+    ],
+    "producthunt.com": [
+        {
+            "selector": ".cursor-pointer:has-text(Promoted)",
+            "type": "extended"
+        },
+        {
+            "selector": ".text-12:has-text(Promoted)",
+            "type": "extended"
+        },
+        {
+            "selector": "div[class=\"flex cursor-pointer items-start gap-4 rounded-lg bg-gray-50 p-4\"]:has-text(Promoted)",
+            "type": "extended"
+        }
+    ],
+    "property24.com": [
+        {
+            "selector": ".p24_tileContainer:has-text(Sponsored)",
+            "type": "extended"
+        }
+    ],
+    "propublica.org": [
+        {
+            "selector": ".bb-aside:has-text(Get in Touch)",
+            "type": "extended"
+        }
+    ],
+    "provigo.ca": [
+        {
+            "selector": ".indiana-scroll-container > ul > li:has(.chakra-badge:has-text(/Sponsorisé|Sponsored/))",
+            "type": "extended"
+        },
+        {
+            "selector": ".product-tile-group__list__item:has-text(Sponsored)",
+            "type": "extended"
+        },
+        {
+            "selector": "[data-testid=\"card\"]:has-text(sponsored)",
+            "type": "extended"
+        },
+        {
+            "selector": ".chakra-container:has-text(Featured Items)",
+            "type": "extended"
+        },
+        {
+            "selector": ".css-1nhzth8:has-text(/sponsorisé|sponsored/)",
+            "type": "extended"
+        }
+    ],
+    "psprices.com": [
+        {
+            "selector": ".creative:has-text(remove advertising)",
+            "type": "extended"
+        }
+    ],
+    "pushsquare.com": [
+        {
+            "selector": "span:has-text(or Subscribe)",
+            "type": "extended"
+        }
+    ],
+    "qvc.com": [
+        {
+            "selector": ".qModule:has-text(Sponsored)",
+            "type": "extended"
+        }
+    ],
+    "randalls.com": [
+        {
+            "selector": ".product-card-col:has-text(Sponsored)",
+            "type": "extended"
+        }
+    ],
+    "rclone.org": [
+        {
+            "selector": ".card:has(.card-header:has-text(Sponsor))",
+            "type": "extended"
+        }
+    ],
+    "read.amazon.*": [
+        {
+            "selector": "#readerChromeOverlayBottom.readerChromeOverlayBottom-banner-desktop {bottom:0 !important;}",
+            "type": "css-injection"
+        }
+    ],
+    "realcanadiansuperstore.ca": [
+        {
+            "selector": ".indiana-scroll-container > ul > li:has(.chakra-badge:has-text(/Sponsorisé|Sponsored/))",
+            "type": "extended"
+        },
+        {
+            "selector": ".product-tile-group__list__item:has-text(Sponsored)",
+            "type": "extended"
+        },
+        {
+            "selector": "[data-testid=\"card\"]:has-text(sponsored)",
+            "type": "extended"
+        }
+    ],
+    "regex101.com": [
+        {
+            "selector": "div > header + div > div + div:has-text(Sponsors)",
+            "type": "extended"
+        }
+    ],
+    "registercitizen.com": [
+        {
+            "selector": ".mb32.b-gray300:has-text(Advertisement)",
+            "type": "extended"
+        },
+        {
+            "selector": ".b-gray300:has-text(Advertisement)",
+            "type": "extended"
+        }
+    ],
+    "rome2rio.com": [
+        {
+            "selector": "#hotel-list-wrapper li:has-text(Ad)",
+            "type": "extended"
+        },
+        {
+            "selector": "[data-testid=\"hotel-list-item\"]:has-text(Ad)",
+            "type": "extended"
+        },
+        {
+            "selector": "div[aria-labelledby=\"schedules-header\"] > div > div:has-text(Ad)",
+            "type": "extended"
+        }
+    ],
+    "safeway.com": [
+        {
+            "selector": ".product-card-col:has-text(Sponsored)",
+            "type": "extended"
+        }
+    ],
+    "sainsburys.co.uk": [
+        {
+            "selector": ".pt-grid-item:has([data-testid=\"citrus-label\"]:has-text(Sponsored))",
+            "type": "extended"
+        },
+        {
+            "selector": "section header[data-test=\"c006-container-wrapper\"]:has-text(Sponsored)",
+            "type": "extended"
+        },
+        {
+            "selector": "section[class=\"ln-o-section ln-u-hard-bottom ln-u-margin-top*2\"]:has-text(Sponsored) + section[class=\"ln-o-section ln-u-hard-bottom ln-u-margin-top*2\"]",
+            "type": "extended"
+        }
+    ],
+    "salon.com": [
+        {
+            "selector": ".title:has-text(Advertisement)",
+            "type": "extended"
+        }
+    ],
+    "samsclub.com": [
+        {
+            "selector": "li[data-slide]:has-text(Sponsored)",
+            "type": "extended"
+        }
+    ],
+    "scamwarners.com": [
+        {
+            "selector": "center:has-text(Advertisement)",
+            "type": "extended"
+        }
+    ],
+    "sciencenews.org": [
+        {
+            "selector": "p:has-text(Sponsor Message)",
+            "type": "extended"
+        }
+    ],
+    "search.yahoo.com": [
+        {
+            "selector": "div.mb-28:has(span:has-text(Ads))",
+            "type": "extended"
+        }
+    ],
+    "seattleweekly.com": [
+        {
+            "selector": ".marketplace-row:has-text(Sponsored)",
+            "type": "extended"
+        }
+    ],
+    "semafor.com": [
+        {
+            "selector": ".suppress-rss:has(:has-text(Supported by))",
+            "type": "extended"
+        }
+    ],
+    "sephora.com": [
+        {
+            "selector": "div[class^=\"css-\"]:has(>a:has(span:has-text(Sponsored)))",
+            "type": "extended"
+        }
+    ],
+    "sfchronicle.com": [
+        {
+            "selector": ".mb32.b-gray300:has-text(Advertisement)",
+            "type": "extended"
+        },
+        {
+            "selector": ".b-gray300:has-text(Advertisement)",
+            "type": "extended"
+        }
+    ],
+    "sfgate.com": [
+        {
+            "selector": ".mb32.b-gray300:has-text(Advertisement)",
+            "type": "extended"
+        },
+        {
+            "selector": ".p20.mxa:has-text(BECOME A FRIEND)",
+            "type": "extended"
+        }
+    ],
+    "sfyimby.com": [
+        {
+            "selector": ".textwidget:has-text(ADVERTISEMENT)",
+            "type": "extended"
+        }
+    ],
+    "shaws.com": [
+        {
+            "selector": ".product-card-col:has-text(Sponsored)",
+            "type": "extended"
+        }
+    ],
+    "shipt.com": [
+        {
+            "selector": "div.swiper-slide:has-text(Sponsored)",
+            "type": "extended"
+        },
+        {
+            "selector": "li[class]:has-text(Sponsored)",
+            "type": "extended"
+        }
+    ],
+    "shopee.sg": [
+        {
+            "selector": ".shopee-header-section:has(> .shopee-header-section__content:has-text(Ad))",
+            "type": "extended"
+        },
+        {
+            "selector": "div[class=\"N_YeYe\"]:has(> .shopee_ic:has-text(Ad))",
+            "type": "extended"
+        },
+        {
+            "selector": "div[class=\"oMSmr0\"]:has(> .shopee_ic:has-text(Ad))",
+            "type": "extended"
+        }
+    ],
+    "slashdot.org": [
+        {
+            "selector": ".fhitem-story.fhitem:has-text(Sponsored Content)",
+            "type": "extended"
+        },
+        {
+            "selector": ".grid_24:has-text(Featured Content)",
+            "type": "extended"
+        }
+    ],
+    "sneakernews.com": [
+        {
+            "selector": ".site-header {top:0;}",
+            "type": "css-injection"
+        }
+    ],
+    "songbpm.com": [
+        {
+            "selector": "div.mb-6:has-text(Advertisement)",
+            "type": "extended"
+        }
+    ],
+    "sourceforge.net": [
+        {
+            "selector": "aside.m-sidebar-widget > .as-header:has-text(Featured)",
+            "type": "extended"
+        }
+    ],
+    "sowetan.co.za": [
+        {
+            "selector": ".content-list-block:has-text(News & insights from our commercial partners)",
+            "type": "extended"
+        }
+    ],
+    "spaceweatherlive.com": [
+        {
+            "selector": "div.my-2:has-text(Support SpaceWeatherLive.com!)",
+            "type": "extended"
+        }
+    ],
+    "spigotmc.org": [
+        {
+            "selector": "[style=\"text-align: center\"]:has-text(sponsored)",
+            "type": "extended"
+        }
+    ],
+    "sprouts.com": [
+        {
+            "selector": "li.product-wrapper:has(span:has-text(Sponsored))",
+            "type": "extended"
+        }
+    ],
+    "stamfordadvocate.com": [
+        {
+            "selector": ".mb32.b-gray300:has-text(Advertisement)",
+            "type": "extended"
+        },
+        {
+            "selector": ".b-gray300:has-text(Advertisement)",
+            "type": "extended"
+        }
+    ],
+    "staples.com": [
+        {
+            "selector": ".side-by-side-carousel__carousel_container:has-text(Sponsored Products)",
+            "type": "extended"
+        },
+        {
+            "selector": ".sku-configurator__skuOffsetCarouselNew:has(span:has-text(Sponsored products:))",
+            "type": "extended"
+        }
+    ],
+    "star-history.com": [
+        {
+            "selector": ".items-start.sidebar-sticky:has-text(Featured Products)",
+            "type": "extended"
+        }
+    ],
+    "starmarket.com": [
+        {
+            "selector": ".product-card-col:has-text(Sponsored)",
+            "type": "extended"
+        }
+    ],
+    "stocktwits.com": [
+        {
+            "selector": ".is-visible:has-text(Remove ads)",
+            "type": "extended"
+        },
+        {
+            "selector": ".leading-\\[16px\\]:has-text(Advertisement)",
+            "type": "extended"
+        }
+    ],
+    "stokesentinel.co.uk": [
+        {
+            "selector": ".sticky ~ header {top:0;}",
+            "type": "css-injection"
+        }
+    ],
+    "stuff.co.nz": [
+        {
+            "selector": ".common-html-frame.html-content:has-text(how much)",
+            "type": "extended"
+        },
+        {
+            "selector": ".html-content:has-text(Got a tip)",
+            "type": "extended"
+        }
+    ],
+    "target.com": [
+        {
+            "selector": ".ProductRecsLink-sc-4mw94v-0:has(p:has-text(sponsored))",
+            "type": "extended"
+        },
+        {
+            "selector": ".styles_ndsCarouselItem__dnUkr:has(p.h-text-sm:has-text(Sponsored))",
+            "type": "extended"
+        },
+        {
+            "selector": "[class*=\"styledCarouselItem\"]:has-text(Sponsored)",
+            "type": "extended"
+        },
+        {
+            "selector": "[data-test=\"ProductCardVariantRecommendation\"]:has-text(Sponsored)",
+            "type": "extended"
+        },
+        {
+            "selector": "[data-test=\"productCardVariantRecommendation\"]:has-text(Sponsored)",
+            "type": "extended"
+        },
+        {
+            "selector": "div[class^=\"styles_productCardVariantMiniWrapper_\"]:has(div.h-text-sm:has-text(Sponsored))",
+            "type": "extended"
+        },
+        {
+            "selector": "div[data-test=\"@web/ProductCard/ProductCardVariantAisle\"]:has-text(Sponsored)",
+            "type": "extended"
+        },
+        {
+            "selector": "div[data-test=\"@web/site-top-of-funnel/ProductCardWrapper\"]:has-text(sponsored)",
+            "type": "extended"
+        },
+        {
+            "selector": "div[data-test=\"ListingPageProductListing\"]:has(span:has-text(Sponsored))",
+            "type": "extended"
+        },
+        {
+            "selector": "div[data-test=\"addToCartSuccessModalRecommendationsTile\"]:has(p.h-text-xs:has-text(Sponsored))",
+            "type": "extended"
+        }
+    ],
+    "taste.com.au": [
+        {
+            "selector": ".main-header {top:0;}",
+            "type": "css-injection"
+        }
+    ],
+    "techonthenet.com": [
+        {
+            "selector": "div[class] > p:has-text(Advertisements)",
+            "type": "extended"
+        }
+    ],
+    "telugupeople.com": [
+        {
+            "selector": "table:has(> tbody > tr > td > a:has-text(Advertisements))",
+            "type": "extended"
+        }
+    ],
+    "temu.com": [
+        {
+            "selector": ".EKDT7a3v:has-text(AD)",
+            "type": "extended"
+        },
+        {
+            "selector": ".goods-container:has-text(AD)",
+            "type": "extended"
+        },
+        {
+            "selector": ".splide__slide:has-text(AD)",
+            "type": "extended"
+        }
+    ],
+    "theblock.co": [
+        {
+            "selector": ".py-4.my-6:has-text(Advertisement)",
+            "type": "extended"
+        }
+    ],
+    "thedailywtf.com": [
+        {
+            "selector": ".article-body > div:has-text([Advertisement])",
+            "type": "extended"
+        }
+    ],
+    "thehour.com": [
+        {
+            "selector": ".mb32.b-gray300:has-text(Advertisement)",
+            "type": "extended"
+        },
+        {
+            "selector": ".b-gray300:has-text(Advertisement)",
+            "type": "extended"
+        }
+    ],
+    "theintelligencer.com": [
+        {
+            "selector": ".mb32.b-gray300:has-text(Advertisement)",
+            "type": "extended"
+        },
+        {
+            "selector": ".b-gray300:has-text(Advertisement)",
+            "type": "extended"
+        }
+    ],
+    "theintercept.com": [
+        {
+            "selector": ".text-\\[18px\\]:has-text(Support Us)",
+            "type": "extended"
+        }
+    ],
+    "theregister.com": [
+        {
+            "selector": "article.large-12:has-text(SPONSORED FEATURE)",
+            "type": "extended"
+        }
+    ],
+    "thesaurus.com": [
+        {
+            "selector": "[class] > p:has-text(Advertisement)",
+            "type": "extended"
+        }
+    ],
+    "theworld.org": [
+        {
+            "selector": ".mui-style-9ulf7o-root:has-text(Donate today!)",
+            "type": "extended"
+        }
+    ],
+    "thingiverse.com": [
+        {
+            "selector": ".item-card-container:has-text(/^Ad$/)",
+            "type": "extended"
+        }
+    ],
+    "timeslive.co.za": [
+        {
+            "selector": ".content-list-block:has-text(News & insights from our commercial partners)",
+            "type": "extended"
+        }
+    ],
+    "timesofindia.indiatimes.com": [
+        {
+            "selector": "div[data-type=\"in_view\"]:has(> div > span:has-text(Tired of too many ads?))",
+            "type": "extended"
+        }
+    ],
+    "tlgrm.eu": [
+        {
+            "selector": ".cfeed-card:has-text(Promoted post)",
+            "type": "extended"
+        }
+    ],
+    "tomthumb.com": [
+        {
+            "selector": ".product-card-col:has-text(Sponsored)",
+            "type": "extended"
+        }
+    ],
+    "tossinggames.com": [
+        {
+            "selector": "tbody:has-text(Please visit our below advertisers)",
+            "type": "extended"
+        }
+    ],
+    "tribuna.com": [
+        {
+            "selector": "body {overflow:auto;}",
+            "type": "css-injection"
+        }
+    ],
+    "tripadvisor.*": [
+        {
+            "selector": ".AaFRW:has-text(Sponsored)",
+            "type": "extended"
+        },
+        {
+            "selector": "[data-automation=\"crossSellShelf\"] div:has(> span:has-text(Sponsored))",
+            "type": "extended"
+        },
+        {
+            "selector": "[data-automation=\"relatedStories\"] div > div:has(a:has-text(SPONSORED))",
+            "type": "extended"
+        },
+        {
+            "selector": "div[class=\"JYrkj w\"]:has(span:has-text(In partnership with))",
+            "type": "extended"
+        },
+        {
+            "selector": "div[class=\"JYrkj w\"]:has(span:has-text(Sponsored by))",
+            "type": "extended"
+        }
+    ],
+    "tripadvisor.com": [
+        {
+            "selector": ".cAWGu:has(a:has-text(Similar Sponsored Properties))",
+            "type": "extended"
+        },
+        {
+            "selector": ".tkvEM:has-text(Sponsored)",
+            "type": "extended"
+        },
+        {
+            "selector": "[aria-label=\"Map marker\"]:has-text(Sponsored)",
+            "type": "extended"
+        },
+        {
+            "selector": "[data-test=\"SL_list_item\"]:has-text(Sponsored)",
+            "type": "extended"
+        }
+    ],
+    "tumblr.com": [
+        {
+            "selector": "[style=\"background-color: rgb(124, 92, 255); color: rgb(255, 255, 255);\"]:abp-contains(Join over 100 million people)",
+            "type": "extended"
+        }
+    ],
+    "tumlook.com": [
+        {
+            "selector": "article:has-text(Sponsored)",
+            "type": "extended"
+        }
+    ],
+    "twitch.tv": [
+        {
+            "selector": ".video-player--stream-display-ad_lower-third {height:100% !important;}",
+            "type": "css-injection"
+        },
+        {
+            "selector": ".player-overlay-background:has-text(Consider Turbo)",
+            "type": "extended"
+        }
+    ],
+    "twitter.com": [
+        {
+            "selector": "h2[role=\"heading\"]:has-text(/Promoted|Gesponsert|Promocionado|Sponsorisé|Sponsorizzato|Promowane|Promovido|Реклама|Uitgelicht|Sponsorlu|Promotert|Promoveret|Sponsrad|Mainostettu|Sponzorováno|Promovat|Ajánlott|Προωθημένο|Dipromosikan|Được quảng bá|推廣|推广|推薦|推荐|プロモーション|프로모션|ประชาสมพนธ|परचरत|বজঞপত|تشہیر شدہ|مروج|تبلیغی|מקודם/)",
+            "type": "extended"
+        }
+    ],
+    "ulta.com": [
+        {
+            "selector": "li.ProductListingResults__productCard:has(.ProductCard__badge:has-text(Sponsored))",
+            "type": "extended"
+        }
+    ],
+    "undark.org": [
+        {
+            "selector": ".trigger-in-view:has-text(Support Undark Magazine)",
+            "type": "extended"
+        }
+    ],
+    "united24media.com": [
+        {
+            "selector": ".c-prose__ignore:has-text(Every article pushes)",
+            "type": "extended"
+        },
+        {
+            "selector": ".z-modal.border-white:has-text(Support)",
+            "type": "extended"
+        }
+    ],
+    "usnews.com": [
+        {
+            "selector": ".MuiPaper-elevation.MuiPaper-root:has-text(Create an Account)",
+            "type": "extended"
+        }
+    ],
+    "valumart.ca": [
+        {
+            "selector": ".indiana-scroll-container > ul > li:has(.chakra-badge:has-text(/Sponsorisé|Sponsored/))",
+            "type": "extended"
+        },
+        {
+            "selector": ".product-tile-group__list__item:has-text(Sponsored)",
+            "type": "extended"
+        },
+        {
+            "selector": "[data-testid=\"card\"]:has-text(sponsored)",
+            "type": "extended"
+        },
+        {
+            "selector": ".chakra-container:has-text(Featured Items)",
+            "type": "extended"
+        }
+    ],
+    "velo.outsideonline.com": [
+        {
+            "selector": "main {margin-top:10px;}",
+            "type": "css-injection"
+        }
+    ],
+    "vons.com": [
+        {
+            "selector": ".product-card-col:has-text(Sponsored)",
+            "type": "extended"
+        }
+    ],
+    "vpforums.org": [
+        {
+            "selector": ".ipsSideBlock.clearfix:has-text(Affiliates)",
+            "type": "extended"
+        }
+    ],
+    "w3schools.com": [
+        {
+            "selector": "#tryitLeaderboard ~ #container {top:48px;}",
+            "type": "css-injection"
+        },
+        {
+            "selector": ".trytopnav {top:0;}",
+            "type": "css-injection"
+        }
+    ],
+    "walmart.*": [
+        {
+            "selector": "div > div[io-id]:has-text(Sponsored)",
+            "type": "extended"
+        },
+        {
+            "selector": "div[role=\"group\"]:has(div:has-text(/Sponsored|Commandité/))",
+            "type": "extended"
+        }
+    ],
+    "warontherocks.com": [
+        {
+            "selector": ".tw\\:bg-\\[\\#5F1A16\\]:has-text(Join War on the Rocks)",
+            "type": "extended"
+        },
+        {
+            "selector": ".tw\\:bg-\\[\\#f8f9f9\\]:has-text(Join War on the Rocks)",
+            "type": "extended"
+        }
+    ],
+    "washingtonmonthly.com": [
+        {
+            "selector": ".wp-block-group__inner-container:has-text(Support the Washington Monthly)",
+            "type": "extended"
+        }
+    ],
+    "weather.com": [
+        {
+            "selector": ".bg-gray-100:has-text(Advertisement)",
+            "type": "extended"
+        },
+        {
+            "selector": ".min-h-12:has-text(Sign in to see fewer ads)",
+            "type": "extended"
+        }
+    ],
+    "winaero.com": [
+        {
+            "selector": "#qcihrbv5 > p:has-text(Tip)",
+            "type": "extended"
+        }
+    ],
+    "wings.io": [
+        {
+            "selector": ".form-group center:has-text(Advertisement)",
+            "type": "extended"
+        }
+    ],
+    "wired.com": [
+        {
+            "selector": ".table-container:has-text(Got a Tip?)",
+            "type": "extended"
+        }
+    ],
+    "wltreport.com": [
+        {
+            "selector": ".code-block:has-text(ADVERTISEMENT)",
+            "type": "extended"
+        }
+    ],
+    "wolt.com": [
+        {
+            "selector": "button:has(> div > div > div > span:has-text(Sponsored))",
+            "type": "extended"
+        },
+        {
+            "selector": "div:has(> div > div > div > div > div > p:has-text(Sponsored))",
+            "type": "extended"
+        }
+    ],
+    "woolworths.co.nz": [
+        {
+            "selector": "#cartology-product-cig-tile:has-text(Start Free Trial)",
+            "type": "extended"
+        },
+        {
+            "selector": "cdx-cta:has-text(Learn more)",
+            "type": "extended"
+        }
+    ],
+    "woolworths.com.au": [
+        {
+            "selector": "div[class^=\"recipe-card_component_recipe-card-container-\"]:has-text(Sponsored)",
+            "type": "extended"
+        }
+    ],
+    "woot.com": [
+        {
+            "selector": "[dir=\"auto\"]:has-text(ADVERTISEMENT)",
+            "type": "extended"
+        }
+    ],
+    "wunderground.com": [
+        {
+            "selector": ".content-wrap #inner-wrap {height:100vh;}",
+            "type": "css-injection"
+        }
+    ],
+    "www.google.com": [
+        {
+            "selector": "[aria-describedby=\"promo_desc_id\"]:has-text(/Time for a new laptop|Gemini, |Choose Chrome|built by Google|Search differently|Cherchez différemment|Search just got easier|Try more ways|Switch to Chrome|Keep things dark/)",
+            "type": "extended"
+        }
+    ],
+    "www.yahoo.com": [
+        {
+            "selector": ".uppercase.text-xs:has-text(Advertisement)",
+            "type": "extended"
+        }
+    ],
+    "www.youtube.com": [
+        {
+            "selector": "#content > .ytd-rich-section-renderer:has-text(YouTube Playables)",
+            "type": "extended"
+        },
+        {
+            "selector": ".YtdTalkToRecsFlowRendererHost:has-text(What hobbies are you interested in developing?)",
+            "type": "extended"
+        },
+        {
+            "selector": "tp-yt-paper-dialog.ytd-popup-container:has-text(/How do you feel|Which of the following|following Premium|Get background play|Choose all that apply|Become a member of this channel|Free trial|How are your|How interested|Live TV|Wish videos|better TV|cable box|cable reimagined|hidden fees|of YouTube TV|on YouTube TV|unlimited DVR|with YouTube TV|without the ads|try this feature|Terms apply|View live scores|YouTube experience/)",
+            "type": "extended"
+        },
+        {
+            "selector": ".YtdTalkToRecsFlowRendererHost:has-text(/Ask for videos|What do you like|Help us improve/)",
+            "type": "extended"
+        }
+    ],
+    "x.com": [
+        {
+            "selector": "h2[role=\"heading\"]:has-text(/Promoted|Gesponsert|Promocionado|Sponsorisé|Sponsorizzato|Promowane|Promovido|Реклама|Uitgelicht|Sponsorlu|Promotert|Promoveret|Sponsrad|Mainostettu|Sponzorováno|Promovat|Ajánlott|Προωθημένο|Dipromosikan|Được quảng bá|推廣|推广|推薦|推荐|プロモーション|프로모션|ประชาสมพนธ|परचरत|বজঞপত|تشہیر شدہ|مروج|تبلیغی|מקודם/)",
+            "type": "extended"
+        }
+    ],
+    "yahoo.com": [
+        {
+            "selector": ".leading-3:has-text(Advertisement)",
+            "type": "extended"
+        },
+        {
+            "selector": ".md\\:block.dark\\:bg-ramones:has-text(Advertisement)",
+            "type": "extended"
+        },
+        {
+            "selector": "div.md\\:block.pb-5:has-text(Advertisement)",
+            "type": "extended"
+        }
+    ],
+    "yalereview.org": [
+        {
+            "selector": ".lg\\:border-b-2:has-text(Support Our Commitment to Print)",
+            "type": "extended"
+        }
+    ],
+    "yelp.*": [
+        {
+            "selector": "main[class^=\"searchResultsContainer\"] li h2:has-text(Sponsored)",
+            "type": "extended"
+        }
+    ],
+    "yourdictionary.com": [
+        {
+            "selector": ".header {top:0;}",
+            "type": "css-injection"
+        }
+    ],
+    "yourindependentgrocer.ca": [
+        {
+            "selector": ".indiana-scroll-container > ul > li:has(.chakra-badge:has-text(/Sponsorisé|Sponsored/))",
+            "type": "extended"
+        },
+        {
+            "selector": ".product-tile-group__list__item:has-text(Sponsored)",
+            "type": "extended"
+        },
+        {
+            "selector": "[data-testid=\"card\"]:has-text(sponsored)",
+            "type": "extended"
+        },
+        {
+            "selector": ".chakra-container:has-text(Featured Items)",
+            "type": "extended"
+        }
+    ],
+    "yourstory.com": [
+        {
+            "selector": "[width]:has-text(ADVERTISEMENT)",
+            "type": "extended"
+        }
+    ],
+    "yts.*": [
+        {
+            "selector": ".bbj:has-text(Warning)",
+            "type": "extended"
+        },
+        {
+            "selector": ".col-lg-12:has-text(/Please enable|indirirken/)",
+            "type": "extended"
+        }
+    ],
+    "zehrs.ca": [
+        {
+            "selector": ".indiana-scroll-container > ul > li:has(.chakra-badge:has-text(/Sponsorisé|Sponsored/))",
+            "type": "extended"
+        },
+        {
+            "selector": ".product-tile-group__list__item:has-text(Sponsored)",
+            "type": "extended"
+        },
+        {
+            "selector": "[data-testid=\"card\"]:has-text(sponsored)",
+            "type": "extended"
+        },
+        {
+            "selector": ".chakra-container:has-text(Featured Items)",
+            "type": "extended"
+        }
+    ]
+}
