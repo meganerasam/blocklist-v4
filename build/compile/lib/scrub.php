@@ -143,6 +143,33 @@ function scrubBlockRules(array $rules, array $whitelist, array &$stats): array {
             }
         }
 
+        // 3. Generic-pattern main_frame blocks scoped to a whitelisted INITIATOR:
+        //    ABP's $popup maps to DNR main_frame, which catches ORDINARY navigation —
+        //    including the whitelisted site's own internal links (the blocked request's
+        //    destination can be the whitelisted domain itself, e.g. "|http*://*?" from
+        //    pornhub matching /view_video.php?...). Strip those initiators; drop the
+        //    rule when none remain. Destination-scoped rules (requestDomains or a
+        //    ||-anchored filter) are kept — they block popups TO a specific target,
+        //    never the site's own navigation. (2026-09-08)
+        if (isset($cond['initiatorDomains']) && is_array($cond['initiatorDomains'])
+            && !isset($cond['requestDomains'])
+            && in_array('main_frame', $cond['resourceTypes'] ?? [], true)
+            && !(isset($cond['urlFilter']) && strpos($cond['urlFilter'], '||') === 0)) {
+            $keptInit = [];
+            foreach ($cond['initiatorDomains'] as $d) {
+                if (isWhitelistCovered(strtolower($d), $whitelist)) {
+                    $stats['initiatorsStripped'] = ($stats['initiatorsStripped'] ?? 0) + 1;
+                    continue;
+                }
+                $keptInit[] = $d;
+            }
+            if (empty($keptInit)) {
+                $stats['rulesDropped']++;
+                continue;
+            }
+            $cond['initiatorDomains'] = $keptInit;
+        }
+
         $rule['condition'] = $cond;
         $out[] = $rule;
     }

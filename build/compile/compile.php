@@ -473,6 +473,19 @@ foreach ($rules as $rule) {
             }
         }
     }
+    // same guarantee for generic-pattern main_frame BLOCKS: with no destination scope
+    // they can match the whitelisted site's own navigation (ABP $popup over-breadth)
+    if ($type === 'block'
+        && !isset($rule['condition']['requestDomains'])
+        && in_array('main_frame', $rule['condition']['resourceTypes'] ?? [], true)
+        && !(isset($rule['condition']['urlFilter']) && strpos($rule['condition']['urlFilter'], '||') === 0)) {
+        foreach ($rule['condition']['initiatorDomains'] ?? [] as $d) {
+            $ld = strtolower((string) $d);
+            if (isWhitelistCovered($ld, $excl) || isWhitelistCovered($ld, $never)) {
+                fail("whitelist-covered initiator survived on generic main_frame block {$rule['id']}: $d");
+            }
+        }
+    }
     if ($type === 'block') {
         $hay = strtolower((string)($rule['condition']['urlFilter'] ?? '')
              . ' ' . (string)($rule['condition']['regexFilter'] ?? ''));
@@ -725,7 +738,7 @@ foreach (['kadhosts', 'adguarddns', 'anudeep', 'peterlowe'] as $tag) {
         . ' (dead −' . $hostsDeadDropped[$tag] . ' · retained +' . $hostsRetained[$tag] . ')';
 }
 $rep[] = '| ③ lanes (internal) | ' . $feedCell . ' |';
-$rep[] = '| ④ scrub (exclusion) | ' . $scrubStats['domainsRemoved'] . ' domains removed · ' . $scrubStats['rulesDropped'] . ' rules dropped · ' . $scrubStats['exclusionsAdded'] . ' carve-outs |';
+$rep[] = '| ④ scrub (exclusion) | ' . $scrubStats['domainsRemoved'] . ' domains removed · ' . $scrubStats['rulesDropped'] . ' rules dropped · ' . $scrubStats['exclusionsAdded'] . ' carve-outs · ' . ($scrubStats['initiatorsStripped'] ?? 0) . ' generic main_frame initiators stripped |';
 $rep[] = '| ④ omit H (never-block floor) | filters: ' . $hStats['domainsRemoved'] . ' removed / ' . $hStats['rulesDropped'] . ' dropped · popup lane: ' . $popupNeverDropped . ' · domains lane: ' . $trackerStats['never'] . ' · appends: ' . $appendNeverDropped . ' |';
 $rep[] = '| ④ veto (curated/vetoes.txt) | ' . $vetoed . ' block rules dropped |';
 $rep[] = '| ④ popup lane | ' . count($popupDomains) . ' domains → ' . count($popupRules) . ' redirect rules · excluded by whitelist: ' . count($popupExcluded) . ' |';

@@ -16,16 +16,16 @@
             }
         },
         "staging": {
-            "total": 10157,
+            "total": 10155,
             "byAction": {
                 "redirect": 63,
-                "block": 9017,
+                "block": 9015,
                 "allow": 1077
             },
             "idBands": {
                 "10000": 63,
                 "20000": 9000,
-                "30000": 17,
+                "30000": 15,
                 "40000": 1077
             }
         }
@@ -15884,16 +15884,19 @@
     "surgical": {
         "production_only": {
             "upstream-drift": {
-                "count": 99,
+                "count": 102,
                 "sample": [
                     "||cc.zorores.com/ad/*.vtt",
                     "||cxense.com/public/widget/",
                     "||cxense.com/cx.cce.js",
                     "||cxense.com/cx.js",
                     "^http.+",
+                    ".com./",
+                    "^http.+",
+                    "|http*://*?",
                     "^http.+",
                     "^http.+",
-                    "^http.+",
+                    "/?ref=",
                     "^http.+",
                     "||google.com/favicon.ico",
                     "||pornhub.*/_xa/ads",
@@ -16193,8 +16196,8 @@
                 ]
             }
         },
-        "identical": 9843,
-        "staging_only": 89
+        "identical": 9840,
+        "staging_only": 90
     },
     "gate": {
         "ext_id_placeholder": true,
@@ -16202,7 +16205,7 @@
         "floors": [
             {
                 "check": "staging total \u2265 75% of production",
-                "value_pct": 97.5,
+                "value_pct": 97.4,
                 "ok": true
             },
             {
@@ -16212,7 +16215,7 @@
             },
             {
                 "check": "production-only surgical \u2264 10% of production surgical",
-                "value_pct": 3.7,
+                "value_pct": 3.8,
                 "ok": true
             }
         ],
