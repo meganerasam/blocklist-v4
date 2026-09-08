@@ -5,7 +5,7 @@ The single factory repo replacing the four legacy repos (`blocklist`, `blocklist
 extension family (Ninja Block, Stop Ads Now, Ad Block Wonder, Ad Block Ghost).
 
 **Read first, in order:** `STATUS.md` (what's done / what's next, per file) → `README.md`
-(tree contract, 13-sheet table, compile order) → `sources/gsheet/SCHEMA.md` (sheet schemas +
+(tree contract, 14-sheet table, compile order) → `sources/gsheet/SCHEMA.md` (sheet schemas +
 ingest gates). Full design rationale + diagrams: the "Ninja List Atlas" artifact,
 sections 08–09 → https://claude.ai/code/artifact/6291c622-79d0-4fd5-b269-0ad6174ab0d1
 
@@ -18,27 +18,47 @@ sections 08–09 → https://claude.ai/code/artifact/6291c622-79d0-4fd5-b269-0ad
 3. **Fail-closed everywhere.** A failed/suspicious fetch keeps the previous mirror/snapshot and
    turns the run red. Never publish from a partial input.
 4. **Matching asymmetry:** Sheet G (omit-from-whitelist) matches EXACT host only — subdomain
-   matching would let google.com in G strip accounts.google.com from Sheet C. Sheet H
+   matching would let google.com in G strip accounts.google.com from the whitelist. Sheet H
    (omit-from-blocklist, the never-block floor) matches domain + ALL subdomains, and overrides
-   every block source including fleet blocklists — at COMPILE TIME ONLY. No dist artifact, no
-   client enforcement (decision 2026-09-08, verified): own-brand domains are unblockable
-   client-side anyway via the static self-vendor allow rules at priority 99999 (defaultlist.json
-   ids 3654/3655 outrank any local user block), and the rest of Sheet H (secured-pixel.com …)
-   is server-to-server traffic DNR never touches.
-5. **Exclusion set = (C ∪ E ∪ fleet community) − G**, built before ANY rule generation.
-   Fleet community = all-extension.csv merged votes ≥ 200 (decision 2026-09-08); the
-   ≥20-users/6-month floor is only the backends' EXPORT contract, never the trust bar.
-   The exclusion covers ALL blocking axes (2026-09-08, deviates from production in the safe
-   direction): wildcard-anchored block filters (`||name.*`) are dropped when a member matches
-   the prefix, and whitelisted domains are stripped from redirect-twin initiatorDomains —
-   the main-frame twin loses its source urlFilter by construction, so an initiator-scoped
-   twin would hijack EVERY navigation from the site (the live pornhub breakage, prod rule
-   11018 — likely manufacturing part of its own coerced Allow-votes). Allow rules are NEVER
-   scrubbed: they only ever help a whitelisted domain against the other rule populations.
-   Appends = Sheets D + F + fleet blocklists (after the whitelist pass, never scrubbed).
-   Final pass = omit H → veto (`curated/vetoes.txt`) → re-ID → `dist/` + `manifest.json`.
-6. **Sheets D and F are never DNS-verified** (user decision). The ledger covers the 4 hosts
-   snapshots + Sheet A only, and only filters what ships — dead Sheet-A entries go in reports.
+   every block source including fleet blocklists — via the curation set for the sources and
+   as the append floor at compile. No dist artifact, no client enforcement (decision
+   2026-09-08, verified): own-brand domains are unblockable client-side anyway via the
+   static self-vendor allow rules at priority 99999 (defaultlist.json ids 3654/3655 outrank
+   any local user block), and the rest of Sheet H (secured-pixel.com …) is server-to-server
+   traffic DNR never touches.
+5. **The pipeline is upstream → curate → verify → compile** (re-conception 2026-09-08,
+   evening). Mirrors are verbatim; `build/curate/curate.php` is the ONLY place any
+   whitelist/curation subtraction is derived, publishing `sanitized/` (committed —
+   curation decisions are git diffs). There is NO monolithic exclusion set: curation is
+   per source. User whitelist = all-extension.csv merged votes ≥ 50 [step 1, was ≥200]
+   − Sheet G [step 2] (the ≥20-users/6-month floor is only the backends' EXPORT contract).
+   **Curation set = H ∪ I (download sites) ∪ user whitelist**, matched domain+subdomains,
+   published as `sanitized/curation-set.json` — consumers (compile carves/guards/asserts,
+   shadow-diff buckets) READ it, never re-derive it. Recipes: Sheet A − set · hosts − set ·
+   easylist DNR lanes scrubbed on every block axis (batch strip + carve · ||-anchor ·
+   wildcard-TLD `||name.*` incl. deeper family members · generic-main_frame initiators —
+   the pornhub-class hijack, prod rule 11018); allow rules follow the SELF-PROTECTION
+   policy (decision 2026-09-08 evening, revised on adversarial-review evidence): allows
+   anchored on / entirely targeting curated domains and initiator-scoped exceptions are
+   KEPT (they only ever protect the curated site — generic path blocks still reach its
+   pages), and only MIXED requestDomains batches strip their curated members (a leftover
+   allow entry could neutralize a deliberate D/F append); cosmetic is never curated. Sheet I is ALSO a source (2026-09-08 evening): normalized
+   rows (strip protocol/path/port/www./trailing dot; invalid rows warn, never fail) − G →
+   `sanitized/download-sites.txt` (ABP, exact template
+   `@@||domain^$subdocument,stylesheet,font,xmlhttprequest,media,websocket,other`,
+   overwritten each run) → parsed back into a DNR allow lane (priority 2,
+   subdocument→sub_frame, websocket/other never dropped — unmapped option = fail).
+   Guards fail the build on `$document`/`$~third-party`/non-`@@` rule lines; compile
+   re-validates the lane on load and asserts min allow priority > max block priority
+   over the whole merge. Sheet C is PRODUCT-ONLY: ships as
+   `dist/whitelist/default.json` (−G), takes part in nothing; the C-vs-rules.json overlap
+   is flagged every run (`default_whitelist_vs_shipped`, redirect-initiator axis bolded).
+   Sheet E is mirrored but in NO recipe (role to be decided). Appends = Sheets D + F +
+   fleet blocklists, ABOVE curation (only H floors them; conflicts flagged).
+   Compile = assembly: sanitized lanes → veto → re-ID → budgets → `dist/` + `manifest.json`.
+6. **Sheets D and F are never DNS-verified** (user decision). The ledger's candidates are
+   the SANITIZED sources (sanitized/hosts + sanitized popup) — exactly what can ship, no
+   skip rules — and it only filters what ships; dead Sheet-A entries go in reports.
 7. **Fleet whitelist wins by default; Sheet G is the per-domain veto for gamed votes.**
    Votes on third-party ad infrastructure measure the "click Allow to continue" coercion
    funnel, not intent. Review artifact: `state/review/whitelist-conflicts.json` (regenerated by
@@ -48,21 +68,24 @@ sections 08–09 → https://claude.ai/code/artifact/6291c622-79d0-4fd5-b269-0ad
 
 ## Phase status (2026-09-07, evening)
 
-Source layer COMPLETE + live-tested: 13 sheet mirrors, traffic_quality split (21 markets),
+Source layer COMPLETE + live-tested: 14 sheet mirrors (Sheet I download-sites added
+2026-09-08, live: 50 rows), traffic_quality
+split (24 market files incl. the latam/apac/nordics rollups),
 extension whitelist pull (4 backends, 1,470 merged), hosts (4) + easylist (59) snapshots.
 Ledger seeded: 266,451 records (141k active · 72k dead · 53k backlog, drains at MAX_TESTS=60k).
 COMPILE COMPLETE + live-run: generators adapted to snapshots, `build/compile/compile.php`
-publishes all of dist/ (10,010 rules · byte-deterministic · budgets + change gate asserted),
-compile.yml written (07:00 + after green ingest). Decisions locked: dist as commits; fleet
+publishes all of dist/ (10,264 rules · byte-deterministic · budgets + change gate asserted),
+compile.yml written (07:00 + after green curate). Decisions locked: dist as commits; fleet
 fetches via backend mirrors. Shadow-diff harness (`build/review/shadow_diff.php`) run vs the
-Aug 2 production cache: 9,619 surgical rules identical, every divergence cause-classified,
-**0 unexplained** — the gate is clear.
-Workflows written: ingest.yml (12h) · extension.yml (06:00) · verify.yml (00:30) · compile.yml (07:00).
+Aug 2 production cache: 9,936 surgical rules identical, every divergence cause-classified,
+**0 unexplained** — the gate is clear (re-verified after every wave of the re-conception).
+Workflows written: ingest.yml (12h) · extension.yml (06:00) · curate.yml (after green
+ingest/extension) · verify.yml (00:30) · compile.yml (07:00 + after green curate).
 
 dist/ FINALIZED 2026-09-08: only called artifacts ship — network/rules.json ·
-whitelist/default.json · cosmetic/ · traffic_quality/ · standalone/ (I–M) · derived/
-(community ≥200 + exclusion-set, helpers for inspection) · manifest.json. Killed: feeds/,
-never-block.json, popup/, whitelist/{manual,community}.json (Sheet E is exclusion-side only;
+whitelist/default.json · cosmetic/ · traffic_quality/ · standalone/ (J–N) · derived/
+(community ≥50 −G + curation-set, helpers for inspection) · manifest.json. Killed: feeds/,
+never-block.json, popup/, whitelist/{manual,community}.json (Sheet E is in no recipe;
 each backend's short/long.php was internal derivation, replaced by rules.json readers —
 resurrect a flat popup artifact only if access logs ever show external short.php callers).
 
@@ -79,6 +102,24 @@ artifact — it is finished (re-running the old STEP-3 logic re-creates the hija
 ships [] on fetch failure). generate_cosmetic_rules.php keeps the per-brand merge, only its
 3 source URLs move to v4. Remaining brands: StopAds (24) · Wonder (23) · Ghost (26) ·
 North (21), each with its own substitution string.
+
+WHITELIST RE-CONCEPTION 2026-09-08 (evening, user decisions — landed in two waves):
+(1) Sheet C demoted to product-only — ships as whitelist/default.json, scrubs nothing.
+Measured effect: 1,857 C-covered block targets + 451 C-covered redirect targets ship
+(mostly ad/tracker hosts under C's shared-CDN members: cloudfront.net 1,519 ·
+s3.amazonaws.com · akamaihd.net · taobao.com — the old conception shielded whole CDN
+subtrees); redirect-INITIATOR axis (pornhub-class hijack, unreachable by a request-level
+client whitelist) = 0 today, flagged every run (`default_whitelist_vs_shipped`).
+(2) Fleet trust bar 200 → 50 votes. (3) CURATION STAGE built: Sheet I download-sites
+added (50 rows live; old I–M re-lettered J–N), build/curate/curate.php → sanitized/
+(committed), per-source recipes as in rule 5, curate.yml chained Ingest/Extension →
+Curate → Compile; ledger tests sanitized candidates (skip rules deleted); compile is
+assembly-only and reads sanitized/curation-set.json (the keep-three-in-sync problem is
+gone — the trust bar lives ONLY in curate.php). Block-side results byte-equal to the
+pre-stage pipeline; only designed deltas: allow destination-axis curation (−28 rules) +
+Sheet I effects. Chain re-verified: compile 10,216 rules · budgets fine · shadow gate
+CLEAR (0 unexplained, allow floor 97.3%). derived/exclusion-set.json → replaced by
+derived/curation-set.json.
 
 Still to do: upload the Ad Block Pro trio + repeat the shim for the other 4 brands (log-check
 before deleting short/long/blocklist.php) · extension changes (client-side extid
