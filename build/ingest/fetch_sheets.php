@@ -247,6 +247,31 @@ foreach ($specs as $key => $s) {
             if ($mk === '') $mk = 'global';
             $groups[$mk][$row['hostname']] = true;
         }
+        // CROSS-MARKET PROMOTION (restored 2026-09-08, user decision): v3's whitelist-json
+        // built general_global.json with a click-spread classifier that PROMOTED domains
+        // seen across several markets into the global list; V2's verbatim split published
+        // only the empty-market rows (789 vs v3's 1,173), so every backend serves
+        // global + <market> and the SMALL markets silently lost ~370 exemptions each
+        // (hk/tw/no/in kept ~62% of their v3 coverage; the domains were never lost, they
+        // just stayed in their own market files). A domain listed in >= this many distinct
+        // LITERAL markets is treated as market-agnostic and joins global. Count is taken
+        // BEFORE the rollups below — a rollup is a union of its members, so counting after
+        // would inflate every latam/apac/nordics member by one and promote on noise.
+        // Measured at the restore: 789 -> ~1,442 domains, recovering 424 of v3's 474.
+        $PROMOTE_MIN_MARKETS = 3;
+        $marketCount = [];
+        foreach ($groups as $mk => $set) {
+            if ($mk === 'global') continue;
+            foreach ($set as $h => $_) $marketCount[$h] = ($marketCount[$h] ?? 0) + 1;
+        }
+        $promoted = 0;
+        foreach ($marketCount as $h => $c) {
+            if ($c >= $PROMOTE_MIN_MARKETS && !isset($groups['global'][$h])) {
+                $groups['global'][$h] = true;
+                $promoted++;
+            }
+        }
+
         // Regional rollups (restored 2026-09-08): v3's whitelist-json shipped latam/apac/
         // nordics and the backends request them by region key — the verbatim per-market
         // split had silently dropped them. Each rollup = the UNION of its member markets
@@ -303,6 +328,7 @@ foreach ($specs as $key => $s) {
         if ($rejects) $notes[] = count($rejects) . ' rejected';
         if ($dupes)   $notes[] = count($dupes) . ' dupes';
         $notes[] = count($groups) . ' market files: ' . $mkSummary;
+        $notes[] = "global promoted +{$promoted} (listed in >= {$PROMOTE_MIN_MARKETS} markets)";
         $report[] = "| {$label} | {$st} | {$n} | {$deltaTxt} | " . str_replace('|', '\\|', implode(' · ', $notes)) . " |";
         foreach (array_slice($rejects, 0, 5) as [$ln, $val, $why]) {
             $report[] = "|  | | | | line {$ln}: `" . str_replace('|', '\\|', substr($val, 0, 60)) . "` — {$why} |";
