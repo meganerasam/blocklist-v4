@@ -1,7 +1,7 @@
 {
     "schema": 1,
-    "version": "b0873fdebd0da43061e9e63e8cb6f84b5c1c5f3b0ba62113d353ae99afab9b8a",
-    "generated_at": "2026-09-08T09:33:45+00:00",
+    "version": "754fd32999a302179e1ed61f0ed6731a7d83db93b5635ee5770535c537f4ddd3",
+    "generated_at": "2026-09-08T09:59:17+00:00",
     "counts": {
         "network_rules_total": 10155,
         "network_rules_by_action": {
@@ -11,7 +11,7 @@
         },
         "unsafe_rules": 63,
         "regex_rules": 63,
-        "shipped_block_domains": 183173,
+        "shipped_block_domains": 183179,
         "exclusion_set": 429
     },
     "budgets": {
@@ -51,8 +51,8 @@
             "count": 429
         },
         "network/rules.json": {
-            "sha256": "67c07bbfa57a07e0efaf5d3e6d3906e143e2d656975d0a3d524d9f91d7682875",
-            "bytes": 10825454,
+            "sha256": "1afa0535db3d9e8cde9c212f5a2ac232b20f1c7a32fce9f83c0cd14602d751bc",
+            "bytes": 10825567,
             "count": 10155
         },
         "standalone/allow-request-domains.json": {
@@ -74,6 +74,10 @@
         "standalone/whitelisted-domains-injection-enabled.json": {
             "sha256": "29c50f3b3877f803613818ccd9f4d5f266e3d4f48671d458b949aa14a0176e70",
             "bytes": 7539
+        },
+        "traffic_quality/apac.json": {
+            "sha256": "8c490c44cf5454be0b8253862b17a810d71661e43e51a6aa88ecb1219dc5ab65",
+            "bytes": 8814
         },
         "traffic_quality/at.json": {
             "sha256": "75cc979971634b8ced55a92a4bca3a8780f17b2141ba20a919c390455d8acee5",
@@ -127,6 +131,10 @@
             "sha256": "cac602fd56b6bdee234d41033d531030b04d2d19a522c4eeb058d01438a9a3c2",
             "bytes": 16246
         },
+        "traffic_quality/latam.json": {
+            "sha256": "94750b09aca2ec786c3a3e6b8487721067856acd54362b37bf0516c5ab1fb4cc",
+            "bytes": 17906
+        },
         "traffic_quality/mx.json": {
             "sha256": "2b68cd187d7b8a73e4427324039888f99a32adce3520a506cf7758c846a59985",
             "bytes": 7330
@@ -138,6 +146,10 @@
         "traffic_quality/no.json": {
             "sha256": "e0b7ea1d1400731e051a8178713cdc72a295d869416da3cad29794b04e112bde",
             "bytes": 2101
+        },
+        "traffic_quality/nordics.json": {
+            "sha256": "28fd56080835644eb752e40c65d01ad2e1e93de3b76942800a0671c3770a3862",
+            "bytes": 17021
         },
         "traffic_quality/se.json": {
             "sha256": "6abf70c4cbd6a683d299d6228ced9e74c12a23f424dbd564ef5e55be92ff3c8f",

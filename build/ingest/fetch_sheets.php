@@ -244,6 +244,22 @@ foreach ($specs as $key => $s) {
             if ($mk === '') $mk = 'global';
             $groups[$mk][$row['hostname']] = true;
         }
+        // Regional rollups (restored 2026-09-08): v3's whitelist-json shipped latam/apac/
+        // nordics and the backends request them by region key — the verbatim per-market
+        // split had silently dropped them. Each rollup = the UNION of its member markets
+        // (member lists copied from v3's generate_whitelist_files.php); a literal sheet
+        // market sharing a rollup name simply merges into the union. Rollups with no
+        // member present are not written, and a stale one is deleted like any market.
+        $ROLLUPS = [
+            'latam'   => ['br', 'mx', 'ar', 'co', 'cl', 'pe', 've', 'ec', 'gt', 'cu', 'bo', 'do', 'hn', 'py', 'sv', 'ni', 'cr', 'pa', 'uy', 'pr'],
+            'apac'    => ['sg', 'my', 'id', 'th', 'vn', 'ph', 'in', 'jp', 'kr', 'cn', 'tw', 'hk', 'nz'],
+            'nordics' => ['se', 'dk', 'fi', 'no'],
+        ];
+        foreach ($ROLLUPS as $region => $members) {
+            foreach ($members as $m) {
+                foreach ($groups[$m] ?? [] as $h => $_) $groups[$region][$h] = true;
+            }
+        }
         ksort($groups);
         $prevTotal = 0; $prevFiles = [];
         foreach (glob($dir . '/*.json') ?: [] as $f) {

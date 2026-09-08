@@ -24,6 +24,10 @@ Mirrored as a per-market split, directly at ingest, into **`sources/traffic_qual
 one flat sorted hostname array per market (`fr.json`, `de.json`, …); rows with an empty
 market land in `global.json`. `nb_click` stays sheet-side only. A market file whose market
 disappears from the sheet is deleted. `dist/traffic_quality/` publishes these files as-is.
+Three **regional rollups** are also written (restored 2026-09-08 — v3 shipped them and the
+backends request them by region key): `latam.json`, `apac.json`, `nordics.json`, each the
+UNION of its member markets (member lists in `fetch_sheets.php`, copied from v3's
+generator). A literal sheet market sharing a rollup name merges into the union.
 
 ## C–H · pipeline domain sheets · I–M · standalone domain sheets
 | domain | added | reason |
