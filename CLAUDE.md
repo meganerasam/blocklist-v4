@@ -91,7 +91,11 @@ Workflows written: ingest.yml (12h) · extension.yml (06:00) · curate.yml (afte
 ingest/extension) · verify.yml (00:30) · compile.yml (07:00 + after green curate).
 
 dist/ FINALIZED 2026-09-08: only called artifacts ship — network/rules.json ·
-whitelist/ · cosmetic/ · traffic_quality/ · standalone/ (J–N) · derived/
+whitelist/ · blocklist/popup-curated.json (2026-09-09: the popup/redirect lane as a flat
+array — Sheet A ∪ kadhosts − ledger dead − H − curation set, 42,116; staged from the SAME
+$popupDomains the redirect rules are chunked from, so file and rules.json cannot diverge;
+'blocklist' added to $managedDirs or the dir would never be pruned) ·
+cosmetic/ · traffic_quality/ · standalone/ (J–N) · derived/
 (community ≥50 −G + curation-set, helpers for inspection) · manifest.json.
 **whitelist/ carries the three whitelist flavours since 2026-09-09** (user request — one
 folder per consumer instead of three): default.json (Sheet C −G, 173) · community.json

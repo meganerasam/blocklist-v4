@@ -767,6 +767,12 @@ $stage('whitelist/default.json',    json_out($wlDefault, true), count($wlDefault
 // whose www. rows would never match). community.json is byte-identical to
 // derived/community.json — same variable, staged twice on purpose; derived/ stays the
 // inspection surface, whitelist/ is the product surface.
+// The popup/redirect lane as a flat domain array (2026-09-09, user request). Same
+// $popupDomains the redirect rules are chunked from a few lines below, so the file and
+// rules.json can never disagree: Sheet A ∪ kadhosts, − ledger dead, − H, − curation set.
+// This is the POST-ledger list — what actually ships. The pre-ledger curated halves stay
+// in sanitized/gsheet/popup.json and sanitized/hosts/kadhosts.json.
+$stage('blocklist/popup-curated.json',  json_out($popupDomains, true), count($popupDomains));
 $stage('whitelist/community.json',      json_out($wlCommunity, true), count($wlCommunity));
 $stage('whitelist/download-sites.json', json_out($dlSiteDomains, true), count($dlSiteDomains));
 $stage('derived/community.json',    json_out($wlCommunity, true), count($wlCommunity));
@@ -824,7 +830,7 @@ foreach ($artifacts as $rel => $a) {
 // Prune managed dist dirs: anything not staged this run is stale (a delisted market,
 // a retired artifact) and must not keep shipping. static-rulesets/ is not managed —
 // it is a reserved slot pending its own decision.
-$managedDirs = ['network', 'whitelist', 'cosmetic', 'traffic_quality', 'standalone', 'derived', 'feeds', 'popup'];
+$managedDirs = ['network', 'whitelist', 'blocklist', 'cosmetic', 'traffic_quality', 'standalone', 'derived', 'feeds', 'popup'];
 foreach ($managedDirs as $dir) {
     $base = "$ROOT/dist/$dir";
     if (!is_dir($base)) continue;

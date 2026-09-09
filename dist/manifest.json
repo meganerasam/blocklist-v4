@@ -1,7 +1,7 @@
 {
     "schema": 1,
-    "version": "8160997bd7475156b9069f75fcd69d7123c51a0ca72525b6fc828172ca6b5204",
-    "generated_at": "2026-09-09T14:47:58+00:00",
+    "version": "1a3aa9942a684d1c1e63d6d0e08dca188ffeebd55c075dbfcd35413974e1e39e",
+    "generated_at": "2026-09-09T14:57:45+00:00",
     "counts": {
         "network_rules_total": 10291,
         "network_rules_by_action": {
@@ -20,6 +20,11 @@
         "regex_rules": 1000
     },
     "artifacts": {
+        "blocklist/popup-curated.json": {
+            "sha256": "388a4b81721c2fc7eac8bbd436ed479e3add0072038a3d977dae92a1be5f5a3e",
+            "bytes": 1177346,
+            "count": 42116
+        },
         "cosmetic/extended.json": {
             "sha256": "8f47127ce49c432dcb9f29d107dd04772610293b81b1c37f29ff5a0b6aa52e9a",
             "bytes": 76285,
