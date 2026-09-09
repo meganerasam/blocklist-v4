@@ -693,10 +693,17 @@ $cssUnhide   = merge_css_maps($WORK, $CATS, 'allow', 'unhide.json');
 // ============================================================================
 // WHITELIST + TRAFFIC_QUALITY + NEVER-BLOCK ARTIFACTS
 // ============================================================================
-$minusG = function (array $list) use ($G): array {
+// − G − H (H added 2026-09-09: vetoed everywhere G is). G is exact-host, H is domain +
+// all subdomains — each keeps the semantics it has everywhere else in the pipeline.
+$neverSet = [];
+foreach ($H as $h) $neverSet[$h] = true;
+$minusG = function (array $list) use ($G, $neverSet): array {
     $set = [];
     foreach ($list as $d) $set[$d] = true;
     foreach ($G as $g) unset($set[$g]);          // same exact-host veto as user-WL step 2
+    foreach (array_keys($set) as $d) {
+        if (isWhitelistCovered($d, $neverSet)) unset($set[$d]);
+    }
     $out = array_keys($set);
     sort($out, SORT_STRING);
     return $out;

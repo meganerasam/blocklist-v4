@@ -21,7 +21,12 @@ sections 08–09 → https://claude.ai/code/artifact/6291c622-79d0-4fd5-b269-0ad
    matching would let google.com in G strip accounts.google.com from the whitelist. Sheet H
    (omit-from-blocklist, the never-block floor) matches domain + ALL subdomains, and overrides
    every block source including fleet blocklists — via the curation set for the sources and
-   as the append floor at compile. No dist artifact, no client enforcement (decision
+   as the append floor at compile. **Since 2026-09-09 H is ALSO vetoed everywhere G is**
+   (user decision — symmetric treatment): user whitelist step 2b, Sheet I, and compile's
+   `$minusG` (→ whitelist/default.json). Each keeps its own matcher: G exact-host, H
+   domain+subdomains. Effect today 0 (no H domain is in C/I or reaches the vote bar) — it
+   is a standing guarantee that no vote count can whitelist an own-brand domain and switch
+   the extension off on our own pages. Reported as `*_vetoed_by_H` in curation-drops.json. No dist artifact, no client enforcement (decision
    2026-09-08, verified): own-brand domains are unblockable client-side anyway via the
    static self-vendor allow rules at priority 99999 (defaultlist.json ids 3654/3655 outrank
    any local user block), and the rest of Sheet H (secured-pixel.com …) is server-to-server
