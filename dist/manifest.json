@@ -1,12 +1,12 @@
 {
     "schema": 1,
-    "version": "058f127f689e11f00eaf54353bb9b91eda6d04fbab5b0bed44232b559742e687",
-    "generated_at": "2026-09-08T17:34:53+00:00",
+    "version": "6f13702b703558ebc2d5a780e2913e91291959e04b92a2add8e3432a4b9ea7ee",
+    "generated_at": "2026-09-09T03:54:50+00:00",
     "counts": {
-        "network_rules_total": 10293,
+        "network_rules_total": 10294,
         "network_rules_by_action": {
             "redirect": 59,
-            "block": 9107,
+            "block": 9108,
             "allow": 1127
         },
         "unsafe_rules": 59,
@@ -51,9 +51,9 @@
             "count": 852
         },
         "network/rules.json": {
-            "sha256": "2aaa85341b1916144618da8ed5462247ffecaa7be3a9c4e5273de603f1db49bd",
-            "bytes": 10894226,
-            "count": 10293
+            "sha256": "e964f139e9029a8de1925134c4d6833d74494dbe54e43e9056be69655a9a8961",
+            "bytes": 10897786,
+            "count": 10294
         },
         "standalone/allow-request-domains.json": {
             "sha256": "47939522a90410ffd6a1606820c6d3427327bf53fc624e1cb54c1d007a760356",
