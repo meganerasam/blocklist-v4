@@ -2638,6 +2638,9 @@
         ".pos-top",
         ".vc_single_image-wrapper"
     ],
+    "battlemetrics.com": [
+        "a[href^=\"https://us.ovhcloud.com\"]"
+    ],
     "bavarianfootballworks.com": [
         "[data-concert=\"desktop_leaderboard_variable\"]",
         "[data-concert=\"leaderboard_top_tablet_desktop\"]"
@@ -12827,6 +12830,11 @@
     "hellenicshippingnews.com": [
         ".bigbanner"
     ],
+    "hellobanker.in": [
+        ".clearfix.entry > p:has(.adsbygoogle)",
+        ".stream-item:has(.adsbygoogle)",
+        ".widget_custom_html"
+    ],
     "hellobeautiful.com": [
         ".module-recommended"
     ],
@@ -17602,7 +17610,8 @@
     ],
     "mediaweek.com.au": [
         "#wallpaper",
-        ".leader-wrap-out"
+        ".leader-wrap-out",
+        ".md\\:min-h-\\[250px\\]"
     ],
     "medibang.com": [
         ".adBlock__pc",
@@ -26509,6 +26518,9 @@
         "#wgo_affiliates",
         "a[href^=\"https://www.sportscardforum.com/rbs_banner.php?\"]"
     ],
+    "sportsinjuryclinic.net": [
+        ".uagb-container-inner-blocks-wrap:has(> p.has-cyan-bluish-gray-color)"
+    ],
     "sportsjoe.ie": [
         "#div-gpt-top_page",
         ".mpu"
@@ -32021,6 +32033,9 @@
     ],
     "wantedinrome.com": [
         "img[width=\"300\"]"
+    ],
+    "wantmymtv.org": [
+        ".floating-coffee-btn"
     ],
     "wapbold.net": [
         ".up-button"
