@@ -13,6 +13,10 @@
 declare(strict_types=1);
 
 $ROOT = dirname(__DIR__, 2);
+// load_hosts_file / json_out / atomic_write — the kadhosts JSON sibling below must parse
+// hosts rows with the EXACT function curate uses, or sources/ and sanitized/ could
+// disagree about what a row means.
+require $ROOT . '/build/compile/lib/util.php';
 
 // ---- config: parse hosts + easylist_snapshots from sources/upstream.yml ----
 function load_upstreams(string $yml): array
@@ -103,6 +107,29 @@ foreach ($hosts as $name => $h) {
     $report[] = "| hosts/{$name} | {$icon} {$st} | {$detail} |";
 }
 
+// ---- kadhosts JSON sibling (2026-09-09) ------------------------------------------
+// sources/hosts/kadhosts.txt stays the VERBATIM upstream snapshot (its own headers,
+// hosts syntax). Consumers that want the popup list as a plain domain array had nothing
+// to call, so the parsed view is published beside it — same shape as the sheet mirrors
+// (flat, sorted, deduped string array). The .txt remains the source of truth; this file
+// is regenerated from whatever is ON DISK every run, so it tracks the snapshot whether
+// the fetch updated it, left it unchanged, or failed and kept the previous one.
+$kadJson    = $ROOT . '/sources/hosts/kadhosts.json';
+$kadDomains = array_keys(load_hosts_file($ROOT . '/sources/hosts/kadhosts.txt'));
+sort($kadDomains, SORT_STRING);
+if (!$kadDomains) {
+    // fail-closed: never overwrite a good JSON with an empty one
+    $report[] = "| hosts/kadhosts.json | ❌ FAILED | snapshot parsed to 0 domains — kept previous |";
+    $failed++;
+} else {
+    $kadContent = json_out($kadDomains, true) . "\n";
+    if (!is_file($kadJson) || file_get_contents($kadJson) !== $kadContent) {
+        atomic_write($kadJson, $kadContent);
+        $updated++;
+        $report[] = "| hosts/kadhosts.json | ✅ updated | " . count($kadDomains) . " domains |";
+    }
+}
+
 foreach ($el['files'] as $rel) {
     [$ok, $body] = fetch_raw($el['base_url'] . $rel);
     [$st, $detail] = $ok ? store_snapshot($ROOT . '/' . rtrim($el['dir'], '/') . '/' . $rel, $body, 50) : ['FAILED', $body . ' — kept previous'];
@@ -113,7 +140,7 @@ foreach ($el['files'] as $rel) {
     }
 }
 $report[] = "";
-$report[] = sprintf("**%d updated · %d failed · %d total**", $updated, $failed, count($hosts) + count($el['files']));
+$report[] = sprintf("**%d updated · %d failed · %d total**", $updated, $failed, count($hosts) + count($el['files']) + 1); // +1 = the kadhosts JSON sibling
 
 $md = implode("\n", $report) . "\n";
 echo $md;

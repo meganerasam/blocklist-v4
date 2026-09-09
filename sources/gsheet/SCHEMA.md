@@ -42,7 +42,7 @@ subdomains.
 | D | default-blocklist | org default blocks, appended as block rules (bootstrap: the 23 default_blockdom) |
 | E | manual-whitelist | mirrored; part of NO recipe for now (user decision 2026-09-08: role to be decided) |
 | F | manual-blocklist | appended block rules, like D |
-| G | omit-from-whitelist | step-2 veto on the user whitelist, EXACT host (holds the protected search hosts + gamed-vote vetoes) |
+| G | omit-from-whitelist | EXACT host, three consumers (holds the protected search hosts + gamed-vote vetoes): ① step-2 veto on the user whitelist · ② veto on Sheet I · ③ since 2026-09-09, the veto on BLANKET upstream allows (`scrubGVetoAllows`, guarded) — path/type-scoped exceptions stay |
 | H | omit-from-blocklist | never-block floor — curation-set member + append floor at compile |
 | I | download-sites | NEW 2026-09-08 (live, 50 rows), dual role: ① curation-set member — subtracted from every blocking source by curate.php; ② source — normalized (invalid rows warn) − G → `sanitized/download-sites.txt` (ABP allow list, exact 7-option template) → DNR allow lane at priority 2 (guards: $document/$~third-party/non-@@ = fail) |
 | J | whitelisted-domains-injection-enabled | standalone · on-demand JSON, never merged |

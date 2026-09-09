@@ -19,8 +19,10 @@
 //                           DNR allow lanes under the SELF-PROTECTION policy (allows on
 //                           curated destinations/initiators kept — they only ever protect
 //                           those sites; mixed batches strip curated members — see
-//                           scrubAllowRules); cosmetic outputs
-//                           (css/*, allow/unhide.json) pass through UNCURATED
+//                           scrubAllowRules), then the Sheet G VETO pass removes exact G
+//                           hosts from BLANKET allows only (no urlFilter, no
+//                           resourceTypes) — see scrubGVetoAllows, guarded; cosmetic
+//                           outputs (css/*, allow/unhide.json) pass through UNCURATED
 //                                                       → sanitized/easylist/<cat>/...
 //     Sheets C · B · J–N  — no curation (C is product-only; B and J–N verbatim)
 //     Sheets D · F + fleet blocklist — ABOVE curation: deliberate blocks are never
@@ -240,6 +242,9 @@ function work_json(string $path): array
 // between runs that do and don't strip one
 $blockStats = ['domainsRemoved' => 0, 'rulesDropped' => 0, 'exclusionsAdded' => 0, 'initiatorsStripped' => 0];
 $allowStats = ['domainsRemoved' => 0, 'rulesDropped' => 0, 'exclusionsAdded' => 0];
+// Sheet G's "public host" half (ruled 2026-09-09) — a separate pass from the curation
+// scrub above, with the opposite polarity: see scrubGVetoAllows() in lib/scrub.php.
+$gVetoStats = ['domainsRemoved' => 0, 'rulesDropped' => 0];
 $easylistOut = [];          // rel path under sanitized/easylist/ => JSON string
 $cosmeticOut = [];          // rel path => verbatim bytes (cosmetic is NEVER curated)
 foreach ($CATS as $cat) {
@@ -249,6 +254,12 @@ foreach ($CATS as $cat) {
     }
     foreach ([['allow', 'network.json'], ['allow', 'popup.json']] as [$folder, $file]) {
         $rules = scrubAllowRules(work_json("$WORK/$cat/$folder/$file"), $curation, $allowStats);
+        $rules = scrubGVetoAllows($rules, $G, $gVetoStats);
+        $leaks = gVetoAllowLeaks($rules, $G);
+        if ($leaks) {
+            fail("Sheet G veto guard: a blanket allow still names a G host in $cat/$folder/$file — "
+                . implode(', ', array_slice($leaks, 0, 10)));
+        }
         $easylistOut["$cat/$folder/$file"] = json_out(array_values($rules), false);
     }
     // cosmetic pass-through (user decision: keep cosmetic): unhide map + css outputs.
@@ -376,6 +387,11 @@ $artifacts['download-sites/allow.json']         = json_out($dlRules, false);    
 foreach ($hostsKept as $tag => $kept) {
     $artifacts["hosts/$tag.txt"] = implode("\n", $kept) . "\n";
 }
+// kadhosts also as JSON (2026-09-09) — it is the popup/redirect feed, so consumers want
+// it in the same shape as sanitized/gsheet/popup.json: the curated domain array. Same
+// content as hosts/kadhosts.txt above, different encoding; the .txt stays for the hosts
+// lane readers. The other three feeds are the domains lane and keep .txt only.
+$artifacts['hosts/kadhosts.json'] = json_out($hostsKept['kadhosts'], true);
 foreach ($easylistOut as $rel => $content) $artifacts["easylist/$rel"] = $content;
 foreach ($cosmeticOut as $rel => $content) $artifacts["easylist/$rel"] = $content;
 
@@ -403,6 +419,7 @@ $review = [
     'hosts_dropped'                => $hostsDropped,
     'easylist_block'               => $blockStats,
     'easylist_allow'               => $allowStats,
+    'easylist_allow_g_veto'        => $gVetoStats,
     'download_sites_mirror_missing' => $downloadMissing,
     'download_sites_invalid_rows'  => $dlWarnings,   // warned + skipped, never a failure
     'download_sites_vetoed_by_G'   => $dlVetoed,
@@ -427,6 +444,7 @@ foreach ($hostsKept as $tag => $kept) $hostsCell[] = "$tag " . count($kept) . ' 
 $rep[] = '| ③ hosts lanes | ' . implode(' · ', $hostsCell) . ' |';
 $rep[] = '| ④ easylist block lanes | ' . $blockStats['domainsRemoved'] . ' domains removed · ' . $blockStats['rulesDropped'] . ' rules dropped · ' . $blockStats['exclusionsAdded'] . ' carve-outs · ' . ($blockStats['initiatorsStripped'] ?? 0) . ' generic main_frame initiators stripped |';
 $rep[] = '| ④ easylist allow lanes (self-protection kept · mixed batches stripped) | ' . $allowStats['domainsRemoved'] . ' curated members stripped from mixed batches · ' . $allowStats['rulesDropped'] . ' rules dropped (policy: always 0) |';
+$rep[] = '| ④ easylist allow lanes (Sheet G veto: blanket allows only) | ' . $gVetoStats['domainsRemoved'] . ' G hosts stripped · ' . $gVetoStats['rulesDropped'] . ' rules dropped (axis would have emptied) · guard OK |';
 $rep[] = '| ④ cosmetic | pass-through, never curated |';
 $rep[] = '| ⑤ download_sites.txt (ABP allow source) | ' . count($dlRules) . ' rules (@@||domain^$' . DL_ALLOW_OPTIONS . ') · guards OK ($document/$~third-party/non-@@ = fail) |';
 if ($dlWarnings) {
