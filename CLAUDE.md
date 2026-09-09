@@ -91,8 +91,14 @@ Workflows written: ingest.yml (12h) · extension.yml (06:00) · curate.yml (afte
 ingest/extension) · verify.yml (00:30) · compile.yml (07:00 + after green curate).
 
 dist/ FINALIZED 2026-09-08: only called artifacts ship — network/rules.json ·
-whitelist/default.json · cosmetic/ · traffic_quality/ · standalone/ (J–N) · derived/
-(community ≥50 −G + curation-set, helpers for inspection) · manifest.json. Killed: feeds/,
+whitelist/ · cosmetic/ · traffic_quality/ · standalone/ (J–N) · derived/
+(community ≥50 −G + curation-set, helpers for inspection) · manifest.json.
+**whitelist/ carries the three whitelist flavours since 2026-09-09** (user request — one
+folder per consumer instead of three): default.json (Sheet C −G, 173) · community.json
+(votes ≥50 −G, 803 — byte-identical to derived/community.json, staged twice on purpose:
+derived/ = inspection, whitelist/ = product) · download-sites.json (50, the NORMALIZED
+G-vetoed form harvested from the validated allow lane's ||domain^ anchors, never the raw
+sheet whose www. rows would not match). Killed: feeds/,
 never-block.json, popup/, whitelist/{manual,community}.json (Sheet E is in no recipe;
 each backend's short/long.php was internal derivation, replaced by rules.json readers —
 resurrect a flat popup artifact only if access logs ever show external short.php callers).

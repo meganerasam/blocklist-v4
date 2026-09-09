@@ -142,6 +142,10 @@ $dlLanePath = "$SAN/download-sites/allow.json";
 if (!is_file($dlLanePath)) fail('sanitized download-sites lane missing (run build/curate/curate.php): ' . $dlLanePath);
 $dlAllow = json_decode((string) file_get_contents($dlLanePath), true);
 if (!is_array($dlAllow)) fail('download-sites lane is not valid JSON: ' . $dlLanePath);
+// The domain list is harvested from this same validation pass — never re-derived from the
+// sheet — so dist/whitelist/download-sites.json can only ever contain domains that
+// actually cleared every guard below (normalized, G-vetoed, ||domain^ anchored).
+$dlSiteDomains = [];
 foreach ($dlAllow as $i => $r) {
     if (($r['action']['type'] ?? '') !== 'allow') fail("download-sites lane rule #$i: action is not allow");
     if ((int) ($r['priority'] ?? 0) <= 1) fail("download-sites lane rule #$i: priority must be strictly above blocks (>1)");
@@ -155,7 +159,11 @@ foreach ($dlAllow as $i => $r) {
     }
     $uf = (string) ($r['condition']['urlFilter'] ?? '');
     if (!preg_match('/^\|\|[a-z0-9.-]+\^$/', $uf)) fail("download-sites lane rule #$i: urlFilter is not a ||domain^ anchor: $uf");
+    $dlSiteDomains[substr($uf, 2, -1)] = true;      // ||domain^ -> domain
 }
+$dlSiteDomains = array_keys($dlSiteDomains);
+sort($dlSiteDomains, SORT_STRING);
+if (!$dlSiteDomains) fail('download-sites lane yielded no domains — lane corrupted?');
 
 $vetoes = [];
 foreach (file("$ROOT/curated/vetoes.txt", FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES) ?: [] as $line) {
@@ -753,6 +761,14 @@ $stage = function (string $rel, string $content, ?int $count) use (&$artifacts) 
 
 $stage('network/rules.json',        json_out($rules, false), $totalRules);
 $stage('whitelist/default.json',    json_out($wlDefault, true), count($wlDefault));
+// whitelist/ now carries the three whitelist flavours side by side (2026-09-09), so a
+// consumer reads one folder instead of three: the org default (Sheet C −G), the fleet
+// list (votes ≥ bar −G) and the download sites (normalized, −G — NOT the raw sheet,
+// whose www. rows would never match). community.json is byte-identical to
+// derived/community.json — same variable, staged twice on purpose; derived/ stays the
+// inspection surface, whitelist/ is the product surface.
+$stage('whitelist/community.json',      json_out($wlCommunity, true), count($wlCommunity));
+$stage('whitelist/download-sites.json', json_out($dlSiteDomains, true), count($dlSiteDomains));
 $stage('derived/community.json',    json_out($wlCommunity, true), count($wlCommunity));
 $stage('derived/curation-set.json', json_out($curationOut, true), count($curationOut));
 
