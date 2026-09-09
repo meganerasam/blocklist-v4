@@ -313,6 +313,13 @@ foreach ([array_keys($popupSheet), array_keys($hostsFeeds['kadhosts'])] as $lane
         $popupDomains[$d] = true;
     }
 }
+// Sheet A's own contribution to the shipped lane — derived by intersecting with the very
+// map the redirect rules are built from, so blocklist/popup.json is a guaranteed subset of
+// blocklist/popup-curated.json (and of rules.json) rather than a parallel re-derivation.
+$popupSheetShipped = [];
+foreach (array_keys($popupSheet) as $d) if (isset($popupDomains[$d])) $popupSheetShipped[] = $d;
+sort($popupSheetShipped, SORT_STRING);
+
 $popupDomains = array_keys($popupDomains);
 sort($popupDomains, SORT_STRING);
 $popupExcluded = array_keys($popupExcluded);
@@ -773,12 +780,11 @@ $stage('whitelist/default.json',    json_out($wlDefault, true), count($wlDefault
 // This is the POST-ledger list — what actually ships. The pre-ledger curated halves stay
 // in sanitized/gsheet/popup.json and sanitized/hosts/kadhosts.json.
 $stage('blocklist/popup-curated.json',  json_out($popupDomains, true), count($popupDomains));
-// Sheet A alone, sanitized (2026-09-09, user request): the mirror curate produced, i.e.
-// Sheet A − curation set, PRE-ledger. Deliberately NOT a subset of popup-curated.json:
-// 2,440 of these are ledger-dead and therefore never ship. Keep that in mind when
-// comparing the two files — popup.json is "what the sheet contributes after curation",
-// popup-curated.json is "what actually ships".
-$stage('blocklist/popup.json',          json_out($A, true), count($A));
+// Sheet A alone, as SHIPPED (2026-09-09, user decision): same ledger + H + curation
+// filtering as the merged lane, so it is a strict subset of popup-curated.json. The
+// pre-ledger forms stay upstream — sources/gsheet/popup.json (raw sheet) and
+// sanitized/gsheet/popup.json (− curation set).
+$stage('blocklist/popup.json',          json_out($popupSheetShipped, true), count($popupSheetShipped));
 $stage('whitelist/community.json',      json_out($wlCommunity, true), count($wlCommunity));
 $stage('whitelist/download-sites.json', json_out($dlSiteDomains, true), count($dlSiteDomains));
 $stage('derived/community.json',    json_out($wlCommunity, true), count($wlCommunity));

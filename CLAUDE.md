@@ -94,9 +94,10 @@ dist/ FINALIZED 2026-09-08: only called artifacts ship — network/rules.json ·
 whitelist/ · blocklist/ (2026-09-09: popup-curated.json = the popup/redirect lane as a flat
 array — Sheet A ∪ kadhosts − ledger dead − H − curation set, 42,116; staged from the SAME
 $popupDomains the redirect rules are chunked from, so file and rules.json cannot diverge;
-'blocklist' added to $managedDirs or the dir would never be pruned; popup.json = Sheet A
-alone, sanitized, PRE-ledger 4,475 — deliberately NOT a subset of popup-curated.json,
-2,440 of it is ledger-dead and never ships) ·
+'blocklist' added to $managedDirs or the dir would never be pruned; popup.json = Sheet A's
+own SHIPPED contribution, 2,035 — same ledger+H+curation filtering, so a strict subset of
+popup-curated.json. Pre-ledger forms stay upstream: sources/gsheet/popup.json raw 4,759 ·
+sanitized/gsheet/popup.json −curation 4,475) ·
 cosmetic/ · traffic_quality/ · standalone/ (J–N) · derived/
 (community ≥50 −G + curation-set, helpers for inspection) · manifest.json.
 **whitelist/ carries the three whitelist flavours since 2026-09-09** (user request — one
