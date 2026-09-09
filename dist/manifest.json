@@ -1,7 +1,7 @@
 {
     "schema": 1,
-    "version": "1a3aa9942a684d1c1e63d6d0e08dca188ffeebd55c075dbfcd35413974e1e39e",
-    "generated_at": "2026-09-09T14:57:45+00:00",
+    "version": "eef80da47b80feb5d2c09af4e5c90fc669f16172410a07f1ef58ce89aa47a0d8",
+    "generated_at": "2026-09-09T15:06:08+00:00",
     "counts": {
         "network_rules_total": 10291,
         "network_rules_by_action": {
@@ -24,6 +24,11 @@
             "sha256": "388a4b81721c2fc7eac8bbd436ed479e3add0072038a3d977dae92a1be5f5a3e",
             "bytes": 1177346,
             "count": 42116
+        },
+        "blocklist/popup.json": {
+            "sha256": "ccc470d78a227d1c1f239092869a8c9d7dd2760d8f52052e5f840abff52e11c9",
+            "bytes": 116295,
+            "count": 4475
         },
         "cosmetic/extended.json": {
             "sha256": "8f47127ce49c432dcb9f29d107dd04772610293b81b1c37f29ff5a0b6aa52e9a",

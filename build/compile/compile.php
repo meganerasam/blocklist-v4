@@ -773,6 +773,12 @@ $stage('whitelist/default.json',    json_out($wlDefault, true), count($wlDefault
 // This is the POST-ledger list — what actually ships. The pre-ledger curated halves stay
 // in sanitized/gsheet/popup.json and sanitized/hosts/kadhosts.json.
 $stage('blocklist/popup-curated.json',  json_out($popupDomains, true), count($popupDomains));
+// Sheet A alone, sanitized (2026-09-09, user request): the mirror curate produced, i.e.
+// Sheet A − curation set, PRE-ledger. Deliberately NOT a subset of popup-curated.json:
+// 2,440 of these are ledger-dead and therefore never ship. Keep that in mind when
+// comparing the two files — popup.json is "what the sheet contributes after curation",
+// popup-curated.json is "what actually ships".
+$stage('blocklist/popup.json',          json_out($A, true), count($A));
 $stage('whitelist/community.json',      json_out($wlCommunity, true), count($wlCommunity));
 $stage('whitelist/download-sites.json', json_out($dlSiteDomains, true), count($dlSiteDomains));
 $stage('derived/community.json',    json_out($wlCommunity, true), count($wlCommunity));
