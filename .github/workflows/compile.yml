@@ -73,3 +73,23 @@ jobs:
             # ingest/verify/extension may have pushed since checkout — rebase once and retry
             git push || { git pull --rebase origin "${GITHUB_REF_NAME}" && git push; }
           fi
+
+      # The à-la-carte layer (user decision 2026-09-10): per-source domains + per-type DNR
+      # rules at three stages (raw/curated/merged) under dist/catalog/. Pure output layer —
+      # reads sources/ + sanitized/ + dist/, writes only dist/catalog/, own index+prune.
+      # Runs AFTER the canonical dist commit (adversarial review 2026-09-10): a
+      # catalog-only failure turns the run red but never withholds the fleet-serving
+      # artifacts; its separate commit keeps a torn catalog tree out of the repo, and the
+      # manifest.sanitized_provenance gate detects the stale-catalog window on the next run.
+      - name: Catalog — dist/catalog/ (raw · curated · merged)
+        run: php build/catalog/catalog.php
+
+      - name: Commit catalog
+        run: |
+          git add dist/catalog
+          if git diff --cached --quiet; then
+            echo "No catalog changes."
+          else
+            git commit -m "catalog: publish dist/catalog $(date -u '+%Y-%m-%d %H:%M')"
+            git push || { git pull --rebase origin "${GITHUB_REF_NAME}" && git push; }
+          fi

@@ -103,7 +103,24 @@ array — Sheet A ∪ kadhosts − ledger dead − omit-from-blocklist − curat
 $popupDomains the redirect rules are chunked from, so file and rules.json cannot diverge;
 'blocklist' added to $managedDirs or the dir would never be pruned; popup.json = Sheet A's
 own SHIPPED contribution, 2,040 — same ledger+H+curation filtering, so a strict subset of
-popup-curated.json. Pre-ledger forms stay upstream: sources/gsheet/popup.json raw 4,771 ·
+popup-curated.json. SINCE 2026-09-10 the lane is chunked PER SOURCE (user decision: no
+A/KAD mixing before the final merge — sheet-A chunks first, then kadhosts chunks; every
+redirect rule traces to exactly ONE source; the ~3-domain A∩KAD overlap ships in both,
+harmless). Zero budget cost by luck of the chunk math (2,040→1 + 39,872→8 = 9 chunks,
+same as the merged 41,909→9); verified: identical domain coverage + identical carves +
+every non-popup rule byte-identical to the pre-split artifact. The union still feeds
+popup-curated.json, so file and rules.json still cannot diverge.
+ALSO 2026-09-10 (user requests): `derived/curation-set.json` RENAMED
+`derived/to-filter-out-domains-set.json` (dist-side only — the consumer-facing name says
+what it is; `sanitized/curation-set.json` keeps the internal name, it is what compile,
+shadow-diff and the catalog read). And `network/` gained the BY-ORIGIN subsets
+`rules-hosts.json` (60 — the 4 hosts feeds: tracker chunks + twins + KADhosts chunks) and
+`rules-easylist.json` (10,175 — the surgical lanes incl. their twins), both with CANONICAL
+IDs so every rule cross-references rules.json; built from an origin tag carried through
+the merge (the `_src` marker is compile-internal and stripped at emission — verified: 0
+leaked keys, every subset rule byte-identical to its canonical twin, rules.json itself
+byte-identical to the pre-change artifact). Sheet-A chunks, download-sites allows and
+appends belong to neither subset. Pre-ledger forms stay upstream: sources/gsheet/popup.json raw 4,771 ·
 sanitized/gsheet/popup.json −curation 4,486) ·
 cosmetic/ · traffic_quality/ · standalone/ (K–O) · derived/
 (community ≥50 after both omit vetoes + curation-set, helpers for inspection) · manifest.json.
@@ -183,6 +200,48 @@ and compile — semantic names ($omitWhitelist, $omitBlocklist, $defaultBlocklis
 future re-lettering can never silently shift a variable onto another sheet's data. (The two
 lib/scrub.php helpers still take a `$G` PARAMETER — local to the function, fed
 $omitWhitelist; harmless but renamed for consistency.)
+
+CATALOG LAYER ADDED 2026-09-10 (user decision — the à-la-carte re-conception):
+`build/catalog/catalog.php` (compile.yml step after the budget asserts) publishes
+`dist/catalog/` — every source in two representations (domains.json + DNR rules split per
+action type) at three stages mirroring the pipeline: `raw/` (verbatim pre-curation —
+NEVER shippable as-is, predates the floors/vetoes/curation) · `curated/` (copies/reshapes
+of sanitized/ + dist/ — C's curated form = copy of whitelist/default.json; the ONLY
+computation is the appends' never-floor subtraction, the same one compile applies — rule 5
+stands, no curation-set derivation) · `merged/` (per-action subsets of network/rules.json KEEPING the
+canonical band IDs + partial domain rollups; the canonical merge is never duplicated —
+user decision: alias, not a second compile). IDs per-file sequential 1..N (user decision):
+files load as SEPARATE DNR rulesets (Chrome scopes ID uniqueness per ruleset);
+concatenation into one ruleset needs re-IDing, which the canonical merge already does.
+Index `dist/catalog/catalog.json`: stage contract, 25 sources with role/matching/counts +
+per-cell notes, merged refs, per-artifact sha256, content-derived version. Own gates
+(provenance freshness like compile + manifest↔rules.json coherence), staged writes + own
+prune (`catalog/` is NOT in compile's `$managedDirs` — each emitter prunes what it
+stages), byte-deterministic (verified). 117 files ≈ 71 MB (merged domains split per type: block · redirect · allow · cosmetic). Absent cells are information:
+veto sheets (E/H/I) have no rules by definition, J has no raw rules (normalization IS the
+curate recipe), cosmetic exists only for easylist/fanboy and is identical raw↔curated
+(never curated). `catalog/raw` knowingly reverses the feeds/ kill (feeds/ = unconsumed
+copies; catalog/raw = consumer-facing, indexed, pruned, user-requested). This amends the
+dist contract: catalog/ joins derived/ as a sanctioned exception to "only called artifacts".
+HARDENED same day after a 7-agent adversarial review (4 majors confirmed by repro, all
+fixed): ① domain extractions now take PURE `||domain^` anchors only (end-anchored regex —
+a path-scoped anchor was listing googleapis.com as a sitewide block target; the catalog's
+honest failure mode is under-coverage, never over); ② `manifest.json` gained
+`sanitized_provenance` (sha of sanitized/provenance.json at compile time) and the catalog
+gates on it — closes the reproduced hole where green-curate + gated compile left dist/ one
+generation behind sanitized/ and the catalog mixed the two; ③ compile.yml order is now
+Commit dist → Catalog → Commit catalog: a catalog-only failure turns the run red but never
+withholds the fleet-serving artifacts (the catalog re-execs the 10 generators, a failure
+surface the compile job never had); ④ repo growth is the ACCEPTED trade-off for now
+(~21 MB gz per full churn vs a 9 MB repo pack — flagged to the user, revisit if pack
+growth hurts; alternatives: orphan branch / releases / LFS). Also from review: raw popup
+lane lowercases like every other lane; E/J absent-mirror fail-soft honored (empty cell +
+note, never red); fleet-whitelist raw lane fails on empty mirror; merged split is dynamic
+per action type (a future modifyHeaders band ships as its own file, never a red run);
+download-sites harvest hard-fails off-template rules (parity with compile); cosmetic
+presence asserted equal between .work and sanitized/. Review also verified positively:
+every reshape byte-identical to the reference recipes, floor holds on every surface,
+index exact, two runs byte-identical, compile's dist untouched.
 
 Still to do: upload the Ad Block Pro trio + repeat the shim for the other 4 brands (log-check
 before deleting short/long/blocklist.php) · extension changes (client-side extid

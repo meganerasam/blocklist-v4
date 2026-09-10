@@ -26,7 +26,9 @@ curated/    break-glass hand-edited files only (vetoes.txt) — all normal human
 state/      pipeline memory (domain-ledger.json) — machine-owned, never hand-edited
 build/      ALL code (ingest / curate / verify / compile) — no code anywhere else
 dist/       the public API — ONLY artifacts a consumer actually calls, plus derived/
-            (compile helpers committed for inspection) · one manifest.json
+            (compile helpers committed for inspection) and catalog/ (the à-la-carte layer,
+            user decision 2026-09-10: per-source domains + per-type DNR rules at three
+            stages raw/curated/merged, indexed by catalog.json) · one manifest.json
 ```
 
 ## The fifteen sheets
@@ -65,6 +67,13 @@ dist/       the public API — ONLY artifacts a consumer actually calls, plus de
 3. **Compile = assembly** — sanitized lanes → veto (`curated/vetoes.txt`) · never-block floor +
    curation guards · appends D + manual-blocklist + fleet-BL (floored only by omit-from-blocklist + not-to-add, conflicts flagged) ·
    band re-ID · DNR budgets · staged writes → `dist/` + `manifest.json`
+4. **Catalog** — `build/catalog/catalog.php` (compile.yml step, after a green compile) →
+   `dist/catalog/`: every source in two representations (domains.json + DNR rules split
+   per action type, per-file IDs 1..N) at three stages — `raw/` (pre-curation, inspection
+   only, NEVER shippable as-is) · `curated/` (the sanitized recipes, safe standalone) ·
+   `merged/` (per-action subsets of rules.json keeping the canonical band IDs + domain
+   rollups; the canonical merge stays `network/rules.json`, never duplicated) — indexed,
+   with counts and per-cell notes, by `dist/catalog/catalog.json`
 
 ## Cold start — regenerating everything from a data-free clone
 
@@ -99,10 +108,12 @@ publishes the whole `dist/` tree (10,287 rules at 2026-09-10, byte-deterministic
 **clear: 0 unexplained divergences** vs the Aug 2 production cache.
 
 dist/ as-built (2026-09-10, only called artifacts): `network/rules.json` (extension) ·
+`network/rules-{hosts,easylist}.json` (by-origin subsets, canonical IDs — hosts 60 · easylist 10,175) ·
 `whitelist/` — default.json (backend sync) · community.json · download-sites.json ·
 `blocklist/` — popup-curated.json (the redirect lane as a flat list) · popup.json (Sheet A's
 shipped share) · `cosmetic/` (4 files) · `traffic_quality/` (per-market) · `standalone/`
-(Sheets K–O) · `derived/` (community + curation-set — inspection helpers) · `manifest.json`.
+(Sheets K–O) · `derived/` (community + to-filter-out-domains-set — inspection helpers) · `catalog/`
+(the à-la-carte layer, 2026-09-10: 117 files + catalog.json, ~71 MB) · `manifest.json`.
 
 Decisions locked 2026-09-07: `dist/` is published **as commits**; the fleet fetches it
 **via the backend mirrors** (raw GitHub only as fallback). Workflows activate on push:
