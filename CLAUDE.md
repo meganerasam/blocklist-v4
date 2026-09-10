@@ -12,7 +12,9 @@ sections 08–09 → https://claude.ai/code/artifact/6291c622-79d0-4fd5-b269-0ad
 ## Non-negotiable rules
 
 1. **No source URL anywhere except `sources/upstream.yml`.** Code found violating this gets fixed
-   or deleted (it already happened once).
+   or deleted (it already happened once). Enforced everywhere as of 2026-09-10:
+   `fetch_extension_whitelists.php` now reads the `extension_endpoints:` block instead of
+   carrying its own copy of the 4 backend URLs — adding a brand is a one-line yml edit.
 2. **Sheets are human territory.** Machines read mirrors, never write sheets. Domain mirrors are
    flat string arrays, rows preserved exactly as entered (no www-stripping, no "cleanup").
 3. **Fail-closed everywhere.** A failed/suspicious fetch keeps the previous mirror/snapshot and

@@ -30,34 +30,89 @@ declare(strict_types=1);
  */
 
 // ============================================================================
-// CONFIGURATION — one entry per extension backend.
-// To add an extension: deploy user-whitelisted-domains.php on that project's
-// server with the SAME shared $whitelist_export_token value in its config.php,
-// then append an entry here. Nothing else: the token secret and the workflow
-// env line are one-time setup shared by every extension.
+// CONFIGURATION — read from sources/upstream.yml, never hardcoded here.
+// Rule 1 of CLAUDE.md: no source URL lives anywhere except upstream.yml. The
+// endpoints used to be duplicated in this file while the yml block sat unread,
+// so the two could drift apart silently; the yml is now the only registry.
+// To add an extension, see the TO ADD AN EXTENSION note in that block.
 // ============================================================================
-$EXTENSIONS = [
-    [
-        'id'   => '23',
-        'name' => 'Ad Block Wonder',
-        'url'  => 'https://wonderupdates.com/user-whitelisted-domains.php',
-    ],
-    [
-        'id'   => '24',
-        'name' => 'Stop Ads Now',
-        'url'  => 'https://stopads-now.com/user-whitelisted-domains.php',
-    ],
-    [
-        'id'   => '25',
-        'name' => 'Ninja Block',
-        'url'  => 'https://ninja-block.com/user-whitelisted-domains.php',
-    ],
-    [
-        'id'   => '26',
-        'name' => 'Ad Block Ghost',
-        'url'  => 'https://adblockghost.com/user-whitelisted-domains.php',
-    ],
-];
+
+/**
+ * Parse the `extension_endpoints:` list out of sources/upstream.yml.
+ *
+ * Deliberately a tiny hand-rolled reader (php-yaml is not guaranteed on the
+ * runner, and the repo already parses this file the same way in
+ * fetch_upstreams.php / fetch_sheets.php): it accepts exactly the block style
+ * the file uses — "  - id: N" followed by indented "key: value" lines — and
+ * stops at the first line that is neither a comment nor indented under the key.
+ *
+ * Fail-closed: a missing file, a missing block, a malformed entry or an empty
+ * result aborts the run. Silently fetching zero endpoints would look like "all
+ * backends returned nothing" and could publish a shrunken whitelist.
+ */
+function wlf_load_endpoints(string $ymlPath): array
+{
+    if (!is_file($ymlPath)) {
+        fwrite(STDERR, "FATAL: upstream.yml not found: $ymlPath\n");
+        exit(1);
+    }
+    $lines = file($ymlPath, FILE_IGNORE_NEW_LINES);
+    $out = [];
+    $cur = null;
+    $inBlock = false;
+    foreach ($lines as $n => $raw) {
+        if (!$inBlock) {
+            if (preg_match('/^extension_endpoints:\s*$/', $raw)) $inBlock = true;
+            continue;
+        }
+        if (preg_match('/^\s*(#.*)?$/', $raw)) continue;          // blank / comment
+        if (preg_match('/^\S/', $raw)) break;                     // next top-level key
+        if (preg_match('/^\s*-\s*(\w+):\s*(.*)$/', $raw, $m)) { // "- id: 23"
+            if ($cur !== null) $out[] = $cur;
+            $cur = [];
+            $cur[$m[1]] = trim($m[2], " \"'");
+            continue;
+        }
+        if (preg_match('/^\s+(\w+):\s*(.*)$/', $raw, $m)) {      // "  brand: ..."
+            if ($cur === null) {
+                fwrite(STDERR, "FATAL: upstream.yml:" . ($n + 1) . " — key outside a list entry\n");
+                exit(1);
+            }
+            $cur[$m[1]] = trim($m[2], " \"'");
+            continue;
+        }
+        fwrite(STDERR, "FATAL: upstream.yml:" . ($n + 1) . " — unparseable line in extension_endpoints: $raw\n");
+        exit(1);
+    }
+    if ($cur !== null) $out[] = $cur;
+
+    if (!$inBlock) {
+        fwrite(STDERR, "FATAL: no extension_endpoints: block in $ymlPath\n");
+        exit(1);
+    }
+    $endpoints = [];
+    foreach ($out as $k => $e) {
+        foreach (['id', 'brand', 'url'] as $req) {
+            if (($e[$req] ?? '') === '') {
+                fwrite(STDERR, "FATAL: extension_endpoints entry #$k is missing '$req'\n");
+                exit(1);
+            }
+        }
+        if (!preg_match('#^https://#', $e['url'])) {
+            fwrite(STDERR, "FATAL: extension_endpoints entry {$e['id']}: url must be https — {$e['url']}\n");
+            exit(1);
+        }
+        // 'name' is what the rest of this file calls the label; the yml says 'brand'
+        $endpoints[] = ['id' => (string) $e['id'], 'name' => $e['brand'], 'url' => $e['url']];
+    }
+    if (!$endpoints) {
+        fwrite(STDERR, "FATAL: extension_endpoints: is empty — refusing to run with zero backends\n");
+        exit(1);
+    }
+    return $endpoints;
+}
+
+$EXTENSIONS = wlf_load_endpoints(dirname(__DIR__, 2) . '/sources/upstream.yml');
 
 // One shared token for ALL extension backends: every server's config.php holds
 // the same $whitelist_export_token value, and this env var (GitHub Actions

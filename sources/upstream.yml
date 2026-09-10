@@ -1,6 +1,5 @@
 # Every external input of the factory, in one reviewable file.
-# ingest.yml reads this. KNOWN GAP: build/ingest/fetch_extension_whitelists.php still
-# hardcodes the 4 backend endpoints below instead of reading extension_endpoints from here.
+# ingest.yml and fetch_extension_whitelists.php read this; nothing else may hardcode a source URL.
 # (The 59 EasyList URLs migrated here 2026-09-07; the category generators read ONLY the
 #  sources/easylist/ snapshots — zero live URLs — and run inside build/curate/curate.php.)
 
@@ -173,26 +172,27 @@ easylist_snapshots:
     - fanboy-addon/fanboy_annoyance_thirdparty.txt
 
 extension_endpoints:
-  # fleet feedback — pulled into sources/extension/<category>/ by extension.yml
-  # X-Whitelist-Token from repo secret USER_WHITELIST_DOMAINS; fail-closed; JSON output
-  # category param (?type=whitelist|blocklist) once backends ship it
-  - {
-      id: 23,
-      brand: "Ad Block Wonder",
-      url: "https://wonderupdates.com/user-whitelisted-domains.php",
-    }
-  - {
-      id: 24,
-      brand: "Stop Ads Now",
-      url: "https://stopads-now.com/user-whitelisted-domains.php",
-    }
-  - {
-      id: 25,
-      brand: "Ninja Block",
-      url: "https://ninja-block.com/user-whitelisted-domains.php",
-    }
-  - {
-      id: 26,
-      brand: "Ad Block Ghost",
-      url: "https://adblockghost.com/user-whitelisted-domains.php",
-    }
+  # fleet feedback — pulled into sources/extension/<category>/ by extension.yml.
+  # THE single registry of the backend URLs: build/ingest/fetch_extension_whitelists.php
+  # reads this block (rule 1 — no source URL lives anywhere else).
+  #
+  # TO ADD AN EXTENSION: deploy user-whitelisted-domains.php on that project's server
+  # with the SAME $whitelist_export_token value in its config.php, then append one
+  # entry below. Nothing else — the token secret (repo secret USER_WHITELIST_DOMAINS,
+  # sent as X-Whitelist-Token) and the workflow env line are one-time shared setup.
+  #
+  # id    -> names the mirror file sources/extension/whitelist/raw/extension-<id>.csv
+  # brand -> report label only
+  # url   -> the endpoint; fail-closed, a bad response keeps the previous CSV
+  - id: 23
+    brand: "Ad Block Wonder"
+    url: "https://wonderupdates.com/user-whitelisted-domains.php"
+  - id: 24
+    brand: "Stop Ads Now"
+    url: "https://stopads-now.com/user-whitelisted-domains.php"
+  - id: 25
+    brand: "Ninja Block"
+    url: "https://ninja-block.com/user-whitelisted-domains.php"
+  - id: 26
+    brand: "Ad Block Ghost"
+    url: "https://adblockghost.com/user-whitelisted-domains.php"
