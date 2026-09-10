@@ -296,7 +296,11 @@ foreach ($HOSTS as $tag => $path) {
 // break-glass veto applies here. The download-sites allow lane (validated above) joins
 // the surgical population — the veto only ever drops blocks, so it passes through.
 $filters = merge_category_dnr($WORK, $CATS);
-foreach ($dlAllow as $r) $filters[] = $r;
+// origin tag (compile-internal, STRIPPED at emission): powers the by-origin subsets
+// network/rules-{hosts,easylist}.json without disturbing the merge order in any way
+foreach ($filters as &$fRule) $fRule['_src'] = 'easylist';
+unset($fRule);
+foreach ($dlAllow as $r) { $r['_src'] = 'download-sites'; $filters[] = $r; }
 $vetoed = 0;
 $filters = array_values(array_filter($filters, function ($rule) use ($vetoes, &$vetoed) {
     if (($rule['action']['type'] ?? 'block') !== 'block') return true;
@@ -309,47 +313,61 @@ $filters = array_values(array_filter($filters, function ($rule) use ($vetoes, &$
 }));
 $filters = reid_sequential($filters);
 
-// popup.json — Sheet A + KADhosts as redirect rules (the popup/scam role)
+// popup lane — Sheet A and KADhosts as redirect rules (the navigation/scam role).
+// PER-SOURCE CHUNKING since 2026-09-10 (user decision: no A/KAD mixing before the final
+// merge — every redirect rule traces to exactly ONE source; the ~3-domain A∩KAD overlap
+// ships in both sources' chunks, which is harmless: same action, same priority).
 $popupExcluded = [];
-$popupDomains = [];
 $popupNeverDropped = 0;
+$popupLaneSets = ['sheetA' => [], 'kadhosts' => []];
+$popupUnion = [];
 // Lanes arrive pre-curated; these checks are GUARDS against what bypasses curate
 // (ledger retention re-adds, normalization edge cases) — expect counts near zero.
-foreach ([array_keys($popupSheet), array_keys($hostsFeeds['kadhosts'])] as $lane) {
+foreach (['sheetA' => array_keys($popupSheet), 'kadhosts' => array_keys($hostsFeeds['kadhosts'])] as $laneTag => $lane) {
     foreach ($lane as $d) {
         if (isWhitelistCovered($d, $never)) { $popupNeverDropped++; continue; }   // H floor
         if (isWhitelistCovered($d, $curation)) { $popupExcluded[$d] = true; continue; }
-        $popupDomains[$d] = true;
+        $popupLaneSets[$laneTag][$d] = true;
+        $popupUnion[$d] = true;
     }
 }
-// Sheet A's own contribution to the shipped lane — derived by intersecting with the very
-// map the redirect rules are built from, so blocklist/popup.json is a guaranteed subset of
-// blocklist/popup-curated.json (and of rules.json) rather than a parallel re-derivation.
-$popupSheetShipped = [];
-foreach (array_keys($popupSheet) as $d) if (isset($popupDomains[$d])) $popupSheetShipped[] = $d;
+// Sheet A's own contribution IS its lane set now (no more intersecting a merged map) —
+// still a guaranteed subset of blocklist/popup-curated.json and of rules.json.
+$popupSheetShipped = array_keys($popupLaneSets['sheetA']);
 sort($popupSheetShipped, SORT_STRING);
 
-$popupDomains = array_keys($popupDomains);
+// The union feeds blocklist/popup-curated.json — derived from the very sets the rules
+// are chunked from, so file and rules.json still cannot diverge.
+$popupDomains = array_keys($popupUnion);
 sort($popupDomains, SORT_STRING);
 $popupExcluded = array_keys($popupExcluded);
 sort($popupExcluded, SORT_STRING);
 
 $carveSet = $curation + $never;   // carve-outs protect curated + never-block subdomains
 $popupRules = [];
-foreach (array_chunk($popupDomains, CHUNK) as $domains) {
-    $cond = [
-        'regexFilter'    => '^http.+',
-        'requestDomains' => $domains,
-        'resourceTypes'  => ['main_frame'],
-    ];
-    $carve = carve_for_chunk($domains, $carveSet);
-    if ($carve) $cond['excludedRequestDomains'] = $carve;
-    $popupRules[] = [
-        'id'       => 0,
-        'priority' => 3,
-        'action'   => ['type' => 'redirect', 'redirect' => ['regexSubstitution' => REDIRECT_SUBSTITUTION]],
-        'condition' => $cond,
-    ];
+$popupRuleLane = [];   // parallel to $popupRules — which source each chunk came from
+$popupLaneChunks = [];
+foreach ($popupLaneSets as $laneTag => $set) {
+    $laneDomains = array_keys($set);
+    sort($laneDomains, SORT_STRING);
+    $popupLaneChunks[$laneTag] = 0;
+    foreach (array_chunk($laneDomains, CHUNK) as $domains) {
+        $cond = [
+            'regexFilter'    => '^http.+',
+            'requestDomains' => $domains,
+            'resourceTypes'  => ['main_frame'],
+        ];
+        $carve = carve_for_chunk($domains, $carveSet);
+        if ($carve) $cond['excludedRequestDomains'] = $carve;
+        $popupRules[] = [
+            'id'       => 0,
+            'priority' => 3,
+            'action'   => ['type' => 'redirect', 'redirect' => ['regexSubstitution' => REDIRECT_SUBSTITUTION]],
+            'condition' => $cond,
+        ];
+        $popupRuleLane[] = $laneTag;
+        $popupLaneChunks[$laneTag]++;
+    }
 }
 $popupRules = reid_sequential($popupRules);
 
@@ -441,18 +459,23 @@ $assignId = function (string $type) use (&$idCounters) {
 };
 
 $rules = [];
-foreach ($popupRules as $rule) {
+$ruleOrigins = [];   // parallel to $rules — the origin group of every emitted rule
+foreach ($popupRules as $pi => $rule) {
     $rule['id'] = $assignId('redirect');
     $rules[] = $rule;
+    $ruleOrigins[] = $popupRuleLane[$pi] === 'kadhosts' ? 'hosts' : 'gsheet-popup';
 }
 foreach ($domainRules as $rule) {
     $rule['id'] = $assignId($rule['action']['type']);
     $rules[] = $rule;
+    $ruleOrigins[] = 'hosts';
 }
 $dupAsRedirect = 0;
 $dupInitStripped = 0;
 $dupSkippedWhitelisted = 0;
 foreach ($filters as $rule) {
+    $origin = $rule['_src'] ?? 'easylist';
+    unset($rule['_src']);
     $type = $rule['action']['type'] ?? 'block';
     $rule['id'] = $assignId($type);
     if ($type === 'block') {
@@ -493,15 +516,31 @@ foreach ($filters as $rule) {
                     'action' => ['type' => 'redirect', 'redirect' => ['regexSubstitution' => REDIRECT_SUBSTITUTION]],
                     'condition' => $redirCond,
                 ];
+                $ruleOrigins[] = $origin;
                 $dupAsRedirect++;
             }
         }
     }
     $rules[] = $rule;
+    $ruleOrigins[] = $origin;
 }
 foreach ($appendRules as $rule) {
     $rule['id'] = $assignId('block');
     $rules[] = $rule;
+    $ruleOrigins[] = 'appends';
+}
+
+// By-origin subsets (user request 2026-09-10): the shipped hosts-family rules and the
+// shipped easylist-family rules as standalone files — SUBSETS of rules.json with the
+// canonical IDs kept, so every rule cross-references back to the merge. hosts = the 4
+// hosts feeds (tracker chunks + their navigation twins + the KADhosts chunks of the
+// navigation lane); easylist = the surgical lanes incl. their main-frame twins. The
+// Sheet-A chunks, the download-sites allows and the manual appends belong to neither.
+$rulesHosts = [];
+$rulesEasylist = [];
+foreach ($rules as $ri => $r) {
+    if ($ruleOrigins[$ri] === 'hosts')         $rulesHosts[] = $r;
+    elseif ($ruleOrigins[$ri] === 'easylist')  $rulesEasylist[] = $r;
 }
 
 // Final-pass safety asserts: H floor, veto, and the redirect-initiator guarantee
@@ -783,6 +822,8 @@ $stage = function (string $rel, string $content, ?int $count) use (&$artifacts) 
 };
 
 $stage('network/rules.json',        json_out($rules, false), $totalRules);
+$stage('network/rules-hosts.json',    json_out($rulesHosts, false), count($rulesHosts));
+$stage('network/rules-easylist.json', json_out($rulesEasylist, false), count($rulesEasylist));
 $stage('whitelist/default.json',    json_out($wlDefault, true), count($wlDefault));
 // whitelist/ now carries the three whitelist flavours side by side (2026-09-09), so a
 // consumer reads one folder instead of three: the org default (Sheet C − both omits), the fleet
@@ -804,7 +845,10 @@ $stage('blocklist/popup.json',          json_out($popupSheetShipped, true), coun
 $stage('whitelist/community.json',      json_out($wlCommunity, true), count($wlCommunity));
 $stage('whitelist/download-sites.json', json_out($dlSiteDomains, true), count($dlSiteDomains));
 $stage('derived/community.json',    json_out($wlCommunity, true), count($wlCommunity));
-$stage('derived/curation-set.json', json_out($curationOut, true), count($curationOut));
+// renamed from curation-set.json (user request 2026-09-10): the name says what it IS for
+// a consumer — the set of domains filtered out of every blocking source. The canonical
+// derivation keeps its internal name (sanitized/curation-set.json, written by curate.php).
+$stage('derived/to-filter-out-domains-set.json', json_out($curationOut, true), count($curationOut));
 
 $stage('cosmetic/generic.css',     $genericCss, count($selectorsList));
 $stage('cosmetic/specific.json',   json_out($cssSpecific, true), count($cssSpecific));
@@ -836,6 +880,10 @@ $manifest = [
     'schema'       => 1,
     'version'      => $version,
     'generated_at' => $generatedAt,
+    // ties this dist generation to the sanitized/ generation it was assembled from —
+    // build/catalog/catalog.php refuses to run on a mismatch (no mixed-generation
+    // catalog; adversarial review 2026-09-10)
+    'sanitized_provenance' => hash('sha256', (string) file_get_contents("$SAN/provenance.json")),
     'counts'       => [
         'network_rules_total'   => $totalRules,
         'network_rules_by_action' => $byAction,
@@ -915,10 +963,13 @@ foreach (['kadhosts', 'adguarddns', 'anudeep', 'peterlowe'] as $tag) {
 $rep[] = '| ③ lanes (internal) | ' . $feedCell . ' |';
 $rep[] = '| ④ guards (post-curation leaks: retention re-adds, edge cases) | popup lane: curation ' . count($popupExcluded) . ' · H ' . $popupNeverDropped . ' · domains lane: curation ' . $trackerStats['excl'] . ' · H ' . $trackerStats['never'] . ' · retention blocked by curation: ' . $hostsRetainedCurated . ' · appends H −' . $appendNeverDropped . ' |';
 $rep[] = '| ④ veto (curated/vetoes.txt) | ' . $vetoed . ' block rules dropped |';
-$rep[] = '| ④ popup lane | ' . count($popupDomains) . ' domains → ' . count($popupRules) . ' redirect rules |';
+$rep[] = '| ④ popup lane | ' . count($popupDomains) . ' domains → ' . count($popupRules)
+    . ' redirect rules, chunked PER SOURCE (sheet-A ' . count($popupLaneSets['sheetA']) . ' → ' . $popupLaneChunks['sheetA']
+    . ' · kadhosts ' . count($popupLaneSets['kadhosts']) . ' → ' . $popupLaneChunks['kadhosts'] . ') |';
 $rep[] = '| ④ domains lane | ' . count($trackerDomains) . ' domains → ' . count($domainRules) . ' rules (easylist-covered −' . $trackerStats['covered'] . ') |';
 $rep[] = '| ⑤ appends (D + G + fleet-BL) | ' . count($appendShipped) . ' domains → ' . count($appendRules) . ' rules · H −' . $appendNeverDropped . ' · **conflicts vs whitelist: ' . count($appendConflicts) . '** · **whitelisted subdomains overridden by an append parent: ' . count($appendParentOverrides) . '** |';
 $rep[] = '| ⑥ rules.json | **' . $totalRules . ' rules** (' . implode(' · ', array_map(fn ($k, $v) => "$k $v", array_keys($byAction), $byAction)) . ') · main-frame dup→redirect ' . $dupAsRedirect . ' (whitelisted initiators stripped ' . $dupInitStripped . ' · twins skipped ' . $dupSkippedWhitelisted . ') |';
+$rep[] = '| ⑥ by-origin subsets | rules-hosts.json ' . count($rulesHosts) . ' · rules-easylist.json ' . count($rulesEasylist) . ' (IDs canoniques) |';
 $rep[] = '| ⑥ download-sites allow lane | ' . count($dlAllow) . ' rules merged (validated: allow · priority>blocks · full 7-type map incl. websocket/other) · global assert: min allow prio ' . ($minAllowPrio === PHP_INT_MAX ? '—' : $minAllowPrio) . ' > max block prio ' . $maxBlockPrio . ' |';
 $rep[] = '| ⑥ C (product-only) vs shipped | block targets ' . count($cShippedBlock) . ' · redirect targets ' . count($cShippedRedirect) . ' · **redirect initiators (navigation hijack): ' . count($cHijackInitiators) . '** |';
 $rep[] = '| budgets | total ' . $totalRules . '/' . BUDGET_TOTAL_RULES . ' · unsafe ' . $unsafeRules . '/' . BUDGET_UNSAFE_RULES . ' · regex ' . $regexRules . '/' . BUDGET_REGEX_RULES . ' |';
