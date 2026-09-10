@@ -1,0 +1,1510 @@
+{
+    "schema": 1,
+    "version": "85032c2b2d15d9d8909af89e3318dead704710332518ae37bbfe876b247f70e0",
+    "built_from": {
+        "dist_manifest_version": "fd0a9b02cb1466b4f35a0118440a3758c2c875433e6982a1f33d64879d0b4ec3"
+    },
+    "contract": {
+        "stages": {
+            "raw": "each source verbatim, BEFORE any subtraction — inspection/composition only, NEVER shippable as-is (predates the never-block floor, the vetoes and the curation set)",
+            "curated": "each source after its own curation recipe (from sanitized/ — curate.php is the only place subtraction is derived); safe standalone, but pre-ledger and pre-merge-dedup",
+            "merged": "the cross-source cumulés; the canonical merge stays network/rules.json"
+        },
+        "ids": "per-file sequential 1..N — files are loadable as SEPARATE DNR rulesets (Chrome scopes rule-ID uniqueness per ruleset); concatenating catalog files into ONE ruleset requires re-IDing, which the canonical merge already does. merged/rules/* keep the canonical band IDs instead.",
+        "budgets": "Chrome DNR budgets apply to what a consumer LOADS, not per file — combine lanes under your own budget using the counts below (canonical caps: 30,000 rules · 5,000 redirect/modifyHeaders · 1,000 regex)",
+        "absent_cells": "a missing cell is information, not an omission: veto sheets produce no rules by definition, cosmetic exists only for easylist/fanboy, download-sites has no raw rules (normalization is the curate recipe)"
+    },
+    "sources": {
+        "easylist-adult": {
+            "curated": {
+                "domains": {
+                    "path": "catalog/curated/easylist-adult/domains.json",
+                    "count": 750
+                },
+                "rules": {
+                    "all": {
+                        "path": "catalog/curated/easylist-adult/rules/all.json",
+                        "count": 763
+                    },
+                    "block": {
+                        "path": "catalog/curated/easylist-adult/rules/block.json",
+                        "count": 751
+                    },
+                    "allow": {
+                        "path": "catalog/curated/easylist-adult/rules/allow.json",
+                        "count": 12
+                    }
+                },
+                "cosmetic": {
+                    "unhide": {
+                        "path": "catalog/curated/easylist-adult/cosmetic/unhide.json",
+                        "count": 0
+                    }
+                }
+            },
+            "kind": "easylist",
+            "matching": null,
+            "notes": [
+                "domains.json is PARTIAL: block-rule requestDomains + pure ||domain^ anchors — path/pattern rules carry no domain",
+                "cosmetic is never curated (policy): raw and curated cosmetic differ only by regeneration",
+                "allow-lane requestDomains may contain wildcard-TLD entries (literal *) inherited from @@||name.*^ patterns"
+            ],
+            "raw": {
+                "domains": {
+                    "path": "catalog/raw/easylist-adult/domains.json",
+                    "count": 767
+                },
+                "rules": {
+                    "all": {
+                        "path": "catalog/raw/easylist-adult/rules/all.json",
+                        "count": 784
+                    },
+                    "block": {
+                        "path": "catalog/raw/easylist-adult/rules/block.json",
+                        "count": 772
+                    },
+                    "allow": {
+                        "path": "catalog/raw/easylist-adult/rules/allow.json",
+                        "count": 12
+                    }
+                },
+                "cosmetic": {
+                    "unhide": {
+                        "path": "catalog/raw/easylist-adult/cosmetic/unhide.json",
+                        "count": 0
+                    }
+                }
+            },
+            "role": "block+allow",
+            "sheet": null
+        },
+        "easylist-easylist": {
+            "curated": {
+                "domains": {
+                    "path": "catalog/curated/easylist-easylist/domains.json",
+                    "count": 47052
+                },
+                "rules": {
+                    "all": {
+                        "path": "catalog/curated/easylist-easylist/rules/all.json",
+                        "count": 2355
+                    },
+                    "block": {
+                        "path": "catalog/curated/easylist-easylist/rules/block.json",
+                        "count": 1823
+                    },
+                    "allow": {
+                        "path": "catalog/curated/easylist-easylist/rules/allow.json",
+                        "count": 532
+                    }
+                },
+                "cosmetic": {
+                    "unhide": {
+                        "path": "catalog/curated/easylist-easylist/cosmetic/unhide.json",
+                        "count": 517
+                    },
+                    "specific": {
+                        "path": "catalog/curated/easylist-easylist/cosmetic/specific.json",
+                        "count": 6797
+                    },
+                    "extended": {
+                        "path": "catalog/curated/easylist-easylist/cosmetic/extended.json",
+                        "count": 286
+                    },
+                    "generic_css": {
+                        "path": "catalog/curated/easylist-easylist/cosmetic/generic.css",
+                        "count": null
+                    }
+                }
+            },
+            "kind": "easylist",
+            "matching": null,
+            "notes": [
+                "domains.json is PARTIAL: block-rule requestDomains + pure ||domain^ anchors — path/pattern rules carry no domain",
+                "cosmetic is never curated (policy): raw and curated cosmetic differ only by regeneration",
+                "allow-lane requestDomains may contain wildcard-TLD entries (literal *) inherited from @@||name.*^ patterns"
+            ],
+            "raw": {
+                "domains": {
+                    "path": "catalog/raw/easylist-easylist/domains.json",
+                    "count": 47221
+                },
+                "rules": {
+                    "all": {
+                        "path": "catalog/raw/easylist-easylist/rules/all.json",
+                        "count": 2392
+                    },
+                    "block": {
+                        "path": "catalog/raw/easylist-easylist/rules/block.json",
+                        "count": 1860
+                    },
+                    "allow": {
+                        "path": "catalog/raw/easylist-easylist/rules/allow.json",
+                        "count": 532
+                    }
+                },
+                "cosmetic": {
+                    "unhide": {
+                        "path": "catalog/raw/easylist-easylist/cosmetic/unhide.json",
+                        "count": 517
+                    },
+                    "specific": {
+                        "path": "catalog/raw/easylist-easylist/cosmetic/specific.json",
+                        "count": 6797
+                    },
+                    "extended": {
+                        "path": "catalog/raw/easylist-easylist/cosmetic/extended.json",
+                        "count": 286
+                    },
+                    "generic_css": {
+                        "path": "catalog/raw/easylist-easylist/cosmetic/generic.css",
+                        "count": null
+                    }
+                }
+            },
+            "role": "block+allow",
+            "sheet": null
+        },
+        "easylist-easyprivacy": {
+            "curated": {
+                "domains": {
+                    "path": "catalog/curated/easylist-easyprivacy/domains.json",
+                    "count": 37633
+                },
+                "rules": {
+                    "all": {
+                        "path": "catalog/curated/easylist-easyprivacy/rules/all.json",
+                        "count": 6636
+                    },
+                    "block": {
+                        "path": "catalog/curated/easylist-easyprivacy/rules/block.json",
+                        "count": 6122
+                    },
+                    "allow": {
+                        "path": "catalog/curated/easylist-easyprivacy/rules/allow.json",
+                        "count": 514
+                    }
+                },
+                "cosmetic": {
+                    "unhide": {
+                        "path": "catalog/curated/easylist-easyprivacy/cosmetic/unhide.json",
+                        "count": 0
+                    }
+                }
+            },
+            "kind": "easylist",
+            "matching": null,
+            "notes": [
+                "domains.json is PARTIAL: block-rule requestDomains + pure ||domain^ anchors — path/pattern rules carry no domain",
+                "cosmetic is never curated (policy): raw and curated cosmetic differ only by regeneration",
+                "allow-lane requestDomains may contain wildcard-TLD entries (literal *) inherited from @@||name.*^ patterns"
+            ],
+            "raw": {
+                "domains": {
+                    "path": "catalog/raw/easylist-easyprivacy/domains.json",
+                    "count": 37735
+                },
+                "rules": {
+                    "all": {
+                        "path": "catalog/raw/easylist-easyprivacy/rules/all.json",
+                        "count": 6786
+                    },
+                    "block": {
+                        "path": "catalog/raw/easylist-easyprivacy/rules/block.json",
+                        "count": 6272
+                    },
+                    "allow": {
+                        "path": "catalog/raw/easylist-easyprivacy/rules/allow.json",
+                        "count": 514
+                    }
+                },
+                "cosmetic": {
+                    "unhide": {
+                        "path": "catalog/raw/easylist-easyprivacy/cosmetic/unhide.json",
+                        "count": 0
+                    }
+                }
+            },
+            "role": "block+allow",
+            "sheet": null
+        },
+        "easylist-fanboy": {
+            "curated": {
+                "domains": {
+                    "path": "catalog/curated/easylist-fanboy/domains.json",
+                    "count": 317
+                },
+                "rules": {
+                    "all": {
+                        "path": "catalog/curated/easylist-fanboy/rules/all.json",
+                        "count": 399
+                    },
+                    "block": {
+                        "path": "catalog/curated/easylist-fanboy/rules/block.json",
+                        "count": 380
+                    },
+                    "allow": {
+                        "path": "catalog/curated/easylist-fanboy/rules/allow.json",
+                        "count": 19
+                    }
+                },
+                "cosmetic": {
+                    "unhide": {
+                        "path": "catalog/curated/easylist-fanboy/cosmetic/unhide.json",
+                        "count": 14
+                    },
+                    "specific": {
+                        "path": "catalog/curated/easylist-fanboy/cosmetic/specific.json",
+                        "count": 2324
+                    },
+                    "extended": {
+                        "path": "catalog/curated/easylist-fanboy/cosmetic/extended.json",
+                        "count": 36
+                    },
+                    "generic_css": {
+                        "path": "catalog/curated/easylist-fanboy/cosmetic/generic.css",
+                        "count": null
+                    }
+                }
+            },
+            "kind": "easylist",
+            "matching": null,
+            "notes": [
+                "domains.json is PARTIAL: block-rule requestDomains + pure ||domain^ anchors — path/pattern rules carry no domain",
+                "cosmetic is never curated (policy): raw and curated cosmetic differ only by regeneration",
+                "allow-lane requestDomains may contain wildcard-TLD entries (literal *) inherited from @@||name.*^ patterns"
+            ],
+            "raw": {
+                "domains": {
+                    "path": "catalog/raw/easylist-fanboy/domains.json",
+                    "count": 318
+                },
+                "rules": {
+                    "all": {
+                        "path": "catalog/raw/easylist-fanboy/rules/all.json",
+                        "count": 406
+                    },
+                    "block": {
+                        "path": "catalog/raw/easylist-fanboy/rules/block.json",
+                        "count": 387
+                    },
+                    "allow": {
+                        "path": "catalog/raw/easylist-fanboy/rules/allow.json",
+                        "count": 19
+                    }
+                },
+                "cosmetic": {
+                    "unhide": {
+                        "path": "catalog/raw/easylist-fanboy/cosmetic/unhide.json",
+                        "count": 14
+                    },
+                    "specific": {
+                        "path": "catalog/raw/easylist-fanboy/cosmetic/specific.json",
+                        "count": 2324
+                    },
+                    "extended": {
+                        "path": "catalog/raw/easylist-fanboy/cosmetic/extended.json",
+                        "count": 36
+                    },
+                    "generic_css": {
+                        "path": "catalog/raw/easylist-fanboy/cosmetic/generic.css",
+                        "count": null
+                    }
+                }
+            },
+            "role": "block+allow",
+            "sheet": null
+        },
+        "extension-blocklist": {
+            "curated": {
+                "domains": {
+                    "path": "catalog/curated/extension-blocklist/domains.json",
+                    "count": 0
+                },
+                "rules": {
+                    "block": {
+                        "path": "catalog/curated/extension-blocklist/rules/block.json",
+                        "count": 0
+                    }
+                }
+            },
+            "kind": "extension",
+            "matching": "domain+subdomains",
+            "notes": [
+                "mirror absent today (compile fail-softs it to empty) — cells stay declared so the shape is stable when it appears",
+                "append lane like Sheets D/G: above curation, floored only by the never-block floor"
+            ],
+            "raw": {
+                "domains": {
+                    "path": "catalog/raw/extension-blocklist/domains.json",
+                    "count": 0
+                },
+                "rules": {
+                    "block": {
+                        "path": "catalog/raw/extension-blocklist/rules/block.json",
+                        "count": 0
+                    }
+                }
+            },
+            "role": "append",
+            "sheet": null
+        },
+        "extension-whitelist": {
+            "curated": {
+                "domains": {
+                    "path": "catalog/curated/extension-whitelist/domains.json",
+                    "count": 812
+                },
+                "rules": {
+                    "allow": {
+                        "path": "catalog/curated/extension-whitelist/rules/allow.json",
+                        "count": 1
+                    }
+                }
+            },
+            "kind": "extension",
+            "matching": "domain+subdomains",
+            "notes": [
+                "raw = the 4 backends merged, pre-vote-bar — includes gamed \"click Allow to continue\" votes; curated = votes ≥ the trust bar − omit-from-whitelist − omit-from-blocklist (derived in curate.php)"
+            ],
+            "raw": {
+                "domains": {
+                    "path": "catalog/raw/extension-whitelist/domains.json",
+                    "count": 1479
+                },
+                "rules": {
+                    "allow": {
+                        "path": "catalog/raw/extension-whitelist/rules/allow.json",
+                        "count": 1
+                    }
+                }
+            },
+            "role": "allow",
+            "sheet": null
+        },
+        "gsheet-allow-request-domains": {
+            "curated": null,
+            "kind": "gsheet",
+            "matching": null,
+            "notes": [
+                "ships verbatim at dist/standalone/allow-request-domains.json"
+            ],
+            "raw": {
+                "domains": {
+                    "path": "catalog/raw/gsheet-allow-request-domains/domains.json",
+                    "count": 19
+                },
+                "rules": null
+            },
+            "role": "standalone",
+            "sheet": "M"
+        },
+        "gsheet-default-blocklist": {
+            "curated": {
+                "domains": {
+                    "path": "catalog/curated/gsheet-default-blocklist/domains.json",
+                    "count": 2
+                },
+                "rules": {
+                    "block": {
+                        "path": "catalog/curated/gsheet-default-blocklist/rules/block.json",
+                        "count": 1
+                    }
+                }
+            },
+            "kind": "gsheet",
+            "matching": "domain+subdomains",
+            "notes": [
+                "append lane: sits ABOVE the curation set, floored only by omit-from-blocklist ∪ not-to-add (the never-block floor)"
+            ],
+            "raw": {
+                "domains": {
+                    "path": "catalog/raw/gsheet-default-blocklist/domains.json",
+                    "count": 2
+                },
+                "rules": {
+                    "block": {
+                        "path": "catalog/raw/gsheet-default-blocklist/rules/block.json",
+                        "count": 1
+                    }
+                }
+            },
+            "role": "append",
+            "sheet": "D"
+        },
+        "gsheet-default-blocklist-not-to-add": {
+            "curated": null,
+            "kind": "gsheet",
+            "matching": "domain+subdomains",
+            "notes": [
+                "never-block floor + curation-set member; a listed domain produces NO rule anywhere"
+            ],
+            "raw": {
+                "domains": {
+                    "path": "catalog/raw/gsheet-default-blocklist-not-to-add/domains.json",
+                    "count": 21
+                },
+                "rules": null
+            },
+            "role": "veto",
+            "sheet": "E"
+        },
+        "gsheet-default-whitelist": {
+            "curated": {
+                "domains": {
+                    "path": "catalog/curated/gsheet-default-whitelist/domains.json",
+                    "count": 177
+                },
+                "rules": {
+                    "allow": {
+                        "path": "catalog/curated/gsheet-default-whitelist/rules/allow.json",
+                        "count": 1
+                    }
+                }
+            },
+            "kind": "gsheet",
+            "matching": "domain+subdomains",
+            "notes": [
+                "product-only sheet: takes part in no curation; curated form = dist/whitelist/default.json (C − omit-from-whitelist − omit-from-blocklist, derived at compile, copied here)"
+            ],
+            "raw": {
+                "domains": {
+                    "path": "catalog/raw/gsheet-default-whitelist/domains.json",
+                    "count": 178
+                },
+                "rules": {
+                    "allow": {
+                        "path": "catalog/raw/gsheet-default-whitelist/rules/allow.json",
+                        "count": 1
+                    }
+                }
+            },
+            "role": "allow",
+            "sheet": "C"
+        },
+        "gsheet-download-sites": {
+            "curated": {
+                "domains": {
+                    "path": "catalog/curated/gsheet-download-sites/domains.json",
+                    "count": 50
+                },
+                "rules": {
+                    "allow": {
+                        "path": "catalog/curated/gsheet-download-sites/rules/allow.json",
+                        "count": 50
+                    }
+                }
+            },
+            "kind": "gsheet",
+            "matching": "domain+subdomains",
+            "notes": [
+                "no raw rules on purpose: row normalization (protocol/path/www. strip) IS the curate recipe — raw rows are not rule material",
+                "dual role: allow source (this lane) AND curation-set member subtracted from every blocking source"
+            ],
+            "raw": {
+                "domains": {
+                    "path": "catalog/raw/gsheet-download-sites/domains.json",
+                    "count": 50
+                },
+                "rules": null
+            },
+            "role": "allow",
+            "sheet": "J"
+        },
+        "gsheet-initiator-allowed-domains": {
+            "curated": null,
+            "kind": "gsheet",
+            "matching": null,
+            "notes": [
+                "ships verbatim at dist/standalone/initiator-allowed-domains.json"
+            ],
+            "raw": {
+                "domains": {
+                    "path": "catalog/raw/gsheet-initiator-allowed-domains/domains.json",
+                    "count": 316
+                },
+                "rules": null
+            },
+            "role": "standalone",
+            "sheet": "N"
+        },
+        "gsheet-manual-blocklist": {
+            "curated": {
+                "domains": {
+                    "path": "catalog/curated/gsheet-manual-blocklist/domains.json",
+                    "count": 0
+                },
+                "rules": {
+                    "block": {
+                        "path": "catalog/curated/gsheet-manual-blocklist/rules/block.json",
+                        "count": 0
+                    }
+                }
+            },
+            "kind": "gsheet",
+            "matching": "domain+subdomains",
+            "notes": [
+                "append lane: sits ABOVE the curation set, floored only by omit-from-blocklist ∪ not-to-add (the never-block floor)"
+            ],
+            "raw": {
+                "domains": {
+                    "path": "catalog/raw/gsheet-manual-blocklist/domains.json",
+                    "count": 0
+                },
+                "rules": {
+                    "block": {
+                        "path": "catalog/raw/gsheet-manual-blocklist/rules/block.json",
+                        "count": 0
+                    }
+                }
+            },
+            "role": "append",
+            "sheet": "G"
+        },
+        "gsheet-manual-whitelist": {
+            "curated": null,
+            "kind": "gsheet",
+            "matching": "domain+subdomains",
+            "notes": [
+                "mirrored, part of NO recipe (role to be decided)"
+            ],
+            "raw": {
+                "domains": {
+                    "path": "catalog/raw/gsheet-manual-whitelist/domains.json",
+                    "count": 0
+                },
+                "rules": null
+            },
+            "role": "unassigned",
+            "sheet": "F"
+        },
+        "gsheet-omit-from-blocklist": {
+            "curated": null,
+            "kind": "gsheet",
+            "matching": "domain+subdomains",
+            "notes": [
+                "never-block floor, own-brand only; overrides every block source including fleet blocklists"
+            ],
+            "raw": {
+                "domains": {
+                    "path": "catalog/raw/gsheet-omit-from-blocklist/domains.json",
+                    "count": 14
+                },
+                "rules": null
+            },
+            "role": "veto",
+            "sheet": "I"
+        },
+        "gsheet-omit-from-whitelist": {
+            "curated": null,
+            "kind": "gsheet",
+            "matching": "exact-host",
+            "notes": [
+                "whitelist veto: exact host only — subdomain matching would let google.com strip accounts.google.com"
+            ],
+            "raw": {
+                "domains": {
+                    "path": "catalog/raw/gsheet-omit-from-whitelist/domains.json",
+                    "count": 34
+                },
+                "rules": null
+            },
+            "role": "veto",
+            "sheet": "H"
+        },
+        "gsheet-popup": {
+            "curated": {
+                "domains": {
+                    "path": "catalog/curated/gsheet-popup/domains.json",
+                    "count": 4486
+                },
+                "rules": {
+                    "redirect": {
+                        "path": "catalog/curated/gsheet-popup/rules/redirect.json",
+                        "count": 1
+                    }
+                }
+            },
+            "kind": "gsheet",
+            "matching": "domain+subdomains",
+            "notes": [
+                "curated domains keep the sheet rows verbatim; curated rules normalize them (www./scheme strip) before chunking",
+                "ledger dead-filtering happens only at the canonical merge — curated here = post-curation, pre-ledger"
+            ],
+            "raw": {
+                "domains": {
+                    "path": "catalog/raw/gsheet-popup/domains.json",
+                    "count": 4771
+                },
+                "rules": {
+                    "redirect": {
+                        "path": "catalog/raw/gsheet-popup/rules/redirect.json",
+                        "count": 1
+                    }
+                }
+            },
+            "role": "block",
+            "sheet": "A"
+        },
+        "gsheet-rule101xtra": {
+            "curated": null,
+            "kind": "gsheet",
+            "matching": null,
+            "notes": [
+                "ships verbatim at dist/standalone/rule101xtra.json"
+            ],
+            "raw": {
+                "domains": {
+                    "path": "catalog/raw/gsheet-rule101xtra/domains.json",
+                    "count": 307
+                },
+                "rules": null
+            },
+            "role": "standalone",
+            "sheet": "O"
+        },
+        "gsheet-tracking-whitelist": {
+            "curated": null,
+            "kind": "gsheet",
+            "matching": null,
+            "notes": [
+                "ships verbatim at dist/standalone/tracking-whitelist.json"
+            ],
+            "raw": {
+                "domains": {
+                    "path": "catalog/raw/gsheet-tracking-whitelist/domains.json",
+                    "count": 46
+                },
+                "rules": null
+            },
+            "role": "standalone",
+            "sheet": "L"
+        },
+        "gsheet-traffic-quality": {
+            "curated": null,
+            "kind": "gsheet",
+            "matching": null,
+            "notes": [
+                "per-market split published verbatim at dist/traffic_quality/<market>.json (24 files incl. global + latam/apac/nordics rollups) — never merged into rules"
+            ],
+            "raw": null,
+            "role": "data",
+            "sheet": "B"
+        },
+        "gsheet-whitelisted-domains-injection-enabled": {
+            "curated": null,
+            "kind": "gsheet",
+            "matching": null,
+            "notes": [
+                "ships verbatim at dist/standalone/whitelisted-domains-injection-enabled.json"
+            ],
+            "raw": {
+                "domains": {
+                    "path": "catalog/raw/gsheet-whitelisted-domains-injection-enabled/domains.json",
+                    "count": 344
+                },
+                "rules": null
+            },
+            "role": "standalone",
+            "sheet": "K"
+        },
+        "hosts-adguarddns": {
+            "curated": {
+                "domains": {
+                    "path": "catalog/curated/hosts-adguarddns/domains.json",
+                    "count": 176217
+                },
+                "rules": {
+                    "block": {
+                        "path": "catalog/curated/hosts-adguarddns/rules/block.json",
+                        "count": 36
+                    },
+                    "redirect": {
+                        "path": "catalog/curated/hosts-adguarddns/rules/redirect.json",
+                        "count": 36
+                    }
+                }
+            },
+            "kind": "hosts",
+            "matching": "domain+subdomains",
+            "notes": [
+                "feeds the tracker domains lane (block + main_frame redirect); ledger dead-filtering + retention + easylist-coverage dedup happen only at the canonical merge"
+            ],
+            "raw": {
+                "domains": {
+                    "path": "catalog/raw/hosts-adguarddns/domains.json",
+                    "count": 176587
+                },
+                "rules": {
+                    "block": {
+                        "path": "catalog/raw/hosts-adguarddns/rules/block.json",
+                        "count": 36
+                    },
+                    "redirect": {
+                        "path": "catalog/raw/hosts-adguarddns/rules/redirect.json",
+                        "count": 36
+                    }
+                }
+            },
+            "role": "block",
+            "sheet": null
+        },
+        "hosts-anudeep": {
+            "curated": {
+                "domains": {
+                    "path": "catalog/curated/hosts-anudeep/domains.json",
+                    "count": 41095
+                },
+                "rules": {
+                    "block": {
+                        "path": "catalog/curated/hosts-anudeep/rules/block.json",
+                        "count": 9
+                    },
+                    "redirect": {
+                        "path": "catalog/curated/hosts-anudeep/rules/redirect.json",
+                        "count": 9
+                    }
+                }
+            },
+            "kind": "hosts",
+            "matching": "domain+subdomains",
+            "notes": [
+                "feeds the tracker domains lane (block + main_frame redirect); ledger dead-filtering + retention + easylist-coverage dedup happen only at the canonical merge"
+            ],
+            "raw": {
+                "domains": {
+                    "path": "catalog/raw/hosts-anudeep/domains.json",
+                    "count": 42358
+                },
+                "rules": {
+                    "block": {
+                        "path": "catalog/raw/hosts-anudeep/rules/block.json",
+                        "count": 9
+                    },
+                    "redirect": {
+                        "path": "catalog/raw/hosts-anudeep/rules/redirect.json",
+                        "count": 9
+                    }
+                }
+            },
+            "role": "block",
+            "sheet": null
+        },
+        "hosts-kadhosts": {
+            "curated": {
+                "domains": {
+                    "path": "catalog/curated/hosts-kadhosts/domains.json",
+                    "count": 43986
+                },
+                "rules": {
+                    "redirect": {
+                        "path": "catalog/curated/hosts-kadhosts/rules/redirect.json",
+                        "count": 9
+                    }
+                }
+            },
+            "kind": "hosts",
+            "matching": "domain+subdomains",
+            "notes": [
+                "feeds the popup/redirect lane (with Sheet A); ledger dead-filtering + easylist-coverage dedup happen only at the canonical merge"
+            ],
+            "raw": {
+                "domains": {
+                    "path": "catalog/raw/hosts-kadhosts/domains.json",
+                    "count": 43996
+                },
+                "rules": {
+                    "redirect": {
+                        "path": "catalog/raw/hosts-kadhosts/rules/redirect.json",
+                        "count": 9
+                    }
+                }
+            },
+            "role": "block",
+            "sheet": null
+        },
+        "hosts-peterlowe": {
+            "curated": {
+                "domains": {
+                    "path": "catalog/curated/hosts-peterlowe/domains.json",
+                    "count": 3486
+                },
+                "rules": {
+                    "block": {
+                        "path": "catalog/curated/hosts-peterlowe/rules/block.json",
+                        "count": 1
+                    },
+                    "redirect": {
+                        "path": "catalog/curated/hosts-peterlowe/rules/redirect.json",
+                        "count": 1
+                    }
+                }
+            },
+            "kind": "hosts",
+            "matching": "domain+subdomains",
+            "notes": [
+                "feeds the tracker domains lane (block + main_frame redirect); ledger dead-filtering + retention + easylist-coverage dedup happen only at the canonical merge"
+            ],
+            "raw": {
+                "domains": {
+                    "path": "catalog/raw/hosts-peterlowe/domains.json",
+                    "count": 3542
+                },
+                "rules": {
+                    "block": {
+                        "path": "catalog/raw/hosts-peterlowe/rules/block.json",
+                        "count": 1
+                    },
+                    "redirect": {
+                        "path": "catalog/raw/hosts-peterlowe/rules/redirect.json",
+                        "count": 1
+                    }
+                }
+            },
+            "role": "block",
+            "sheet": null
+        }
+    },
+    "merged": {
+        "canonical": {
+            "rules_all": {
+                "path": "network/rules.json",
+                "count": 10286,
+                "note": "THE merged artifact — band re-ID, budgets, shadow-diff gate; the catalog never duplicates it"
+            },
+            "cosmetic": {
+                "path": "cosmetic/",
+                "note": "merged cosmetic (generic.css + specific/extended/unhide maps)"
+            },
+            "whitelists": {
+                "path": "whitelist/",
+                "note": "the three product whitelist flavours (default · community · download-sites)"
+            },
+            "popup_domains": {
+                "path": "blocklist/popup-curated.json",
+                "note": "the redirect lane as a flat array (post-ledger, = rules.json)"
+            }
+        },
+        "rules": {
+            "allow": {
+                "path": "catalog/merged/rules/allow.json",
+                "count": 1127
+            },
+            "block": {
+                "path": "catalog/merged/rules/block.json",
+                "count": 9103
+            },
+            "redirect": {
+                "path": "catalog/merged/rules/redirect.json",
+                "count": 56
+            }
+        },
+        "domains": {
+            "block": {
+                "path": "catalog/merged/domains/block.json",
+                "count": 212556
+            },
+            "redirect": {
+                "path": "catalog/merged/domains/redirect.json",
+                "count": 172853
+            },
+            "allow": {
+                "path": "catalog/merged/domains/allow.json",
+                "count": 1011
+            },
+            "cosmetic": {
+                "path": "catalog/merged/domains/cosmetic.json",
+                "count": 8930
+            }
+        },
+        "notes": [
+            "merged/rules/* keep the CANONICAL band IDs (redirect 11000+ · block 21000+ · allow 41000+) — subsets of one coherent ID space, cross-referenceable to network/rules.json",
+            "merged domains are split PER TYPE (user sketch 2026-09-10): block.json = block-rule targets · redirect.json = redirect-rule targets (the popup lane) · a domain blocked via redirect only is NOT in block.json — union them for \"everything blocked\"",
+            "merged/domains/{block,redirect}.json are PARTIAL like every extraction: listed requestDomains + pure ||domain^ anchors; pattern rules carry no domain",
+            "merged/domains/allow.json = union of the three whitelist flavours (different consumers — read whitelist/ for the split); cosmetic.json = every hostname carrying a specific/extended/unhide cosmetic entry (generic.css is site-wide, no domain)"
+        ]
+    },
+    "artifacts": {
+        "catalog/curated/easylist-adult/cosmetic/unhide.json": {
+            "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+            "bytes": 3,
+            "count": 0
+        },
+        "catalog/curated/easylist-adult/domains.json": {
+            "sha256": "dfe54dfa4aa463eda03ebbc9468bffe4a4ec50f2b747060c1a576c1c981d42c3",
+            "bytes": 13766,
+            "count": 750
+        },
+        "catalog/curated/easylist-adult/rules/all.json": {
+            "sha256": "184083f7998e1224c2d5585dabbf36dc53f63f5c3939b6448c9c56e25dd3a45d",
+            "bytes": 101353,
+            "count": 763
+        },
+        "catalog/curated/easylist-adult/rules/allow.json": {
+            "sha256": "8c8cbb53261015fdad9aa51dcf4c97050a25ec0f123bd6649eff38e9e7b5d7d9",
+            "bytes": 1959,
+            "count": 12
+        },
+        "catalog/curated/easylist-adult/rules/block.json": {
+            "sha256": "9a3128da515ba7e953f00e82ee21dfb1a70919686e63a01dc3d3e74839249395",
+            "bytes": 99375,
+            "count": 751
+        },
+        "catalog/curated/easylist-easylist/cosmetic/extended.json": {
+            "sha256": "955fcb1d431f773bbda87f7aebb877c748aa1a7c7ce01a389f961470acff289c",
+            "bytes": 68574,
+            "count": 286
+        },
+        "catalog/curated/easylist-easylist/cosmetic/generic.css": {
+            "sha256": "087b577cabb31c18473dbafcf41da3c6fc4f4779955bdb168b8b1bcb37ecacb1",
+            "bytes": 221344
+        },
+        "catalog/curated/easylist-easylist/cosmetic/specific.json": {
+            "sha256": "b66158a060b9cd973ad08214a4b511c7a9930e2bc4869bc785e0045ad3c0f1ea",
+            "bytes": 682457,
+            "count": 6797
+        },
+        "catalog/curated/easylist-easylist/cosmetic/unhide.json": {
+            "sha256": "8f3ce236a83f1363a952b542f4bae61ea770432535108dad481546b2dc8e312a",
+            "bytes": 33211,
+            "count": 517
+        },
+        "catalog/curated/easylist-easylist/domains.json": {
+            "sha256": "a52f5f223bf362306d507df1cc509430ded797024e1036c96a6037b41497c492",
+            "bytes": 994323,
+            "count": 47052
+        },
+        "catalog/curated/easylist-easylist/rules/all.json": {
+            "sha256": "31e94eb0067cb293880bf8a7b374ca6b500ee174006dfcf3e1dc4a7018796833",
+            "bytes": 1364846,
+            "count": 2355
+        },
+        "catalog/curated/easylist-easylist/rules/allow.json": {
+            "sha256": "e6dd1faaf47ecc14da3c2a403ef26fd1dc168653db7b4fa6c96832d7d6a50d05",
+            "bytes": 98131,
+            "count": 532
+        },
+        "catalog/curated/easylist-easylist/rules/block.json": {
+            "sha256": "0b5a6a27dd2678b201eaf74a04f8844120f19b5a2659a1f2fc34ca502a35134f",
+            "bytes": 1266077,
+            "count": 1823
+        },
+        "catalog/curated/easylist-easyprivacy/cosmetic/unhide.json": {
+            "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+            "bytes": 3,
+            "count": 0
+        },
+        "catalog/curated/easylist-easyprivacy/domains.json": {
+            "sha256": "26c356629979f50345c9309fafd4bf7e3a6a54eab41f5fb5ba6dc64d92dd06ac",
+            "bytes": 922341,
+            "count": 37633
+        },
+        "catalog/curated/easylist-easyprivacy/rules/all.json": {
+            "sha256": "1bc49f70d9e7d1fcca268b153798d3282d6c5bcb13df9bfc54df3d19780cb839",
+            "bytes": 1675457,
+            "count": 6636
+        },
+        "catalog/curated/easylist-easyprivacy/rules/allow.json": {
+            "sha256": "1480fccde3aa6e87960eb80f589eafc615ae9502ebf9c1e9004df67c80b9264d",
+            "bytes": 102431,
+            "count": 514
+        },
+        "catalog/curated/easylist-easyprivacy/rules/block.json": {
+            "sha256": "ec787e46150420d151d28489c4dcc12a5374798abc05b04f4fe6ddd2088231a5",
+            "bytes": 1572406,
+            "count": 6122
+        },
+        "catalog/curated/easylist-fanboy/cosmetic/extended.json": {
+            "sha256": "5e9a27f2ba8c09917d14eaba592dcaaf9270e35dcd769b2a324c42968680a922",
+            "bytes": 7850,
+            "count": 36
+        },
+        "catalog/curated/easylist-fanboy/cosmetic/generic.css": {
+            "sha256": "bf8ddd6767c91776551a5d18848bf69433fccdaa2813b1a2c8300c4ace558e17",
+            "bytes": 15395
+        },
+        "catalog/curated/easylist-fanboy/cosmetic/specific.json": {
+            "sha256": "4dd8f41a338fd64ce1a485592b092c69e818aa789bab30d99ce194d35598c4dc",
+            "bytes": 155195,
+            "count": 2324
+        },
+        "catalog/curated/easylist-fanboy/cosmetic/unhide.json": {
+            "sha256": "058376ad8ee17abb09982af7944ce2559b5dc56e1f7bcce1ff2b7732df7efc05",
+            "bytes": 907,
+            "count": 14
+        },
+        "catalog/curated/easylist-fanboy/domains.json": {
+            "sha256": "bad842ce67bb050312f07b77eef478c5158841b352ba4cbd5a9558a07231ed14",
+            "bytes": 5805,
+            "count": 317
+        },
+        "catalog/curated/easylist-fanboy/rules/all.json": {
+            "sha256": "405470589785579467a32b0bf422deba0dd3ca8eaf29d341e344ae3a2704e352",
+            "bytes": 54685,
+            "count": 399
+        },
+        "catalog/curated/easylist-fanboy/rules/allow.json": {
+            "sha256": "3b846bf9fdd81399b502dd6bf9e38790661650bd97ce001e6934a226eedd48c1",
+            "bytes": 3206,
+            "count": 19
+        },
+        "catalog/curated/easylist-fanboy/rules/block.json": {
+            "sha256": "c62dacba9bb58ca58b070c51fe9d6636a1521340210552dcd28938002bea3e32",
+            "bytes": 51453,
+            "count": 380
+        },
+        "catalog/curated/extension-blocklist/domains.json": {
+            "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+            "bytes": 3,
+            "count": 0
+        },
+        "catalog/curated/extension-blocklist/rules/block.json": {
+            "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+            "bytes": 3,
+            "count": 0
+        },
+        "catalog/curated/extension-whitelist/domains.json": {
+            "sha256": "ef47d74e8666d4d3f70dc7c1298f3e4218e251f69b72b8f3c6bea84b59de9c23",
+            "bytes": 18194,
+            "count": 812
+        },
+        "catalog/curated/extension-whitelist/rules/allow.json": {
+            "sha256": "d30994b6449dc695a2d7983ec390d57f18ffd1254b832c2d28c4a1c4e4ac5192",
+            "bytes": 14215,
+            "count": 1
+        },
+        "catalog/curated/gsheet-default-blocklist/domains.json": {
+            "sha256": "39e8c2b716dbe258ab6c9c760b6c07de3da15201768eaef1854782283fe3cba0",
+            "bytes": 45,
+            "count": 2
+        },
+        "catalog/curated/gsheet-default-blocklist/rules/block.json": {
+            "sha256": "b1b0f7452fefbfb0834970afcef7b5701dec8a40c30916427cf71a7c130e330d",
+            "bytes": 198,
+            "count": 1
+        },
+        "catalog/curated/gsheet-default-whitelist/domains.json": {
+            "sha256": "8a7f995c19102033d0dc74225e12f0532e54bbe779d2a0c6637a07f956b103a7",
+            "bytes": 3943,
+            "count": 177
+        },
+        "catalog/curated/gsheet-default-whitelist/rules/allow.json": {
+            "sha256": "d89d272cbdf46a27d21d3e723d07f5629633683289c9e5590ae1e08ddb8e78bb",
+            "bytes": 3139,
+            "count": 1
+        },
+        "catalog/curated/gsheet-download-sites/domains.json": {
+            "sha256": "49fb211cbcb8c5f06ef3a2b7f93d56b7e75f831055a1d65ab12661f78c83506f",
+            "bytes": 737,
+            "count": 50
+        },
+        "catalog/curated/gsheet-download-sites/rules/allow.json": {
+            "sha256": "7708230391b32c37e256e8eedf84a7f3348574c10e53e199b239768bd0918359",
+            "bytes": 9378,
+            "count": 50
+        },
+        "catalog/curated/gsheet-manual-blocklist/domains.json": {
+            "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+            "bytes": 3,
+            "count": 0
+        },
+        "catalog/curated/gsheet-manual-blocklist/rules/block.json": {
+            "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+            "bytes": 3,
+            "count": 0
+        },
+        "catalog/curated/gsheet-popup/domains.json": {
+            "sha256": "928bb5caea3ccec7d3c68d23451c894ed240b4482278bb433cff41d3c9c30875",
+            "bytes": 116576,
+            "count": 4486
+        },
+        "catalog/curated/gsheet-popup/rules/redirect.json": {
+            "sha256": "20fd35ba7f5840c749fed986ed8cd1172df145444b0bd2bfe54905d932e2566c",
+            "bytes": 94566,
+            "count": 1
+        },
+        "catalog/curated/hosts-adguarddns/domains.json": {
+            "sha256": "12350eace5847f1733bb7479184ea4195c7bc403cbe00efdaf6e476fade6d368",
+            "bytes": 4046853,
+            "count": 176217
+        },
+        "catalog/curated/hosts-adguarddns/rules/block.json": {
+            "sha256": "1b240aa1bff721cc234da2028727733b66ad5ebe8ab52c8954c9232fc3415fc8",
+            "bytes": 4053909,
+            "count": 36
+        },
+        "catalog/curated/hosts-adguarddns/rules/redirect.json": {
+            "sha256": "06d556fe1408a380efe88ca7ddceab3edf29f67bb101fee767825e63bb12e58c",
+            "bytes": 4056933,
+            "count": 36
+        },
+        "catalog/curated/hosts-anudeep/domains.json": {
+            "sha256": "674525009a03bc81c5914eef93653db2aff728dad4d049964fef31c7c25fad03",
+            "bytes": 1058465,
+            "count": 41095
+        },
+        "catalog/curated/hosts-anudeep/rules/block.json": {
+            "sha256": "84d08fa75547cccf392ee2dbc2ea0809dcbec560519111345700bb16df54900d",
+            "bytes": 1060229,
+            "count": 9
+        },
+        "catalog/curated/hosts-anudeep/rules/redirect.json": {
+            "sha256": "8c16a0968ae95994e027c5d20e1cc883124979ff75a94521fc445af800e83409",
+            "bytes": 1060985,
+            "count": 9
+        },
+        "catalog/curated/hosts-kadhosts/domains.json": {
+            "sha256": "7a0f543e9dadf3c8d8741ad962e115a468c7ef4c1de1a102f00dcf4edec8b8a3",
+            "bytes": 1031888,
+            "count": 43986
+        },
+        "catalog/curated/hosts-kadhosts/rules/redirect.json": {
+            "sha256": "99e07277fb27845d6bf653a1bf23b354f2ba6c7fa7c5d429d9e3725004cb9b4e",
+            "bytes": 1034122,
+            "count": 9
+        },
+        "catalog/curated/hosts-peterlowe/domains.json": {
+            "sha256": "2897186eee1c374b0e51bc418e07650bff48b52fb69f21258db4313c24c702d6",
+            "bytes": 64602,
+            "count": 3486
+        },
+        "catalog/curated/hosts-peterlowe/rules/block.json": {
+            "sha256": "6704cf8b1c43a91849a792c7445d2bb4a271ca7e6f5eac00fd3747ec4214b1c1",
+            "bytes": 65129,
+            "count": 1
+        },
+        "catalog/curated/hosts-peterlowe/rules/redirect.json": {
+            "sha256": "ef0776d2b6c0b6a44f451187209a2a292ea87a4b7605efea2edea52e4da00d59",
+            "bytes": 65213,
+            "count": 1
+        },
+        "catalog/merged/domains/allow.json": {
+            "sha256": "fe0240d960a16d59f5948d3311d4c0ca931a11bb04ee33b6677f3f5c21a1a634",
+            "bytes": 17500,
+            "count": 1011
+        },
+        "catalog/merged/domains/block.json": {
+            "sha256": "fc015178e30d960566f814446cb2114e08c87aad9cafe7207c42ca18024d5f4c",
+            "bytes": 4968489,
+            "count": 212556
+        },
+        "catalog/merged/domains/cosmetic.json": {
+            "sha256": "93051f96e3f117814990039fbce4eea7ff8a6463e5f73c6012a18066f04b4886",
+            "bytes": 155993,
+            "count": 8930
+        },
+        "catalog/merged/domains/redirect.json": {
+            "sha256": "b63e1830b8bd856be196f35a5434f67faa1bf9e34c1e3adb9366144f53bd0e83",
+            "bytes": 4083155,
+            "count": 172853
+        },
+        "catalog/merged/rules/allow.json": {
+            "sha256": "5b6a07c6aa34bb676c975325db9549b9880c2e36c7a9e61de25dabe4e144f976",
+            "bytes": 217675,
+            "count": 1127
+        },
+        "catalog/merged/rules/block.json": {
+            "sha256": "4e4f8c8692554d11b097c8645aa5336f9fd5557d2f25a1f640b1a33bd9306f4e",
+            "bytes": 6069854,
+            "count": 9103
+        },
+        "catalog/merged/rules/redirect.json": {
+            "sha256": "34a9d2a7ac375321975f70e95bba08a2b383eca21f582419b2728b3af4b29a47",
+            "bytes": 4115158,
+            "count": 56
+        },
+        "catalog/raw/easylist-adult/cosmetic/unhide.json": {
+            "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+            "bytes": 3,
+            "count": 0
+        },
+        "catalog/raw/easylist-adult/domains.json": {
+            "sha256": "241b83d73cbe4b3678c4fc5af45be037d1163d415713b1a8507e7203152b7cfa",
+            "bytes": 14093,
+            "count": 767
+        },
+        "catalog/raw/easylist-adult/rules/all.json": {
+            "sha256": "9b84b65cc20c4d39635c8821765836e7c5703253230eaf526a7ae64157624eef",
+            "bytes": 104135,
+            "count": 784
+        },
+        "catalog/raw/easylist-adult/rules/allow.json": {
+            "sha256": "889d42e72d68c3bd3cf98cf43191c2d82d951030fbd5e0547a134c89d31d966c",
+            "bytes": 1989,
+            "count": 12
+        },
+        "catalog/raw/easylist-adult/rules/block.json": {
+            "sha256": "bf052916d49362de05623d1dcced91b9688ff086412bb3926d3a39d43833002c",
+            "bytes": 102127,
+            "count": 772
+        },
+        "catalog/raw/easylist-easylist/cosmetic/extended.json": {
+            "sha256": "955fcb1d431f773bbda87f7aebb877c748aa1a7c7ce01a389f961470acff289c",
+            "bytes": 68574,
+            "count": 286
+        },
+        "catalog/raw/easylist-easylist/cosmetic/generic.css": {
+            "sha256": "087b577cabb31c18473dbafcf41da3c6fc4f4779955bdb168b8b1bcb37ecacb1",
+            "bytes": 221344
+        },
+        "catalog/raw/easylist-easylist/cosmetic/specific.json": {
+            "sha256": "b66158a060b9cd973ad08214a4b511c7a9930e2bc4869bc785e0045ad3c0f1ea",
+            "bytes": 682457,
+            "count": 6797
+        },
+        "catalog/raw/easylist-easylist/cosmetic/unhide.json": {
+            "sha256": "8f3ce236a83f1363a952b542f4bae61ea770432535108dad481546b2dc8e312a",
+            "bytes": 33211,
+            "count": 517
+        },
+        "catalog/raw/easylist-easylist/domains.json": {
+            "sha256": "46725ff7f7be2487b336c6e9c8be9816780c6d3abb3295264ce9527e55a46180",
+            "bytes": 997381,
+            "count": 47221
+        },
+        "catalog/raw/easylist-easylist/rules/all.json": {
+            "sha256": "400c0b1ed93d564ced2000062dfaaa39b6ac4b45cf6389922f499fafe75d2057",
+            "bytes": 1370508,
+            "count": 2392
+        },
+        "catalog/raw/easylist-easylist/rules/allow.json": {
+            "sha256": "e7838f27919ffeaf060ded7a98d1f1a2dbe5f882d976b6a976cd8e9f5dd438df",
+            "bytes": 98785,
+            "count": 532
+        },
+        "catalog/raw/easylist-easylist/rules/block.json": {
+            "sha256": "e9264f517992de4878818a2c2d6f10e1ed085f0b1bbc634eee8a10123bd6430f",
+            "bytes": 1271085,
+            "count": 1860
+        },
+        "catalog/raw/easylist-easyprivacy/cosmetic/unhide.json": {
+            "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+            "bytes": 3,
+            "count": 0
+        },
+        "catalog/raw/easylist-easyprivacy/domains.json": {
+            "sha256": "3eb151a6342d05341952d78a1cf3ce7e4f8376d91e92a49e647cfa20298c2803",
+            "bytes": 924686,
+            "count": 37735
+        },
+        "catalog/raw/easylist-easyprivacy/rules/all.json": {
+            "sha256": "1edae83268b36b40472a1f1c8092fd15d4f329fd165b03c25470303e2f55f274",
+            "bytes": 1691556,
+            "count": 6786
+        },
+        "catalog/raw/easylist-easyprivacy/rules/allow.json": {
+            "sha256": "1480fccde3aa6e87960eb80f589eafc615ae9502ebf9c1e9004df67c80b9264d",
+            "bytes": 102431,
+            "count": 514
+        },
+        "catalog/raw/easylist-easyprivacy/rules/block.json": {
+            "sha256": "f1361aab2fe7550476fbe7892425308576e897a1a49383677e6fb9b6a451fd9c",
+            "bytes": 1588505,
+            "count": 6272
+        },
+        "catalog/raw/easylist-fanboy/cosmetic/extended.json": {
+            "sha256": "5e9a27f2ba8c09917d14eaba592dcaaf9270e35dcd769b2a324c42968680a922",
+            "bytes": 7850,
+            "count": 36
+        },
+        "catalog/raw/easylist-fanboy/cosmetic/generic.css": {
+            "sha256": "bf8ddd6767c91776551a5d18848bf69433fccdaa2813b1a2c8300c4ace558e17",
+            "bytes": 15395
+        },
+        "catalog/raw/easylist-fanboy/cosmetic/specific.json": {
+            "sha256": "4dd8f41a338fd64ce1a485592b092c69e818aa789bab30d99ce194d35598c4dc",
+            "bytes": 155195,
+            "count": 2324
+        },
+        "catalog/raw/easylist-fanboy/cosmetic/unhide.json": {
+            "sha256": "058376ad8ee17abb09982af7944ce2559b5dc56e1f7bcce1ff2b7732df7efc05",
+            "bytes": 907,
+            "count": 14
+        },
+        "catalog/raw/easylist-fanboy/domains.json": {
+            "sha256": "7ed58537a959376f2b7f3d56bf12a9f4574e5a6a4e98f4450f002aa940775dd5",
+            "bytes": 5828,
+            "count": 318
+        },
+        "catalog/raw/easylist-fanboy/rules/all.json": {
+            "sha256": "795ac1e77f0d8741653873523568adb62f0f88a05e3f1894ab3f3d6054110ef5",
+            "bytes": 54929,
+            "count": 406
+        },
+        "catalog/raw/easylist-fanboy/rules/allow.json": {
+            "sha256": "3b846bf9fdd81399b502dd6bf9e38790661650bd97ce001e6934a226eedd48c1",
+            "bytes": 3206,
+            "count": 19
+        },
+        "catalog/raw/easylist-fanboy/rules/block.json": {
+            "sha256": "90a1c1b7d21b061678df7def0869e65a9e6a7489132834841abcfb393e11a3db",
+            "bytes": 51697,
+            "count": 387
+        },
+        "catalog/raw/extension-blocklist/domains.json": {
+            "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+            "bytes": 3,
+            "count": 0
+        },
+        "catalog/raw/extension-blocklist/rules/block.json": {
+            "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+            "bytes": 3,
+            "count": 0
+        },
+        "catalog/raw/extension-whitelist/domains.json": {
+            "sha256": "0da8a3554c286e5da3ce57d413bcdf51f28e57dfff1bee398545cfc289f117c5",
+            "bytes": 33391,
+            "count": 1479
+        },
+        "catalog/raw/extension-whitelist/rules/allow.json": {
+            "sha256": "78be4215299724996011bac0d91f797b0b9e564074b859b74dced491e4ff9050",
+            "bytes": 26076,
+            "count": 1
+        },
+        "catalog/raw/gsheet-allow-request-domains/domains.json": {
+            "sha256": "47939522a90410ffd6a1606820c6d3427327bf53fc624e1cb54c1d007a760356",
+            "bytes": 424,
+            "count": 19
+        },
+        "catalog/raw/gsheet-default-blocklist-not-to-add/domains.json": {
+            "sha256": "1148cd2ab177c72492bbc1b4b7fe6e421ef1851b65dd58e8800e9360d1b64f9c",
+            "bytes": 646,
+            "count": 21
+        },
+        "catalog/raw/gsheet-default-blocklist/domains.json": {
+            "sha256": "e7cfaae299a5558eeca16effc10984c498486c0b573248d46aa7c9ac6438ab23",
+            "bytes": 56,
+            "count": 2
+        },
+        "catalog/raw/gsheet-default-blocklist/rules/block.json": {
+            "sha256": "b1b0f7452fefbfb0834970afcef7b5701dec8a40c30916427cf71a7c130e330d",
+            "bytes": 198,
+            "count": 1
+        },
+        "catalog/raw/gsheet-default-whitelist/domains.json": {
+            "sha256": "95c18affc339185343ebc6b5efa3491d0a2148309477cbad6a6e259716a19137",
+            "bytes": 3969,
+            "count": 178
+        },
+        "catalog/raw/gsheet-default-whitelist/rules/allow.json": {
+            "sha256": "c8eb01d32aa679207c5ad4590627d78a9a92629a0e5975adb56c894a924a654e",
+            "bytes": 3159,
+            "count": 1
+        },
+        "catalog/raw/gsheet-download-sites/domains.json": {
+            "sha256": "c183c7f5f5b426ba5d8cfa4a8413c1688f17c18336ec73bb739cd13cee896465",
+            "bytes": 1008,
+            "count": 50
+        },
+        "catalog/raw/gsheet-initiator-allowed-domains/domains.json": {
+            "sha256": "8451a3930b39754d90a6d972509f69477acaac46d7bef775ffb62af4f5ecb96d",
+            "bytes": 6755,
+            "count": 316
+        },
+        "catalog/raw/gsheet-manual-blocklist/domains.json": {
+            "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+            "bytes": 3,
+            "count": 0
+        },
+        "catalog/raw/gsheet-manual-blocklist/rules/block.json": {
+            "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+            "bytes": 3,
+            "count": 0
+        },
+        "catalog/raw/gsheet-manual-whitelist/domains.json": {
+            "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+            "bytes": 3,
+            "count": 0
+        },
+        "catalog/raw/gsheet-omit-from-blocklist/domains.json": {
+            "sha256": "fe2186ce10fc5afaa2347243034282f532a87440cf52a0f967d3d764d7aecbfb",
+            "bytes": 344,
+            "count": 14
+        },
+        "catalog/raw/gsheet-omit-from-whitelist/domains.json": {
+            "sha256": "871050c9a09ca4a85a0b0e9f47779ff8365c5df44abcfbe87ea4e02de4598e3a",
+            "bytes": 919,
+            "count": 34
+        },
+        "catalog/raw/gsheet-popup/domains.json": {
+            "sha256": "56a60f5ce9f33c515e458684f046f53d81fbe8faf41ae169790e94a5cc610d73",
+            "bytes": 123447,
+            "count": 4771
+        },
+        "catalog/raw/gsheet-popup/rules/redirect.json": {
+            "sha256": "39bbda74c7d820e9bbfc4f776dbb033c72be55ecd65cd3b8bf3ba0b824dca64a",
+            "bytes": 99808,
+            "count": 1
+        },
+        "catalog/raw/gsheet-rule101xtra/domains.json": {
+            "sha256": "99e5b14080483721ef79ed36fa12d33151ec26b34dbe8a233f2c5af6081071d0",
+            "bytes": 6535,
+            "count": 307
+        },
+        "catalog/raw/gsheet-tracking-whitelist/domains.json": {
+            "sha256": "0a8bc0bdad8a818130994b9d6ac27026fc90927c32a01b0aa6c3143ec360e8c2",
+            "bytes": 1006,
+            "count": 46
+        },
+        "catalog/raw/gsheet-whitelisted-domains-injection-enabled/domains.json": {
+            "sha256": "29c50f3b3877f803613818ccd9f4d5f266e3d4f48671d458b949aa14a0176e70",
+            "bytes": 7539,
+            "count": 344
+        },
+        "catalog/raw/hosts-adguarddns/domains.json": {
+            "sha256": "06489e25d7bb99988b45ea58fada16576a2877d8414c84d3fc241875c46551df",
+            "bytes": 4054774,
+            "count": 176587
+        },
+        "catalog/raw/hosts-adguarddns/rules/block.json": {
+            "sha256": "99859e4467dd78ca12211235c44217c5fe4c5cca960bb658993f64a2ad8018fa",
+            "bytes": 4060309,
+            "count": 36
+        },
+        "catalog/raw/hosts-adguarddns/rules/redirect.json": {
+            "sha256": "413819ad58069a3002949bfb681b45fd9c1b67181660ac3a38ef65d7605d6473",
+            "bytes": 4063333,
+            "count": 36
+        },
+        "catalog/raw/hosts-anudeep/domains.json": {
+            "sha256": "7f8e85e3db6f03d0a5097fc641ea8ef768fb33134696a334cee6f0eb04ad71d2",
+            "bytes": 1094565,
+            "count": 42358
+        },
+        "catalog/raw/hosts-anudeep/rules/block.json": {
+            "sha256": "0729576501b7ae5eb800882946bbf58713af6f794cd1cc94acec4be3487e4487",
+            "bytes": 1095942,
+            "count": 9
+        },
+        "catalog/raw/hosts-anudeep/rules/redirect.json": {
+            "sha256": "8528038f75cc0597f2a28ef868d9fdc2594731f96f2b4c7d2f1806ad6927b96e",
+            "bytes": 1096698,
+            "count": 9
+        },
+        "catalog/raw/hosts-kadhosts/domains.json": {
+            "sha256": "3874c52b6ee41ba7b818e9954c8d1a7bd84eab3afadbc6f17754b653d34cf0c8",
+            "bytes": 1032056,
+            "count": 43996
+        },
+        "catalog/raw/hosts-kadhosts/rules/redirect.json": {
+            "sha256": "d0f137c3cc3780899d8f12d5dd02fbe6d479080d837a170f8f2f02f4104a4e12",
+            "bytes": 1034189,
+            "count": 9
+        },
+        "catalog/raw/hosts-peterlowe/domains.json": {
+            "sha256": "0e89f09abfd91917beb869a7dca1f5a539a1289469d35a5e2dae2132a16eb640",
+            "bytes": 65728,
+            "count": 3542
+        },
+        "catalog/raw/hosts-peterlowe/rules/block.json": {
+            "sha256": "a353225cda572c60f7126bcf9b38e913f07067219f161b985489cdf75a72982e",
+            "bytes": 65881,
+            "count": 1
+        },
+        "catalog/raw/hosts-peterlowe/rules/redirect.json": {
+            "sha256": "b2ba1b0d2c61a75398b15336178d52810e24660855a68d62d3bde0c714614566",
+            "bytes": 65965,
+            "count": 1
+        }
+    }
+}
