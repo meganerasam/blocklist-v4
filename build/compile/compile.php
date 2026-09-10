@@ -26,7 +26,7 @@
 //
 // dist/ contract (2026-09-08): ONLY what a consumer actually calls is published —
 //   network/rules.json (extension) · whitelist/default.json (backend sync) · cosmetic/ ·
-//   traffic_quality/ · standalone/ (Sheets J–N) — plus derived/ (community.json,
+//   traffic_quality/ · standalone/ (Sheets K–O) — plus derived/ (community.json,
 //   curation-set.json): compile helpers committed for inspection, called by nothing.
 //
 // Fail-closed doctrine: every artifact is computed and every assertion passes BEFORE the
@@ -99,11 +99,11 @@ function load_mirror(string $path, string $label, bool $mustBeNonEmpty): array
 // ============================================================================
 // ① INPUTS — compile-side mirrors + the sanitized curation products
 // ============================================================================
-$G  = load_mirror("$ROOT/sources/gsheet/omit-from-whitelist.json",  'Sheet G', false);
-$C  = load_mirror("$ROOT/sources/gsheet/default-whitelist.json",    'Sheet C', true);
-$H  = load_mirror("$ROOT/sources/gsheet/omit-from-blocklist.json",  'Sheet H', true);
-$D  = load_mirror("$ROOT/sources/gsheet/default-blocklist.json",    'Sheet D', true);
-$F  = load_mirror("$ROOT/sources/gsheet/manual-blocklist.json",     'Sheet F', false);
+$omitWhitelist  = load_mirror("$ROOT/sources/gsheet/omit-from-whitelist.json",  'Sheet H (omit-from-whitelist)', false);
+$defaultWhitelist  = load_mirror("$ROOT/sources/gsheet/default-whitelist.json",    'Sheet C', true);
+$omitBlocklist  = load_mirror("$ROOT/sources/gsheet/omit-from-blocklist.json",  'Sheet I (omit-from-blocklist)', true);
+$defaultBlocklist  = load_mirror("$ROOT/sources/gsheet/default-blocklist.json",    'Sheet D', true);
+$manualBlocklist  = load_mirror("$ROOT/sources/gsheet/manual-blocklist.json",     'Sheet G (manual-blocklist)', false);
 $fleetBLPath = "$ROOT/sources/extension/blocklist/user-extension-blocklist.json";
 $fleetBL = is_file($fleetBLPath) ? load_mirror($fleetBLPath, 'Fleet blocklist', false) : [];
 
@@ -127,9 +127,17 @@ $curationList = load_mirror("$SAN/curation-set.json", 'curation set (sanitized)'
 $curation = [];
 foreach ($curationList as $d) $curation[$d] = true;
 $userWL = load_mirror("$SAN/extension/user-whitelist.json", 'user whitelist (sanitized)', true);
-$A = load_mirror("$SAN/gsheet/popup.json", 'Sheet A (sanitized)', true);
+$popupSheetRows = load_mirror("$SAN/gsheet/popup.json", 'Sheet A (sanitized)', true);
+// Sheet E — default-blocklist-not-to-add (2026-09-10, user decision). Same contract as
+// omit-from-blocklist: curation-set member (handled in curate) AND part of the never-block
+// floor here, which is what actually vetoes the Sheet D / manual-blocklist / fleet appends —
+// those sit ABOVE curation, so curation-set membership alone would not stop them.
+// Mirror may not exist yet (export_url TBD): absent = empty set, never a failure.
+$noAddPath = "$ROOT/sources/gsheet/default-blocklist-not-to-add.json";
+$noAdd = is_file($noAddPath) ? load_mirror($noAddPath, 'Sheet E (default-blocklist-not-to-add)', false) : [];
 $never = [];
-foreach ($H as $d) $never[$d] = true;      // H: never-block floor, domain + subdomains
+foreach ($omitBlocklist as $d) $never[$d] = true;      // Sheet I: never-block floor, domain + subdomains
+foreach ($noAdd as $d)         $never[$d] = true;      // Sheet E: same floor, freely editable list
 
 // Download-sites allow lane (Sheet I as a SOURCE, user spec 2026-09-08): the compiler
 // VERIFIES the contract the curate stage promises before merging a single rule —
@@ -235,7 +243,7 @@ function reid_sequential(array $rules): array
 // ---- Sheet A (popup role): normalize like production short.php, dead-filter ----
 $sheetADead = [];
 $popupSheet = [];
-foreach ($A as $row) {
+foreach ($popupSheetRows as $row) {
     $rawClean = clean_domain($row);                    // ledger keyed on this form
     if ($rawClean !== null && isset($dead[$rawClean])) { $sheetADead[] = $row; continue; }
     $norm = normalize_domain($row);
@@ -390,7 +398,7 @@ $domainRules = reid_sequential($domainRules);
 // ⑤ APPENDS — Sheets D + F + fleet blocklists, AFTER the pass, never scrubbed
 // ============================================================================
 $appendAll = [];
-foreach ([$D, $F, $fleetBL] as $src) foreach ($src as $d) $appendAll[$d] = true;
+foreach ([$defaultBlocklist, $manualBlocklist, $fleetBL] as $src) foreach ($src as $d) $appendAll[$d] = true;
 $appendConflicts = [];       // deliberate block vs whitelist — flagged, never silent
 $appendShipped = [];
 $appendNeverDropped = 0;
@@ -583,7 +591,7 @@ foreach ($rules as $rule) {
 // initiator would hijack EVERY navigation from a default-whitelisted site, the one
 // axis a request-level client whitelist cannot counter (pornhub-class breakage).
 $cSet = [];
-foreach ($C as $d) $cSet[$d] = true;
+foreach ($defaultWhitelist as $d) $cSet[$d] = true;
 $cShippedBlock = $cShippedRedirect = $cHijackInitiators = [];
 foreach ($rules as $rule) {
     $type = $rule['action']['type'] ?? '';
@@ -696,11 +704,11 @@ $cssUnhide   = merge_css_maps($WORK, $CATS, 'allow', 'unhide.json');
 // − G − H (H added 2026-09-09: vetoed everywhere G is). G is exact-host, H is domain +
 // all subdomains — each keeps the semantics it has everywhere else in the pipeline.
 $neverSet = [];
-foreach ($H as $h) $neverSet[$h] = true;
-$minusG = function (array $list) use ($G, $neverSet): array {
+foreach ($omitBlocklist as $h) $neverSet[$h] = true;
+$minusG = function (array $list) use ($omitWhitelist, $neverSet): array {
     $set = [];
     foreach ($list as $d) $set[$d] = true;
-    foreach ($G as $g) unset($set[$g]);          // same exact-host veto as user-WL step 2
+    foreach ($omitWhitelist as $g) unset($set[$g]);          // same exact-host veto as user-WL step 2
     foreach (array_keys($set) as $d) {
         if (isWhitelistCovered($d, $neverSet)) unset($set[$d]);
     }
@@ -708,7 +716,7 @@ $minusG = function (array $list) use ($G, $neverSet): array {
     sort($out, SORT_STRING);
     return $out;
 };
-$wlDefault   = $minusG($C);                      // Sheet C as a product — the only SERVED
+$wlDefault   = $minusG($defaultWhitelist);                      // Sheet C as a product — the only SERVED
                                                  // whitelist (backend sync); C∩G is empty
                                                  // today, so −G is a standing veto hook
 $wlCommunity = $userWL;                          // = sanitized user whitelist (≥50 −G),
@@ -908,7 +916,7 @@ $rep[] = '| ④ guards (post-curation leaks: retention re-adds, edge cases) | po
 $rep[] = '| ④ veto (curated/vetoes.txt) | ' . $vetoed . ' block rules dropped |';
 $rep[] = '| ④ popup lane | ' . count($popupDomains) . ' domains → ' . count($popupRules) . ' redirect rules |';
 $rep[] = '| ④ domains lane | ' . count($trackerDomains) . ' domains → ' . count($domainRules) . ' rules (easylist-covered −' . $trackerStats['covered'] . ') |';
-$rep[] = '| ⑤ appends (D + F + fleet-BL) | ' . count($appendShipped) . ' domains → ' . count($appendRules) . ' rules · H −' . $appendNeverDropped . ' · **conflicts vs whitelist: ' . count($appendConflicts) . '** · **whitelisted subdomains overridden by an append parent: ' . count($appendParentOverrides) . '** |';
+$rep[] = '| ⑤ appends (D + G + fleet-BL) | ' . count($appendShipped) . ' domains → ' . count($appendRules) . ' rules · H −' . $appendNeverDropped . ' · **conflicts vs whitelist: ' . count($appendConflicts) . '** · **whitelisted subdomains overridden by an append parent: ' . count($appendParentOverrides) . '** |';
 $rep[] = '| ⑥ rules.json | **' . $totalRules . ' rules** (' . implode(' · ', array_map(fn ($k, $v) => "$k $v", array_keys($byAction), $byAction)) . ') · main-frame dup→redirect ' . $dupAsRedirect . ' (whitelisted initiators stripped ' . $dupInitStripped . ' · twins skipped ' . $dupSkippedWhitelisted . ') |';
 $rep[] = '| ⑥ download-sites allow lane | ' . count($dlAllow) . ' rules merged (validated: allow · priority>blocks · full 7-type map incl. websocket/other) · global assert: min allow prio ' . ($minAllowPrio === PHP_INT_MAX ? '—' : $minAllowPrio) . ' > max block prio ' . $maxBlockPrio . ' |';
 $rep[] = '| ⑥ C (product-only) vs shipped | block targets ' . count($cShippedBlock) . ' · redirect targets ' . count($cShippedRedirect) . ' · **redirect initiators (navigation hijack): ' . count($cHijackInitiators) . '** |';

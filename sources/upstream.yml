@@ -29,24 +29,34 @@ sheets:
     name: default-blocklist
     mirror: sources/gsheet/default-blocklist.json
     export_url: "https://docs.google.com/spreadsheets/d/1io0IqiXUc8VBERQvdWuUkh4pwJz6sxxZ7QqGL8i7YTk/export?format=csv&gid=735128469#gid=735128469" # NEW — org default block domains, appended as block rules; bootstrap candidate: the 23 default_blockdom() entries
-  E_manual_whitelist:
+  E_default_blocklist_not_to_add:
+    name: default-blocklist-not-to-add
+    mirror: sources/gsheet/default-blocklist-not-to-add.json
+    export_url: "TBD"  # sheet not created yet — ingest skips it without failing (see SCHEMA gates)
+    note: |
+      NEW 2026-09-10 (user decision). The veto on the default blocklist: a domain listed
+      here must produce NO rule at all. Same contract as I_omit_from_blocklist — curation-set
+      member AND append floor — but a separate, freely editable list, whereas
+      omit-from-blocklist stays locked down for our own brand domains.
+      Matched domain + ALL subdomains. Sheet D itself is unchanged.
+  F_manual_whitelist:
     name: manual-whitelist
     mirror: sources/gsheet/manual-whitelist.json
     export_url: "https://docs.google.com/spreadsheets/d/1hPdvfQBkXWTb8dU0w_x0XA1NJBylADfd20MP5PCNOjw/export?format=csv&gid=0#gid=0" # starts empty — future manual whitelist additions
-  F_manual_blocklist:
+  G_manual_blocklist:
     name: manual-blocklist
     mirror: sources/gsheet/manual-blocklist.json
     export_url: "https://docs.google.com/spreadsheets/d/1hPdvfQBkXWTb8dU0w_x0XA1NJBylADfd20MP5PCNOjw/export?format=csv&gid=1649415842#gid=1649415842" # starts empty
-  G_omit_from_whitelist:
+  H_omit_from_whitelist:
     name: omit-from-whitelist
     mirror: sources/gsheet/omit-from-whitelist.json
     export_url: "https://docs.google.com/spreadsheets/d/1IS72yj64N7RVIT_kXOmE-67Q0dg1hqXgzY9Y6oSyA-0/export?format=csv&gid=1360553846#gid=1360553846" # holds the protected search hosts (google.com, search.yahoo.com, …)
-  H_omit_from_blocklist:
+  I_omit_from_blocklist:
     name: omit-from-blocklist
     mirror: sources/gsheet/omit-from-blocklist.json
     export_url: "https://docs.google.com/spreadsheets/d/1IS72yj64N7RVIT_kXOmE-67Q0dg1hqXgzY9Y6oSyA-0/export?format=csv&gid=0#gid=0" # bootstrapped 2026-09-07 with whitelistes3.txt's 13 ecosystem/partner domains
     note: never-block floor — tightest edit access of all sheets
-  I_download_sites:
+  J_download_sites:
     name: download-sites
     mirror: sources/gsheet/download-sites.json
     export_url: "https://docs.google.com/spreadsheets/d/1IS72yj64N7RVIT_kXOmE-67Q0dg1hqXgzY9Y6oSyA-0/export?format=csv&gid=43296086#gid=43296086" # NEW 2026-09-08 — download sites, omit-style domain list; curation input: subtracted from the blocking sources (Sheet A, KADhosts, hosts lanes, easylist family)
@@ -54,23 +64,23 @@ sheets:
   # ---- standalone sheets (J–N): mirrored + published as on-demand JSON, NEVER merged ----
   # These carry the remaining hardcoded arrays out of ninja-adb21.php; the backends fetch
   # them on demand (like Sheet B). Bootstrap TSVs generated from the live server file.
-  J_whitelisted_domains_injection_enabled:
+  K_whitelisted_domains_injection_enabled:
     name: whitelisted-domains-injection-enabled
     mirror: sources/gsheet/whitelisted-domains-injection-enabled.json
     export_url: "https://docs.google.com/spreadsheets/d/1eVY_rEJ9fNZVwQTPns6isM4bv5ggLmpkEcQ-VzBqF5M/export?format=csv&gid=0#gid=0" # was $whitelistedDomainsInjectionEnabled (344 entries)
-  K_tracking_whitelist:
+  L_tracking_whitelist:
     name: tracking-whitelist
     mirror: sources/gsheet/tracking-whitelist.json
     export_url: "https://docs.google.com/spreadsheets/d/1eVY_rEJ9fNZVwQTPns6isM4bv5ggLmpkEcQ-VzBqF5M/export?format=csv&gid=331010199#gid=331010199" # was $tracking_whitelist (46 entries, DNR rule 5005)
-  L_allow_request_domains:
+  M_allow_request_domains:
     name: allow-request-domains
     mirror: sources/gsheet/allow-request-domains.json
     export_url: "https://docs.google.com/spreadsheets/d/1eVY_rEJ9fNZVwQTPns6isM4bv5ggLmpkEcQ-VzBqF5M/export?format=csv&gid=110294896#gid=110294896" # was $allowReqDomains (19 entries, DNR rule 5006)
-  M_initiator_allowed_domains:
+  N_initiator_allowed_domains:
     name: initiator-allowed-domains
     mirror: sources/gsheet/initiator-allowed-domains.json
     export_url: "https://docs.google.com/spreadsheets/d/1eVY_rEJ9fNZVwQTPns6isM4bv5ggLmpkEcQ-VzBqF5M/export?format=csv&gid=920400328#gid=920400328" # was $initiatorAllowedDomains (316 entries, DNR rule 5006)
-  N_rule101xtra:
+  O_rule101xtra:
     name: rule101xtra
     mirror: sources/gsheet/rule101xtra.json
     export_url: "https://docs.google.com/spreadsheets/d/1eVY_rEJ9fNZVwQTPns6isM4bv5ggLmpkEcQ-VzBqF5M/export?format=csv&gid=2001657757#gid=2001657757" # was $rule101xtraDomainsNew (307 entries, CSP-strip rule 33)

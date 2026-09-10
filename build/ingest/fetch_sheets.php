@@ -50,6 +50,10 @@ const SPECS = [
     'traffic-quality-trackers' => ['header' => ['market', 'hostname', 'nb_click'],  'kind' => 'tracker', 'shrink_guard' => false, 'delta_pct' => 30],
     'default-whitelist'        => ['header' => ['domain'],       'kind' => 'domains', 'shrink_guard' => true,  'delta_pct' => null],
     'default-blocklist'        => ['header' => ['domain'],       'kind' => 'domains', 'shrink_guard' => false, 'delta_pct' => null],
+    // Sheet E (2026-09-10): the veto on the default blocklist — a listed domain must
+    // produce NO rule at all. Shrink-guarded like omit-from-blocklist: a silent shrink
+    // would silently re-admit blocks the operator deliberately vetoed.
+    'default-blocklist-not-to-add' => ['header' => ['domain'],   'kind' => 'domains', 'shrink_guard' => true,  'delta_pct' => null],
     'manual-whitelist'         => ['header' => ['domain'],       'kind' => 'domains', 'shrink_guard' => true,  'delta_pct' => null],
     'manual-blocklist'         => ['header' => ['domain'],       'kind' => 'domains', 'shrink_guard' => false, 'delta_pct' => null],
     'omit-from-whitelist'      => ['header' => ['domain'],       'kind' => 'domains', 'shrink_guard' => false, 'delta_pct' => null],
@@ -57,7 +61,7 @@ const SPECS = [
     // Sheet I (2026-09-08): download sites — omit-style curation input; a silent shrink
     // would strip protection from download sites, so it gets the shrink guard like H
     'download-sites'           => ['header' => ['domain'],       'kind' => 'domains', 'shrink_guard' => true,  'delta_pct' => null],
-    // standalone (J–N): mirrored + published on demand, never merged into rules
+    // standalone (K–O): mirrored + published on demand, never merged into rules
     'whitelisted-domains-injection-enabled' => ['header' => ['domain'], 'kind' => 'domains', 'shrink_guard' => false, 'delta_pct' => null],
     'tracking-whitelist'       => ['header' => ['domain'],       'kind' => 'domains', 'shrink_guard' => false, 'delta_pct' => null],
     'allow-request-domains'    => ['header' => ['domain'],       'kind' => 'domains', 'shrink_guard' => false, 'delta_pct' => null],

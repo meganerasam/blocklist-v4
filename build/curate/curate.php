@@ -100,13 +100,24 @@ function load_mirror(string $path, string $label, bool $mustBeNonEmpty): array
 // ============================================================================
 // ① CURATION INPUTS
 // ============================================================================
-$G = load_mirror("$ROOT/sources/gsheet/omit-from-whitelist.json", 'Sheet G', false);
-$H = load_mirror("$ROOT/sources/gsheet/omit-from-blocklist.json", 'Sheet H', true);
-$Hset = [];
-foreach ($H as $h) $Hset[$h] = true;   // lookup form for isWhitelistCovered (domain + subs)
+$omitWhitelist = load_mirror("$ROOT/sources/gsheet/omit-from-whitelist.json", 'Sheet H (omit-from-whitelist)', false);
+$omitBlocklist = load_mirror("$ROOT/sources/gsheet/omit-from-blocklist.json", 'Sheet I (omit-from-blocklist)', true);
+$omitBlocklistSet = [];
+foreach ($omitBlocklist as $h) $omitBlocklistSet[$h] = true;   // lookup form for isWhitelistCovered (domain + subs)
+// Sheet E — default-blocklist-not-to-add (2026-09-10, user decision): the veto on the
+// default blocklist. Same contract as omit-from-blocklist — curation-set member here AND
+// part of compile's never-block floor (which is what actually stops the Sheet D appends,
+// since appends sit above curation). Kept as a SEPARATE sheet because omit-from-blocklist
+// has the tightest edit access of all sheets (our own brand domains); this one is meant to
+// be edited freely. Matched domain + all subdomains, like omit-from-blocklist.
+// The sheet may not exist yet (export_url TBD) — absent mirror = empty set, never a failure.
+$noAddPath = "$ROOT/sources/gsheet/default-blocklist-not-to-add.json";
+$noAddMissing = !is_file($noAddPath);
+$noAdd = $noAddMissing ? [] : load_mirror($noAddPath, 'Sheet E (default-blocklist-not-to-add)', false);
+
 $downloadPath = "$ROOT/sources/gsheet/download-sites.json";
 $downloadMissing = !is_file($downloadPath);
-$I = $downloadMissing ? [] : load_mirror($downloadPath, 'Sheet I (download-sites)', false);
+$downloadSites = $downloadMissing ? [] : load_mirror($downloadPath, 'Sheet J (download-sites)', false);
 
 // ---- Sheet I normalization + its own curation (user spec 2026-09-08 evening) ----
 // step 1: normalize each row — lowercase/trim (load_mirror), strip protocol, path/query/
@@ -118,7 +129,7 @@ $I = $downloadMissing ? [] : load_mirror($downloadPath, 'Sheet I (download-sites
 //         (a G-vetoed download site is fully retracted) and the allow-list source below.
 $dlWarnings = [];
 $dlSet = [];
-foreach ($I as $row) {
+foreach ($downloadSites as $row) {
     $s = (string) preg_replace('#^[a-z][a-z0-9+.-]*://#', '', $row);   // protocol
     $s = (string) preg_replace('#[/?\#].*$#', '', $s);                 // path / query / fragment
     $s = (string) preg_replace('#:\d+$#', '', $s);                     // port
@@ -133,7 +144,7 @@ foreach ($I as $row) {
     $dlSet[$s] = true;
 }
 $dlVetoed = [];
-foreach ($G as $g) {
+foreach ($omitWhitelist as $g) {
     if (isset($dlSet[$g])) { $dlVetoed[] = $g; unset($dlSet[$g]); }
 }
 // ...and − H (2026-09-09, user decision: H is vetoed everywhere G is). H keeps its OWN
@@ -142,7 +153,7 @@ foreach ($G as $g) {
 // whitelist: the extension has to stay active on our own pages.
 $dlVetoedH = [];
 foreach (array_keys($dlSet) as $d) {
-    if (isWhitelistCovered($d, $Hset)) { $dlVetoedH[] = $d; unset($dlSet[$d]); }
+    if (isWhitelistCovered($d, $omitBlocklistSet)) { $dlVetoedH[] = $d; unset($dlSet[$d]); }
 }
 sort($dlVetoedH, SORT_STRING);
 $dlSites = array_keys($dlSet);
@@ -162,14 +173,14 @@ if (!$userRaw) fail('user whitelist step 1 empty — no domain reaches ' . COMMU
 // step 2: − G (exact host — the editorial veto for gamed votes)
 $userWL = $userRaw;
 $userVetoed = [];
-foreach ($G as $g) {
+foreach ($omitWhitelist as $g) {
     if (isset($userWL[$g])) { $userVetoed[] = $g; unset($userWL[$g]); }
 }
 // step 2b: − H (2026-09-09) — no vote count can whitelist an own-brand domain and
 // switch the extension off on our own pages. Domain + subdomains, H's own semantics.
 $userVetoedH = [];
 foreach (array_keys($userWL) as $d) {
-    if (isWhitelistCovered($d, $Hset)) { $userVetoedH[] = $d; unset($userWL[$d]); }
+    if (isWhitelistCovered($d, $omitBlocklistSet)) { $userVetoedH[] = $d; unset($userWL[$d]); }
 }
 sort($userVetoedH, SORT_STRING);
 if (!$userWL) fail('user whitelist step 2 empty — G/H vetoed everything?');
@@ -177,15 +188,15 @@ if (!$userWL) fail('user whitelist step 2 empty — G/H vetoed everything?');
 // the curation set — every recipe below subtracts THIS (domain + subdomains).
 // Sheet I contributes its NORMALIZED, G-vetoed form ($dlSites), never the raw rows.
 $curation = [];
-foreach ([$H, $dlSites, array_keys($userWL)] as $src) foreach ($src as $d) $curation[$d] = true;
+foreach ([$omitBlocklist, $noAdd, $dlSites, array_keys($userWL)] as $src) foreach ($src as $d) $curation[$d] = true;
 
 // ============================================================================
 // ② SHEET A (popup) − curation set
 // ============================================================================
-$A = load_mirror("$ROOT/sources/gsheet/popup.json", 'Sheet A', true);
+$popupSheetRows = load_mirror("$ROOT/sources/gsheet/popup.json", 'Sheet A (popup)', true);
 $popupKept = [];
 $popupDropped = [];
-foreach ($A as $row) {
+foreach ($popupSheetRows as $row) {
     $norm = normalize_domain($row);
     $raw  = clean_domain($row);
     $covered = ($norm !== '' && isWhitelistCovered($norm, $curation))
@@ -272,8 +283,8 @@ foreach ($CATS as $cat) {
     }
     foreach ([['allow', 'network.json'], ['allow', 'popup.json']] as [$folder, $file]) {
         $rules = scrubAllowRules(work_json("$WORK/$cat/$folder/$file"), $curation, $allowStats);
-        $rules = scrubGVetoAllows($rules, $G, $gVetoStats);
-        $leaks = gVetoAllowLeaks($rules, $G);
+        $rules = scrubGVetoAllows($rules, $omitWhitelist, $gVetoStats);
+        $leaks = gVetoAllowLeaks($rules, $omitWhitelist);
         if ($leaks) {
             fail("Sheet G veto guard: a blanket allow still names a G host in $cat/$folder/$file — "
                 . implode(', ', array_slice($leaks, 0, 10)));
@@ -375,6 +386,7 @@ $provInputs = [
     'sources/gsheet/omit-from-whitelist.json',
     'sources/gsheet/omit-from-blocklist.json',
     'sources/gsheet/download-sites.json',        // hashes as 'MISSING' while the sheet bootstraps
+    'sources/gsheet/default-blocklist-not-to-add.json',  // idem — export_url still TBD
     'sources/gsheet/popup.json',
     'sources/extension/whitelist/raw/all-extension.csv',
     'sources/hosts/anudeep.txt',
@@ -455,9 +467,9 @@ $rep[] = '# Curate — ' . gmdate('Y-m-d H:i') . " UTC · {$elapsed}s";
 $rep[] = '';
 $rep[] = '| stage | result |';
 $rep[] = '|---|---|';
-$rep[] = '| ① user whitelist | step 1 (votes ≥' . COMMUNITY_MIN_VOTES . ') ' . count($userRawOut) . ' → step 2 (−G −H) ' . count($userOut) . ' (vetoed by G ' . count($userVetoed) . ' · by H ' . count($userVetoedH) . ') |';
-$rep[] = '| ① download sites (Sheet I) | ' . count($I) . ' rows → ' . count($dlSites) . ' normalized (invalid ' . count($dlWarnings) . ' **warned** · vetoed by G ' . count($dlVetoed) . ' · by H ' . count($dlVetoedH) . ')' . ($downloadMissing ? ' **[mirror missing — sheet URL TBD]**' : '') . ' |';
-$rep[] = '| ① curation set (H ∪ I ∪ userWL) | ' . count($curationOut) . ' domains (H ' . count($H) . ' · I ' . count($dlSites) . ' · userWL ' . count($userOut) . ') |';
+$rep[] = '| ① user whitelist | step 1 (votes ≥' . COMMUNITY_MIN_VOTES . ') ' . count($userRawOut) . ' → step 2 (−omit-whitelist −omit-blocklist) ' . count($userOut) . ' (vetoed by omit-whitelist ' . count($userVetoed) . ' · by omit-blocklist ' . count($userVetoedH) . ') |';
+$rep[] = '| ① download sites (Sheet J) | ' . count($downloadSites) . ' rows → ' . count($dlSites) . ' normalized (invalid ' . count($dlWarnings) . ' **warned** · vetoed by omit-whitelist ' . count($dlVetoed) . ' · by omit-blocklist ' . count($dlVetoedH) . ')' . ($downloadMissing ? ' **[mirror missing — sheet URL TBD]**' : '') . ' |';
+$rep[] = '| ① curation set (I ∪ E ∪ J ∪ userWL) | ' . count($curationOut) . ' domains (omit-from-blocklist ' . count($omitBlocklist) . ' · not-to-add ' . count($noAdd) . ($noAddMissing ? ' **[sheet TBD]**' : '') . ' · download-sites ' . count($dlSites) . ' · userWL ' . count($userOut) . ') |';
 $rep[] = '| ② Sheet A | ' . count($popupKept) . ' kept · ' . count($popupDropped) . ' curated out |';
 $hostsCell = [];
 foreach ($hostsKept as $tag => $kept) $hostsCell[] = "$tag " . count($kept) . ' (−' . count($hostsDropped[$tag]) . ')';
