@@ -2,7 +2,7 @@ name: Verify — domain ledger (tiered DNS)
 
 # Maintains state/domain-ledger.json: one record per domain across the SANITIZED
 # candidates (sanitized/hosts/*.txt + sanitized/gsheet/popup.json — the curation
-# stage already subtracted H ∪ I ∪ user whitelist, so there are no skip rules;
+# stage already subtracted omit-from-blocklist ∪ not-to-add ∪ download-sites ∪ user whitelist, so there are no skip rules;
 # the ledger tests exactly what can ship). Tiered scheduling replaces v2's daily
 # full retest — new domains now, active weekly, dead on backoff (1d/7d/30d/
 # quarterly), purged when dead+delisted 180d (or delisted 365d). Sheets are never

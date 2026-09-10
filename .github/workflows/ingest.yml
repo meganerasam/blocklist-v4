@@ -1,6 +1,6 @@
 name: Ingest — mirror Sheets A–G
 
-# Mirrors the 14 Google Sheets A–N into sources/gsheet/*.json (validated, fail-closed per
+# Mirrors the 15 Google Sheets A–O into sources/gsheet/*.json (validated, fail-closed per
 # sheet) plus the hosts + easylist snapshots. Successes are committed even when another
 # sheet fails; a failed sheet keeps its previous mirror and turns the run red.
 # NOTE: the workflow `name:` above is a FROZEN string — curate.yml's workflow_run trigger

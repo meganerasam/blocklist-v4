@@ -8,7 +8,7 @@
 //
 //   step 1 · user whitelist raw  = all-extension.csv merged votes ≥ COMMUNITY_MIN_VOTES
 //   step 2 · user whitelist      = step 1 − Sheet G (exact-host veto)
-//   curation set                 = Sheet H ∪ Sheet I (download sites) ∪ user whitelist
+//   curation set                 = omit-from-blocklist ∪ default-blocklist-not-to-add ∪ download-sites ∪ user whitelist
 //                                  (all matched domain + subdomains)
 //   per-source recipes (user decisions 2026-09-08):
 //     Sheet A (popup)     − curation set                → sanitized/gsheet/popup.json
@@ -110,7 +110,7 @@ foreach ($omitBlocklist as $h) $omitBlocklistSet[$h] = true;   // lookup form fo
 // since appends sit above curation). Kept as a SEPARATE sheet because omit-from-blocklist
 // has the tightest edit access of all sheets (our own brand domains); this one is meant to
 // be edited freely. Matched domain + all subdomains, like omit-from-blocklist.
-// The sheet may not exist yet (export_url TBD) — absent mirror = empty set, never a failure.
+// Live since 2026-09-10; the absent-mirror path stays as a fail-soft fallback.
 $noAddPath = "$ROOT/sources/gsheet/default-blocklist-not-to-add.json";
 $noAddMissing = !is_file($noAddPath);
 $noAdd = $noAddMissing ? [] : load_mirror($noAddPath, 'Sheet E (default-blocklist-not-to-add)', false);
@@ -386,7 +386,7 @@ $provInputs = [
     'sources/gsheet/omit-from-whitelist.json',
     'sources/gsheet/omit-from-blocklist.json',
     'sources/gsheet/download-sites.json',        // hashes as 'MISSING' while the sheet bootstraps
-    'sources/gsheet/default-blocklist-not-to-add.json',  // idem — export_url still TBD
+    'sources/gsheet/default-blocklist-not-to-add.json',  // Sheet E — live since 2026-09-10
     'sources/gsheet/popup.json',
     'sources/extension/whitelist/raw/all-extension.csv',
     'sources/hosts/anudeep.txt',
@@ -410,7 +410,7 @@ $artifacts = [];   // rel path under sanitized/ => content
 $artifacts['provenance.json'] = json_out($prov, true);
 $artifacts['extension/user-whitelist-raw.json'] = json_out($userRawOut, true);   // step 1
 $artifacts['extension/user-whitelist.json']     = json_out($userOut, true);      // step 2
-$artifacts['curation-set.json']                 = json_out($curationOut, true);  // H ∪ I ∪ userWL
+$artifacts['curation-set.json']                 = json_out($curationOut, true);  // omit-from-blocklist ∪ not-to-add ∪ download-sites ∪ userWL
 $artifacts['gsheet/popup.json']                 = json_out($popupKept, true);
 $artifacts['download-sites.txt']                = $dlTxt;                        // ABP list, overwritten every run
 $artifacts['download-sites/allow.json']         = json_out($dlRules, false);     // its DNR allow lane
@@ -476,7 +476,7 @@ foreach ($hostsKept as $tag => $kept) $hostsCell[] = "$tag " . count($kept) . ' 
 $rep[] = '| ③ hosts lanes | ' . implode(' · ', $hostsCell) . ' |';
 $rep[] = '| ④ easylist block lanes | ' . $blockStats['domainsRemoved'] . ' domains removed · ' . $blockStats['rulesDropped'] . ' rules dropped · ' . $blockStats['exclusionsAdded'] . ' carve-outs · ' . ($blockStats['initiatorsStripped'] ?? 0) . ' generic main_frame initiators stripped |';
 $rep[] = '| ④ easylist allow lanes (self-protection kept · mixed batches stripped) | ' . $allowStats['domainsRemoved'] . ' curated members stripped from mixed batches · ' . $allowStats['rulesDropped'] . ' rules dropped (policy: always 0) |';
-$rep[] = '| ④ easylist allow lanes (Sheet G veto: blanket allows only) | ' . $gVetoStats['domainsRemoved'] . ' G hosts stripped · ' . $gVetoStats['rulesDropped'] . ' rules dropped (axis would have emptied) · guard OK |';
+$rep[] = '| ④ easylist allow lanes (omit-from-whitelist veto: blanket allows only) | ' . $gVetoStats['domainsRemoved'] . ' omit-from-whitelist hosts stripped · ' . $gVetoStats['rulesDropped'] . ' rules dropped (axis would have emptied) · guard OK |';
 $rep[] = '| ④ cosmetic | pass-through, never curated |';
 $rep[] = '| ⑤ download_sites.txt (ABP allow source) | ' . count($dlRules) . ' rules (@@||domain^$' . DL_ALLOW_OPTIONS . ') · guards OK ($document/$~third-party/non-@@ = fail) |';
 if ($dlWarnings) {

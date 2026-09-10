@@ -5,10 +5,11 @@
 // happens in build/curate/curate.php, which publishes the sanitized/ tree. Compile
 // consumes sanitized/ and never re-derives a whitelist:
 //
-//   ① curation set — READ from sanitized/curation-set.json (H ∪ I ∪ user whitelist,
+//   ① curation set — READ from sanitized/curation-set.json (omit-from-blocklist ∪ not-to-add
 //      the single derivation; used here only for carve-outs, twin-initiator stripping,
 //      retention-leak guards and the final asserts). Sheet C stays PRODUCT-ONLY: it
-//      ships as whitelist/default.json (−G) and takes no part in any subtraction.
+//      ∪ download-sites ∪ user whitelist). Sheet C ships as whitelist/default.json
+//      (− both omit sheets) and takes no part in any subtraction.
 //   ② ledger read — dead domains (st = 'd') never ship; sheets are never modified
 //   ③ lanes from sanitized/: gsheet/popup.json · hosts/<tag>.txt · easylist/<cat>/
 //      DNR lanes (already curated; cosmetic passed through uncurated)
@@ -17,8 +18,8 @@
 //      self-vendor allow rules at priority 99999, and the rest of Sheet H is
 //      server-to-server traffic DNR never sees — verified 2026-09-08, so no
 //      never-block artifact ships
-//   ⑤ append explicit blocks (Sheets D + F + fleet blocklists) — ABOVE curation, never
-//      scrubbed (only the H floor); conflicts vs the curation set are FLAGGED, not
+//   ⑤ append explicit blocks (Sheets D + manual-blocklist + fleet blocklists) — ABOVE curation, never
+//      scrubbed (only the never-block floor = omit-from-blocklist ∪ Sheet E); conflicts are FLAGGED, not
 //      silently resolved
 //   ⑥ merge → dist/network/rules.json — re-ID into the production bands, assert DNR
 //      budgets, keep __EXT_ID__ placeholders — then cosmetic, whitelist, traffic_quality,
@@ -132,7 +133,7 @@ $popupSheetRows = load_mirror("$SAN/gsheet/popup.json", 'Sheet A (sanitized)', t
 // omit-from-blocklist: curation-set member (handled in curate) AND part of the never-block
 // floor here, which is what actually vetoes the Sheet D / manual-blocklist / fleet appends —
 // those sit ABOVE curation, so curation-set membership alone would not stop them.
-// Mirror may not exist yet (export_url TBD): absent = empty set, never a failure.
+// Live since 2026-09-10; the absent-mirror path stays as a fail-soft fallback.
 $noAddPath = "$ROOT/sources/gsheet/default-blocklist-not-to-add.json";
 $noAdd = is_file($noAddPath) ? load_mirror($noAddPath, 'Sheet E (default-blocklist-not-to-add)', false) : [];
 $never = [];
@@ -395,7 +396,7 @@ foreach (array_chunk($trackerDomains, CHUNK) as $domains) {
 $domainRules = reid_sequential($domainRules);
 
 // ============================================================================
-// ⑤ APPENDS — Sheets D + F + fleet blocklists, AFTER the pass, never scrubbed
+// ⑤ APPENDS — Sheets D + manual-blocklist + fleet blocklists, AFTER the pass, never scrubbed
 // ============================================================================
 $appendAll = [];
 foreach ([$defaultBlocklist, $manualBlocklist, $fleetBL] as $src) foreach ($src as $d) $appendAll[$d] = true;
@@ -718,8 +719,8 @@ $minusG = function (array $list) use ($omitWhitelist, $neverSet): array {
 };
 $wlDefault   = $minusG($defaultWhitelist);                      // Sheet C as a product — the only SERVED
                                                  // whitelist (backend sync); C∩G is empty
-                                                 // today, so −G is a standing veto hook
-$wlCommunity = $userWL;                          // = sanitized user whitelist (≥50 −G),
+                                                 // today, so the vetoes are standing hooks
+$wlCommunity = $userWL;                          // = sanitized user whitelist (≥50, − both omits),
 sort($wlCommunity, SORT_STRING);                 //   derived once, in curate.php
 $curationOut = $curationList;
 sort($curationOut, SORT_STRING);
@@ -784,8 +785,8 @@ $stage = function (string $rel, string $content, ?int $count) use (&$artifacts) 
 $stage('network/rules.json',        json_out($rules, false), $totalRules);
 $stage('whitelist/default.json',    json_out($wlDefault, true), count($wlDefault));
 // whitelist/ now carries the three whitelist flavours side by side (2026-09-09), so a
-// consumer reads one folder instead of three: the org default (Sheet C −G), the fleet
-// list (votes ≥ bar −G) and the download sites (normalized, −G — NOT the raw sheet,
+// consumer reads one folder instead of three: the org default (Sheet C − both omits), the fleet
+// list (votes ≥ bar, − both omits) and the download sites (normalized + vetoed — NOT the raw sheet,
 // whose www. rows would never match). community.json is byte-identical to
 // derived/community.json — same variable, staged twice on purpose; derived/ stays the
 // inspection surface, whitelist/ is the product surface.
@@ -904,7 +905,7 @@ $rep[] = '# Compile — ' . gmdate('Y-m-d H:i') . " UTC · {$elapsed}s" . ($FORC
 $rep[] = '';
 $rep[] = '| stage | result |';
 $rep[] = '|---|---|';
-$rep[] = '| ① curation set (sanitized/) | ' . count($curation) . ' domains (H ∪ I ∪ userWL — derived by curate.php) · user whitelist ' . count($wlCommunity) . ' · C product-only: ' . count($wlDefault) . ' → whitelist/default.json |';
+$rep[] = '| ① curation set (sanitized/) | ' . count($curation) . ' domains (omit-from-blocklist ∪ not-to-add ∪ download-sites ∪ userWL — derived by curate.php) · user whitelist ' . count($wlCommunity) . ' · C product-only: ' . count($wlDefault) . ' → whitelist/default.json |';
 $rep[] = '| ② ledger dead set | ' . count($dead) . ' domains never ship |';
 $feedCell = 'sheet-A ' . count($popupSheet) . ' (dead −' . count($sheetADead) . ')';
 foreach (['kadhosts', 'adguarddns', 'anudeep', 'peterlowe'] as $tag) {

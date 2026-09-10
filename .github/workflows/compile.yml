@@ -3,8 +3,8 @@ name: Compile — assemble dist/
 # One compile = ASSEMBLY of the sanitized sources (curation re-conception 2026-09-08:
 # every per-source subtraction happens in build/curate/curate.php → sanitized/; Sheet C
 # is product-only — published as whitelist/default.json, never merged). Compile reads
-# sanitized/ lanes + the curation set, applies the veto and H floor guards, appends
-# D + F + fleet-BL (above curation), band re-ID, DNR budget assertions, manifest.json.
+# sanitized/ lanes + the curation set, applies the veto and never-block floor guards, appends
+# D + manual-blocklist + fleet-BL (above curation), band re-ID, DNR budget assertions, manifest.json.
 # dist/ is published as commits (user decision 2026-09-07); the fleet fetches it through
 # the backend mirrors, never from GitHub directly.
 # Fail-closed: any gate/assertion failure exits non-zero BEFORE dist/ is touched, so the

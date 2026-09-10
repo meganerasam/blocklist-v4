@@ -1,5 +1,6 @@
 # Every external input of the factory, in one reviewable file.
-# ingest.yml reads this; nothing else may hardcode a source URL.
+# ingest.yml reads this. KNOWN GAP: build/ingest/fetch_extension_whitelists.php still
+# hardcodes the 4 backend endpoints below instead of reading extension_endpoints from here.
 # (The 59 EasyList URLs migrated here 2026-09-07; the category generators read ONLY the
 #  sources/easylist/ snapshots — zero live URLs — and run inside build/curate/curate.php.)
 
@@ -32,7 +33,7 @@ sheets:
   E_default_blocklist_not_to_add:
     name: default-blocklist-not-to-add
     mirror: sources/gsheet/default-blocklist-not-to-add.json
-    export_url: "https://docs.google.com/spreadsheets/d/1io0IqiXUc8VBERQvdWuUkh4pwJz6sxxZ7QqGL8i7YTk/export?format=csv&gid=866107718#gid=866107718" # tab "blocklist_but_do_not_add" — live 2026-09-10, 23 rows
+    export_url: "https://docs.google.com/spreadsheets/d/1io0IqiXUc8VBERQvdWuUkh4pwJz6sxxZ7QqGL8i7YTk/export?format=csv&gid=866107718#gid=866107718" # tab "blocklist_but_do_not_add" — live 2026-09-10 (21 rows)
     note: |
       NEW 2026-09-10 (user decision). The veto on the default blocklist: a domain listed
       here must produce NO rule at all. Same contract as I_omit_from_blocklist — curation-set
@@ -61,7 +62,7 @@ sheets:
     mirror: sources/gsheet/download-sites.json
     export_url: "https://docs.google.com/spreadsheets/d/1IS72yj64N7RVIT_kXOmE-67Q0dg1hqXgzY9Y6oSyA-0/export?format=csv&gid=43296086#gid=43296086" # NEW 2026-09-08 — download sites, omit-style domain list; curation input: subtracted from the blocking sources (Sheet A, KADhosts, hosts lanes, easylist family)
 
-  # ---- standalone sheets (J–N): mirrored + published as on-demand JSON, NEVER merged ----
+  # ---- standalone sheets (K–O): mirrored + published as on-demand JSON, NEVER merged ----
   # These carry the remaining hardcoded arrays out of ninja-adb21.php; the backends fetch
   # them on demand (like Sheet B). Bootstrap TSVs generated from the live server file.
   K_whitelisted_domains_injection_enabled:

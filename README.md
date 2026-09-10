@@ -19,8 +19,8 @@ sources/    ALL upstream inputs, filed by origin, VERBATIM: gsheet/ (Sheets A–
             extension/ (fleet reports, whitelists live + blocklists reserved)
 sanitized/  the CURATED sources (2026-09-08) — machine-owned, written only by
             build/curate/curate.php, committed so every curation decision is a git diff:
-            extension/user-whitelist{-raw,}.json (fleet ≥50 → −G) · curation-set.json
-            (H ∪ I ∪ userWL, the single derivation) · gsheet/popup.json · hosts/ ·
+            extension/user-whitelist{-raw,}.json (fleet ≥50 → − omit-from-whitelist − omit-from-blocklist) · curation-set.json · download-sites.txt + download-sites/allow.json
+            (omit-from-blocklist ∪ not-to-add ∪ download-sites ∪ userWL, the single derivation) · gsheet/popup.json · hosts/ ·
             easylist/ (curated DNR lanes + pass-through cosmetic)
 curated/    break-glass hand-edited files only (vetoes.txt) — all normal human input = Sheets
 state/      pipeline memory (domain-ledger.json) — machine-owned, never hand-edited
@@ -29,20 +29,20 @@ dist/       the public API — ONLY artifacts a consumer actually calls, plus de
             (compile helpers committed for inspection) · one manifest.json
 ```
 
-## The fourteen sheets
+## The fifteen sheets
 
 | Sheet | Mirror | Compiler contract |
 |---|---|---|
-| A · popup | `sources/gsheet/popup.json` | redirect rules (kept in its current pivot format); curated − (H ∪ I ∪ user whitelist) → `sanitized/gsheet/popup.json` |
+| A · popup | `sources/gsheet/popup.json` | redirect rules (kept in its current pivot format); curated − (omit-from-blocklist ∪ not-to-add ∪ download-sites ∪ user whitelist) → `sanitized/gsheet/popup.json` |
 | B · trackers | `sources/traffic_quality/` (split per market at ingest) | published untouched to `dist/traffic_quality/` — never merged into rules |
-| C · default whitelist | `sources/gsheet/default-whitelist.json` | product-only: published as `dist/whitelist/default.json` (−G) — takes part in NO curation or scrub (2026-09-08) |
-| D · default blocklist | `sources/gsheet/default-blocklist.json` | org default blocks, appended as block rules — ABOVE curation, only H floors them |
-| E · default blocklist not to add | `sources/gsheet/default-blocklist-not-to-add.json` | **NEW 2026-09-10** — the veto on the default blocklist: a listed domain produces NO rule at all. Curation-set member AND never-block floor (so it stops the appends too). Separate from omit-from-blocklist, which stays locked to own-brand domains. `export_url` TBD |
+| C · default whitelist | `sources/gsheet/default-whitelist.json` | product-only: published as `dist/whitelist/default.json` (− omit-from-whitelist − omit-from-blocklist) — takes part in NO curation or scrub |
+| D · default blocklist | `sources/gsheet/default-blocklist.json` | org default blocks, appended as block rules — ABOVE curation; floored only by omit-from-blocklist and default-blocklist-not-to-add |
+| E · default blocklist not to add | `sources/gsheet/default-blocklist-not-to-add.json` | **NEW 2026-09-10** — the veto on the default blocklist: a listed domain produces NO rule at all. Curation-set member AND never-block floor (so it stops the appends too). Separate from omit-from-blocklist, which stays locked to own-brand domains. **Live since 2026-09-10** (gid 866107718, tab `blocklist_but_do_not_add`, 21 rows) |
 | F · manual whitelist | `sources/gsheet/manual-whitelist.json` | mirrored; part of NO recipe for now (user decision 2026-09-08: role to be decided) |
 | G · manual blocklist | `sources/gsheet/manual-blocklist.json` | block rules appended, like D |
-| H · omit from whitelist | `sources/gsheet/omit-from-whitelist.json` | step-2 veto on the user whitelist (EXACT host) — gamed fleet votes die here |
+| H · omit from whitelist | `sources/gsheet/omit-from-whitelist.json` | EXACT host, four consumers: user-whitelist step 2 · download-sites veto · blanket upstream allows (`scrubGVetoAllows`) · compile's `$minusG` for whitelist/default.json |
 | I · omit from blocklist | `sources/gsheet/omit-from-blocklist.json` | never-block floor — curation-set member (subtracted from every blocking source at curate) + append floor at compile (no dist artifact: own-brand domains are covered by the static self-vendor 99999 allows; the rest is server-to-server traffic DNR never sees) |
-| J · download sites | `sources/gsheet/download-sites.json` | NEW 2026-09-08, dual role. ① curation-set member — subtracted from every blocking source at curate. ② a SOURCE: normalized (lowercase, strip protocol/path/port/www./trailing dot; invalid rows warn, never fail) − G → `sanitized/download-sites.txt` (ABP, overwritten each run, `@@||domain^$subdocument,stylesheet,font,xmlhttprequest,media,websocket,other`) → DNR allow lane (priority 2, subdocument→sub_frame, websocket/other never dropped). Guards: `$document` / `$~third-party` / non-`@@` line = build failure; compile re-validates the lane and asserts allow priority strictly above every block |
+| J · download sites | `sources/gsheet/download-sites.json` | NEW 2026-09-08, dual role. ① curation-set member — subtracted from every blocking source at curate. ② a SOURCE: normalized (lowercase, strip protocol/path/port/www./trailing dot; invalid rows warn, never fail) − omit-from-whitelist − omit-from-blocklist → `sanitized/download-sites.txt` (ABP, overwritten each run, `@@||domain^$subdocument,stylesheet,font,xmlhttprequest,media,websocket,other`) → DNR allow lane (priority 2, subdocument→sub_frame, websocket/other never dropped). Guards: `$document` / `$~third-party` / non-`@@` line = build failure; compile re-validates the lane and asserts allow priority strictly above every block |
 | K–O · standalone | `whitelisted-domains-injection-enabled` · `tracking-whitelist` · `allow-request-domains` · `initiator-allowed-domains` · `rule101xtra` | mirrored + published as on-demand JSON — never merged into any generated ruleset |
 
 ## Order of operations (the four-stage pipeline, 2026-09-08)
@@ -51,19 +51,19 @@ dist/       the public API — ONLY artifacts a consumer actually calls, plus de
 1. **Curate** — `build/curate/curate.php` → `sanitized/`, per-source recipes (there is no
    monolithic whitelist anymore — different curation per source):
    - user whitelist = fleet votes ≥ 50 *(step 1)* − omit-from-whitelist *(step 2)* − omit-from-blocklist *(step 2b)*
-   - **curation set = H ∪ I (download sites) ∪ user whitelist** (domain + subdomains)
+   - **curation set = omit-from-blocklist ∪ default-blocklist-not-to-add ∪ download-sites ∪ user whitelist** (domain + subdomains)
    - Sheet A − set · hosts lanes − set · easylist DNR lanes scrubbed on every block axis;
      allows follow the SELF-PROTECTION policy (allows on curated destinations/initiators
      kept — they only ever protect those sites; mixed batches strip curated members);
      cosmetic passes through uncurated
-   - download-sites (Sheet J) is ALSO a source: normalized − omit-from-whitelist → `sanitized/download-sites.txt` (ABP) →
+   - download-sites (Sheet J) is ALSO a source: normalized − omit-from-whitelist − omit-from-blocklist → `sanitized/download-sites.txt` (ABP) →
      its DNR allow lane (sub-resource unbreakage on the download sites, priority 2)
    - Sheet C takes no part (product-only) · Sheets D/G + fleet blocklist stay ABOVE curation
      (vetoed only by omit-from-blocklist and by Sheet E `default-blocklist-not-to-add`)
 2. **Verify** — tiered DNS over the sanitized candidates (no skip rules left: the ledger
    tests exactly what can ship)
-3. **Compile = assembly** — sanitized lanes → veto (`curated/vetoes.txt`) · H floor +
-   curation guards · appends D + F + fleet-BL (only H floors them, conflicts flagged) ·
+3. **Compile = assembly** — sanitized lanes → veto (`curated/vetoes.txt`) · never-block floor +
+   curation guards · appends D + manual-blocklist + fleet-BL (floored only by omit-from-blocklist + not-to-add, conflicts flagged) ·
    band re-ID · DNR budgets · staged writes → `dist/` + `manifest.json`
 
 ## Cold start — regenerating everything from a data-free clone
@@ -73,7 +73,7 @@ stage is fail-closed, so the order matters — a stage run before its inputs exi
 and touches nothing (that's the design, not a bug):
 
 1. `ingest.yml` (or `php build/ingest/fetch_sheets.php` + `fetch_upstreams.php`) — mirrors
-   the 14 sheets, 24 market files, 4 hosts + 59 EasyList snapshots. First run: the
+   the 15 sheets, 24 market files, 4 hosts + 59 EasyList snapshots. First run: the
    shrink/delta guards auto-skip (no previous mirror to compare against).
 2. `extension.yml` (or `fetch_extension_whitelists.php`) — pulls the 4 backend whitelist
    exports. Needs the `USER_WHITELIST_DOMAINS` secret (locally: the env var).
@@ -94,14 +94,15 @@ and touches nothing (that's the design, not a bug):
 Phase 2 (compile + shadow diff) — source layer, curation stage, ledger and compile are all
 written and live-tested locally; see `STATUS.md` for the per-file map. One
 `php build/curate/curate.php && php build/compile/compile.php`
-publishes the whole `dist/` tree (10,216 rules, byte-deterministic, budgets asserted) and
+publishes the whole `dist/` tree (10,287 rules at 2026-09-10, byte-deterministic, budgets asserted) and
 `php build/review/shadow_diff.php <production cache>` is the cutover gate — currently
 **clear: 0 unexplained divergences** vs the Aug 2 production cache.
 
-dist/ as-built (2026-09-08, only called artifacts): `network/rules.json` (extension) ·
-`whitelist/default.json` (backend sync) · `cosmetic/` (4 files) · `traffic_quality/`
-(per-market) · `standalone/` (Sheets K–O) · `derived/` (community: the sanitized user
-whitelist ≥50 −G + curation-set — compile helpers, called by nothing) · `manifest.json`.
+dist/ as-built (2026-09-10, only called artifacts): `network/rules.json` (extension) ·
+`whitelist/` — default.json (backend sync) · community.json · download-sites.json ·
+`blocklist/` — popup-curated.json (the redirect lane as a flat list) · popup.json (Sheet A's
+shipped share) · `cosmetic/` (4 files) · `traffic_quality/` (per-market) · `standalone/`
+(Sheets K–O) · `derived/` (community + curation-set — inspection helpers) · `manifest.json`.
 
 Decisions locked 2026-09-07: `dist/` is published **as commits**; the fleet fetches it
 **via the backend mirrors** (raw GitHub only as fallback). Workflows activate on push:

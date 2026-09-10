@@ -9,7 +9,7 @@
 //   ledger-dead        — DNS-dead per state/domain-ledger.json (v2 kept testing daily; the
 //                        ledger's backoff keeps it out of the shipped set)
 //   whitelist-excluded — covered by the CURATION SET (sanitized/curation-set.json =
-//                        H ∪ I download-sites ∪ user whitelist ≥50 −G, derived once by
+//                        omit-from-blocklist ∪ not-to-add ∪ download-sites ∪ user whitelist, derived once by
 //                        build/curate/curate.php); production's long lane never
 //                        subtracted the fleet whitelist. Sheet C is product-only
 //                        (2026-09-08) and takes no part in this bucket.

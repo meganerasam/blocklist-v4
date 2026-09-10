@@ -266,7 +266,7 @@ function scrubAllowRules(array $rules, array $whitelist, array &$stats): array {
  * exception either. This pass is deliberately NOT the curation scrub and must not be
  * confused with it:
  *
- *   · curation set (H ∪ I ∪ userWL) — allows ON its members are SELF-PROTECTION and are
+ *   · curation set (omit-from-blocklist ∪ not-to-add ∪ download-sites ∪ userWL) — allows ON its members are SELF-PROTECTION and are
  *     kept; see scrubAllowRules above.
  *   · Sheet G — the inverse. An allow that un-blocks a G host defeats the sheet's entire
  *     purpose, so it is removed.
@@ -287,10 +287,10 @@ function scrubAllowRules(array $rules, array $whitelist, array &$stats): array {
  *
  * $stats accumulates: domainsRemoved, rulesDropped.
  */
-function scrubGVetoAllows(array $rules, array $G, array &$stats): array {
-    if (!$G) return $rules;
+function scrubGVetoAllows(array $rules, array $omitWhitelist, array &$stats): array {
+    if (!$omitWhitelist) return $rules;
     $veto = [];
-    foreach ($G as $g) $veto[g_veto_key($g)] = true;
+    foreach ($omitWhitelist as $g) $veto[g_veto_key($g)] = true;
 
     $out = [];
     foreach ($rules as $rule) {
@@ -332,10 +332,10 @@ function scrubGVetoAllows(array $rules, array $G, array &$stats): array {
  * still names an exact Sheet G host; curate.php fails the build on a non-empty result, so
  * a future generator change can never quietly re-open the hole.
  */
-function gVetoAllowLeaks(array $rules, array $G): array {
-    if (!$G) return [];
+function gVetoAllowLeaks(array $rules, array $omitWhitelist): array {
+    if (!$omitWhitelist) return [];
     $veto = [];
-    foreach ($G as $g) $veto[g_veto_key($g)] = true;
+    foreach ($omitWhitelist as $g) $veto[g_veto_key($g)] = true;
 
     $leaks = [];
     foreach ($rules as $rule) {

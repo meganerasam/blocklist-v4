@@ -3,11 +3,11 @@ name: Curate — sanitize sources
 # The curation stage (user re-conception, 2026-09-08 evening). Mirrors stay VERBATIM in
 # sources/; every per-source subtraction happens here and lands in sanitized/ —
 # machine-owned, committed, so each curation decision is a reviewable git diff.
-#   user whitelist = all-extension.csv merged votes ≥ 50 (step 1) − Sheet G (step 2)
-#   curation set   = Sheet H ∪ Sheet I (download sites) ∪ user whitelist
+#   user whitelist = all-extension.csv merged votes ≥ 50 (step 1) − omit-from-whitelist (step 2) − omit-from-blocklist (step 2b)
+#   curation set   = omit-from-blocklist ∪ default-blocklist-not-to-add ∪ download-sites ∪ user whitelist
 #   recipes:  Sheet A − set · hosts lanes − set · easylist DNR lanes scrubbed (block on
 #   every axis, allow on the DESTINATION axis; cosmetic passes through uncurated) ·
-#   Sheets D/F + fleet blocklist stay ABOVE curation (deliberate blocks, H floor only)
+#   Sheets D/manual-blocklist + fleet blocklist stay ABOVE curation (floored only by omit-from-blocklist + not-to-add)
 # Fail-closed: any bad input aborts before sanitized/ is touched — the previous
 # sanitized/ tree keeps feeding verify + compile.
 # Chain: Ingest → Curate → Compile and Extension → Curate → Compile (workflow_run);
