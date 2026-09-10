@@ -2995,6 +2995,7 @@ mydramalist.com##.col-lg-4 > .clear
 roseindia.net##.col-md-4
 disqus.com##.col-promoted
 lapa.ninja##.col-sm-1
+alternativeto.net##.col-start-1:has([data-testid])
 turtlecute.org##.collab_wrap
 tineye.com##.collection.match-row
 iamgujarat.com,indiatimes.com,samayam.com,vijaykarnataka.com##.colombia
@@ -4445,6 +4446,7 @@ golfdigest.com##.midslot
 extremetech.com##.min-h-24
 gizmodo.com##.min-h-\[1000px\]
 op.gg,thenewdaily.com.au##.min-h-\[100px\]
+alternativeto.net##.min-h-\[100vw\]
 charlieintel.com,dexerto.com##.min-h-\[114px\]
 stomp.sg##.min-h-\[120px\]
 stuff.co.nz##.min-h-\[133px\]
@@ -8279,6 +8281,7 @@ amazon.*##div[data-cel-widget="sp-rhf-desktop-carousel_desktop-rhf_1"]
 amazon.*##div[data-cel-widget="sp-shiptrack-desktop-carousel_desktop-yo-shiptrack_0"]
 amazon.*##div[data-cel-widget^="multi-brand-video-mobile_DPSims_"]
 amazon.*##div[data-cel-widget^="multi-card-creative-desktop_loom-desktop-top-slot_"]
+amazon.*##div[data-csa-c-content-id="sims-substitutes"]:has(div[class^="adFeedbackMainComponent_"])
 amazon.*##div[data-csa-c-painter="sp-cart-mobile-carousel-cards"]
 amazon.*##div[data-csa-c-slot-id^="loom-mobile-brand-footer-slot_hsa-id-"]
 amazon.*##div[data-csa-c-slot-id^="loom-mobile-top-slot_hsa-id-"]
