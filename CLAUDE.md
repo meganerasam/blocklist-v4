@@ -219,8 +219,9 @@ per-cell notes, merged refs, per-artifact sha256, content-derived version. Own g
 prune (`catalog/` is NOT in compile's `$managedDirs` — each emitter prunes what it
 stages), byte-deterministic (verified). 117 files ≈ 71 MB (merged domains split per type: block · redirect · allow · cosmetic). Absent cells are information:
 veto sheets (E/H/I) have no rules by definition, J has no raw rules (normalization IS the
-curate recipe), cosmetic exists only for easylist/fanboy and is identical raw↔curated
-(never curated). `catalog/raw` knowingly reverses the feeds/ kill (feeds/ = unconsumed
+curate recipe), the cosmetic unhide map exists for all 4 easylist lists but the full set
+(generic.css/specific/extended) only for easylist+fanboy, and cosmetic is identical
+raw↔curated (never curated). `catalog/raw` knowingly reverses the feeds/ kill (feeds/ = unconsumed
 copies; catalog/raw = consumer-facing, indexed, pruned, user-requested). This amends the
 dist contract: catalog/ joins derived/ as a sanctioned exception to "only called artifacts".
 HARDENED same day after a 7-agent adversarial review (4 majors confirmed by repro, all

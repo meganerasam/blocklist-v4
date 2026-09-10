@@ -12,7 +12,7 @@
         },
         "ids": "per-file sequential 1..N — files are loadable as SEPARATE DNR rulesets (Chrome scopes rule-ID uniqueness per ruleset); concatenating catalog files into ONE ruleset requires re-IDing, which the canonical merge already does. merged/rules/* keep the canonical band IDs instead.",
         "budgets": "Chrome DNR budgets apply to what a consumer LOADS, not per file — combine lanes under your own budget using the counts below (canonical caps: 30,000 rules · 5,000 redirect/modifyHeaders · 1,000 regex)",
-        "absent_cells": "a missing cell is information, not an omission: veto sheets produce no rules by definition, cosmetic exists only for easylist/fanboy, download-sites has no raw rules (normalization is the curate recipe)"
+        "absent_cells": "a missing cell is information, not an omission: veto sheets produce no rules by definition; the cosmetic unhide map exists for all four easylist lists but the full set (generic.css/specific/extended) only for easylist and fanboy; download-sites has no raw rules (normalization is the curate recipe)"
     },
     "sources": {
         "easylist-adult": {
