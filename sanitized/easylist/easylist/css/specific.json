@@ -916,6 +916,8 @@
         ".AdsenseAd-module-scss-module__6YBNDG__adLeaderboard",
         ".AdsenseAd-module-scss-module__6YBNDG__adRectangle",
         ".bannerLink",
+        ".col-start-1:has([data-testid])",
+        ".min-h-\\[100vw\\]",
         "[aria-label=\"Official partner\"]",
         "div[data-testid=\"adsense-wrapper\"]",
         "div[style=\"min-height: 280px;\"]",
@@ -986,6 +988,7 @@
         "div[data-cel-widget=\"sp-shiptrack-desktop-carousel_desktop-yo-shiptrack_0\"]",
         "div[data-cel-widget^=\"multi-brand-video-mobile_DPSims_\"]",
         "div[data-cel-widget^=\"multi-card-creative-desktop_loom-desktop-top-slot_\"]",
+        "div[data-csa-c-content-id=\"sims-substitutes\"]:has(div[class^=\"adFeedbackMainComponent_\"])",
         "div[data-csa-c-painter=\"sp-cart-mobile-carousel-cards\"]",
         "div[data-csa-c-slot-id^=\"loom-mobile-brand-footer-slot_hsa-id-\"]",
         "div[data-csa-c-slot-id^=\"loom-mobile-top-slot_hsa-id-\"]",
@@ -2135,6 +2138,9 @@
         ".parallax-breakout",
         ".pos-top",
         ".vc_single_image-wrapper"
+    ],
+    "battlemetrics.com": [
+        "a[href^=\"https://us.ovhcloud.com\"]"
     ],
     "bavarianfootballworks.com": [
         "[data-concert=\"desktop_leaderboard_variable\"]",
@@ -10613,6 +10619,11 @@
     "hellenicshippingnews.com": [
         ".bigbanner"
     ],
+    "hellobanker.in": [
+        ".clearfix.entry > p:has(.adsbygoogle)",
+        ".stream-item:has(.adsbygoogle)",
+        ".widget_custom_html"
+    ],
     "hellocare.com.au": [
         ".post-wrapper__portrait-ads"
     ],
@@ -14381,7 +14392,8 @@
     ],
     "mediaweek.com.au": [
         "#wallpaper",
-        ".leader-wrap-out"
+        ".leader-wrap-out",
+        ".md\\:min-h-\\[250px\\]"
     ],
     "medibang.com": [
         ".adBlock__pc",
@@ -21648,6 +21660,9 @@
         "#wgo_affiliates",
         "a[href^=\"https://www.sportscardforum.com/rbs_banner.php?\"]"
     ],
+    "sportsinjuryclinic.net": [
+        ".uagb-container-inner-blocks-wrap:has(> p.has-cyan-bluish-gray-color)"
+    ],
     "sportsjoe.ie": [
         "#div-gpt-top_page",
         ".mpu"
@@ -26150,6 +26165,9 @@
     ],
     "wantedinrome.com": [
         "img[width=\"300\"]"
+    ],
+    "wantmymtv.org": [
+        ".floating-coffee-btn"
     ],
     "waploaded.com": [
         "[style*=\"width: 100% !important;\"]",

@@ -5,7 +5,7 @@
  * These selectors hide ad elements on ALL websites.
  * Inject via content_scripts with matches: ["<all_urls>"]
  *
- * Total selectors: 13632
+ * Total selectors: 13633
  */
 
 #AC_ad,
@@ -13206,6 +13206,7 @@
 .zmgad-right-rail,
 .zone-advertisement,
 .zone.zone--loaded,
+.zone.zone--skeletonEnabled,
 .zoneAds,
 .zox-post-ad-wrap,
 .zox-post-bot-ad,
