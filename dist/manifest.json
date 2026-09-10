@@ -1,17 +1,17 @@
 {
     "schema": 1,
-    "version": "18147bb77eab60e73b9b5e1a864714fb4f0ca9b9f84d3a686c9c7e9b3a989ff4",
-    "generated_at": "2026-09-10T06:02:16+00:00",
+    "version": "9ab1f158317545f59c54379d9a5ebd00ba131eec5c01f4b9b83dedae6de7144b",
+    "generated_at": "2026-09-10T06:03:30+00:00",
     "counts": {
-        "network_rules_total": 10289,
+        "network_rules_total": 10286,
         "network_rules_by_action": {
-            "redirect": 58,
-            "block": 9104,
+            "redirect": 56,
+            "block": 9103,
             "allow": 1127
         },
-        "unsafe_rules": 58,
-        "regex_rules": 58,
-        "shipped_block_domains": 178523,
+        "unsafe_rules": 56,
+        "regex_rules": 56,
+        "shipped_block_domains": 170504,
         "curation_set": 884
     },
     "budgets": {
@@ -21,14 +21,14 @@
     },
     "artifacts": {
         "blocklist/popup-curated.json": {
-            "sha256": "1b18c2997c11385b763eadb49388afb0b025e1b1b201b2bda87cafab340b6b2a",
-            "bytes": 1268899,
-            "count": 45072
+            "sha256": "f80680b623bc76b5248aee1946c6762ec47e38e1fbdb552158959cb517194882",
+            "bytes": 1189279,
+            "count": 41909
         },
         "blocklist/popup.json": {
-            "sha256": "13b0a90f167dd4eda6c3d55da2d978194160307471ffdfdf66b6fdface47ac96",
-            "bytes": 51671,
-            "count": 2046
+            "sha256": "cc33a6b67b80599c61fd98d23cc0993c516166f0a017287aa590a279260c1b29",
+            "bytes": 51529,
+            "count": 2040
         },
         "cosmetic/extended.json": {
             "sha256": "8f47127ce49c432dcb9f29d107dd04772610293b81b1c37f29ff5a0b6aa52e9a",
@@ -61,9 +61,9 @@
             "count": 884
         },
         "network/rules.json": {
-            "sha256": "6bb0d59b390c7821a69fbcf97b10dc6230a9bc954aab94ea8100288cf7c35e53",
-            "bytes": 10685597,
-            "count": 10289
+            "sha256": "235785c278cd3ba43b44036f074bb54fd1d94d5a86179fe63b5206b6a51b60d2",
+            "bytes": 10402634,
+            "count": 10286
         },
         "standalone/allow-request-domains.json": {
             "sha256": "47939522a90410ffd6a1606820c6d3427327bf53fc624e1cb54c1d007a760356",
