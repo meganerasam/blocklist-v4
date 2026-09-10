@@ -1,18 +1,18 @@
 {
     "schema": 1,
-    "version": "5c43ae5c04782fb796675a68111948099db5a6d7673557d708ad5cb737af722c",
-    "generated_at": "2026-09-10T03:54:15+00:00",
+    "version": "18147bb77eab60e73b9b5e1a864714fb4f0ca9b9f84d3a686c9c7e9b3a989ff4",
+    "generated_at": "2026-09-10T06:02:16+00:00",
     "counts": {
-        "network_rules_total": 10293,
+        "network_rules_total": 10289,
         "network_rules_by_action": {
             "redirect": 58,
-            "block": 9108,
+            "block": 9104,
             "allow": 1127
         },
         "unsafe_rules": 58,
         "regex_rules": 58,
-        "shipped_block_domains": 178664,
-        "curation_set": 862
+        "shipped_block_domains": 178523,
+        "curation_set": 884
     },
     "budgets": {
         "total_rules": 30000,
@@ -56,14 +56,14 @@
             "count": 807
         },
         "derived/curation-set.json": {
-            "sha256": "c7d2f51e56e1be6c4b198b22b2ad4e85ef0f39b5d77ec8894bcbe019c5c975d1",
-            "bytes": 19234,
-            "count": 862
+            "sha256": "f43d525be5261b35c579e7b2edcfe56701148f23f2b913b33b28aa2a5988b45f",
+            "bytes": 19904,
+            "count": 884
         },
         "network/rules.json": {
-            "sha256": "48e9d0b90ef40d1be624e5ac68fc466c7a4eda34b384503765018cce331511a4",
-            "bytes": 10692539,
-            "count": 10293
+            "sha256": "6bb0d59b390c7821a69fbcf97b10dc6230a9bc954aab94ea8100288cf7c35e53",
+            "bytes": 10685597,
+            "count": 10289
         },
         "standalone/allow-request-domains.json": {
             "sha256": "47939522a90410ffd6a1606820c6d3427327bf53fc624e1cb54c1d007a760356",

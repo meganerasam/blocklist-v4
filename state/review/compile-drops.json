@@ -2441,13 +2441,8 @@
         "zymurgyharmers.top"
     ],
     "popup_excluded_by_whitelist": [],
-    "append_vs_whitelist_conflicts": [
-        "ad.doubleclick.net",
-        "ads.youtube.com"
-    ],
-    "append_parent_overrides": [
-        "ad.doubleclick.net"
-    ],
+    "append_vs_whitelist_conflicts": [],
+    "append_parent_overrides": [],
     "default_whitelist_vs_shipped": {
         "note": "Sheet C is product-only (2026-09-08): these whitelist/default.json-covered domains ship as rule targets anyway; only client-side enforcement protects them. redirect_initiators would hijack every navigation FROM a default-whitelisted site — the axis a request-level client whitelist cannot counter. Resolutions belong in the Sheets (or in the client), never here.",
         "block_targets": [
@@ -2471,7 +2466,6 @@
             "ads-partners.coupang.com",
             "ads-union.jd.com",
             "ads.ebay.com",
-            "ads.youtube.com",
             "adservice.aliexpress.com",
             "adtago.s3.amazonaws.com",
             "adtechvideo.s3.amazonaws.com",

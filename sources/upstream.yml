@@ -32,7 +32,7 @@ sheets:
   E_default_blocklist_not_to_add:
     name: default-blocklist-not-to-add
     mirror: sources/gsheet/default-blocklist-not-to-add.json
-    export_url: "TBD"  # sheet not created yet — ingest skips it without failing (see SCHEMA gates)
+    export_url: "https://docs.google.com/spreadsheets/d/1io0IqiXUc8VBERQvdWuUkh4pwJz6sxxZ7QqGL8i7YTk/export?format=csv&gid=866107718#gid=866107718" # tab "blocklist_but_do_not_add" — live 2026-09-10, 23 rows
     note: |
       NEW 2026-09-10 (user decision). The veto on the default blocklist: a domain listed
       here must produce NO rule at all. Same contract as I_omit_from_blocklist — curation-set
