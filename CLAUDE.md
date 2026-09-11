@@ -61,7 +61,7 @@ sections 08–09 → https://claude.ai/code/artifact/6291c622-79d0-4fd5-b269-0ad
    rows (strip protocol/path/port/www./trailing dot; invalid rows warn, never fail) − omit-from-whitelist − omit-from-blocklist →
    `sanitized/download-sites.txt` (ABP, exact template
    `@@||domain^$subdocument,stylesheet,font,xmlhttprequest,media,websocket,other`,
-   overwritten each run) → parsed back into a DNR allow lane (priority 2,
+   overwritten each run) → parsed back into a DNR allow lane (priority 50 since 2026-09-11 — was 2; no main_frame type so no redirect overlap, still under the client user-block tier 100,
    subdocument→sub_frame, websocket/other never dropped — unmapped option = fail).
    Guards fail the build on `$document`/`$~third-party`/non-`@@` rule lines; compile
    re-validates the lane on load and asserts min allow priority > max block priority

@@ -44,7 +44,7 @@ dist/       the public API — ONLY artifacts a consumer actually calls, plus de
 | G · manual blocklist | `sources/gsheet/manual-blocklist.json` | block rules appended, like D |
 | H · omit from whitelist | `sources/gsheet/omit-from-whitelist.json` | EXACT host, four consumers: user-whitelist step 2 · download-sites veto · blanket upstream allows (`scrubGVetoAllows`) · compile's `$minusG` for whitelist/default.json |
 | I · omit from blocklist | `sources/gsheet/omit-from-blocklist.json` | never-block floor — curation-set member (subtracted from every blocking source at curate) + append floor at compile (no dist artifact: own-brand domains are covered by the static self-vendor 99999 allows; the rest is server-to-server traffic DNR never sees) |
-| J · download sites | `sources/gsheet/download-sites.json` | NEW 2026-09-08, dual role. ① curation-set member — subtracted from every blocking source at curate. ② a SOURCE: normalized (lowercase, strip protocol/path/port/www./trailing dot; invalid rows warn, never fail) − omit-from-whitelist − omit-from-blocklist → `sanitized/download-sites.txt` (ABP, overwritten each run, `@@||domain^$subdocument,stylesheet,font,xmlhttprequest,media,websocket,other`) → DNR allow lane (priority 2, subdocument→sub_frame, websocket/other never dropped). Guards: `$document` / `$~third-party` / non-`@@` line = build failure; compile re-validates the lane and asserts allow priority strictly above every block |
+| J · download sites | `sources/gsheet/download-sites.json` | NEW 2026-09-08, dual role. ① curation-set member — subtracted from every blocking source at curate. ② a SOURCE: normalized (lowercase, strip protocol/path/port/www./trailing dot; invalid rows warn, never fail) − omit-from-whitelist − omit-from-blocklist → `sanitized/download-sites.txt` (ABP, overwritten each run, `@@||domain^$subdocument,stylesheet,font,xmlhttprequest,media,websocket,other`) → DNR allow lane (priority 50 since 2026-09-11, was 2 — above blocks AND redirects, below the client user tier; subdocument→sub_frame, websocket/other never dropped). Guards: `$document` / `$~third-party` / non-`@@` line = build failure; compile re-validates the lane and asserts allow priority strictly above every block |
 | K–O · standalone | `whitelisted-domains-injection-enabled` · `tracking-whitelist` · `allow-request-domains` · `initiator-allowed-domains` · `rule101xtra` | mirrored + published as on-demand JSON — never merged into any generated ruleset |
 
 ## Order of operations (the four-stage pipeline, 2026-09-08)
@@ -59,7 +59,7 @@ dist/       the public API — ONLY artifacts a consumer actually calls, plus de
      kept — they only ever protect those sites; mixed batches strip curated members);
      cosmetic passes through uncurated
    - download-sites (Sheet J) is ALSO a source: normalized − omit-from-whitelist − omit-from-blocklist → `sanitized/download-sites.txt` (ABP) →
-     its DNR allow lane (sub-resource unbreakage on the download sites, priority 2)
+     its DNR allow lane (sub-resource unbreakage on the download sites, priority 50)
    - Sheet C takes no part (product-only) · Sheets D/G + fleet blocklist stay ABOVE curation
      (vetoed only by omit-from-blocklist and by Sheet E `default-blocklist-not-to-add`)
 2. **Verify** — tiered DNS over the sanitized candidates (no skip rules left: the ledger

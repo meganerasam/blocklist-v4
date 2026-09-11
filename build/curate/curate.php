@@ -357,7 +357,11 @@ foreach (explode("\n", rtrim($dlTxt, "\n")) as $ln => $line) {
     sort($types, SORT_STRING);
     $dlRules[] = [
         'id'        => 0,
-        'priority'  => 2,   // strictly above every block (priority 1) — compile asserts this globally
+        'priority'  => 50,  // strictly above every block (1) AND every redirect (3) — user decision
+                            // 2026-09-11 (was 2). No behavioral overlap with the redirects: this
+                            // lane carries NO main_frame type, and 50 stays under the client's
+                            // user-block tier (100), so a user's own block still wins.
+                            // compile asserts min-allow > max-block globally.
         'action'    => ['type' => 'allow'],
         'condition' => ['urlFilter' => '||' . $m[1] . '^', 'resourceTypes' => $types],
     ];

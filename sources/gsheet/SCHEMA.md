@@ -48,7 +48,7 @@ subdomains.
 | G | manual-blocklist | appended block rules, like D |
 | H | omit-from-whitelist | EXACT host, four consumers (holds the protected search hosts + gamed-vote vetoes): ① step-2 veto on the user whitelist · ② veto on download-sites · ④ compile's `$minusG` before publishing `dist/whitelist/default.json` · ③ since 2026-09-09, the veto on BLANKET upstream allows (`scrubGVetoAllows`, guarded) — path/type-scoped exceptions stay |
 | I | omit-from-blocklist | never-block floor, domain+subdomains — curation-set member + append floor at compile + (2026-09-09) vetoed from every whitelist derivation, exactly where omit-from-whitelist is: user whitelist step 2b · download-sites · compile's `$minusG`. Tightest edit access of all sheets |
-| J | download-sites | added 2026-09-08 (live, 50 rows), dual role: ① curation-set member — subtracted from every blocking source by curate.php; ② source — normalized (invalid rows warn) − omit-from-whitelist − omit-from-blocklist → `sanitized/download-sites.txt` (ABP allow list, exact 7-option template) → DNR allow lane at priority 2 (guards: $document/$~third-party/non-@@ = fail) |
+| J | download-sites | added 2026-09-08 (live, 50 rows), dual role: ① curation-set member — subtracted from every blocking source by curate.php; ② source — normalized (invalid rows warn) − omit-from-whitelist − omit-from-blocklist → `sanitized/download-sites.txt` (ABP allow list, exact 7-option template) → DNR allow lane at priority 50, 2026-09-11 — was 2 (guards: $document/$~third-party/non-@@ = fail) |
 | K | whitelisted-domains-injection-enabled | standalone · on-demand JSON, never merged |
 | L | tracking-whitelist | standalone · on-demand (was rule 5005) |
 | M | allow-request-domains | standalone · on-demand (was rule 5006) |
