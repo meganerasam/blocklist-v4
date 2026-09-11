@@ -142,7 +142,10 @@ foreach ($noAdd as $d)         $never[$d] = true;      // Sheet E: same floor, f
 
 // Download-sites allow lane (Sheet I as a SOURCE, user spec 2026-09-08): the compiler
 // VERIFIES the contract the curate stage promises before merging a single rule —
-//   · action is allow, priority strictly above every block (blocks are priority 1)
+//   · action is allow, priority PINNED to DL_ALLOW_PRIORITY (lib/util.php) — exact equality,
+//     not "above the blocks": the lane must also outrank the extension's bundled static
+//     rulesets (block@10, redirect@11/41, block@40), which this compiler never sees, so a
+//     drift back to the old 2 would ship a lane that silently does nothing on ~a third of it
 //   · resourceTypes contain ONLY the mapped sub-resource set (subdocument→sub_frame,
 //     websocket/other included — a lane that lost them fails, never ships narrowed)
 //   · ||domain^ anchor form; no main_frame ($document-class) coverage can ever appear
@@ -157,7 +160,11 @@ if (!is_array($dlAllow)) fail('download-sites lane is not valid JSON: ' . $dlLan
 $dlSiteDomains = [];
 foreach ($dlAllow as $i => $r) {
     if (($r['action']['type'] ?? '') !== 'allow') fail("download-sites lane rule #$i: action is not allow");
-    if ((int) ($r['priority'] ?? 0) <= 1) fail("download-sites lane rule #$i: priority must be strictly above blocks (>1)");
+    if ((int) ($r['priority'] ?? 0) !== DL_ALLOW_PRIORITY) {
+        fail("download-sites lane rule #$i: priority " . ($r['priority'] ?? 'missing')
+           . ' != DL_ALLOW_PRIORITY (' . DL_ALLOW_PRIORITY . ') — the lane must outrank the'
+           . " extension's bundled static rulesets, not merely the compiled blocks");
+    }
     $types = $r['condition']['resourceTypes'] ?? [];
     if (!is_array($types) || !$types) fail("download-sites lane rule #$i: resourceTypes missing");
     if (array_diff($types, $DL_LANE_TYPES)) {
@@ -970,7 +977,7 @@ $rep[] = '| ④ domains lane | ' . count($trackerDomains) . ' domains → ' . co
 $rep[] = '| ⑤ appends (D + G + fleet-BL) | ' . count($appendShipped) . ' domains → ' . count($appendRules) . ' rules · H −' . $appendNeverDropped . ' · **conflicts vs whitelist: ' . count($appendConflicts) . '** · **whitelisted subdomains overridden by an append parent: ' . count($appendParentOverrides) . '** |';
 $rep[] = '| ⑥ rules.json | **' . $totalRules . ' rules** (' . implode(' · ', array_map(fn ($k, $v) => "$k $v", array_keys($byAction), $byAction)) . ') · main-frame dup→redirect ' . $dupAsRedirect . ' (whitelisted initiators stripped ' . $dupInitStripped . ' · twins skipped ' . $dupSkippedWhitelisted . ') |';
 $rep[] = '| ⑥ by-origin subsets | rules-hosts.json ' . count($rulesHosts) . ' · rules-easylist.json ' . count($rulesEasylist) . ' (IDs canoniques) |';
-$rep[] = '| ⑥ download-sites allow lane | ' . count($dlAllow) . ' rules merged (validated: allow · priority>blocks · full 7-type map incl. websocket/other) · global assert: min allow prio ' . ($minAllowPrio === PHP_INT_MAX ? '—' : $minAllowPrio) . ' > max block prio ' . $maxBlockPrio . ' |';
+$rep[] = '| ⑥ download-sites allow lane | ' . count($dlAllow) . ' rules merged (validated: allow · priority pinned to ' . DL_ALLOW_PRIORITY . ' · full 7-type map incl. websocket/other) · global assert: min allow prio ' . ($minAllowPrio === PHP_INT_MAX ? '—' : $minAllowPrio) . ' > max block prio ' . $maxBlockPrio . ' |';
 $rep[] = '| ⑥ C (product-only) vs shipped | block targets ' . count($cShippedBlock) . ' · redirect targets ' . count($cShippedRedirect) . ' · **redirect initiators (navigation hijack): ' . count($cHijackInitiators) . '** |';
 $rep[] = '| budgets | total ' . $totalRules . '/' . BUDGET_TOTAL_RULES . ' · unsafe ' . $unsafeRules . '/' . BUDGET_UNSAFE_RULES . ' · regex ' . $regexRules . '/' . BUDGET_REGEX_RULES . ' |';
 $rep[] = '| shipped block domains | ' . $shippedBlockDomains . ' |';

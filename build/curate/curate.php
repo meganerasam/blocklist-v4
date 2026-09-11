@@ -357,11 +357,13 @@ foreach (explode("\n", rtrim($dlTxt, "\n")) as $ln => $line) {
     sort($types, SORT_STRING);
     $dlRules[] = [
         'id'        => 0,
-        'priority'  => 50,  // strictly above every block (1) AND every redirect (3) — user decision
-                            // 2026-09-11 (was 2). No behavioral overlap with the redirects: this
-                            // lane carries NO main_frame type, and 50 stays under the client's
+        'priority'  => DL_ALLOW_PRIORITY,  // lib/util.php owns the value (50 since 2026-09-11,
+                            // was 2) — strictly above every block (1), every redirect (3) AND the
+                            // extension's bundled static rulesets (10/11/40/41), which the old 2
+                            // could not reach. No behavioral overlap with the redirects: this lane
+                            // carries NO main_frame type, and it stays under the client's
                             // user-block tier (100), so a user's own block still wins.
-                            // compile asserts min-allow > max-block globally.
+                            // compile PINS the value and asserts min-allow > max-block globally.
         'action'    => ['type' => 'allow'],
         'condition' => ['urlFilter' => '||' . $m[1] . '^', 'resourceTypes' => $types],
     ];

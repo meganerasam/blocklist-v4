@@ -9,6 +9,22 @@
 
 declare(strict_types=1);
 
+// ---------------------------------------------------------------------------
+// DOWNLOAD-SITES ALLOW LANE — PRIORITY (single source of truth)
+// curate.php stamps every rule of the lane with this; compile.php PINS it (exact
+// equality, never ">= blocks") so a silent drift back to 2 fails the build instead
+// of shipping a lane that does nothing.
+// The value must outrank the extension's BUNDLED static rulesets, which are an
+// INDEPENDENT lane from the compiled blocklist we assemble here: net-1/net-2 block
+// at 10, net-3 redirect at 11/41 and block at 40. It stays under rules-net-yt (150),
+// under the client's user-block tier (100) so a user's own block still wins, and
+// under the self-vendor allows (99999).
+// 2026-09-11: 2 -> 50 (user decision). At 2 the lane only outranked the compiled
+// blocks (priority 1) and was silently overridden by the bundled rulesets on 17 of
+// the 50 sites — 9 of them by a domain-wide block, i.e. the allow did nothing at all.
+// ---------------------------------------------------------------------------
+const DL_ALLOW_PRIORITY = 50;
+
 function clean_domain(string $d): ?string
 {
     $d = strtolower(trim($d));
