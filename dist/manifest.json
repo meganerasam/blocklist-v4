@@ -1,19 +1,19 @@
 {
     "schema": 1,
-    "version": "b15bbfef0c2ed7a20f9a7fa740d38a36669e42106e4fd917cfd43501b370a93d",
-    "generated_at": "2026-09-11T03:50:32+00:00",
-    "sanitized_provenance": "d46bee5f1e9fdd30964ec328ccc385b4ce193436949e35e822683a3d4161982b",
+    "version": "f4cc74c5c4998fd72453ec8f0dd1411a958f8a2f3f5228730cbd77147a7e8337",
+    "generated_at": "2026-09-11T10:39:32+00:00",
+    "sanitized_provenance": "8dc244d47089aeb759965ba5274c04ed2cccedafe93794eb54b0534e44b3578b",
     "counts": {
-        "network_rules_total": 10286,
+        "network_rules_total": 10280,
         "network_rules_by_action": {
-            "redirect": 56,
-            "block": 9103,
+            "redirect": 55,
+            "block": 9098,
             "allow": 1127
         },
-        "unsafe_rules": 56,
-        "regex_rules": 56,
-        "shipped_block_domains": 170507,
-        "curation_set": 887
+        "unsafe_rules": 55,
+        "regex_rules": 55,
+        "shipped_block_domains": 163076,
+        "curation_set": 892
     },
     "budgets": {
         "total_rules": 30000,
@@ -22,9 +22,9 @@
     },
     "artifacts": {
         "blocklist/popup-curated.json": {
-            "sha256": "17f61fda2e45dd38e3b9b32c3c3e8f8ab5d935a28176754baed58e2c38aea61e",
-            "bytes": 1189293,
-            "count": 41909
+            "sha256": "d4270d19a4ae75275e6391f69f2477dbfdf3d14b072c62c9ff2f9617bd081c04",
+            "bytes": 1128089,
+            "count": 39475
         },
         "blocklist/popup.json": {
             "sha256": "3ef1e661254d32105464f397653840f51f3d90e8d1093ddb58dd2389a81772d2",
@@ -52,29 +52,29 @@
             "count": 530
         },
         "derived/community.json": {
-            "sha256": "ef47d74e8666d4d3f70dc7c1298f3e4218e251f69b72b8f3c6bea84b59de9c23",
-            "bytes": 18194,
-            "count": 812
+            "sha256": "78638406d31091d421d5c00fd4068ebce691d18d37f2c936474d58ff35f3cb55",
+            "bytes": 18317,
+            "count": 817
         },
         "derived/to-filter-out-domains-set.json": {
-            "sha256": "d8d8d2d6576a9a6d4c20636972b93622b8ab14f96c3b90b280cb3320f1b70f02",
-            "bytes": 19962,
-            "count": 887
+            "sha256": "d159181d16595d74596afff113d575646dc4eb0ac6fe048f982fbdc949b7746a",
+            "bytes": 20085,
+            "count": 892
         },
         "network/rules-easylist.json": {
-            "sha256": "dee6d0926b0e957b2236926f6da187abd1a2b68fb472652cf24161b5e25a2a30",
-            "bytes": 3280494,
-            "count": 10174
+            "sha256": "a7fbd08c93ae27adb26a8073e64fa315f4d16acdaa97ff3624adb622bc6e2947",
+            "bytes": 3279980,
+            "count": 10170
         },
         "network/rules-hosts.json": {
-            "sha256": "8c54c5b28ee42b6cc6a91e45747dbeb1b7a08306f7ebb1ae1a48aa465e63161b",
-            "bytes": 7078047,
-            "count": 60
+            "sha256": "9ebb602665fe584a511cdf617417c70435ced9f5ab155b30b81ff2d42bfa00ce",
+            "bytes": 6805699,
+            "count": 58
         },
         "network/rules.json": {
-            "sha256": "aca9a25fcf324d8d34c5ea929b43d8102ab055be22a1e7a5d03c06c4cde2b101",
-            "bytes": 10409998,
-            "count": 10286
+            "sha256": "f729b2b436c701544f04d6f48d15bbeb76f13c6caf9e941307dced05a1e39d27",
+            "bytes": 10137136,
+            "count": 10280
         },
         "standalone/allow-request-domains.json": {
             "sha256": "47939522a90410ffd6a1606820c6d3427327bf53fc624e1cb54c1d007a760356",
@@ -193,9 +193,9 @@
             "bytes": 124242
         },
         "whitelist/community.json": {
-            "sha256": "ef47d74e8666d4d3f70dc7c1298f3e4218e251f69b72b8f3c6bea84b59de9c23",
-            "bytes": 18194,
-            "count": 812
+            "sha256": "78638406d31091d421d5c00fd4068ebce691d18d37f2c936474d58ff35f3cb55",
+            "bytes": 18317,
+            "count": 817
         },
         "whitelist/default.json": {
             "sha256": "8a7f995c19102033d0dc74225e12f0532e54bbe779d2a0c6637a07f956b103a7",
