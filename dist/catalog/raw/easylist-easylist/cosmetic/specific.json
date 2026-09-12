@@ -427,6 +427,10 @@
         ".master-product-carousel:has([data-carousel-api*=\"search/sponsored-carousel\"])",
         ".master-product-carousel:has([data-carousel-driven=\"sponsored-products\"])"
     ],
+    "acronymfinder.com": [
+        ".ts",
+        "tr:has(.ts)"
+    ],
     "actionnetwork.com": [
         ".promotion-table"
     ],
@@ -9428,6 +9432,9 @@
         "div[style=\"position: relative; display: flex; flex-direction: column; gap: 2px; justify-content: center; align-items: center;\"]",
         "div[style=\"position:relative;display:flex;flex-direction:column;gap:2px;justify-content:center;align-items:center\"]",
         "div[style=\"position:relative;display:flex;flex-direction:column;gap:2px;justify-content:center;align-items:center;padding:8px\"]"
+    ],
+    "gdforum.freeforums.net": [
+        "#primisContainer"
     ],
     "gearjunkie.com": [
         ".ldm_ad",
@@ -22757,6 +22764,9 @@
     ],
     "teleboy.ch": [
         ".grid-col-content-leaderboard"
+    ],
+    "telecomtalk.info": [
+        ".tt-ad"
     ],
     "telegraph.co.uk": [
         ".article-betting-unit-container",
