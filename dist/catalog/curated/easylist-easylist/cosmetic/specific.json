@@ -3930,7 +3930,7 @@
     "chatgpt.com": [
         ".border-token-border-default.mt-2.border-t:has(button[aria-label=\"Ad options\"])",
         "[class*=\"_assistantAds\"]",
-        "[data-message-role=\"assistant\"] > section[class]:has(> aside[aria-label] > div[role=\"list\"] a[rel][target=\"_blank\"] + span > button[aria-haspopup])",
+        "[data-message-role=\"assistant\"] > section[class]:has(> aside[aria-label] > div[role=\"list\"] a[rel][target=\"_blank\"] + [class] > button[aria-haspopup])",
         "[data-testid=\"bazaar-v2-elevated-box\"]",
         "aside[data-assistant-ads-unit]",
         "div.opacity-100.transition-opacity.ease-out:has(button[aria-label=\"Sponsored options\"], button[aria-label=\"Ad options\"])",
@@ -9609,6 +9609,9 @@
         ".gg-banner-full-link",
         ".gg-full-content-widget",
         ".site-banner-top-widget"
+    ],
+    "ggbases.com": [
+        ".ad"
     ],
     "ggrecon.com": [
         ".artSideBgBox",
@@ -16990,6 +16993,7 @@
     "openalternative.co": [
         ".duration-100.rounded-lg:has(a[href=\"/advertise\"])",
         ".relative.rounded-lg:has(a[href^=\"/advertise\"])",
+        ".relative.rounded-lg:has(img[src*=\"cdn.revinel.com\"])",
         "div[class=\"relative flex max-md:order-3\"]:has(a[href=\"/advertise\"])",
         "div[class=\"relative flex\"]:has(a[href=\"/advertise\"])"
     ],
