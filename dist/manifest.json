@@ -1,18 +1,18 @@
 {
     "schema": 1,
-    "version": "28cb27f13a61855f99abcb21fe8b9f67eeb057da7689ff1300f62cc66c7cb96b",
-    "generated_at": "2026-09-14T11:52:53+00:00",
-    "sanitized_provenance": "9ca67d811fc6575236654788702ac3fe8ff832ff8e8246d8b2d7bed23310238d",
+    "version": "419a7a4894cbef6f29c2e48930606c51c45dbef49bd5b883501887fd8e151516",
+    "generated_at": "2026-09-14T17:57:32+00:00",
+    "sanitized_provenance": "158314a167dbc6bd5e82d00c2c6f29cd0d71cc439202e0da6b8cf41c57727cf9",
     "counts": {
-        "network_rules_total": 10282,
+        "network_rules_total": 10283,
         "network_rules_by_action": {
             "redirect": 51,
-            "block": 9102,
+            "block": 9103,
             "allow": 1129
         },
         "unsafe_rules": 51,
         "regex_rules": 51,
-        "shipped_block_domains": 144651,
+        "shipped_block_domains": 144693,
         "curation_set": 910
     },
     "budgets": {
@@ -62,19 +62,19 @@
             "count": 910
         },
         "network/rules-easylist.json": {
-            "sha256": "161497304a2b6e3da1d7cca22b6e3b79ae041beed2faf2ce1206f01be763a247",
-            "bytes": 3303124,
-            "count": 10177
+            "sha256": "dabeb415e835efa7b988e93dc0a3fa4b1253c5841c27a3146a259b29c55665f6",
+            "bytes": 3307666,
+            "count": 10178
         },
         "network/rules-hosts.json": {
-            "sha256": "b8ef4d6c800ec59482c7a52561914e11642faa83ad138caceb0bb506c75456b6",
-            "bytes": 6247343,
+            "sha256": "b04a654834579238d7c882cd3bc4a187a4dc654994f63a7ff31a4dc3ac703ae7",
+            "bytes": 6248801,
             "count": 53
         },
         "network/rules.json": {
-            "sha256": "beeea12f11a5f516bba85ed19d5e706f2bb7e83a11d3af0d9f383d084eda4ead",
-            "bytes": 9602096,
-            "count": 10282
+            "sha256": "0571d5fb177e9a1205104e68133e9d557c5127f5bf1764d7a3ecc4729f736dc1",
+            "bytes": 9608096,
+            "count": 10283
         },
         "standalone/allow-request-domains.json": {
             "sha256": "47939522a90410ffd6a1606820c6d3427327bf53fc624e1cb54c1d007a760356",
