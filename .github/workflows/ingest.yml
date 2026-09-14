@@ -13,7 +13,7 @@ on:
   workflow_dispatch:
     inputs:
       force:
-        description: "Override shrink/size-delta guards (the confirming re-run)"
+        description: "Confirm a wipe: let a sheet parsing to zero rows replace a non-empty mirror"
         type: boolean
         default: false
 

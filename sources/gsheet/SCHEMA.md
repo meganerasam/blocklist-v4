@@ -56,13 +56,25 @@ subdomains.
 | O | rule101xtra | standalone · on-demand (was CSP-strip rule 33) |
 
 ## Ingest gates (per sheet, fail-closed — keep previous mirror on violation)
+A sheet is held only when it is BROKEN. A sheet that was merely edited — more rows, fewer
+rows — is mirrored: the sheets are the source of truth, and holding an intentional removal
+stalls Curate + Compile behind it without protecting anything (2026-09-14 decision).
 - fetch error / HTML login page / empty body
 - header mismatch vs the layouts above
 - row-level: invalid domains rejected + reported (IPs, localhost, no-dot, bad syntax)
-- shrink guard on C / E / F / I / J (any shrink → hold; `force` dispatch input = the confirming re-run)
-- ±30% size-delta guard on A / B (when previous mirror ≥ 20 rows)
+- ZERO rows parsed while the mirror holds some → hold. Not an edit: an expired share link
+  answers 200 with an empty export, and wiping the mirror would ship an empty list
+  fleet-wide. The `force` dispatch input confirms a deliberate emptying — it is now the
+  only thing `force` does
 - `TBD` export_url → sheet skipped without failing the run
 - every run posts a per-sheet diff summary (added/removed, rejects with line numbers)
+
+## Size-change warnings (reported, never fatal)
+- `warn_on_change` sheets (C / E / F / I / J — small, hand-curated): ANY delta, up or down
+- `delta_pct` sheets (A / B — they move on their own): only past ±30%, and only when the
+  previous mirror had ≥ 20 rows
+- surfaced twice: a `> [!WARNING]` block at the TOP of the step summary, and one
+  `::warning::` annotation per sheet on the run page, so a green run still says what moved
 
 Bootstraps: C (174) · H omit-from-whitelist · I omit-from-blocklist (13, whitelistes3) done and live.
 Sheet E went live 2026-09-10 (21 rows). All 15 export_urls are configured — no TBD left.

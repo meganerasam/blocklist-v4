@@ -2,11 +2,14 @@
 // build/ingest/fetch_sheets.php
 // Mirrors Google Sheets A–O (15) into sources/gsheet/*.json. Domain sheets mirror as FLAT
 // sorted arrays of domain strings; only Sheet B (trackers) mirrors as objects.
-// Fail-closed PER SHEET: any gate violation keeps the previous mirror untouched and marks
-// the run red; sheets that pass are still written. Guards per sources/gsheet/SCHEMA.md.
+// Fail-closed PER SHEET on a BROKEN sheet (fetch error, HTML login page, header mismatch,
+// nothing parsed): the previous mirror is kept and the run turns red; sheets that pass are
+// still written. A sheet that merely CHANGED SIZE is not broken — it was edited — so it is
+// mirrored and reported as a warning, never held. Gates per sources/gsheet/SCHEMA.md.
 //
 // Env:
-//   INGEST_FORCE=1   override the shrink/size-delta guards (the "confirming re-run")
+//   INGEST_FORCE=1   confirm a WIPE: let a sheet that parses to zero rows replace a
+//                    non-empty mirror. Size deltas are never gated (see the loop).
 //   GITHUB_STEP_SUMMARY  markdown report is appended there when set (always echoed too)
 
 declare(strict_types=1);
@@ -41,32 +44,35 @@ function load_sheet_specs(string $yml): array
     return $out;
 }
 
-// Expected header + guard profile per sheet `name`.
+// Expected header + per-sheet profile for `name`.
+// `warn_on_change` / `delta_pct` select the WARNING threshold for a size change — neither
+// gates the run (2026-09-14). Small hand-curated sheets warn on any delta; the big
+// self-moving ones only past their percentage.
 // 'popup-pivot' = Sheet A's kept-as-is pivot ("Block List v3" column, quoted cells,
 // Grand Total footer). Domain sheets: only the first column ('domain') is required —
 // added/reason columns are sheet-side audit trail and never enter the mirror.
 const SPECS = [
-    'popup'                    => ['header' => ['block list v3'],                   'kind' => 'popup-pivot', 'shrink_guard' => false, 'delta_pct' => 30],
-    'traffic-quality-trackers' => ['header' => ['market', 'hostname', 'nb_click'],  'kind' => 'tracker', 'shrink_guard' => false, 'delta_pct' => 30],
-    'default-whitelist'        => ['header' => ['domain'],       'kind' => 'domains', 'shrink_guard' => true,  'delta_pct' => null],
-    'default-blocklist'        => ['header' => ['domain'],       'kind' => 'domains', 'shrink_guard' => false, 'delta_pct' => null],
+    'popup'                    => ['header' => ['block list v3'],                   'kind' => 'popup-pivot', 'warn_on_change' => false, 'delta_pct' => 30],
+    'traffic-quality-trackers' => ['header' => ['market', 'hostname', 'nb_click'],  'kind' => 'tracker', 'warn_on_change' => false, 'delta_pct' => 30],
+    'default-whitelist'        => ['header' => ['domain'],       'kind' => 'domains', 'warn_on_change' => true,  'delta_pct' => null],
+    'default-blocklist'        => ['header' => ['domain'],       'kind' => 'domains', 'warn_on_change' => false, 'delta_pct' => null],
     // Sheet E (2026-09-10): the veto on the default blocklist — a listed domain must
-    // produce NO rule at all. Shrink-guarded like omit-from-blocklist: a silent shrink
-    // would silently re-admit blocks the operator deliberately vetoed.
-    'default-blocklist-not-to-add' => ['header' => ['domain'],   'kind' => 'domains', 'shrink_guard' => true,  'delta_pct' => null],
-    'manual-whitelist'         => ['header' => ['domain'],       'kind' => 'domains', 'shrink_guard' => true,  'delta_pct' => null],
-    'manual-blocklist'         => ['header' => ['domain'],       'kind' => 'domains', 'shrink_guard' => false, 'delta_pct' => null],
-    'omit-from-whitelist'      => ['header' => ['domain'],       'kind' => 'domains', 'shrink_guard' => false, 'delta_pct' => null],
-    'omit-from-blocklist'      => ['header' => ['domain'],       'kind' => 'domains', 'shrink_guard' => true,  'delta_pct' => null],
-    // Sheet J (2026-09-08, re-lettered 2026-09-10): download sites — omit-style curation input; a silent shrink
-    // would strip protection from download sites, so it gets the shrink guard like H
-    'download-sites'           => ['header' => ['domain'],       'kind' => 'domains', 'shrink_guard' => true,  'delta_pct' => null],
+    // produce NO rule at all. Warns on any change, like omit-from-blocklist: a shrink
+    // re-admits blocks the operator deliberately vetoed, so it should never pass unnoticed.
+    'default-blocklist-not-to-add' => ['header' => ['domain'],   'kind' => 'domains', 'warn_on_change' => true,  'delta_pct' => null],
+    'manual-whitelist'         => ['header' => ['domain'],       'kind' => 'domains', 'warn_on_change' => true,  'delta_pct' => null],
+    'manual-blocklist'         => ['header' => ['domain'],       'kind' => 'domains', 'warn_on_change' => false, 'delta_pct' => null],
+    'omit-from-whitelist'      => ['header' => ['domain'],       'kind' => 'domains', 'warn_on_change' => false, 'delta_pct' => null],
+    'omit-from-blocklist'      => ['header' => ['domain'],       'kind' => 'domains', 'warn_on_change' => true,  'delta_pct' => null],
+    // Sheet J (2026-09-08, re-lettered 2026-09-10): download sites — omit-style curation input; a shrink
+    // strips protection from download sites, so it warns on any change like H
+    'download-sites'           => ['header' => ['domain'],       'kind' => 'domains', 'warn_on_change' => true,  'delta_pct' => null],
     // standalone (K–O): mirrored + published on demand, never merged into rules
-    'whitelisted-domains-injection-enabled' => ['header' => ['domain'], 'kind' => 'domains', 'shrink_guard' => false, 'delta_pct' => null],
-    'tracking-whitelist'       => ['header' => ['domain'],       'kind' => 'domains', 'shrink_guard' => false, 'delta_pct' => null],
-    'allow-request-domains'    => ['header' => ['domain'],       'kind' => 'domains', 'shrink_guard' => false, 'delta_pct' => null],
-    'initiator-allowed-domains'=> ['header' => ['domain'],       'kind' => 'domains', 'shrink_guard' => false, 'delta_pct' => null],
-    'rule101xtra'              => ['header' => ['domain'],       'kind' => 'domains', 'shrink_guard' => false, 'delta_pct' => null],
+    'whitelisted-domains-injection-enabled' => ['header' => ['domain'], 'kind' => 'domains', 'warn_on_change' => false, 'delta_pct' => null],
+    'tracking-whitelist'       => ['header' => ['domain'],       'kind' => 'domains', 'warn_on_change' => false, 'delta_pct' => null],
+    'allow-request-domains'    => ['header' => ['domain'],       'kind' => 'domains', 'warn_on_change' => false, 'delta_pct' => null],
+    'initiator-allowed-domains'=> ['header' => ['domain'],       'kind' => 'domains', 'warn_on_change' => false, 'delta_pct' => null],
+    'rule101xtra'              => ['header' => ['domain'],       'kind' => 'domains', 'warn_on_change' => false, 'delta_pct' => null],
 ];
 
 // ----------------------------------------------------------------- fetch ----
@@ -186,6 +192,7 @@ $report = ["# Sheet ingest — " . gmdate('Y-m-d H:i') . " UTC" . ($FORCE ? " ·
 $report[] = "| sheet | status | rows | Δ | notes |";
 $report[] = "|---|---|---|---|---|";
 $anyFailed = false;
+$warnings  = [];   // size deltas worth a line in the summary — never fatal
 
 foreach ($specs as $key => $s) {
     $name = $s['name'] ?? $key;
@@ -226,18 +233,41 @@ foreach ($specs as $key => $s) {
     $data = build_rows($spec['kind'], array_slice($rows, 1), $rejects, $dupes);
     $n = count($data);
 
-    // delta guards vs previous mirror
-    if ($prevCount !== null && !$FORCE) {
-        if ($spec['shrink_guard'] && $n < $prevCount) {
-            $fail("shrink guard: {$prevCount} → {$n} (re-run with force to confirm)");
+    // SIZE CHANGES ARE REPORTED, NOT BLOCKED (2026-09-14, user decision). The sheets ARE
+    // the source of truth: a shrink is a curation decision, and the old fail-closed guards
+    // turned every intentional row removal into a red run plus a manual force dispatch —
+    // which also froze Curate and Compile behind the workflow_run chain. Seven rows removed
+    // from Sheet C on 2026-09-11 stalled the pipeline for three days AND never reached
+    // dist/, so the guard did not protect the fleet, it just stopped shipping the decision.
+    // The per-sheet thresholds survive as WARNING levels, not gates: `warn_on_change` sheets
+    // are small and hand-curated, so any delta deserves a line; `delta_pct` sheets move on
+    // their own, so only a jump past the percentage does.
+    // ONE HARD GATE REMAINS, because it is the one case that is NOT an edit: a sheet that
+    // parses to ZERO rows while the mirror holds some is a fetch/permission accident (an
+    // expired share link answers 200 with an empty export), and wiping the mirror on it
+    // would ship an empty list fleet-wide. INGEST_FORCE=1 confirms a deliberate emptying.
+    if ($prevCount !== null && $prevCount > 0) {
+        if ($n === 0 && !$FORCE) {
+            $fail("zero rows parsed while the mirror holds {$prevCount} — refusing to wipe it (dispatch with force to confirm an intentional emptying)");
             continue;
         }
-        if ($spec['delta_pct'] !== null && $prevCount >= 20) {
-            $delta = abs($n - $prevCount) / $prevCount * 100;
-            if ($delta > $spec['delta_pct']) {
-                $fail(sprintf('size delta %.0f%% > %d%% (%d → %d; force to confirm)', $delta, $spec['delta_pct'], $prevCount, $n));
-                continue;
-            }
+        $diff = $n - $prevCount;
+        $notable = $spec['warn_on_change']
+            ? $diff !== 0
+            : ($spec['delta_pct'] !== null && $prevCount >= 20
+               && abs($diff) / $prevCount * 100 > $spec['delta_pct']);
+        if ($notable) {
+            $warnings[] = sprintf(
+                '**%s** %s %d domain%s: %d → %d (%s%.0f%%)',
+                $name,
+                $diff < 0 ? 'LOST' : 'GAINED',
+                abs($diff),
+                abs($diff) === 1 ? '' : 's',
+                $prevCount,
+                $n,
+                $diff < 0 ? '−' : '+',
+                abs($diff) / $prevCount * 100
+            );
         }
     }
 
@@ -293,6 +323,13 @@ foreach ($specs as $key => $s) {
             }
         }
         ksort($groups);
+        // $n counts the RAW sheet pairs; the files we are about to write hold something else
+        // — promotion adds a row to global, and every rollup re-lists its members' domains.
+        // $prevTotal is a sum over the published files, so comparing it to $n subtracted two
+        // different units and printed a permanent phantom delta (−2,716 on a run where not a
+        // single file changed). $newTotal is the same unit as $prevTotal: what will be on disk.
+        $newTotal = 0;
+        foreach ($groups as $set) $newTotal += count($set);
         $prevTotal = 0; $prevFiles = [];
         foreach (glob($dir . '/*.json') ?: [] as $f) {
             $arr = json_decode((string) file_get_contents($f), true);
@@ -303,11 +340,28 @@ foreach ($specs as $key => $s) {
             $l = json_decode((string) file_get_contents($legacy), true);
             if (is_array($l)) $prevTotal = count($l);
         }
-        if ($prevTotal >= 20 && !$FORCE && $spec['delta_pct'] !== null) {
-            $delta = abs($n - $prevTotal) / $prevTotal * 100;
-            if ($delta > $spec['delta_pct']) {
-                $fail(sprintf('size delta %.0f%% > %d%% (%d -> %d; force to confirm)', $delta, $spec['delta_pct'], $prevTotal, $n));
+        // Same doctrine as the domain sheets above: the size moves with the market data,
+        // so it is reported, not gated. $prevCount is null here (mirrorPath is a DIRECTORY
+        // for Sheet B), which is why this branch keeps its own copy against $prevTotal.
+        if ($prevTotal > 0) {
+            if ($newTotal === 0 && !$FORCE) {
+                $fail("zero rows parsed while the market files hold {$prevTotal} — refusing to wipe them (dispatch with force to confirm)");
                 continue;
+            }
+            $diff = $newTotal - $prevTotal;
+            if ($prevTotal >= 20 && $spec['delta_pct'] !== null
+                && abs($diff) / $prevTotal * 100 > $spec['delta_pct']) {
+                $warnings[] = sprintf(
+                    '**%s** %s %d row%s: %d → %d (%s%.0f%%)',
+                    $name,
+                    $diff < 0 ? 'LOST' : 'GAINED',
+                    abs($diff),
+                    abs($diff) === 1 ? '' : 's',
+                    $prevTotal,
+                    $newTotal,
+                    $diff < 0 ? '−' : '+',
+                    abs($diff) / $prevTotal * 100
+                );
             }
         }
         if (!is_dir($dir)) mkdir($dir, 0755, true);
@@ -327,13 +381,14 @@ foreach ($specs as $key => $s) {
         if (is_file($legacy)) @unlink($legacy);
         $mkSummary = implode(' · ', array_map(fn($mk) => $mk . ' ' . count($groups[$mk]), array_slice(array_keys($groups), 0, 12)));
         $st = $changedMk ? '✅ updated' : '⏸ unchanged';
-        $deltaTxt = $prevTotal === 0 ? 'new' : (($n - $prevTotal >= 0 ? '+' : '') . ($n - $prevTotal));
+        $deltaTot = $newTotal - $prevTotal;
+        $deltaTxt = $prevTotal === 0 ? 'new' : (($deltaTot > 0 ? '+' : '') . $deltaTot);
         $notes = [];
         if ($rejects) $notes[] = count($rejects) . ' rejected';
         if ($dupes)   $notes[] = count($dupes) . ' dupes';
-        $notes[] = count($groups) . ' market files: ' . $mkSummary;
+        $notes[] = $n . ' sheet rows → ' . $newTotal . ' across ' . count($groups) . ' market files (promotion + rollups re-list domains): ' . $mkSummary;
         $notes[] = "global promoted +{$promoted} (listed in >= {$PROMOTE_MIN_MARKETS} markets)";
-        $report[] = "| {$label} | {$st} | {$n} | {$deltaTxt} | " . str_replace('|', '\\|', implode(' · ', $notes)) . " |";
+        $report[] = "| {$label} | {$st} | {$newTotal} | {$deltaTxt} | " . str_replace('|', '\\|', implode(' · ', $notes)) . " |";
         foreach (array_slice($rejects, 0, 5) as [$ln, $val, $why]) {
             $report[] = "|  | | | | line {$ln}: `" . str_replace('|', '\\|', substr($val, 0, 60)) . "` — {$why} |";
         }
@@ -367,6 +422,19 @@ foreach ($specs as $key => $s) {
     }
     foreach (array_slice($rejects, 0, 10) as [$ln, $val, $why]) {
         $report[] = "|  | | | | line {$ln}: `" . str_replace('|', '\\|', substr($val, 0, 60)) . "` — {$why} |";
+    }
+}
+
+// Size warnings go FIRST — the table is long and a delta is the thing a human wants to
+// see without scrolling. They are also emitted as ::warning:: so GitHub surfaces them on
+// the run page itself, where a green run would otherwise say nothing at all.
+if ($warnings) {
+    $block = ['> [!WARNING]', '> Size changes accepted from the sheets (no gate — verify they were intended):'];
+    foreach ($warnings as $w) $block[] = '> - ' . $w;
+    $block[] = '';
+    array_splice($report, 1, 0, $block);
+    foreach ($warnings as $w) {
+        echo '::warning title=Sheet size change::' . str_replace('**', '', $w) . "\n";
     }
 }
 
