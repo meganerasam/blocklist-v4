@@ -8048,6 +8048,9 @@
         ".gam-ad-wrapper",
         "hr"
     ],
+    "drive.google.com": [
+        "div[data-is-inner-content-recommendation]"
+    ],
     "drivencarguide.co.nz": [
         ".o-adunit",
         ".tw-bg-gray-200",
@@ -28968,6 +28971,7 @@
         ".commercial-label-style",
         ".shopwindow-advertorial",
         "[data-tmdatatrack-type=\"commercial\"]",
+        "div[data-testid*=\"commercial\"]",
         ".swipe-prompt"
     ],
     "themonthly.com.au": [
