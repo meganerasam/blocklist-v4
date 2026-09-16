@@ -3930,7 +3930,7 @@
     "chatgpt.com": [
         ".border-token-border-default.mt-2.border-t:has(button[aria-label=\"Ad options\"])",
         "[class*=\"_assistantAds\"]",
-        "[data-message-role=\"assistant\"] > section[class]:has(> aside[aria-label] > div[role=\"list\"] a[rel][target=\"_blank\"] + [class] > button[aria-haspopup])",
+        "[data-message-role=\"assistant\"] > section[class]:has(> aside[aria-label] > div[role=\"list\"] a[rel][target=\"_blank\"][href*=\"&oppref=\"])",
         "[data-testid=\"bazaar-v2-elevated-box\"]",
         "aside[data-assistant-ads-unit]",
         "div.opacity-100.transition-opacity.ease-out:has(button[aria-label=\"Sponsored options\"], button[aria-label=\"Ad options\"])",
