@@ -1585,11 +1585,7 @@
             "type": "extended"
         },
         {
-            "selector": ".element-action-button:has-text(DO YOU KNOW MORE)",
-            "type": "extended"
-        },
-        {
-            "selector": ".element-action-button:has-text(SHARE YOUR STORY)",
+            "selector": ".element-action-button:has-text(/DO YOU KNOW MORE|SHARE YOUR STORY/)",
             "type": "extended"
         }
     ],
