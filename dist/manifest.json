@@ -1,8 +1,8 @@
 {
     "schema": 1,
-    "version": "ef661989218f0750a48d1f4316f8784fdb7e05dae6704ce2183693d377f008bd",
-    "generated_at": "2026-09-18T11:28:38+00:00",
-    "sanitized_provenance": "8a78c5a3b037b537951dfab5a03d9f6eca98789364bc9c7280bebd05d0e4e804",
+    "version": "a09536c3f566bc1122fb83b18eb03fb565e278d915fb677386a8c51907b9b83c",
+    "generated_at": "2026-09-18T11:46:01+00:00",
+    "sanitized_provenance": "8e6c2f9378402480cf6e40fa079155988e48822bdef3b04867e4e919f620b4da",
     "counts": {
         "network_rules_total": 10494,
         "network_rules_by_action": {
@@ -12,7 +12,7 @@
         },
         "unsafe_rules": 48,
         "regex_rules": 48,
-        "shipped_block_domains": 149503,
+        "shipped_block_domains": 149508,
         "curation_set": 85
     },
     "budgets": {
@@ -22,14 +22,14 @@
     },
     "artifacts": {
         "blocklist/popup-curated.json": {
-            "sha256": "71d428ac284aab4c4fae1d79591c8f3e88382943088c8a0431ab9c67fa2974fb",
-            "bytes": 870614,
-            "count": 31054
+            "sha256": "974e06af8bae2a9c70973e1b01de54861ecb72d8424c23306613ee60555bdd7d",
+            "bytes": 870734,
+            "count": 31059
         },
         "blocklist/popup.json": {
-            "sha256": "76dc3c407bd7c79d4a8d1aca76d56c34180f4a6f3207afaf9f3d6d3c01960f67",
-            "bytes": 57848,
-            "count": 2304
+            "sha256": "1d8494918eb4f9dcf54e7dab354968f21524fd2050ff1d0316470357db3ce9e3",
+            "bytes": 57968,
+            "count": 2309
         },
         "cosmetic/extended.json": {
             "sha256": "0de3aaaa140b44cda9dfc37e3945ac24f46de22dae980c93e93acf10bcba2df8",
@@ -72,8 +72,8 @@
             "count": 54
         },
         "network/rules.json": {
-            "sha256": "32907628de1469a7cb95a3f529b79176a62195e52a1c3b3c8b7ff501e54764be",
-            "bytes": 9774051,
+            "sha256": "aef7b8b6815a9cf8e0b1a3dee3ee316cab517416301f1a282698edd0ed1c68d9",
+            "bytes": 9774146,
             "count": 10494
         },
         "standalone/allow-request-domains.json": {
