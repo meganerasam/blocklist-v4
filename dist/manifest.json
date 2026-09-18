@@ -1,7 +1,7 @@
 {
     "schema": 1,
-    "version": "a09536c3f566bc1122fb83b18eb03fb565e278d915fb677386a8c51907b9b83c",
-    "generated_at": "2026-09-18T11:46:01+00:00",
+    "version": "9f7ef62d8504cd73408d45167edab6b00e54c7aa170ca9f88080dcf7feaf917b",
+    "generated_at": "2026-09-18T12:24:21+00:00",
     "sanitized_provenance": "8e6c2f9378402480cf6e40fa079155988e48822bdef3b04867e4e919f620b4da",
     "counts": {
         "network_rules_total": 10494,
@@ -79,6 +79,10 @@
         "standalone/allow-request-domains.json": {
             "sha256": "47939522a90410ffd6a1606820c6d3427327bf53fc624e1cb54c1d007a760356",
             "bytes": 424
+        },
+        "standalone/default-blocklist-not-to-add.json": {
+            "sha256": "1148cd2ab177c72492bbc1b4b7fe6e421ef1851b65dd58e8800e9360d1b64f9c",
+            "bytes": 646
         },
         "standalone/initiator-allowed-domains.json": {
             "sha256": "8451a3930b39754d90a6d972509f69477acaac46d7bef775ffb62af4f5ecb96d",

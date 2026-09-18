@@ -801,8 +801,17 @@ foreach (glob("$tqDir/*.json") ?: [] as $path) {
 if (!$tqFiles) fail('sources/traffic_quality/ has no market files');
 
 // Sheets J–N: standalone, published as on-demand JSON, never merged (mirror bytes verbatim)
+// 2026-09-18: default-blocklist-not-to-add joins them. It is the sheet tab
+// "blocklist_but_do_not_add", and its contract is unchanged here — a domain listed in it
+// still produces NO rule in this build (curation-set member AND append floor). It is
+// published because the BRAND BACKENDS consume it as their inline default_blockdom() list,
+// replacing a PHP array that had already drifted between brands (ninja/stopads 23 entries,
+// adbpro/wonder 20 — googleadservices.com missing from two of four). Consequence worth
+// keeping in mind: for these domains the backend rule is the ONLY protection, because this
+// build deliberately emits nothing for them.
 $STANDALONE = ['whitelisted-domains-injection-enabled', 'tracking-whitelist',
-               'allow-request-domains', 'initiator-allowed-domains', 'rule101xtra'];
+               'allow-request-domains', 'initiator-allowed-domains', 'rule101xtra',
+               'default-blocklist-not-to-add'];
 $standaloneFiles = [];
 foreach ($STANDALONE as $name) {
     $path = "$ROOT/sources/gsheet/$name.json";
