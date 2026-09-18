@@ -188,7 +188,11 @@ if (!$userWL) fail('user whitelist step 2 empty — G/H vetoed everything?');
 // the curation set — every recipe below subtracts THIS (domain + subdomains).
 // Sheet I contributes its NORMALIZED, G-vetoed form ($dlSites), never the raw rows.
 $curation = [];
-foreach ([$omitBlocklist, $noAdd, $dlSites, array_keys($userWL)] as $src) foreach ($src as $d) $curation[$d] = true;
+// TEST 2026-09-18 (user request): the community/vote whitelist is REMOVED from the curation
+// union. It stays a client-side whitelist (sanitized/extension/user-whitelist.json ->
+// dist/whitelist/community.json, unchanged) but no longer subtracts from ANY block source.
+// Restore by putting array_keys($userWL) back in the array below.
+foreach ([$omitBlocklist, $noAdd, $dlSites] as $src) foreach ($src as $d) $curation[$d] = true;
 
 // ============================================================================
 // ② SHEET A (popup) − curation set
