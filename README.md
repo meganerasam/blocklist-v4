@@ -46,6 +46,7 @@ dist/       the public API — ONLY artifacts a consumer actually calls, plus de
 | I · omit from blocklist | `sources/gsheet/omit-from-blocklist.json` | never-block floor — curation-set member (subtracted from every blocking source at curate) + append floor at compile (no dist artifact: own-brand domains are covered by the static self-vendor 99999 allows; the rest is server-to-server traffic DNR never sees) |
 | J · download sites | `sources/gsheet/download-sites.json` | NEW 2026-09-08, dual role. ① curation-set member — subtracted from every blocking source at curate. ② a SOURCE: normalized (lowercase, strip protocol/path/port/www./trailing dot; invalid rows warn, never fail) − omit-from-whitelist − omit-from-blocklist → `sanitized/download-sites.txt` (ABP, overwritten each run, `@@||domain^$subdocument,stylesheet,font,xmlhttprequest,media,websocket,other`) → DNR allow lane (priority 50 since 2026-09-11, was 2 — above blocks AND redirects AND the extension's bundled static rulesets (10/11/40/41), which the old 2 could not reach; below the client user tier; subdocument→sub_frame, websocket/other never dropped). Guards: `$document` / `$~third-party` / non-`@@` line = build failure; compile re-validates the lane, PINS its priority to `DL_ALLOW_PRIORITY` (`build/compile/lib/util.php`, exact equality — a drift back to 2 fails the build) and asserts min-allow-prio > max-block-prio over the whole merge |
 | K–O · standalone | `whitelisted-domains-injection-enabled` · `tracking-whitelist` · `allow-request-domains` · `initiator-allowed-domains` · `rule101xtra` | mirrored + published as on-demand JSON — never merged into any generated ruleset |
+| E · also standalone | `default-blocklist-not-to-add` | **2026-09-18** — published verbatim as `dist/standalone/default-blocklist-not-to-add.json` (21) IN ADDITION to its veto role. Its curation contract is unchanged: it still produces no rule here. It is published because the brand backends now read it as their inline `default_blockdom()` list, replacing a PHP array that had drifted (ninja/stopads 23 · adbpro/wonder 20). The two halves of one decision — "emit nothing, the server blocks it" — finally live in one place |
 
 ## Order of operations (the four-stage pipeline, 2026-09-08)
 
@@ -112,7 +113,8 @@ dist/ as-built (2026-09-10, only called artifacts): `network/rules.json` (extens
 `whitelist/` — default.json (backend sync) · community.json · download-sites.json ·
 `blocklist/` — popup-curated.json (the redirect lane as a flat list) · popup.json (Sheet A's
 shipped share) · `cosmetic/` (4 files) · `traffic_quality/` (per-market) · `standalone/`
-(Sheets K–O) · `derived/` (community + to-filter-out-domains-set — inspection helpers) · `catalog/`
+(Sheets K–O **+ default-blocklist-not-to-add since 2026-09-18** — the latter is consumed by the
+brand backends as their default block list) · `derived/` (community + to-filter-out-domains-set — inspection helpers) · `catalog/`
 (the à-la-carte layer, 2026-09-10: 117 files + catalog.json, ~71 MB) · `manifest.json`.
 
 Decisions locked 2026-09-07: `dist/` is published **as commits**; the fleet fetches it

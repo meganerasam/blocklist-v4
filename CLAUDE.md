@@ -123,7 +123,9 @@ leaked keys, every subset rule byte-identical to its canonical twin, rules.json 
 byte-identical to the pre-change artifact). Sheet-A chunks, download-sites allows and
 appends belong to neither subset. Pre-ledger forms stay upstream: sources/gsheet/popup.json raw 4,771 ·
 sanitized/gsheet/popup.json −curation 4,486) ·
-cosmetic/ · traffic_quality/ · standalone/ (K–O) · derived/
+cosmetic/ · traffic_quality/ · standalone/ (K–O + default-blocklist-not-to-add since 2026-09-18 —
+Sheet E published verbatim, read by the brand backends as default_blockdom(); its veto role here
+is unchanged) · derived/
 (community ≥50 after both omit vetoes + curation-set, helpers for inspection) · manifest.json.
 **whitelist/ carries the three whitelist flavours since 2026-09-09** (user request — one
 folder per consumer instead of three): default.json (Sheet C − omit-from-whitelist − omit-from-blocklist, 177) · community.json
@@ -138,7 +140,7 @@ resurrect a flat popup artifact only if access logs ever show external short.php
 PUSHED + LIVE 2026-09-08: repo = github.com/meganerasam/blocklist-v4, secret set, full CI
 chain green from a data-free cold start. Whitelist tightened same day (3 user-caught fixes:
 redirect-twin initiators, wildcard anchors, generic main_frame initiator blocks — all with
-fail-closed final asserts). Regional rollups latam/apac/nordics restored to the Sheet-B
+fail-closed final asserts). **TWIN BUILDER, FIXED 2026-09-18 (commit 057674e).** A main_frame block is duplicated as a blocked-page redirect ONLY when the source is a BARE DOMAIN BLOCK — no `urlFilter`, no `domainType`. The twin is always `regexFilter ^http.+` (regexSubstitution needs a regexFilter), so it cannot carry either field, and every scoped source was silently WIDENED into a blanket main_frame redirect. The 2026-09-08 pass only stripped whitelist-covered initiators, which missed the axis entirely — the widening happened whether or not a whitelist was involved. Now a scoped source keeps its block rule and loses only the blocked-page landing; under-redirecting is the only safe direction, because a wrong twin hijacks navigation no client whitelist can counter. Effect: twins 63→48, hijacked initiators 85→19, 66 sites freed — worst offender `|about:` scoped to 51 initiators (dood.*, streamtape.*, uptostream.*, popads.net…), plus `||hltv.org^*=|`→all of hltv.org, `||facebook.com/ads/ig_redirect/`→all of instagram.com, `|http*://*?`→pornhub/redtube/tube8/youporn. All 13 surviving initiator-scoped twins carry BOTH initiatorDomains and requestDomains, so they fire only on navigation from X to a specific blocked destination. Skips logged to `compile-drops.json` → `twin_scoped_source_skipped`. Regional rollups latam/apac/nordics restored to the Sheet-B
 split (24 market files — v3's generator derived them; the verbatim split had dropped them).
 SHIM PHASE STARTED — Ad Block Pro (12) is the template, 3 files edited on disk (not yet on
 the server): generate_compiled_rules.php = mirror dist/network/rules.json + rebrand the
