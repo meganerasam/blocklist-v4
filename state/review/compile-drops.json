@@ -2485,6 +2485,240 @@
         "zw9talorex.zw9talorex.shop",
         "zymurgyharmers.top"
     ],
+    "twin_scoped_source_skipped": {
+        "note": "main_frame block rules NOT duplicated as a blocked-page redirect because the source carries a urlFilter or a domainType the twin cannot express (the twin is always regexFilter ^http.+). Building one would redirect every navigation in the listed scope, not just the matching URL. The block rule itself still ships.",
+        "count": 15,
+        "rules": [
+            {
+                "urlFilter": null,
+                "domainType": "thirdParty",
+                "requestDomains": [
+                    "cooch.tv",
+                    "fapcandy.com",
+                    "freewebcams.com",
+                    "hornymatches.com",
+                    "jasmin.com",
+                    "livejasmin.com",
+                    "sexmotors.com",
+                    "xpeeps.com"
+                ],
+                "initiatorDomains": [],
+                "origin": "easylist"
+            },
+            {
+                "urlFilter": ".com./",
+                "domainType": null,
+                "requestDomains": [],
+                "initiatorDomains": [
+                    "pornhub.com"
+                ],
+                "origin": "easylist"
+            },
+            {
+                "urlFilter": "|http*://*?",
+                "domainType": "thirdParty",
+                "requestDomains": [],
+                "initiatorDomains": [
+                    "forums.socialmediagirls.com",
+                    "pornhub.com",
+                    "redtube.com",
+                    "tube8.com",
+                    "youporn.com",
+                    "youporngay.com"
+                ],
+                "origin": "easylist"
+            },
+            {
+                "urlFilter": "||porndude.link/porndudepass",
+                "domainType": null,
+                "requestDomains": [],
+                "initiatorDomains": [
+                    "theporndude.com"
+                ],
+                "origin": "easylist"
+            },
+            {
+                "urlFilter": null,
+                "domainType": "thirdParty",
+                "requestDomains": [
+                    "6angebot.ch",
+                    "actiondesk.com",
+                    "ad6media.fr",
+                    "adnanny.com",
+                    "adnium.com",
+                    "ads.planetwin365affiliate.com",
+                    "adx.io",
+                    "bestsurferprotector.com",
+                    "bongacams.com",
+                    "canyoublockit.com",
+                    "contentabc.com",
+                    "entainpartners.com",
+                    "explorads.com",
+                    "filestube.com",
+                    "ganja.com",
+                    "ggbetapk.com",
+                    "innovid.com",
+                    "insideoftech.com",
+                    "postaffiliatepro.com",
+                    "revmasters.com",
+                    "rocketmedia24.com",
+                    "senzapudore.it"
+                ],
+                "initiatorDomains": [],
+                "origin": "easylist"
+            },
+            {
+                "urlFilter": null,
+                "domainType": "thirdParty",
+                "requestDomains": [
+                    "130.211.",
+                    "142.91.",
+                    "172.255.6."
+                ],
+                "initiatorDomains": [],
+                "origin": "easylist"
+            },
+            {
+                "urlFilter": "/&*^",
+                "domainType": null,
+                "requestDomains": [],
+                "initiatorDomains": [
+                    "piracyproxy.app",
+                    "piraproxy.info",
+                    "unblocked.club",
+                    "unblockedstreaming.net"
+                ],
+                "origin": "easylist"
+            },
+            {
+                "urlFilter": "/?ref=",
+                "domainType": null,
+                "requestDomains": [],
+                "initiatorDomains": [
+                    "hltv.org"
+                ],
+                "origin": "easylist"
+            },
+            {
+                "urlFilter": "/hkz*^",
+                "domainType": null,
+                "requestDomains": [],
+                "initiatorDomains": [
+                    "piracyproxy.app",
+                    "piraproxy.info",
+                    "unblocked.club",
+                    "unblockedstreaming.net"
+                ],
+                "origin": "easylist"
+            },
+            {
+                "urlFilter": "|blob:",
+                "domainType": null,
+                "requestDomains": [],
+                "initiatorDomains": [
+                    "hqq.tv",
+                    "waaw.to",
+                    "watchadsontape.com"
+                ],
+                "origin": "easylist"
+            },
+            {
+                "urlFilter": "||csgofastx.com/?clickid=",
+                "domainType": null,
+                "requestDomains": [],
+                "initiatorDomains": [
+                    "hltv.org"
+                ],
+                "origin": "easylist"
+            },
+            {
+                "urlFilter": "||facebook.com/ads/ig_redirect/",
+                "domainType": null,
+                "requestDomains": [],
+                "initiatorDomains": [
+                    "instagram.com"
+                ],
+                "origin": "easylist"
+            },
+            {
+                "urlFilter": "||hltv.org^*=|",
+                "domainType": null,
+                "requestDomains": [],
+                "initiatorDomains": [
+                    "hltv.org"
+                ],
+                "origin": "easylist"
+            },
+            {
+                "urlFilter": "||rentalcars.com/?affiliateCode=",
+                "domainType": null,
+                "requestDomains": [],
+                "initiatorDomains": [
+                    "seatguru.com"
+                ],
+                "origin": "easylist"
+            },
+            {
+                "urlFilter": "|about:",
+                "domainType": null,
+                "requestDomains": [],
+                "initiatorDomains": [
+                    "22pixx.xyz",
+                    "adblockstrtape.link",
+                    "bitporno.com",
+                    "clipconverter.cc",
+                    "dailyuploads.net",
+                    "dood.la",
+                    "dood.so",
+                    "dood.to",
+                    "dood.video",
+                    "dood.watch",
+                    "dood.ws",
+                    "doodcdn.com",
+                    "flashx.net",
+                    "gospeljingle.com",
+                    "hqq.tv",
+                    "imagetwist.com",
+                    "mixdrop.bz",
+                    "mixdrop.sx",
+                    "nextgencloudtools.com",
+                    "playtube.ws",
+                    "popads.net",
+                    "powvideo.net",
+                    "powvldeo.cc",
+                    "putlocker.style",
+                    "run-syndicate.com",
+                    "soap2day.tf",
+                    "strcloud.link",
+                    "streamani.net",
+                    "streamtape.cc",
+                    "streamtape.site",
+                    "strtape.cloud",
+                    "strtape.tech",
+                    "strtapeadblock.club",
+                    "strtapeadblock.me",
+                    "strtpe.link",
+                    "supervideo.cc",
+                    "tapecontent.net",
+                    "turboimagehost.com",
+                    "upstream.to",
+                    "uptostream.com",
+                    "uptostream.eu",
+                    "uptostream.fr",
+                    "uptostream.link",
+                    "userload.co",
+                    "vev.red",
+                    "vevo.io",
+                    "vidcloud.co",
+                    "vidoza.net",
+                    "vortez.net",
+                    "vshare.eu",
+                    "watchserieshd.tv"
+                ],
+                "origin": "easylist"
+            }
+        ]
+    },
     "popup_excluded_by_whitelist": [],
     "append_vs_whitelist_conflicts": [],
     "append_parent_overrides": [],
@@ -4737,8 +4971,6 @@
             "yieldmo-builds.s3.amazonaws.com",
             "znaptag-us.s3.amazonaws.com"
         ],
-        "redirect_initiators": [
-            "11059 instagram.com"
-        ]
+        "redirect_initiators": []
     }
 }

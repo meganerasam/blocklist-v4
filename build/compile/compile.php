@@ -480,6 +480,8 @@ foreach ($domainRules as $rule) {
 $dupAsRedirect = 0;
 $dupInitStripped = 0;
 $dupSkippedWhitelisted = 0;
+$dupSkippedScoped = 0;
+$dupScopedDrops = [];
 foreach ($filters as $rule) {
     $origin = $rule['_src'] ?? 'easylist';
     unset($rule['_src']);
@@ -495,9 +497,29 @@ foreach ($filters as $rule) {
         // from those pages — a whitelisted/never-block site must never be widened into
         // that (the live pornhub breakage this fixes; production rule 11018 still has it).
         // Whitelist-covered initiators are stripped; a twin left with no scope is skipped.
+        // 2026-09-18: stripping covered initiators was never enough. The twin also discards
+        // the source rule's urlFilter and domainType, so ANY scoped source was being WIDENED
+        // whether or not a whitelist was involved (||hltv.org^*=| + initiator hltv.org became
+        // a blanket redirect of every hltv.org navigation; 12 urlFilter + 5 domainType sources
+        // measured on the 2026-09-18 dist). A twin is now built ONLY from a bare domain block:
+        // no urlFilter, no domainType. A scoped source keeps its block rule and simply loses
+        // the blocked-page landing — under-redirecting is the only safe direction on this axis,
+        // because a wrong twin hijacks navigation the client whitelist cannot counter.
+        // Dropped twins are listed in compile-drops.json under twin_scoped_source_skipped.
         $hasReq  = isset($rule['condition']['requestDomains'])   && is_array($rule['condition']['requestDomains']);
         $hasInit = isset($rule['condition']['initiatorDomains']) && is_array($rule['condition']['initiatorDomains']);
-        if (($hasReq || $hasInit) && ($rule['condition']['resourceTypes'] ?? null) === ['main_frame']) {
+        $mainFrameOnly = ($rule['condition']['resourceTypes'] ?? null) === ['main_frame'];
+        $isBareBlock   = !isset($rule['condition']['urlFilter']) && !isset($rule['condition']['domainType']);
+        if (($hasReq || $hasInit) && $mainFrameOnly && !$isBareBlock) {
+            $dupSkippedScoped++;
+            $dupScopedDrops[] = [
+                'urlFilter'        => $rule['condition']['urlFilter']  ?? null,
+                'domainType'       => $rule['condition']['domainType'] ?? null,
+                'requestDomains'   => $hasReq  ? array_values($rule['condition']['requestDomains'])   : [],
+                'initiatorDomains' => $hasInit ? array_values($rule['condition']['initiatorDomains']) : [],
+                'origin'           => $origin,
+            ];
+        } elseif (($hasReq || $hasInit) && $mainFrameOnly) {
             $keptInit = [];
             if ($hasInit) {
                 foreach ($rule['condition']['initiatorDomains'] as $d) {
@@ -935,6 +957,14 @@ atomic_write("$ROOT/dist/manifest.json", json_out($manifest, true) . "\n");
 // No timestamp on purpose: unchanged content must not churn a commit every run.
 $review = [
     'sheet_a_dead_dropped'    => $sheetADead,
+    'twin_scoped_source_skipped' => [
+        'note' => 'main_frame block rules NOT duplicated as a blocked-page redirect because the'
+            . ' source carries a urlFilter or a domainType the twin cannot express (the twin is'
+            . ' always regexFilter ^http.+). Building one would redirect every navigation in the'
+            . ' listed scope, not just the matching URL. The block rule itself still ships.',
+        'count' => $dupSkippedScoped,
+        'rules' => $dupScopedDrops,
+    ],
     'popup_excluded_by_whitelist' => $popupExcluded,
     'append_vs_whitelist_conflicts' => $appendConflicts,
     'append_parent_overrides' => $appendParentOverrides,
@@ -975,7 +1005,7 @@ $rep[] = '| ④ popup lane | ' . count($popupDomains) . ' domains → ' . count(
     . ' · kadhosts ' . count($popupLaneSets['kadhosts']) . ' → ' . $popupLaneChunks['kadhosts'] . ') |';
 $rep[] = '| ④ domains lane | ' . count($trackerDomains) . ' domains → ' . count($domainRules) . ' rules (easylist-covered −' . $trackerStats['covered'] . ') |';
 $rep[] = '| ⑤ appends (D + G + fleet-BL) | ' . count($appendShipped) . ' domains → ' . count($appendRules) . ' rules · H −' . $appendNeverDropped . ' · **conflicts vs whitelist: ' . count($appendConflicts) . '** · **whitelisted subdomains overridden by an append parent: ' . count($appendParentOverrides) . '** |';
-$rep[] = '| ⑥ rules.json | **' . $totalRules . ' rules** (' . implode(' · ', array_map(fn ($k, $v) => "$k $v", array_keys($byAction), $byAction)) . ') · main-frame dup→redirect ' . $dupAsRedirect . ' (whitelisted initiators stripped ' . $dupInitStripped . ' · twins skipped ' . $dupSkippedWhitelisted . ') |';
+$rep[] = '| ⑥ rules.json | **' . $totalRules . ' rules** (' . implode(' · ', array_map(fn ($k, $v) => "$k $v", array_keys($byAction), $byAction)) . ') · main-frame dup→redirect ' . $dupAsRedirect . ' (whitelisted initiators stripped ' . $dupInitStripped . ' · twins skipped: all-initiators-whitelisted ' . $dupSkippedWhitelisted . ' · scoped source ' . $dupSkippedScoped . ') |';
 $rep[] = '| ⑥ by-origin subsets | rules-hosts.json ' . count($rulesHosts) . ' · rules-easylist.json ' . count($rulesEasylist) . ' (IDs canoniques) |';
 $rep[] = '| ⑥ download-sites allow lane | ' . count($dlAllow) . ' rules merged (validated: allow · priority pinned to ' . DL_ALLOW_PRIORITY . ' · full 7-type map incl. websocket/other) · global assert: min allow prio ' . ($minAllowPrio === PHP_INT_MAX ? '—' : $minAllowPrio) . ' > max block prio ' . $maxBlockPrio . ' |';
 $rep[] = '| ⑥ C (product-only) vs shipped | block targets ' . count($cShippedBlock) . ' · redirect targets ' . count($cShippedRedirect) . ' · **redirect initiators (navigation hijack): ' . count($cHijackInitiators) . '** |';

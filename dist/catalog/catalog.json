@@ -1,8 +1,8 @@
 {
     "schema": 1,
-    "version": "cd41c58b1866d6cde79982730563b8b4585d12076eda2cebbb5de807639e0c08",
+    "version": "c919b9fc1b061550b319f98f003d9b6a46ebc49226eb9544028cb416ac4ff6ff",
     "built_from": {
-        "dist_manifest_version": "5ddd5466bfbf3951f064e58f06ba50c33725a9f37ffe3b4b8c1fbc916d6e0f51"
+        "dist_manifest_version": "ef661989218f0750a48d1f4316f8784fdb7e05dae6704ce2183693d377f008bd"
     },
     "contract": {
         "stages": {
@@ -869,7 +869,7 @@
         "canonical": {
             "rules_all": {
                 "path": "network/rules.json",
-                "count": 10509,
+                "count": 10494,
                 "note": "THE merged artifact — band re-ID, budgets, shadow-diff gate; the catalog never duplicates it"
             },
             "cosmetic": {
@@ -896,7 +896,7 @@
             },
             "redirect": {
                 "path": "catalog/merged/rules/redirect.json",
-                "count": 63
+                "count": 48
             }
         },
         "domains": {
@@ -906,7 +906,7 @@
             },
             "redirect": {
                 "path": "catalog/merged/domains/redirect.json",
-                "count": 151897
+                "count": 151878
             },
             "allow": {
                 "path": "catalog/merged/domains/allow.json",
@@ -1194,9 +1194,9 @@
             "count": 8937
         },
         "catalog/merged/domains/redirect.json": {
-            "sha256": "5566341e804cede9edd71c41bbcb9daad1500ea1dc465d1a425337a1dbd3f3e1",
-            "bytes": 3595511,
-            "count": 151897
+            "sha256": "ec45b74fe6d77a1ef78ddc90b19f305265246564d0db59f1541f57613204bf3a",
+            "bytes": 3595194,
+            "count": 151878
         },
         "catalog/merged/rules/allow.json": {
             "sha256": "f30f520ed04c804104e3d84d2974bcb800427c314842ceb2911a12105bc7c8c2",
@@ -1209,9 +1209,9 @@
             "count": 9315
         },
         "catalog/merged/rules/redirect.json": {
-            "sha256": "28ab4432bebdb3b69092a40e0f1a63d34f5f05d301f2018762a4244101af11cb",
-            "bytes": 3629269,
-            "count": 63
+            "sha256": "ac00e8a4c4abc20e1b81f71830eb83da4da6c1fcb6a22689967167a817f3c897",
+            "bytes": 3623923,
+            "count": 48
         },
         "catalog/raw/easylist-adult/cosmetic/unhide.json": {
             "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
