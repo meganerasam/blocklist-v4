@@ -21062,6 +21062,11 @@
         "#HeaderAdsenseCLSFix",
         ".adCLS"
     ],
+    "sitepoint.com": [
+        "#takeover-content-1",
+        "#takeover-vertical",
+        ".inline-content"
+    ],
     "siteslike.com": [
         ".rif"
     ],
@@ -25241,6 +25246,9 @@
         "div[data-testid=\"eventHero\"]:has(path[d$=\"10H8.996V8h7v7z\"])",
         "div[data-testid=\"placementTracking\"]:has(div[data-testid$=\"-impression-pixel\"])",
         "div[data-testid=\"trend\"]:has(path[d$=\"10H8.996V8h7v7z\"])"
+    ],
+    "twstalker.com": [
+        "div[style^=\"max-width: 728px; width: 100%;\"]"
     ],
     "twz.com": [
         "#pw-iab-leaderboard",
