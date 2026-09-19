@@ -2383,20 +2383,6 @@
             "type": "extended"
         }
     ],
-    "wolt.com": [
-        {
-            "selector": "div:has(> div > div > div > div > div > div > p:has-text(Sponsored))",
-            "type": "extended"
-        },
-        {
-            "selector": "button:has(> div > div > div > span:has-text(Sponsored))",
-            "type": "extended"
-        },
-        {
-            "selector": "div:has(> div > div > div > div > div > p:has-text(Sponsored))",
-            "type": "extended"
-        }
-    ],
     "woolworths.co.nz": [
         {
             "selector": "#cartology-product-cig-tile:has-text(Start Free Trial)",
