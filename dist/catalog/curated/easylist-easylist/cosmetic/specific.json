@@ -9539,7 +9539,8 @@
     ],
     "geo.tv": [
         ".ads",
-        ".mrec"
+        ".mrec",
+        "div[style$=\"min-height: 280px;\"]"
     ],
     "geoawesome.com": [
         ".single-post__extra-info"
@@ -18920,6 +18921,7 @@
     "qz.com": [
         ".ay-ad-slot",
         ".k3mqd",
+        "[style=\"min-height:300px\"]",
         "div[class*=\":block\"]:has(> .ay-ad-slot)",
         "div[class*=\"my-\"]:has(> .ay-ad-slot)",
         "div[class=\"hidden md:block\"]",
