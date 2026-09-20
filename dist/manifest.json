@@ -1,8 +1,8 @@
 {
     "schema": 1,
-    "version": "9db8caba981b4b652831cbb027e37d91371009183cf27014bc144f0d91e8c709",
-    "generated_at": "2026-09-19T15:40:20+00:00",
-    "sanitized_provenance": "dad0f524fcfe10a25c5d6637eac84b1db19db4263da6b1a4e99643ccbba50162",
+    "version": "ffdc88dae7b9d4efb81bb58ebded33290dfd822730e21707c1176a8e167080c5",
+    "generated_at": "2026-09-20T04:12:14+00:00",
+    "sanitized_provenance": "de19a724c0c6400c7579ff8ab8ff6b1f16df26b346c8697e0ec16542b078e2c9",
     "counts": {
         "network_rules_total": 10499,
         "network_rules_by_action": {
@@ -42,9 +42,9 @@
             "count": 14431
         },
         "cosmetic/specific.json": {
-            "sha256": "cf9cb5774acb61f6c686d79537600e1a9831c96c9432d002637a589ee11d7b72",
-            "bytes": 817633,
-            "count": 8442
+            "sha256": "7a0902bf69d918b4bcd7ab6f710b30744c2c3859c7840b98f3b63a1200544dff",
+            "bytes": 817752,
+            "count": 8444
         },
         "cosmetic/unhide.json": {
             "sha256": "ac82d95a7af47ff2309b71d19b6ded1a04aba5ff10cb3c8b39dc3f4df5d13973",
@@ -62,8 +62,8 @@
             "count": 85
         },
         "network/rules-easylist.json": {
-            "sha256": "fde3f14fd35e3b80595a770c24dac68f25697179a2591909ddeb063b800a3f47",
-            "bytes": 3370349,
+            "sha256": "2bdb3aea5fdcd4dc30d0b9de8443afeecae9120e2ff44a94497e52692169cf6d",
+            "bytes": 3373922,
             "count": 10393
         },
         "network/rules-hosts.json": {
@@ -72,8 +72,8 @@
             "count": 54
         },
         "network/rules.json": {
-            "sha256": "ab342992907074571d24c04ee7e4f63238f4e8b7a74c5570952fad1761062228",
-            "bytes": 9781658,
+            "sha256": "33aa6bbd058870c4d1411bf4d4781fb0a8a1892254e381ca1d5dbc6429747bf0",
+            "bytes": 9785231,
             "count": 10499
         },
         "standalone/allow-request-domains.json": {
