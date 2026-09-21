@@ -4807,6 +4807,7 @@
         "div[data-assistant-ads]",
         "div[data-message-supplement]:has(aside[data-partial-island=\"assistant-ads\"])",
         "div[data-testid=\"bazaar-single-card-container\"]",
+        "div[role=\"complementary\"]:has(a[href*=\"oppref=\"])",
         "section:has(> [aria-label=\"Sponsored\"])"
     ],
     "chatnewstoday.ca": [
@@ -29808,7 +29809,7 @@
     ],
     "tiktok.com": [
         ".banner-ads",
-        "[class*=\"DivCardWrapper\"]:has([data-e2e=\"ad-tag\"])",
+        "[class*=\"ArticleItemContainer\"]:has([data-e2e=\"ad-tag\"])",
         ".app-promotion",
         ".feedback",
         ".show-top",
@@ -30286,7 +30287,8 @@
         ".ad"
     ],
     "trackinsight.com": [
-        "div[data-nosnippet=\"true\"]:has([id^=\"div-gpt-ad-\"])"
+        "div[data-nosnippet=\"true\"]:has([id^=\"div-gpt-ad-\"])",
+        "tr:has(div[style=\"min-height: 168px;\"])"
     ],
     "tractorbynet.com": [
         "a[href][target=\"_blank\"] > img[class^=\"attachment-large\"]"

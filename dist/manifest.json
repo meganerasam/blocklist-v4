@@ -1,18 +1,18 @@
 {
     "schema": 1,
-    "version": "959ed629158a5bf593ee7f7277da98a334923e2adfba889d83c951f8d0475203",
-    "generated_at": "2026-09-21T12:03:24+00:00",
-    "sanitized_provenance": "0c4e73b418d934538b71690c1aff0399bbb2462c6c1f839260f5125173ec6d83",
+    "version": "afb97c53877c00498379c5d89e4b1d25857b732d0f4d4d78cdd7b067d6777ba4",
+    "generated_at": "2026-09-21T18:04:29+00:00",
+    "sanitized_provenance": "223bb10948fb1b6f2b27a3b020a2164b46f478d89c915a112f929615efc61e23",
     "counts": {
-        "network_rules_total": 10503,
+        "network_rules_total": 10504,
         "network_rules_by_action": {
             "redirect": 48,
-            "block": 9324,
+            "block": 9325,
             "allow": 1131
         },
         "unsafe_rules": 48,
         "regex_rules": 48,
-        "shipped_block_domains": 150646,
+        "shipped_block_domains": 150691,
         "curation_set": 85
     },
     "budgets": {
@@ -42,8 +42,8 @@
             "count": 14430
         },
         "cosmetic/specific.json": {
-            "sha256": "a19d84071638afd86f01751dde8a87e218e884974ded6e61dd9a4d10f75e5b28",
-            "bytes": 818109,
+            "sha256": "b982132b546131b2e65987ff7e149878725be6adae65b9373f93eaac76218962",
+            "bytes": 818233,
             "count": 8445
         },
         "cosmetic/unhide.json": {
@@ -62,19 +62,19 @@
             "count": 85
         },
         "network/rules-easylist.json": {
-            "sha256": "2f3170e568d1d5a5f43c318dd8f71aaf3027d5c9567dde976f0f5a1b2e4126b3",
-            "bytes": 3381519,
-            "count": 10397
+            "sha256": "3223fb5eb35fab834b163bcd29f99679906b9d36e32f152db681a20c82b73aa6",
+            "bytes": 3385501,
+            "count": 10398
         },
         "network/rules-hosts.json": {
-            "sha256": "13b92d88c12e7abb6d250514361c1f2e7f0d5d45148f786fd0103754d550c5f3",
-            "bytes": 6385446,
+            "sha256": "466210d433be2cbcb55ed05f7468899fb6c79d768f66d07ec3a5cb72e60abc17",
+            "bytes": 6387164,
             "count": 54
         },
         "network/rules.json": {
-            "sha256": "ef93ee6bef1767adc768025cae62db4a78a606aa487a57e525f82f3336d6c407",
-            "bytes": 9823360,
-            "count": 10503
+            "sha256": "b69e9d2275f474d7d409b1c259e80ba7727d79f485c9ee9dfa77a13f85a8fbd8",
+            "bytes": 9829060,
+            "count": 10504
         },
         "standalone/allow-request-domains.json": {
             "sha256": "47939522a90410ffd6a1606820c6d3427327bf53fc624e1cb54c1d007a760356",
