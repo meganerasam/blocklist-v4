@@ -4800,8 +4800,9 @@
     "chatgpt.com": [
         ".border-token-border-default.mt-2.border-t:has(button[aria-label=\"Ad options\"])",
         "[class*=\"_assistantAds\"]",
-        "[data-message-role=\"assistant\"] > section[class]:has(> aside[aria-label] > div[role=\"list\"] a[rel][target=\"_blank\"][href*=\"&oppref=\"])",
+        "[data-message-role=\"assistant\"] > section[class]:has(> [aria-label] > div[role=\"list\"] a[rel][target=\"_blank\"][href*=\"&oppref=\"])",
         "[data-testid=\"bazaar-v2-elevated-box\"]",
+        "a[rel][target=\"_blank\"][href*=\"?utm_\"][href*=\"&oppref=\"]",
         "aside[data-assistant-ads-unit]",
         "div.opacity-100.transition-opacity.ease-out:has(button[aria-label=\"Sponsored options\"], button[aria-label=\"Ad options\"])",
         "div[data-assistant-ads]",
@@ -31742,9 +31743,6 @@
     ],
     "vipcars.com": [
         "#scroll_top"
-    ],
-    "vipleague.im": [
-        ".btn[data-openuri*=\"/4/\"][data-open=\"_blank\"]"
     ],
     "virginislandsdailynews.com": [
         ".overlay"
