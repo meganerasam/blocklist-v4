@@ -9080,6 +9080,7 @@
         ".wp-block-image"
     ],
     "gamepadla.com": [
+        ".pMain:has(a[href^=\"/go/\"])",
         ".pMain:has(div[class^=\"asd_\"])",
         ".pMain:has(div[title=\"Partner placement\"])",
         "a[href^=\"https://www.amazon.com/\"] + div + picture"
@@ -17001,8 +17002,10 @@
         ".duration-100.rounded-lg:has(a[href=\"/advertise\"])",
         ".relative.rounded-lg:has(a[href^=\"/advertise\"])",
         ".relative.rounded-lg:has(img[src*=\"cdn.revinel.com\"])",
+        "div.fixed.z-49.bottom-4",
         "div[class=\"relative flex max-md:order-3\"]:has(a[href=\"/advertise\"])",
-        "div[class=\"relative flex\"]:has(a[href=\"/advertise\"])"
+        "div[class=\"relative flex\"]:has(a[href=\"/advertise\"])",
+        "div[style*=\"--brand-tint\"]"
     ],
     "openguessr.com": [
         ".bottomFooterAds"
@@ -18420,6 +18423,8 @@
     "producthunt.com": [
         ".cursor-pointer:has(img[alt=\"Promoted\"])",
         ".styles_item__hNPI1",
+        "article:has(> div.cursor-pointer > img)",
+        "article:has(img[alt=\"Promoted\"])",
         "div[class=\"my-2 flex cursor-pointer flex-row items-center gap-4 rounded-lg bg-gray-50 p-3\"]:has(a[href=\"/sponsor\"])",
         "div[class=\"my-2 flex cursor-pointer flex-row items-center gap-4 rounded-lg bg-gray-50 p-3\"]:has(img[src=\"/i/33b26ee8f2668842e38841253cfde42aa203585e395ff731f21aebffbb38c8e5\"])",
         "div[class=\"my-2 flex cursor-pointer flex-row items-center gap-4 rounded-lg bg-gray-50 p-3\"]:has(img[src^=\"/i/\"])",
@@ -21360,6 +21365,9 @@
         ".block_ad",
         ".placement"
     ],
+    "socialblade.com": [
+        "[class*=\"container/ads\"]"
+    ],
     "socialcounts.org": [
         ".home_sticky-ad__Aa_yD"
     ],
@@ -21867,6 +21875,7 @@
         "#main > div:not([class], [id]):has(> div[class^=\"css-\"] > .pa-amp)",
         ".a-bg-result",
         ".css-1j5r2ie",
+        ".pa-amp",
         ".pa-bg",
         ".pa-bg + section",
         "a[href^=\"https://ww44.affinity.net/\"]",
