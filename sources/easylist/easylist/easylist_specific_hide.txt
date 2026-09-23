@@ -4556,6 +4556,7 @@ forbes.com##.monito-widget-wrapper
 miruro.bz,miruro.ru,miruro.to,miruro.tv##.monkey
 joindota.com##.monkey-container
 flickr.com##.moola-search-div.main
+flickr.com##.moola-wrapper
 hindustantimes.com##.moreFrom
 immoweb.be##.mortgage-bank-banner
 apptrigger.com,fansided.com,lastnighton.com,mlsmultiplex.com,netflixlife.com,playingfor90.com,winteriscoming.net##.mosaic-banner
@@ -4869,6 +4870,7 @@ post-gazette.com##.pgevoke-superpromo-innerwrapper
 online.pubhtml5.com##.ph5---banner---container
 timesofindia.com##.phShimmer
 trustedreviews.com##.phoenix-deals-block
+flickr.com##.photo-list-revenue-item-view
 drivespark.com,gizbot.com##.photos-add
 drivespark.com##.photos-left-ad
 cryptorank.io##.piRla
@@ -5545,6 +5547,7 @@ quora.com##.spacing_log_question_page_ad
 nationaltoday.com##.sphinx-popup--16
 informer.com##.spnsd
 sundayworld.co.za##.spnsorhome
+news.mydramalist.com##.spnsr-row
 coincarp.com##.spo-btn
 worldtimezone.com##.spon-menu
 bleepingcomputer.com##.spon_res
@@ -8119,6 +8122,7 @@ producthunt.com##div[class="my-4 flex flex-1 cursor-pointer items-center justify
 producthunt.com##div[class="my-4 flex flex-1 cursor-pointer items-center justify-center overflow-hidden rounded-md border-2 border-gray-200"]:has(video[poster^="https://ph-files.imgix.net/"])
 openalternative.co##div[class="relative flex max-md:order-3"]:has(a[href="/advertise"])
 openalternative.co##div[class="relative flex"]:has(a[href="/advertise"])
+alibaba.com##div[class] > .fy26-product-card:has(> div > span:only-child)
 radio.at,radio.de,radio.dk,radio.es,radio.fr,radio.it,radio.net,radio.pl,radio.pt,radio.se##div[class] > div[class]:has(> div[class] > div[id^="RAD_D_"])
 manomano.*##div[class]:has(> .c4iHiiE)
 androidauthority.com##div[class]:has(> .pw-incontent)
@@ -8264,10 +8268,12 @@ amazon.*###sc-rec-right
 amazon.*###similarities_feature_div:has(span.sponsored_label_tap_space)
 amazon.*###sponsoredProducts2_feature_div
 amazon.*###sponsoredProducts_feature_div
+amazon.*##.AdHolder
 amazon.*##.AdsCard_container__K6vmo
 amazon.*##.a-cardui[class*="_new-detail-faceout-box_"]:has(.dynamicSponsoredLabelClass)
 amazon.*##.ad-center
 amazon.*##.amzn-safe-frame-container
+amazon.*##.ape-placement
 amazon.*##.celwidget[data-ref_$="displayAds"]
 amazon.*##.dp-widget-card-deck:has([data-ad-placement-metadata])
 amazon.*##.s-result-item:has(.puis-sponsored-label-text)
