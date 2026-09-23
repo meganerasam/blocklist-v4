@@ -1,18 +1,18 @@
 {
     "schema": 1,
-    "version": "0eb61e7b6279c71cefc8217baf1dc03507499ed7a55fec94cd4931d7c2bb441d",
-    "generated_at": "2026-09-23T10:49:04+00:00",
-    "sanitized_provenance": "862fe419c7052ffdd824a9a5f18c3e137229add3b7534a3221dfce4fed9c6b61",
+    "version": "a4f0f405140bdadcd33848b7f879f054e7970c23e41e0cf6d646debea8594beb",
+    "generated_at": "2026-09-23T16:29:22+00:00",
+    "sanitized_provenance": "7034566b1beebf7a6155e0f4ecec1b311bb7b1b32439671e4cd6262513ee5182",
     "counts": {
-        "network_rules_total": 10508,
+        "network_rules_total": 10509,
         "network_rules_by_action": {
             "redirect": 48,
-            "block": 9329,
+            "block": 9330,
             "allow": 1131
         },
         "unsafe_rules": 48,
         "regex_rules": 48,
-        "shipped_block_domains": 150627,
+        "shipped_block_domains": 150685,
         "curation_set": 85
     },
     "budgets": {
@@ -22,14 +22,14 @@
     },
     "artifacts": {
         "blocklist/popup-curated.json": {
-            "sha256": "98e29da53ade8a24290fd8beca3d414714863769def5a45652c4dbe61e188fa7",
-            "bytes": 903209,
-            "count": 32163
+            "sha256": "6f7bcf05563e5ead3490312cb9bccc7930810ec4093162da42d6faf90c9f9ef3",
+            "bytes": 903230,
+            "count": 32164
         },
         "blocklist/popup.json": {
-            "sha256": "be653583d1d269a8bc1a8c0eb7ca96ed233dd1ce2ca6631665689ebca2e4ea9e",
-            "bytes": 57604,
-            "count": 2294
+            "sha256": "e5cc7c54181c9e15875cb63e9d24492d4cab48bc04aa27a7cf04eb758814a32b",
+            "bytes": 57625,
+            "count": 2295
         },
         "cosmetic/extended.json": {
             "sha256": "a129458627c55bf5dae6dbfa20eba00617d0ffdf25ae492743dae6be95371aae",
@@ -42,9 +42,9 @@
             "count": 14430
         },
         "cosmetic/specific.json": {
-            "sha256": "ac89b295f1bbfcf9353e2a3695c2b97b1eb22855ca09deab0d437717b410280b",
-            "bytes": 818616,
-            "count": 8445
+            "sha256": "a608e796c9bd90aa41b05a8aa9029864ebeb1fae5ab21490736c8d7d6df99f19",
+            "bytes": 818907,
+            "count": 8446
         },
         "cosmetic/unhide.json": {
             "sha256": "c063ec067de5ce9f53468b6ef1d93a79fee885eba09c38cc77c437286d791c30",
@@ -62,19 +62,19 @@
             "count": 85
         },
         "network/rules-easylist.json": {
-            "sha256": "bca0220de7ecc08c24313bdd5ab0c45729be845f692804e5b7de9167cc301fea",
-            "bytes": 3395410,
-            "count": 10402
+            "sha256": "59146b96ac3ef11d60db41749bd58f511e00df290d54872f4c2acf3a1addccfd",
+            "bytes": 3398949,
+            "count": 10403
         },
         "network/rules-hosts.json": {
-            "sha256": "fc34723ba707682f39cd2a810c0c40462ba85738ef62f7b89ee4281fc6d063e8",
-            "bytes": 6384879,
+            "sha256": "edbeec8249bc6e8d85632130ca208313474b8090a2fd3cfdb046cacca907715a",
+            "bytes": 6386981,
             "count": 54
         },
         "network/rules.json": {
-            "sha256": "a5cb4191d95eef17314a743adc3c3cc968b7873e77d4b90defdb47c1d57dcf0c",
-            "bytes": 9836446,
-            "count": 10508
+            "sha256": "66decfa353ed947582ce47fd29ba636a2760175a3c1767d9e5259d82c0ce3ed1",
+            "bytes": 9842103,
+            "count": 10509
         },
         "standalone/allow-request-domains.json": {
             "sha256": "47939522a90410ffd6a1606820c6d3427327bf53fc624e1cb54c1d007a760356",
