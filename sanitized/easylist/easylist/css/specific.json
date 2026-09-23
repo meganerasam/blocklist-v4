@@ -770,6 +770,7 @@
         ".searchx-offer-item[data-aplus-auto-offer*=\"ad_adgroup_toprank\"]",
         "[id^=\"sse-fluent-wending\"]:has(.creative-ad-tag)",
         "a[campaignid][target=\"_blank\"]",
+        "div[class] > .fy26-product-card:has(> div > span:only-child)",
         "div[data-search-floor^=\"area=wending&\"]",
         "div[data-spm=\"wending-bottom\"]"
     ],
@@ -955,10 +956,12 @@
         "#similarities_feature_div:has(span.sponsored_label_tap_space)",
         "#sponsoredProducts2_feature_div",
         "#sponsoredProducts_feature_div",
+        ".AdHolder",
         ".AdsCard_container__K6vmo",
         ".a-cardui[class*=\"_new-detail-faceout-box_\"]:has(.dynamicSponsoredLabelClass)",
         ".ad-center",
         ".amzn-safe-frame-container",
+        ".ape-placement",
         ".celwidget[data-ref_$=\"displayAds\"]",
         ".dp-widget-card-deck:has([data-ad-placement-metadata])",
         ".s-result-item:has(.puis-sponsored-label-text)",
@@ -8175,6 +8178,8 @@
         ".getty-search-view",
         ".getty-widget-view",
         ".moola-search-div.main",
+        ".moola-wrapper",
+        ".photo-list-revenue-item-view",
         "div[class^=\"main view\"]:has(a[href$=\"&ref=sponsored\"])"
     ],
     "flicksmore.com": [
@@ -16051,7 +16056,8 @@
         ".ad"
     ],
     "news.mydramalist.com": [
-        "#content > .app-body > div:has(.htlad-header_top)"
+        "#content > .app-body > div:has(.htlad-header_top)",
+        ".spnsr-row"
     ],
     "news.net": [
         ".banner",
