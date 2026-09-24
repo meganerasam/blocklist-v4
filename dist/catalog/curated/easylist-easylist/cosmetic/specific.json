@@ -20406,7 +20406,8 @@
         "[data-testid=\"buy-box-ad\"]",
         "[data-testid=\"item-stack\"] > .mb0:has(a[href^=\"https://www.samsclub.com/midas/sams-crs/track?\"])",
         "div[class=\"mb0 ph0-xl pt0-xl bb b--near-white w-20 pb3-m ph1\"]:has(a[href^=\"https://www.samsclub.com/midas/sams-crs/track?\"])",
-        "div[data-testid=\"sba-container\"]"
+        "div[data-testid=\"sba-container\"]",
+        "div[data-testid=\"search-video-in-grid\"]"
     ],
     "samsungmagazine.eu": [
         ".lsads-banner"
@@ -22789,7 +22790,8 @@
     ],
     "tecmint.com": [
         "#tecmint_incontent",
-        "#tecmint_leaderboard_article_top"
+        "#tecmint_leaderboard_article_top",
+        "[href^=\"https://www.manageengine.com/vulnerability-management/\"]"
     ],
     "tedium.co": [
         ".adlayout"
