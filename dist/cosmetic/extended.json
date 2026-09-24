@@ -671,6 +671,12 @@
             "type": "extended"
         }
     ],
+    "discord.com": [
+        {
+            "selector": ".wrapper__0d616:has-text(Get Reward)",
+            "type": "extended"
+        }
+    ],
     "distrowatch.com": [
         {
             "selector": ".TablesTitle > div:not([style=\"padding\"]) {width:100%;}",
