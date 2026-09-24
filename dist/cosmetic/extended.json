@@ -431,10 +431,6 @@
             "type": "extended"
         },
         {
-            "selector": "#thread [class^=\"border-\"]:has-text(/Ad|Sponsored/):not([class*=\"sidebar\"])",
-            "type": "extended"
-        },
-        {
             "selector": ".fixed.bottom-0:has-text(Try Atlas)",
             "type": "extended"
         }
