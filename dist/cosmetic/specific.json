@@ -18613,14 +18613,10 @@
         ".media-action-networks"
     ],
     "mothership.sg": [
-        "#block-imu1",
-        "#block-imu2",
-        "#block-outstream1",
-        "#block-outstream2",
-        "#block-outstream3",
         ".ad--imu",
         ".ad--lb",
-        ".ad--side"
+        ".ad--side",
+        "[id^=\"block-\"]:has(> .advertisement__container)"
     ],
     "motociclismo.it": [
         ".top"
@@ -32948,6 +32944,7 @@
         "#wikigg-sl-footer",
         "#wikigg-sl-header",
         "#wikigg-sl-rail",
+        ".wgg-netbar__deals-link",
         "[href^=\"https://app.wiki.gg/showcase/\"]"
     ],
     "wikibrief.org": [
