@@ -2649,6 +2649,7 @@
         ".cz-toa-wrapp",
         ".ia_ad",
         ".spon_res",
+        "[alt=\"ThreatLocker\"]",
         "[href*=\"https://www.bleepingcomputer.com/mgo/\"]",
         "[href^=\"https://www.adaptivesecurity.com/\"]",
         "[href^=\"https://www.bleepingcomputer.com/go/\"]",
@@ -6036,6 +6037,7 @@
         ".ymHyVK__ymHyVK"
     ],
     "destructoid.com": [
+        ".leaderboard_atf",
         ".wp-block-gamurs-ad"
     ],
     "detectiveconanworld.com": [
@@ -10296,7 +10298,6 @@
     ],
     "gulfcoastnewsnow.com": [
         ".css-1cm6ir6:has(.ad-container)",
-        ".css-1tumxm:has(.ad-container)",
         "aside > div:has(> div > div > div.ad-container)",
         "aside > div:has(> div > div.ad-container)"
     ],
@@ -11473,6 +11474,7 @@
         "div[class$=\"-money\"]"
     ],
     "imgpile.com": [
+        "[href^=\"/cx/click\"]",
         "a[href*=\"&utm_campaign=\"]"
     ],
     "imgsli.com": [
@@ -12499,8 +12501,8 @@
         ".ad"
     ],
     "kcra.com": [
-        ".ad-track",
-        ".css-1tumxm:has(.ad-container)"
+        "[class]:has(>[data-type])",
+        "[data-testid=\"ad-label\"]"
     ],
     "kdnuggets.com": [
         ".a2t-link",
@@ -12553,7 +12555,6 @@
     ],
     "ketv.com": [
         ".css-1cm6ir6:has(.ad-container)",
-        ".css-1tumxm:has(.ad-container)",
         "aside > div:has(> div > div > div.ad-container)",
         "aside > div:has(> div > div.ad-container)"
     ],
@@ -12714,9 +12715,9 @@
         "#list-imga center:has(a[href^=\"https://olimposcans.com/\"])"
     ],
     "kmbc.com": [
-        ".ad-track",
         ".article-content--body-wrapper-side-floater",
-        ".css-1tumxm:has(.ad-container)"
+        "[class]:has(>[data-type])",
+        "[data-testid=\"ad-label\"]"
     ],
     "kmplayer.com": [
         ".dim-layer",
@@ -12737,15 +12738,15 @@
     ],
     "koat.com": [
         ".ad-container",
-        ".ad-track",
-        ".css-1tumxm:has(.ad-container)"
+        "[class]:has(>[data-type])",
+        "[data-testid=\"ad-label\"]"
     ],
     "kob.com": [
         "#Header_1"
     ],
     "koco.com": [
-        ".ad-track",
-        ".css-1tumxm:has(.ad-container)"
+        "[class]:has(>[data-type])",
+        "[data-testid=\"ad-label\"]"
     ],
     "kodinerds.net": [
         ".boxesSidebarRight"
@@ -12877,8 +12878,8 @@
         ".topWrapper"
     ],
     "ksbw.com": [
-        ".ad-track",
-        ".css-1tumxm:has(.ad-container)"
+        "[class]:has(>[data-type])",
+        "[data-testid=\"ad-label\"]"
     ],
     "ksdk.com": [
         ".ad"
@@ -15587,9 +15588,9 @@
         ".code-block"
     ],
     "mynbc5.com": [
-        ".ad-track",
-        ".css-1tumxm:has(.ad-container)",
-        ".listing-page-ad"
+        ".listing-page-ad",
+        "[class]:has(>[data-type])",
+        "[data-testid=\"ad-label\"]"
     ],
     "mynorthwest.com": [
         ".pagebreak",
@@ -26237,9 +26238,9 @@
     ],
     "wapt.com": [
         ".ad-rectangle",
-        ".ad-track",
-        ".css-1tumxm:has(.ad-container)",
-        ".leaderboard"
+        ".leaderboard",
+        "[class]:has(>[data-type])",
+        "[data-testid=\"ad-label\"]"
     ],
     "waptrick.one": [
         ".cent_list"
@@ -26400,8 +26401,8 @@
         ".wbal-banner"
     ],
     "wbaltv.com": [
-        ".ad-track",
-        ".css-1tumxm:has(.ad-container)"
+        "[class]:has(>[data-type])",
+        "[data-testid=\"ad-label\"]"
     ],
     "wbir.com": [
         ".ad"
@@ -26447,8 +26448,8 @@
         ".ad"
     ],
     "wdsu.com": [
-        ".ad-track",
-        ".css-1tumxm:has(.ad-container)"
+        "[class]:has(>[data-type])",
+        "[data-testid=\"ad-label\"]"
     ],
     "wdwmagic.com": [
         ".adthrive-homepage-header",
@@ -26721,7 +26722,8 @@
         ".arcad_feature"
     ],
     "wgal.com": [
-        ".ad-track"
+        "[class]:has(>[data-type])",
+        "[data-testid=\"ad-label\"]"
     ],
     "wgnsradio.com": [
         ".bw-special-image",
@@ -27076,7 +27078,6 @@
     ],
     "wisn.com": [
         ".css-1cm6ir6:has(.ad-container)",
-        ".css-1tumxm:has(.ad-container)",
         "aside > div:has(> div > div > div.ad-container)",
         "aside > div:has(> div > div.ad-container)"
     ],
@@ -27094,7 +27095,6 @@
     ],
     "wjcl.com": [
         ".css-1cm6ir6:has(.ad-container)",
-        ".css-1tumxm:has(.ad-container)",
         "aside > div:has(> div > div > div.ad-container)",
         "aside > div:has(> div > div.ad-container)"
     ],
@@ -27132,18 +27132,19 @@
         ".ad"
     ],
     "wlwt.com": [
-        ".ad-track",
-        ".css-1tumxm:has(.ad-container)"
+        "[class]:has(>[data-type])",
+        "[data-testid=\"ad-label\"]"
     ],
     "wmtips.com": [
         ".a3f17"
     ],
     "wmtw.com": [
-        ".ad-track",
-        ".css-1tumxm:has(.ad-container)"
+        "[class]:has(>[data-type])",
+        "[data-testid=\"ad-label\"]"
     ],
     "wmur.com": [
-        ".ad-track"
+        "[class]:has(>[data-type])",
+        "[data-testid=\"ad-label\"]"
     ],
     "wncv.com": [
         ".simple-image",
@@ -27426,8 +27427,8 @@
         "#leader_1"
     ],
     "wtae.com": [
-        ".ad-track",
-        ".css-1tumxm:has(.ad-container)"
+        "[class]:has(>[data-type])",
+        "[data-testid=\"ad-label\"]"
     ],
     "wtatennis.com": [
         ".advert",
@@ -27458,8 +27459,8 @@
         ".automatic-ad"
     ],
     "wvtm13.com": [
-        ".ad-track",
-        ".css-1tumxm:has(.ad-container)"
+        "[class]:has(>[data-type])",
+        "[data-testid=\"ad-label\"]"
     ],
     "wwe.com": [
         ".l-hybrid-col-frame_rail-wrap"
@@ -27522,13 +27523,15 @@
         "body.font-yahoobeta > div.items-center:has(style)"
     ],
     "wxii12.com": [
-        ".ad-track"
+        "[class]:has(>[data-type])",
+        "[data-testid=\"ad-label\"]"
     ],
     "wyff4.com": [
         ".ad",
-        ".ad-track",
         ".leaderboard",
-        ".listing-page-ad"
+        ".listing-page-ad",
+        "[class]:has(>[data-type])",
+        "[data-testid=\"ad-label\"]"
     ],
     "wymondhamandattleboroughmercury.co.uk": [
         ".advert"
