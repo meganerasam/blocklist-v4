@@ -16319,7 +16319,8 @@
     "nextdoor.com": [
         "#ad",
         ".nas-container",
-        ".promo-container"
+        ".promo-container",
+        "div.w5p1mb0:has(div._1abc1qn0)"
     ],
     "nextnewssource.com": [
         "#wallpaper"
@@ -17018,7 +17019,10 @@
         ".duration-100.rounded-lg:has(a[href=\"/advertise\"])",
         ".relative.rounded-lg:has(a[href^=\"/advertise\"])",
         ".relative.rounded-lg:has(img[src*=\"cdn.revinel.com\"])",
+        "body > div.group:has(a[target=\"_blank\"])",
         "div.fixed.z-49.bottom-4",
+        "div.group:has(> a[target=\"_blank\"])",
+        "div:has(> div > h2 > a[href=\"/advertise\"])",
         "div[class=\"relative flex max-md:order-3\"]:has(a[href=\"/advertise\"])",
         "div[class=\"relative flex\"]:has(a[href=\"/advertise\"])",
         "div[style*=\"--brand-tint\"]"
@@ -17818,6 +17822,7 @@
     ],
     "pinterest.com": [
         "a[href*=\"&epik=\"]",
+        "div[data-grid-item=\"true\"]:has([data-test-id=\"x3f8q1\"]):not(:has(a[href^=\"/pin/\"]))",
         "div[data-grid-item]:has([data-test-pin-id] [data-test-id^=\"one-tap-desktop\"] > a[href^=\"http\"][rel=\"nofollow\"]):not(body > div)"
     ],
     "pintprice.com": [
@@ -19691,6 +19696,9 @@
     "realmadrid.com": [
         ".footer_rm_sponsors_container",
         ".head_sponsors"
+    ],
+    "realnarrativenews.com": [
+        "[aria-label=\"Advertisement\"]"
     ],
     "realpython.com": [
         "div[style^=\"display:block;position:relative;\"]"
