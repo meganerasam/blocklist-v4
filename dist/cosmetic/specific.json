@@ -1203,6 +1203,7 @@
         ".ape-placement",
         ".celwidget[data-ref_$=\"displayAds\"]",
         ".dp-widget-card-deck:has([data-ad-placement-metadata])",
+        ".gwm-window-wrapper:has(> [data-ref_$=\"_displayAds\"])",
         ".s-result-item:has(.puis-sponsored-label-text)",
         ".s-result-item:has([data-ad-feedback-label-id])",
         ".s-result-item:has([data-ad-feedback])",
@@ -11016,6 +11017,9 @@
     "gamecopyworld.eu": [
         "[href*=\"@\"]",
         "[href^=\"https://www.kinguin.net/\"]"
+    ],
+    "gamedaily.com": [
+        ".header-ad-slot"
     ],
     "gamedev.net": [
         ".mb-3.align-items-center.justify-content-start"
