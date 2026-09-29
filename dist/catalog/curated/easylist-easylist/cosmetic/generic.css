@@ -5,7 +5,7 @@
  * These selectors hide ad elements on ALL websites.
  * Inject via content_scripts with matches: ["<all_urls>"]
  *
- * Total selectors: 13634
+ * Total selectors: 13635
  */
 
 #AC_ad,
@@ -13304,6 +13304,7 @@ DFP-AD,
 [id^="ad_sky"],
 [id^="ad_slider"],
 [id^="div-gpt-ad"],
+[id^="google_ads_iframe_"],
 [id^="section-ad-banner"],
 [name^="google_ads_iframe"],
 [onclick*="content.ad/"],
