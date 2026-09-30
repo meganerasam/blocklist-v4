@@ -1109,7 +1109,8 @@
     "androidcentral.com": [
         ".hawk-multi-model-review-container",
         ".sponsored-card",
-        ".vid-present"
+        ".vid-present",
+        "[data-component-name=\"JwPlayer:Carousel\"]"
     ],
     "androidcommunity.com": [
         ".td-header-rec-wrap"
@@ -9315,7 +9316,8 @@
         ".in-article",
         ".jwplayer__widthsetter",
         ".sponsored-card",
-        ".vid-present"
+        ".vid-present",
+        "[data-component-name=\"JwPlayer:Carousel\"]"
     ],
     "gamesystemrequirements.com": [
         ".act_eng"
@@ -10293,7 +10295,8 @@
     ],
     "guitarworld.com": [
         ".sponsored-card",
-        ".vid-present"
+        ".vid-present",
+        "[data-component-name=\"JwPlayer:Carousel\"]"
     ],
     "gulf-times.com": [
         ".gt-horizontal-ad",
@@ -13614,7 +13617,8 @@
         "#widgetArea100",
         ".jwplayer__widthsetter",
         ".sponsored-card",
-        ".sponsored-card-centred"
+        ".sponsored-card-centred",
+        "[data-component-name=\"JwPlayer:Carousel\"]"
     ],
     "livescore.*": [
         "#box-over-content-a",
@@ -17428,6 +17432,7 @@
         ".listingResult:has(> .sponsored-post)",
         ".sponsored-card",
         ".vid-present",
+        "[data-component-name=\"JwPlayer:Carousel\"]",
         "div[class*=\"ad-unit\"]"
     ],
     "pcgamesn.com": [
@@ -18598,6 +18603,9 @@
     ],
     "pstribune.com": [
         ".widget_media_image"
+    ],
+    "psu.com": [
+        ".code-block"
     ],
     "psycatgames.com": [
         ".sticky-banner"
@@ -21244,7 +21252,8 @@
         ".grid-ad-container-2",
         ".sltrib_medrec_sidebar_atf",
         ".sponsored-card",
-        ".stickyTopAd"
+        ".stickyTopAd",
+        "[data-component-name=\"JwPlayer:Carousel\"]"
     ],
     "smailpro.com": [
         ".ads-sidebar-right",
@@ -21563,7 +21572,8 @@
     "space.com": [
         ".aspect-video",
         ".jwplayer__wrapper",
-        ".sponsored-card"
+        ".sponsored-card",
+        "[data-component-name=\"JwPlayer:Carousel\"]"
     ],
     "spacenews.com": [
         ".show-street-dialog"
@@ -22732,7 +22742,8 @@
         ".hawk-merchant-link-widget-container",
         ".hawk-nest",
         ".sponsored-card",
-        ".vid-present"
+        ".vid-present",
+        "[data-component-name=\"JwPlayer:Carousel\"]"
     ],
     "techraptor.net": [
         "#nn_lb1",
@@ -24523,12 +24534,14 @@
         ".hawk-root",
         ".sponsored-card",
         ".vid-present",
+        "[data-component-name=\"JwPlayer:Carousel\"]",
         "div[class*=\"ad-unit\"]"
     ],
     "tomshardware.com": [
         ".jwplayer__widthsetter",
         ".sponsored-card",
         ".vid-present",
+        "[data-component-name=\"JwPlayer:Carousel\"]",
         "div[class*=\"ad-unit\"]"
     ],
     "tomthumb.com": [
@@ -27033,7 +27046,8 @@
         ".hawk-deal-widget-hero",
         ".hawk-master-widget-hawk-wrapper",
         ".sponsored-card",
-        ".vid-present"
+        ".vid-present",
+        "[data-component-name=\"JwPlayer:Carousel\"]"
     ],
     "windowslatest.com": [
         ".ai_widget",
