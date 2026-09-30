@@ -17143,6 +17143,9 @@
     "makeitmeme.com": [
         "div[class^=\"_adContainer_\"]"
     ],
+    "makemytrip.*": [
+        ".listingRowOuter:has(.pc__sponsored)"
+    ],
     "makemytrip.com": [
         ".adtech-desktop",
         ".hotDeals",
