@@ -2646,16 +2646,17 @@
         "[data-concert=\"leaderboard_top_tablet_desktop\"]"
     ],
     "bleepingcomputer.com": [
+        ".article-callout",
         ".articleBody > div:has(a[href^=\"https://www.wiz.io/\"])",
         ".bc_guide",
         ".cz-toa-wrapp",
         ".ia_ad",
         ".spon_res",
         "[alt=\"ThreatLocker\"]",
-        "[href*=\"https://www.bleepingcomputer.com/mgo/\"]",
         "[href^=\"https://www.adaptivesecurity.com/\"]",
         "[href^=\"https://www.bleepingcomputer.com/go/\"]",
         "[href^=\"https://www.threatlocker.com/\"]",
+        "[href^=\"https://www.ztw.com/\"]",
         "[href^=\"https://ztw.com/\"]",
         "[src*=\"https://www.bleepstatic.com/c/t/threatlocker/\"]",
         "div[style=\"width:98%; margin:0 auto; padding:5px; text-align:center; background:#f0f0f0; border:1px solid #ccc; border-radius:6px;\"]",
@@ -24764,6 +24765,13 @@
     ],
     "traderscasa.com": [
         "[class^=\"overlay-\"]:has(> .af-both-cont)"
+    ],
+    "tradersunion.com": [
+        ".banner-v3--horizontal",
+        ".horizontal-banner",
+        ".js-clone-1",
+        ".news-page__terra",
+        ".video-popup"
     ],
     "tradetrucks.com.au": [
         ".middle-banner-list"
