@@ -1806,7 +1806,8 @@
         "[class^=\"styles__LazyHydrateCard\"]:has([class*=\"ProductCardstyles__FlyoutBadge\"])",
         "[class^=\"styles__LazyHydrateCard-sc\"]:has([class*=\"SponsoredBadge\"])",
         "[data-testid=\"citrus_products-carousel\"]",
-        "[data-testid=\"monetisation-product-carousel\"]"
+        "[data-testid=\"monetisation-product-carousel\"]",
+        "section.ds-c-carousel:has(span[class*=\"sponsoredBadge\"])"
     ],
     "arizonasports.com": [
         ".sponsorBy"
@@ -7277,6 +7278,7 @@
         "[class^=\"Carousel\"] li[class^=\"Slide-\"]:has(div[style*=\"d815008c-8a59-40e3-9c64-79b841bf482c\"])",
         "div[class^=\"HomeFeedScrollTracker-\"]:has(div[data-testid=\"sponsored-badge\"] > p[data-testid=\"sponsored-tag\"])",
         "div[class^=\"HomeFeedScrollTracker-\"]:has(p[data-testid=\"sponsored-rating-distance\"] > span[data-testid=\"label-prefix\"])",
+        "li:not(:has(li)):has([data-testid=\"promotional-sponsor-label\"])",
         "li[class^=\"Slide-\"]:has(div[data-testid=\"sponsored-tag\"] > p[data-testid=\"label\"])",
         "li[class^=\"Slide-\"]:has(div[data-testid=\"sponsored-tag\"] > p[data-testid=\"sponsored-tag-label\"])"
     ],
@@ -11541,18 +11543,9 @@
     ],
     "genius.com": [
         "#lyrics-root > div[data-exclude-from-selection][class^=\"sc-\"]",
-        ".InreadContainer-sc-b078f8b1-0",
-        ".Leaderboard-sc-78e1105d-0",
-        ".SectionLeaderboard-sc-dbc68f4-0",
-        ".SectionLeaderboard__Center-sc-1f7f30cc-1",
-        ".bCLuZv",
-        ".bIZLkL",
-        ".cujBpY",
-        "[class^=\"InnerSectionAd__\"]",
+        ".SectionLeaderboard__Center-sc-4496dd88-1",
         "[class^=\"InreadContainer__\"]",
-        "div[class^=\"DfpAd__Container-\"]",
-        "div[class^=\"LeaderboardOrMarquee__\"]",
-        "div[class^=\"SidebarAd_\"]"
+        "div[data-testid=\"sticky-leaderboard\"]"
     ],
     "genshin-impact-map.appsample.com": [
         "#pc-br-300x250-gim",
@@ -32671,10 +32664,6 @@
     "wellnessmama.com": [
         ".post-nav"
     ],
-    "weloma.art": [
-        "#poly",
-        "[href^=\"https://aichattings.com\"]"
-    ],
     "welovetrump.com": [
         ".code-block",
         ".widget-area.sidebar"
@@ -33293,6 +33282,7 @@
         ".wpa-about"
     ],
     "wolt.com": [
+        "[data-test-id=\"MainDiscoveryContent\"] > div:has([data-test-id=\"AdvertisingLabel\"])",
         "[data-test-id=\"MainDiscoveryContent\"] li[draggable]:has(a[aria-label*=\"Sponsored\"])",
         "div[data-test-id=\"MainDiscoveryContent\"] li > div.cb-elevated:has(button[data-test-id=\"AdvertisingLabel\"])",
         "div[data-test-id=\"SearchResultVenueSection\"] li > div.cb-elevated:has(button[data-test-id=\"AdvertisingLabel\"])",
