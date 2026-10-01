@@ -2,7 +2,10 @@
 
 The single factory repo replacing the four legacy repos (`blocklist`, `blocklist-v2`,
 `blocklist-v3`, `whitelist-domains`) and the two server-side generators of the ad-block
-extension family (Ninja Block, Stop Ads Now, Ad Block Wonder, Ad Block Ghost).
+extension family. **The fleet is SEVEN brands:** Ad Block Pro (12) · Ad Block North (21) ·
+Ad Block Hunter (22) · Ad Block Wonder (23) · Stop Ads Now (24) · Ninja Block (25) ·
+Ad Block Ghost (26). All seven are v4 shims (22 migrated 2026-09-20 — until then it was the
+seventh, undocumented backend, running the old 3-step compiler against blocklist-v3).
 
 **Read first, in order:** `STATUS.md` (what's done / what's next, per file) → `README.md`
 (tree contract, 15-sheet table A–O, compile order) → `sources/gsheet/SCHEMA.md` (sheet schemas +
@@ -39,6 +42,15 @@ sections 08–09 → https://claude.ai/code/artifact/6291c622-79d0-4fd5-b269-0ad
    curation decisions are git diffs). There is NO monolithic exclusion set: curation is
    per source. User whitelist = all-extension.csv merged votes ≥ 50 [step 1, was ≥200]
    − omit-from-whitelist [step 2] − omit-from-blocklist [step 2b] (the ≥20-users/6-month floor is only the backends' EXPORT contract).
+   **⚠ TEST SINCE 2026-09-18 (commit e0f8324) — `user whitelist` is SUSPENDED from the union
+   below.** `curate.php` (search `TEST 2026-09-18`) builds the set from omit-from-blocklist ∪ Sheet E ∪ download-sites
+   only (85 domains today), so the vote list no longer subtracts from ANY block source; the paired
+   backend change (community no longer merged into the response whitelist) SHIPPED TO PRODUCTION on the six brands that have a community mechanism at all (22 Ad Block Hunter has none — no `generate_community_whitelist.php`, no community read)
+   on all seven brands the same day — the list is published but not served. Deliberately temporary:
+   the design below stands, do not rewrite it. Restore by putting `array_keys($userWL)` back in the
+   array at `curate.php` (search `TEST 2026-09-18`). (Observable symptom: `curation-drops.json → sheet_a_dropped: 0` and
+   `sanitized/gsheet/popup.json` identical to the raw mirror. The curate/compile step summaries
+   still PRINT the old union string — believe the code, not the summary.)
    **Curation set = omit-from-blocklist ∪ Sheet E (default-blocklist-not-to-add) ∪ download-sites ∪ user whitelist**, matched domain+subdomains,
    published as `sanitized/curation-set.json` — consumers (compile carves/guards/asserts,
    shadow-diff buckets) READ it, never re-derive it. Recipes: Sheet A − set · hosts − set ·
@@ -87,53 +99,60 @@ sections 08–09 → https://claude.ai/code/artifact/6291c622-79d0-4fd5-b269-0ad
 Source layer COMPLETE + live-tested: 15 sheet mirrors (download-sites added
 2026-09-08, live: 50 rows), traffic_quality
 split (24 market files incl. the latam/apac/nordics rollups),
-extension whitelist pull (4 backends, 1,479 merged), hosts (4) + easylist (59) snapshots.
-Ledger: 270,142 records (95k active · 27k dead · 148k backlog, drains at MAX_TESTS=60k).
+extension whitelist pull (4 backends, 1,557 merged), hosts (4) + easylist (59) snapshots.
+Ledger: 284,037 records (211k active · 71k dead · 2k untested, drains at MAX_TESTS=60k — the
+148k backlog of 2026-09-07 is gone).
 COMPILE COMPLETE + live-run: generators adapted to snapshots, `build/compile/compile.php`
 publishes all of dist/ (10,287 rules at 2026-09-10 · byte-deterministic · budgets + change gate asserted),
 compile.yml written (07:00 + after green curate). Decisions locked: dist as commits; fleet
 fetches via backend mirrors. Shadow-diff harness (`build/review/shadow_diff.php`) run vs the
 production cache: 9,974 surgical rules identical, every divergence cause-classified,
-**0 unexplained** — the gate is clear (re-verified after every wave of the re-conception).
+**0 unexplained** — the gate was clear as of 2026-09-08 (re-verified after every wave of the
+re-conception). NOT re-runnable today: its input, Ninja's `compiled_rules_cache.json`
+production cache, no longer exists on disk — the gate needs a fresh prod capture first.
 Workflows written: ingest.yml (12h) · extension.yml (06:00) · curate.yml (after green
 ingest/extension) · verify.yml (00:30) · compile.yml (07:00 + after green curate).
 
 dist/ FINALIZED 2026-09-08: only called artifacts ship — network/rules.json ·
 whitelist/ · blocklist/ (2026-09-09: popup-curated.json = the popup/redirect lane as a flat
-array — Sheet A ∪ kadhosts − ledger dead − omit-from-blocklist − curation set, 41,909; staged from the SAME
+array — Sheet A ∪ kadhosts − ledger dead − omit-from-blocklist − curation set; staged from the SAME
 $popupDomains the redirect rules are chunked from, so file and rules.json cannot diverge;
 'blocklist' added to $managedDirs or the dir would never be pruned; popup.json = Sheet A's
-own SHIPPED contribution, 2,040 — same ledger+H+curation filtering, so a strict subset of
+own SHIPPED contribution — same ledger+H+curation filtering, so a strict subset of
 popup-curated.json. SINCE 2026-09-10 the lane is chunked PER SOURCE (user decision: no
 A/KAD mixing before the final merge — sheet-A chunks first, then kadhosts chunks; every
-redirect rule traces to exactly ONE source; the ~3-domain A∩KAD overlap ships in both,
-harmless). Zero budget cost by luck of the chunk math (2,040→1 + 39,872→8 = 9 chunks,
-same as the merged 41,909→9); verified: identical domain coverage + identical carves +
+redirect rule traces to exactly ONE source; the A∩KAD overlap (5 domains at 2026-09-20) ships
+in both, harmless). Zero budget cost by luck of the chunk math (measured 2026-09-20:
+2,305→1 + 28,714→6 = 7 chunks, same as the merged 31,014→7 — live counts always in
+`dist/manifest.json`); verified: identical domain coverage + identical carves +
 every non-popup rule byte-identical to the pre-split artifact. The union still feeds
 popup-curated.json, so file and rules.json still cannot diverge.
 ALSO 2026-09-10 (user requests): `derived/curation-set.json` RENAMED
 `derived/to-filter-out-domains-set.json` (dist-side only — the consumer-facing name says
 what it is; `sanitized/curation-set.json` keeps the internal name, it is what compile,
 shadow-diff and the catalog read). And `network/` gained the BY-ORIGIN subsets
-`rules-hosts.json` (60 — the 4 hosts feeds: tracker chunks + twins + KADhosts chunks) and
-`rules-easylist.json` (10,175 — the surgical lanes incl. their twins), both with CANONICAL
+`rules-hosts.json` (the 4 hosts feeds: tracker chunks + twins + KADhosts chunks) and
+`rules-easylist.json` (the surgical lanes incl. their twins — counts for both in
+`dist/manifest.json`), both with CANONICAL
 IDs so every rule cross-references rules.json; built from an origin tag carried through
 the merge (the `_src` marker is compile-internal and stripped at emission — verified: 0
 leaked keys, every subset rule byte-identical to its canonical twin, rules.json itself
 byte-identical to the pre-change artifact). Sheet-A chunks, download-sites allows and
-appends belong to neither subset. Pre-ledger forms stay upstream: sources/gsheet/popup.json raw 4,771 ·
-sanitized/gsheet/popup.json −curation 4,486) ·
-cosmetic/ · traffic_quality/ · standalone/ (K–O + default-blocklist-not-to-add since 2026-09-18 —
+appends belong to neither subset. Pre-ledger forms stay upstream: sources/gsheet/popup.json raw ·
+sanitized/gsheet/popup.json − curation set — 0 rows dropped while e0f8324 is in effect, so
+identical to the raw mirror today) ·
+cosmetic/ · traffic_quality/ · standalone/ (6 files: K–O + default-blocklist-not-to-add since 2026-09-18 —
 Sheet E published verbatim, read by the brand backends as default_blockdom(); its veto role here
 is unchanged) · derived/
 (community ≥50 after both omit vetoes + curation-set, helpers for inspection) · manifest.json.
 **whitelist/ carries the three whitelist flavours since 2026-09-09** (user request — one
-folder per consumer instead of three): default.json (Sheet C − omit-from-whitelist − omit-from-blocklist, 177) · community.json
-(votes ≥50 after both omit vetoes, 807 — byte-identical to derived/community.json, staged twice on purpose:
-derived/ = inspection, whitelist/ = product) · download-sites.json (50, the NORMALIZED
+folder per consumer instead of three): default.json (Sheet C − omit-from-whitelist − omit-from-blocklist) · community.json
+(votes ≥50 after both omit vetoes — byte-identical to derived/community.json, staged twice on purpose:
+derived/ = inspection, whitelist/ = product; still PUBLISHED, but not served since 2026-09-18 —
+see the TEST banner in rule 5) · download-sites.json (the NORMALIZED
 G-vetoed form harvested from the validated allow lane's ||domain^ anchors, never the raw
-sheet whose www. rows would not match). Killed: feeds/,
-never-block.json, popup/, whitelist/{manual,community}.json (manual-whitelist is in no recipe;
+sheet whose www. rows would not match). All three counts in `dist/manifest.json`. Killed: feeds/,
+never-block.json, popup/, whitelist/manual.json (manual-whitelist is in no recipe;
 each backend's short/long.php was internal derivation, replaced by rules.json readers —
 resurrect a flat popup artifact only if access logs ever show external short.php callers).
 
@@ -142,23 +161,33 @@ chain green from a data-free cold start. Whitelist tightened same day (3 user-ca
 redirect-twin initiators, wildcard anchors, generic main_frame initiator blocks — all with
 fail-closed final asserts). **TWIN BUILDER, FIXED 2026-09-18 (commit 057674e).** A main_frame block is duplicated as a blocked-page redirect ONLY when the source is a BARE DOMAIN BLOCK — no `urlFilter`, no `domainType`. The twin is always `regexFilter ^http.+` (regexSubstitution needs a regexFilter), so it cannot carry either field, and every scoped source was silently WIDENED into a blanket main_frame redirect. The 2026-09-08 pass only stripped whitelist-covered initiators, which missed the axis entirely — the widening happened whether or not a whitelist was involved. Now a scoped source keeps its block rule and loses only the blocked-page landing; under-redirecting is the only safe direction, because a wrong twin hijacks navigation no client whitelist can counter. Effect: twins 63→48, hijacked initiators 85→19, 66 sites freed — worst offender `|about:` scoped to 51 initiators (dood.*, streamtape.*, uptostream.*, popads.net…), plus `||hltv.org^*=|`→all of hltv.org, `||facebook.com/ads/ig_redirect/`→all of instagram.com, `|http*://*?`→pornhub/redtube/tube8/youporn. All 13 surviving initiator-scoped twins carry BOTH initiatorDomains and requestDomains, so they fire only on navigation from X to a specific blocked destination. Skips logged to `compile-drops.json` → `twin_scoped_source_skipped`. Regional rollups latam/apac/nordics restored to the Sheet-B
 split (24 market files — v3's generator derived them; the verbatim split had dropped them).
-SHIM PHASE STARTED — Ad Block Pro (12) is the template, 3 files edited on disk (not yet on
-the server): generate_compiled_rules.php = mirror dist/network/rules.json + rebrand the
+SHIM PHASE STARTED 2026-09-08 — Ad Block Pro (12) is the template, 3 files:
+generate_compiled_rules.php = mirror dist/network/rules.json + rebrand the
 whole redirect substitution to the brand page (close.html#\0; target must be in the
 extension's web_accessible_resources) + last-good mirror + hard-abort; NEVER re-compile the
 artifact — it is finished (re-running the old STEP-3 logic re-creates the hijack twins and
 ships [] on fetch failure). generate_cosmetic_rules.php keeps the per-brand merge, only its
 3 source URLs move to v4.
-SHIM ROLLOUT as of 2026-09-09: Pro (12) · Ghost (26) · Wonder (23) UPLOADED and live ·
-North (21) ready on disk, UPLOAD PENDING (host was down 2026-09-09) · Ninja (25) shimmed
-on disk 2026-09-09, upload pending — its swap IS the production cutover · StopAds (24)
-blocked, needs its own design (static "Local First" ruleset, no rules.json consumer).
+SHIM ROLLOUT COMPLETE as of 2026-09-20 — **all seven brands are v4 shims**: Pro (12) ·
+North (21) · Wonder (23) · StopAds (24) · Ninja (25) · Ghost (26) uploaded and live (their
+prod files carry the 2026-09-18 production edit, which is what dates them) · Hunter (22)
+migrated 2026-09-20. StopAds is NOT the exception it was once planned to be: it mirrors
+dist/network/rules.json like the rest, but with no compiled_rules.php serving layer — its
+cache KEEPS the literal `__EXT_ID__` and stopads.php substitutes per request. Hunter (22) was
+the seventh, undocumented backend, running the old 3-step compiler against blocklist-v3 —
+i.e. the twin bug 057674e fixed, unfixed in production; now generate_compiled_rules.php is the
+v4 shim (rebrands to blocked.html, WAR-listed in its manifest), generate_cosmetic_rules.php
+reads dist/cosmetic/, adshunter_2.php reads dist/traffic_quality/. Its v3 originals are kept in
+`22 - Ad Block Hunter/backend/history/`.
 Every brand needs its own substitution string and the target page must be WAR-listed —
 EXCEPT Ninja, whose string IS the factory string: there the guard is a positive
-occurrence count (matched == redirects > 0), never "output != input".
-Universal trap in every swap: traffic_quality's baseline file is RENAMED
-general_global.json (v3) -> global.json (v4); keeping the old name 404s the baseline
-whitelist on every market, masked 24h by the per-market allowlist cache.
+occurrence count (matched == redirects > 0), never "output != input". All seven now also
+reject a ZERO-redirect artifact (`$redirects === 0 ||`, added to Pro/North/Wonder/Ghost on
+2026-09-20) — without it a `0 of 0` artifact satisfies the equality trivially and ships.
+Universal trap in every swap (now universally true — 22 was the last holdout on the v3 name):
+traffic_quality's baseline file is RENAMED general_global.json (v3) -> global.json (v4);
+keeping the old name 404s the baseline whitelist on every market, masked 24h by the
+per-market allowlist cache.
 
 WHITELIST RE-CONCEPTION 2026-09-08 (evening, user decisions — landed in two waves):
 (1) Sheet C demoted to product-only — ships as whitelist/default.json, scrubs nothing.
@@ -197,7 +226,8 @@ This REVERSES what the production server stopads.php does today; reversible from
 Sheet D now holds 2 domains (outlinediabase.com, tolerancewarily.com) — the 23 legacy
 `$blockdom` entries moved to Sheet E. The two briefly sat in BOTH sheets, which cancelled
 the append lane entirely (E outranks D); removing them from E restored it (788c6b1).
-Appends are back to 2 domains → 1 rule (id 30103). **Keep D and E disjoint.**
+Appends are back to 2 domains → 1 rule (band ids re-assign every run — do not quote one).
+**Keep D and E disjoint.**
 ALSO 2026-09-10: the letter-named PHP variables ($G/$H/$A/$C/$D/$F/$I) are gone from curate
 and compile — semantic names ($omitWhitelist, $omitBlocklist, $defaultBlocklist …) so a
 future re-lettering can never silently shift a variable onto another sheet's data. (The two
@@ -220,7 +250,7 @@ Index `dist/catalog/catalog.json`: stage contract, 25 sources with role/matching
 per-cell notes, merged refs, per-artifact sha256, content-derived version. Own gates
 (provenance freshness like compile + manifest↔rules.json coherence), staged writes + own
 prune (`catalog/` is NOT in compile's `$managedDirs` — each emitter prunes what it
-stages), byte-deterministic (verified). 117 files ≈ 71 MB (merged domains split per type: block · redirect · allow · cosmetic). Absent cells are information:
+stages), byte-deterministic (verified). 118 files (117 artifacts + `catalog.json`) ≈ 71 MB (merged domains split per type: block · redirect · allow · cosmetic). Absent cells are information:
 veto sheets (E/H/I) have no rules by definition, J has no raw rules (normalization IS the
 curate recipe), the cosmetic unhide map exists for all 4 easylist lists but the full set
 (generic.css/specific/extended) only for easylist+fanboy, and cosmetic is identical
@@ -247,9 +277,12 @@ presence asserted equal between .work and sanitized/. Review also verified posit
 every reshape byte-identical to the reference recipes, floor holds on every surface,
 index exact, two runs byte-identical, compile's dist untouched.
 
-Still to do: upload the Ad Block Pro trio + repeat the shim for the other 4 brands (log-check
-before deleting short/long/blocklist.php) · extension changes (client-side extid
-substitution) · keep shadow-diffing daily during the shadow window ·
+DONE 2026-09-20 (was on this list): the shim rollout — all seven brands, build 22 included ·
+the zero-redirect guard on all seven.
+Still to do: log-check before deleting short/long/blocklist.php on the shimmed brands ·
+decide the fate of the 2026-09-18 curation TEST (e0f8324 — restore the vote list in the union,
+or make the removal permanent and rewrite rule 5) · extension changes (client-side extid
+substitution) · capture a fresh production rules cache so the shadow-diff gate can run again ·
 review the Sheet-A conflicts (`state/review/whitelist-conflicts.json` + compile's
 `state/review/compile-drops.json`) · decide dist/static-rulesets (only compile-adjacent item
 left) · at the very end: write the full V2 documentation (user explicitly wants this).

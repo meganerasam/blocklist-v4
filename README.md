@@ -1,7 +1,9 @@
 # Automated All-In-One List V2
 
 The single factory repo for every blocklist and whitelist consumed by the ad-block extension
-family (Ninja Block, Stop Ads Now, Ad Block Wonder, Ad Block Ghost). It replaces the four
+family — **seven brands, all on the v4 mirror shim since 2026-09-20**: Ad Block Pro (12) ·
+Ad Block North (21) · Ad Block Hunter (22) · Ad Block Wonder / Wonder Blocker (23) ·
+Stop Ads Now (24) · Ninja Block (25) · Ad Block Ghost (26). It replaces the four
 previous repos (`blocklist`, `blocklist-v2`, `blocklist-v3`, `whitelist-domains`) and the two
 server-side generators (`generate_compiled_rules.php`, `generate_cosmetic_rules.php`).
 
@@ -20,7 +22,8 @@ sources/    ALL upstream inputs, filed by origin, VERBATIM: gsheet/ (Sheets A–
 sanitized/  the CURATED sources (2026-09-08) — machine-owned, written only by
             build/curate/curate.php, committed so every curation decision is a git diff:
             extension/user-whitelist{-raw,}.json (fleet ≥50 → − omit-from-whitelist − omit-from-blocklist) · curation-set.json · download-sites.txt + download-sites/allow.json
-            (omit-from-blocklist ∪ not-to-add ∪ download-sites ∪ userWL, the single derivation) · gsheet/popup.json · hosts/ ·
+            (omit-from-blocklist ∪ not-to-add ∪ download-sites ∪ userWL, the single derivation —
+            ⚠ the userWL term is SUSPENDED since 2026-09-18, TEST commit e0f8324) · gsheet/popup.json · hosts/ ·
             easylist/ (curated DNR lanes + pass-through cosmetic)
 curated/    break-glass hand-edited files only (vetoes.txt) — all normal human input = Sheets
 state/      pipeline memory (domain-ledger.json) — machine-owned, never hand-edited
@@ -35,7 +38,7 @@ dist/       the public API — ONLY artifacts a consumer actually calls, plus de
 
 | Sheet | Mirror | Compiler contract |
 |---|---|---|
-| A · popup | `sources/gsheet/popup.json` | redirect rules (kept in its current pivot format); curated − (omit-from-blocklist ∪ not-to-add ∪ download-sites ∪ user whitelist) → `sanitized/gsheet/popup.json` |
+| A · popup | `sources/gsheet/popup.json` | redirect rules (kept in its current pivot format); curated − (omit-from-blocklist ∪ not-to-add ∪ download-sites ∪ user whitelist) → `sanitized/gsheet/popup.json` (⚠ user whitelist suspended since 2026-09-18, TEST e0f8324 — the sanitized file equals the raw mirror while that holds) |
 | B · trackers | `sources/traffic_quality/` (split per market at ingest) | published untouched to `dist/traffic_quality/` — never merged into rules |
 | C · default whitelist | `sources/gsheet/default-whitelist.json` | product-only: published as `dist/whitelist/default.json` (− omit-from-whitelist − omit-from-blocklist) — takes part in NO curation or scrub |
 | D · default blocklist | `sources/gsheet/default-blocklist.json` | org default blocks, appended as block rules — ABOVE curation; floored only by omit-from-blocklist and default-blocklist-not-to-add |
@@ -55,6 +58,11 @@ dist/       the public API — ONLY artifacts a consumer actually calls, plus de
    monolithic whitelist anymore — different curation per source):
    - user whitelist = fleet votes ≥ 50 *(step 1)* − omit-from-whitelist *(step 2)* − omit-from-blocklist *(step 2b)*
    - **curation set = omit-from-blocklist ∪ default-blocklist-not-to-add ∪ download-sites ∪ user whitelist** (domain + subdomains)
+     - **⚠ TEST since 2026-09-18 (commit e0f8324, `curate.php` (search `TEST 2026-09-18`)): the `user whitelist`
+       term is SUSPENDED** — the ≥50-vote community list still ships as
+       `dist/whitelist/community.json` but subtracts from nothing, so the live set is
+       omit-from-blocklist ∪ not-to-add ∪ download-sites. Deliberately temporary; restore by
+       putting `array_keys($userWL)` back in the union at `curate.php` (search `TEST 2026-09-18`).
    - Sheet A − set · hosts lanes − set · easylist DNR lanes scrubbed on every block axis;
      allows follow the SELF-PROTECTION policy (allows on curated destinations/initiators
      kept — they only ever protect those sites; mixed batches strip curated members);
@@ -68,7 +76,9 @@ dist/       the public API — ONLY artifacts a consumer actually calls, plus de
 3. **Compile = assembly** — sanitized lanes → veto (`curated/vetoes.txt`) · never-block floor +
    curation guards · appends D + manual-blocklist + fleet-BL (floored only by omit-from-blocklist + not-to-add, conflicts flagged) ·
    band re-ID · DNR budgets · staged writes → `dist/` + `manifest.json`
-4. **Catalog** — `build/catalog/catalog.php` (compile.yml step, after a green compile) →
+4. **Catalog** — `build/catalog/catalog.php` (compile.yml step, run AFTER the `dist/` commit —
+   order is Compile → assert budgets → commit dist → catalog → commit catalog, so a
+   catalog-only failure reddens the run without withholding the fleet artifacts) →
    `dist/catalog/`: every source in two representations (domains.json + DNR rules split
    per action type, per-file IDs 1..N) at three stages — `raw/` (pre-curation, inspection
    only, NEVER shippable as-is) · `curated/` (the sanitized recipes, safe standalone) ·
@@ -84,9 +94,12 @@ and touches nothing (that's the design, not a bug):
 
 1. `ingest.yml` (or `php build/ingest/fetch_sheets.php` + `fetch_upstreams.php`) — mirrors
    the 15 sheets, 24 market files, 4 hosts + 59 EasyList snapshots. First run: the
-   shrink/delta guards auto-skip (no previous mirror to compare against).
+   size-change comparison has nothing to compare against, so it stays silent (it only ever warns
+   since 50cee9f, 2026-09-14 — the old shrink/delta *guards* that failed the run are gone).
 2. `extension.yml` (or `fetch_extension_whitelists.php`) — pulls the 4 backend whitelist
-   exports. Needs the `USER_WHITELIST_DOMAINS` secret (locally: the env var).
+   exports (4 of the 7 brands expose `user-whitelisted-domains.php`; the registry is
+   `extension_endpoints:` in `sources/upstream.yml`). Needs the `USER_WHITELIST_DOMAINS`
+   secret (locally: the env var).
 2b. `curate.yml` (or `php build/curate/curate.php`) — needs the mirrors + fleet CSV;
    builds `sanitized/` (user whitelist, curation set, curated lanes). Verify and compile
    read ONLY sanitized data, so this must be green before either of them can run.
@@ -97,7 +110,8 @@ and touches nothing (that's the design, not a bug):
 4. `compile.yml` (or `php build/compile/compile.php`) — requires ALL of the above; the
    change-budget gate auto-skips (no previous manifest).
 5. `php build/review/shadow_diff.php <path to production compiled_rules_cache.json>` —
-   the cutover gate.
+   the cutover gate. Fetch that cache from a production backend first: no local copy is
+   left on disk, so this step is currently un-runnable without one.
 
 ## Status
 
@@ -105,17 +119,22 @@ Phase 2 (compile + shadow diff) — source layer, curation stage, ledger and com
 written and live-tested locally; see `STATUS.md` for the per-file map. One
 `php build/curate/curate.php && php build/compile/compile.php`
 publishes the whole `dist/` tree (10,287 rules at 2026-09-10, byte-deterministic, budgets asserted) and
-`php build/review/shadow_diff.php <production cache>` is the cutover gate — currently
-**clear: 0 unexplained divergences** vs the Aug 2 production cache.
+`php build/review/shadow_diff.php <production cache>` is the cutover gate — last run
+**2026-09-08: clear, 0 unexplained divergences** vs the Aug 2 production cache. That result
+is stale and the gate cannot be re-run as it stands: the production
+`compiled_rules_cache.json` it takes as input is no longer on disk under
+`25 - Ninja Block/backend/infomaniak/`, and the stored report
+(`state/review/shadow-diff.json`, 10,292 staging rules · 59 redirects) predates the
+2026-09-18 twin fix. Pull a fresh production cache before quoting the gate again.
 
 dist/ as-built (2026-09-10, only called artifacts): `network/rules.json` (extension) ·
-`network/rules-{hosts,easylist}.json` (by-origin subsets, canonical IDs — hosts 60 · easylist 10,175) ·
+`network/rules-{hosts,easylist}.json` (by-origin subsets, canonical IDs — live per-file counts in `manifest.json`) ·
 `whitelist/` — default.json (backend sync) · community.json · download-sites.json ·
 `blocklist/` — popup-curated.json (the redirect lane as a flat list) · popup.json (Sheet A's
 shipped share) · `cosmetic/` (4 files) · `traffic_quality/` (per-market) · `standalone/`
 (Sheets K–O **+ default-blocklist-not-to-add since 2026-09-18** — the latter is consumed by the
 brand backends as their default block list) · `derived/` (community + to-filter-out-domains-set — inspection helpers) · `catalog/`
-(the à-la-carte layer, 2026-09-10: 117 files + catalog.json, ~71 MB) · `manifest.json`.
+(the à-la-carte layer, 2026-09-10: 118 files total (117 artifacts + catalog.json), ~71 MB) · `manifest.json`.
 
 Decisions locked 2026-09-07: `dist/` is published **as commits**; the fleet fetches it
 **via the backend mirrors** (raw GitHub only as fallback). Workflows activate on push:
