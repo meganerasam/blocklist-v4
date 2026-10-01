@@ -20,7 +20,13 @@ sheets:
   B_trackers:
     name: traffic-quality-trackers
     mirror: sources/traffic_quality # DIRECTORY — split per market at ingest: global.json, fr.json, us.json, …
-    export_url: "https://docs.google.com/spreadsheets/d/1QQEymysUlufJ12oTbr1ILdpZy8PdO-OHSTyxnkdhDSQ/export?format=csv&gid=1704568972"
+    # 2026-10-01: no longer a Google Sheet — the stateless advertiser-domains.php endpoint
+    # on the tracking server (live sum of track_monthly_advertisers, same CSV contract:
+    # market,hostname,nb_click). Auth: X-Whitelist-Token from the env var named below
+    # (the same shared USER_WHITELIST_DOMAINS secret as the extension endpoints).
+    # Was: https://docs.google.com/spreadsheets/d/1QQEymysUlufJ12oTbr1ILdpZy8PdO-OHSTyxnkdhDSQ/export?format=csv&gid=1704568972
+    export_url: "https://secure-check.co/advertiser-domains.php"
+    token_env: USER_WHITELIST_DOMAINS
   C_default_whitelist:
     name: default-whitelist
     mirror: sources/gsheet/default-whitelist.json

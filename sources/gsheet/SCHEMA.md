@@ -22,6 +22,9 @@ redirect targets (block-type handling is a compile-level decision).
 ## B · traffic-quality-trackers
 | market | hostname | nb_click |
 |---|---|---|
+Source since 2026-10-01: not a Google Sheet anymore but `advertiser-domains.php` on the
+tracking server (clicks summed over all of `track_monthly_advertisers`; DB market `XX` is
+emitted empty and `GB` as `UK`), fetched with `X-Whitelist-Token` — see `upstream.yml`.
 Mirrored as a per-market split, directly at ingest, into **`sources/traffic_quality/`**:
 one flat sorted hostname array per market (`fr.json`, `de.json`, …); rows with an empty
 market land in `global.json`, which ALSO receives a cross-market promotion (a hostname seen

@@ -30,7 +30,7 @@ function load_sheet_specs(string $yml): array
         if (preg_match('/^(\S[^:]*):\s*(#.*)?$/', $ln, $m)) { $in = ($m[1] === 'sheets'); $cur = null; continue; }
         if (!$in) continue;
         if (preg_match('/^  ([A-Za-z0-9_]+):\s*$/', $ln, $m)) { $cur = $m[1]; $out[$cur] = []; continue; }
-        if ($cur && preg_match('/^    (name|mirror|export_url|note):\s*(.*)$/', $ln, $m)) {
+        if ($cur && preg_match('/^    (name|mirror|export_url|token_env|note):\s*(.*)$/', $ln, $m)) {
             $v = trim($m[2]);
             if ($v !== '' && $v[0] === '"') {
                 $v = substr($v, 1);
@@ -76,13 +76,19 @@ const SPECS = [
 ];
 
 // ----------------------------------------------------------------- fetch ----
-function fetch_csv(string $url): array // [ok(bool), body-or-error(string)]
+// $token: sent as X-Whitelist-Token for sources that are our own endpoints (upstream.yml
+// `token_env`). With a token, redirects are NOT followed — a redirect would leak it to
+// another host. Any non-2xx answer (401/500 from the endpoint) fails the fetch, so the
+// previous mirror is kept.
+function fetch_csv(string $url, ?string $token = null): array // [ok(bool), body-or-error(string)]
 {
-    $ctx = stream_context_create(['http' => [
+    $http = [
         'timeout' => 30,
-        'follow_location' => 1,
+        'follow_location' => $token === null ? 1 : 0,
         'user_agent' => 'list-factory-ingest/1.0',
-    ]]);
+    ];
+    if ($token !== null) $http['header'] = 'X-Whitelist-Token: ' . $token;
+    $ctx = stream_context_create(['http' => $http]);
     $body = @file_get_contents($url, false, $ctx);
     if ($body === false) return [false, 'fetch failed (network/HTTP error)'];
     if (strlen($body) === 0) return [false, 'empty response'];
@@ -215,7 +221,13 @@ foreach ($specs as $key => $s) {
         continue;
     }
 
-    [$ok, $body] = fetch_csv($url);
+    $token = null;
+    if (($s['token_env'] ?? '') !== '') {
+        $token = (string) getenv($s['token_env']);
+        if ($token === '') { $fail("env {$s['token_env']} is not set — endpoint needs X-Whitelist-Token"); continue; }
+    }
+
+    [$ok, $body] = fetch_csv($url, $token);
     if (!$ok) { $fail($body); continue; }
 
     $rows = parse_csv($body);

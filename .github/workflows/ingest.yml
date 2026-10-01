@@ -40,6 +40,7 @@ jobs:
         continue-on-error: true
         env:
           INGEST_FORCE: ${{ inputs.force == true && '1' || '' }}
+          USER_WHITELIST_DOMAINS: ${{ secrets.USER_WHITELIST_DOMAINS }} # Sheet B endpoint token
         run: php build/ingest/fetch_sheets.php
 
       - name: Snapshot upstreams (hosts + 59 EasyList files)
