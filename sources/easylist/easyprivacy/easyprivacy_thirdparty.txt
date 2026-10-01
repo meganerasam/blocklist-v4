@@ -4,6 +4,7 @@
 ||1.1.1.1/dns-query$xmlhttprequest,domain=allmodern.com|birchlane.com|catbirdnyc.com|gametime.co|jossandmain.com|ladym.com|libertylondon.com|mediamarkt.de|nobullproject.com|paynow.pmnts.io|perigold.com|theathletesfoot.co.nz|theathletesfoot.com.au|wayfair.*
 ||100widgets.com^$third-party
 ||105app.com/report/?
+||1414.hexa.su/script.js
 ||1worldsync.com/log?
 ||216.18.176.4/logger/
 ||360buyimg.com/jdf/1.0.0/unit/log/
@@ -337,6 +338,7 @@
 ||api.tally.so/forms/*/events
 ||api.transtore.app/api/v2/storefront/tracking
 ||api.usestoryteller.com/api/app/activity/recordActivity?
+||api.useunloq.com/event_management/
 ||api.visitorapi.com^$third-party
 ||api.wipmania.com^
 ||apibaza.com/pixel/
@@ -616,6 +618,7 @@
 ||cdn.prod.euid.eu^
 ||cdn.ravm.tv^
 ||cdn.seonintelligence.com^
+||cdn.signalfx.com/o11y-gdi-rum/
 ||cdn.skypack.dev/uuid
 ||cdn.sourcesync.io/open-pixel/source-pixel.js
 ||cdn.sphlabs.com/suid/
@@ -625,6 +628,7 @@
 ||cdn.tds.bid/bid.js
 ||cdn.tolt.io/tolt.js
 ||cdn.usefathom.com^
+||cdn.zeroclick.io/scripts/badge.js
 ||cdn.zg-api.com/a/z/js/v1/analytics.js
 ||cdnjs.work/metrics.js
 ||cdnma.com/apps/capture.js
@@ -1017,6 +1021,7 @@
 ||emarketeer.com/tracker/
 ||enc-90128738.b-cdn.net^
 ||endorsal.io/check/
+||engagelab.com/ma-report/
 ||engageplatform.com/api/trace/d/record?
 ||ensighten.com/error/e.php?
 ||envato.market/i/
@@ -1090,6 +1095,7 @@
 ||events.plutus.ninja^
 ||events.realgravity.com^
 ||events.release.narrativ.com^$subdocument,xmlhttprequest
+||events.searchtap.net^
 ||events.shareably.net^
 ||events.shoplift.ai^
 ||events.splash-screen.net^
@@ -1275,6 +1281,7 @@
 ||gigya.com^*/cimp.gif?
 ||giosg.com^*/public/trace/
 ||gitbook.com/v1/integrations/googleanalytics/
+||gkx.gokwik.co^
 ||glam.com/cece/agof/
 ||glam.com/ctagsimgcmd.act?
 ||glam.com/jsadimp.gif?
@@ -1392,6 +1399,7 @@
 ||iadvize.com/collector/
 ||ibmcloud.com/collector/
 ||icbdr.com/images/pixel.gif
+||ichnaea-web.netflix.com^
 ||icontact.com/icp/core/signup/tracking.gif?
 ||icu.newsroom.bi/ingest.php
 ||id.a-mx.com^
@@ -1630,6 +1638,7 @@
 ||loggingapi.spingo.com^
 ||loglady.skypicker.com^
 ||logs-api.shoprunner.com^
+||logs-ingester.prod.zuddl.com^
 ||logs.animaapp.com^
 ||logs.betterstack.com^
 ||logs.datadoghq.com^$third-party
@@ -1745,6 +1754,7 @@
 ||mochiads.com/clk/
 ||moderate.cleantalk.org/ct-bot-detector-wrapper.js
 ||modules.ooyala.com^*/analytics-
+||mon-sg.byteintlapi.com^
 ||mon.domdog.io^
 ||monitor-api.blackcrow.ai^
 ||monitor-frontend-collector.a.bybit-aws.com^
@@ -1914,6 +1924,7 @@
 ||p.jmlp.app^
 ||p.metrilo.com^
 ||p.placed.com^
+||p.sa7eer.com^
 ||p.skimresources.com^
 ||p.tryretool.com^
 ||p.typekit.net^
@@ -1952,6 +1963,7 @@
 ||pc161021.com/scripts/noui/StatProvider.js
 ||pcapredict.com/js/sensor.js
 ||pcrl.co/js/jstracker.min.js
+||pdp.gokwik.co/cart-get-tokens.html
 ||pega.com/logserver
 ||pegasus.unifygroup.com^
 ||pendo.io/data/ptm.gif/
@@ -2158,6 +2170,7 @@
 ||reach-id.orbit.tm-awx.com^
 ||readcube.com/assets/track_
 ||realm.hearst3pcc.com^
+||realtimeanalytics.yext.com^
 ||rebelmouse.com/pharos/
 ||recart.com/tracking/
 ||receive.wmcdp.io^
@@ -2274,6 +2287,7 @@
 ||scribol.com/traffix/widget_tracker/
 ||script-api.kinja.com/script?
 ||script.claspo.io/forms/v1/event
+||scripts.adeqmedia.com/master.js
 ||scripts.postie.com/otcteung/lp.1.js
 ||scripts.psyma.com^
 ||scripts.stay22.com/letmeallez.js
@@ -2318,6 +2332,7 @@
 ||sharethis.com/increment_clicks?
 ||sharethis.com/pageviews?
 ||shop.app/pay/hop?analytics_trace_id=
+||shoperatech.com/s/collect?
 ||shopflo.com/api/v1/spark
 ||shopify-gtm-suite.getelevar.com/getelevar/*/dl-web-pixel-lax-custom.js
 ||shopify-webhooks.sailthru.com^
@@ -2387,6 +2402,7 @@
 ||ssa.stepstone.com^
 ||ssc.shopstyle.com/collective.min.js
 ||ssl-images-amazon.com/images/I/31YXrY93hfL.js$domain=imdb.com
+||ssl.ceneo.pl/ct/
 ||ssr.streamrail.net^
 ||st.cdnco.us^
 ||st.linkfire.com^
@@ -2406,6 +2422,7 @@
 ||statdb.pressflex.com^
 ||static-tracking.klaviyo.com^
 ||static.fengkongcloud.com^
+||static.guance.com/browser-sdk/
 ||static.klaviyo.com/onsite/js/event_adapter.
 ||static.myshlf.us/Affiliates/sms_aff_clicktrack-deciem.js
 ||static.parsely.com^$third-party
@@ -2699,6 +2716,7 @@
 ||traccoon.intellectsoft.net^
 ||trace.swaven.com^
 ||track-dark-bz.b-cdn.net^
+||track-na2.hubspot.com^
 ||track.360playvid.info^
 ||track.91app.io^
 ||track.addevent.com^
@@ -2709,6 +2727,7 @@
 ||track.btdmp.com^
 ||track.coherentpath.com^
 ||track.contently.com^
+||track.convertfox.com^
 ||track.cordial.io^
 ||track.digitalriver.com^
 ||track.emerse.com^
@@ -2901,6 +2920,7 @@
 ||twitter.com/oct.js
 ||twitter.com/scribe/
 ||typeform.com/*/insights/events^
+||u.tetas.pt/script.js
 ||uaas.yandex.ru^
 ||ubm.docu.info^
 ||uc.cn/collect?
@@ -3033,6 +3053,7 @@
 ||webeyo.com/ipinfo
 ||webgames.io/imp/
 ||webmasters.ksalsocial.online/pixel/
+||webpushstat-sgp.engagelab.com^
 ||websdk.appsflyer.com^
 ||websdk.appsflyersdk.com^
 ||webservices.websitepros.com^
@@ -3300,6 +3321,7 @@
 ||dtym7iokkjlif.cloudfront.net/dough/
 ||du4rq1xqh3i1k.cloudfront.net^
 ||duu8lzqdm8tsz.cloudfront.net^
+||duvkog4eyegl0.cloudfront.net^
 ||dy2xcjk8s1dbz.cloudfront.net^
 ||dzgwautxzdtn9.cloudfront.net^
 ! Goatcounter CNAMES https://github.com/AdguardTeam/cname-trackers/issues/99

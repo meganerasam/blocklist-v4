@@ -431,10 +431,6 @@
             "type": "extended"
         },
         {
-            "selector": "#thread [class^=\"border-\"]:has-text(/Ad|Sponsored/):not([class*=\"sidebar\"])",
-            "type": "extended"
-        },
-        {
             "selector": ".fixed.bottom-0:has-text(Try Atlas)",
             "type": "extended"
         }
@@ -668,6 +664,12 @@
     "digg.com": [
         {
             "selector": "article.relative:has(div:has-text(SPONSORED))",
+            "type": "extended"
+        }
+    ],
+    "discord.com": [
+        {
+            "selector": ".wrapper__0d616:has-text(Get Reward)",
             "type": "extended"
         }
     ],
@@ -1654,6 +1656,10 @@
         },
         {
             "selector": ".text-12:has-text(Promoted)",
+            "type": "extended"
+        },
+        {
+            "selector": "article:has-text(Promoted)",
             "type": "extended"
         },
         {

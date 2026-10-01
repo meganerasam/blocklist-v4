@@ -5,7 +5,7 @@
  * These selectors hide ad elements on ALL websites.
  * Inject via content_scripts with matches: ["<all_urls>"]
  *
- * Total selectors: 13634
+ * Total selectors: 13635
  */
 
 #AC_ad,
@@ -10740,7 +10740,6 @@
 .is-mpu,
 .is-preload-ad,
 .is-script-ad,
-.is-sponsored,
 .is-sticky-ad,
 .isAd,
 .isAdPage,
@@ -13305,6 +13304,7 @@ DFP-AD,
 [id^="ad_sky"],
 [id^="ad_slider"],
 [id^="div-gpt-ad"],
+[id^="google_ads_iframe_"],
 [id^="section-ad-banner"],
 [name^="google_ads_iframe"],
 [onclick*="content.ad/"],
@@ -13312,11 +13312,12 @@ a-ad,
 a[data-oburl^="https://paid.outbrain.com/network/redir?"],
 a[data-redirect^="https://paid.outbrain.com/network/redir?"],
 a[href*="&maxads="],
+a[href*=".adglare.net/"],
 a[href*=".adsrv.eacdn.com/"],
 a[href*=".cfm?domain="][href*="&fp="],
-a[href*=".engine.adglare.net/"],
 a[href*=".foxqck.com/"],
 a[href*=".g2afse.com/"],
+a[href*=".sadbaguette.com/"],
 a[href*="//jjgirls.com/sex/Chaturbate"],
 a[href*="/jump/next.php?r="],
 a[href^=" https://www.friendlyduck.com/AF_"],
