@@ -27207,7 +27207,6 @@
         ".wpa-about"
     ],
     "wolt.com": [
-        "[data-test-id=\"MainDiscoveryContent\"] > div:has([data-test-id=\"AdvertisingLabel\"])",
         "[data-test-id=\"MainDiscoveryContent\"] li[draggable]:has(a[aria-label*=\"Sponsored\"])",
         "div[data-test-id=\"MainDiscoveryContent\"] li > div.cb-elevated:has(button[data-test-id=\"AdvertisingLabel\"])",
         "div[data-test-id=\"SearchResultVenueSection\"] li > div.cb-elevated:has(button[data-test-id=\"AdvertisingLabel\"])",
