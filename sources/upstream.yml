@@ -66,6 +66,18 @@ sheets:
     name: download-sites
     mirror: sources/gsheet/download-sites.json
     export_url: "https://docs.google.com/spreadsheets/d/1IS72yj64N7RVIT_kXOmE-67Q0dg1hqXgzY9Y6oSyA-0/export?format=csv&gid=43296086#gid=43296086" # NEW 2026-09-08 — download sites, omit-style domain list; curation input: subtracted from the blocking sources (Sheet A, KADhosts, hosts lanes, easylist family)
+  P_redirectors_affiliate:
+    name: redirectors-affiliate
+    mirror: sources/gsheet/redirectors-affiliate.json
+    export_url: "https://docs.google.com/spreadsheets/d/1IS72yj64N7RVIT_kXOmE-67Q0dg1hqXgzY9Y6oSyA-0/export?format=csv&gid=1006631613#gid=1006631613" # NEW 2026-10-02 — click redirectors (affiliate networks, shorteners, email/deep-link click hosts)
+    note: |
+      NEW 2026-10-02 (user decision). Hosts a user's own click passes THROUGH on the way to a
+      real site (cna.st → prf.hn → expedia). Compile keeps them out of every GLOBAL main_frame
+      redirect/block (Sheet A, KADhosts, the tracker lanes' navigation twins, easylist $popup
+      rules with no initiator) — their sub-resource blocks are untouched, and initiator-scoped
+      pop-up rules (a pop-up FROM a listed site) still apply. NOT a curation-set member, no
+      allow lane. Columns: domain, category (category is sheet-side only). Matched domain +
+      ALL subdomains.
 
   # ---- standalone sheets (K–O): mirrored + published as on-demand JSON, NEVER merged ----
   # These carry the remaining hardcoded arrays out of ninja-adb21.php; the backends fetch

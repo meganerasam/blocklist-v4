@@ -67,6 +67,10 @@ const SPECS = [
     // Sheet J (2026-09-08, re-lettered 2026-09-10): download sites — omit-style curation input; a shrink
     // strips protection from download sites, so it warns on any change like H
     'download-sites'           => ['header' => ['domain'],       'kind' => 'domains', 'warn_on_change' => true,  'delta_pct' => null],
+    // Sheet P (2026-10-02): click redirectors kept out of global main_frame redirects/blocks.
+    // A shrink sends users' affiliate/shortener clicks back to the self-closing block page —
+    // warn on any change.
+    'redirectors-affiliate'    => ['header' => ['domain'],       'kind' => 'domains', 'warn_on_change' => true,  'delta_pct' => null],
     // standalone (K–O): mirrored + published on demand, never merged into rules
     'whitelisted-domains-injection-enabled' => ['header' => ['domain'], 'kind' => 'domains', 'warn_on_change' => false, 'delta_pct' => null],
     'tracking-whitelist'       => ['header' => ['domain'],       'kind' => 'domains', 'warn_on_change' => false, 'delta_pct' => null],

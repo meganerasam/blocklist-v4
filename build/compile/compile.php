@@ -140,6 +140,18 @@ $never = [];
 foreach ($omitBlocklist as $d) $never[$d] = true;      // Sheet I: never-block floor, domain + subdomains
 foreach ($noAdd as $d)         $never[$d] = true;      // Sheet E: same floor, freely editable list
 
+// Sheet P — redirectors-affiliate (2026-10-02, user decision). Click redirectors a user's OWN click
+// passes through (affiliate networks, shorteners, email/deep-link click hosts): a GLOBAL
+// main_frame redirect on one sends the click to the self-closing block page and the user
+// never reaches the merchant (cna.st → prf.hn → expedia.co.uk). Kept out of every
+// main_frame rule that has no initiator scope; sub-resource blocks and initiator-scoped
+// pop-up rules are untouched. Domain + subdomains; a listed host under a lane PARENT is
+// carved via excludedRequestDomains. Fail-soft on an absent mirror, like Sheet E.
+$redirectorsAffiliatePath = "$ROOT/sources/gsheet/redirectors-affiliate.json";
+$redirectorsAffiliate = [];
+foreach (is_file($redirectorsAffiliatePath) ? load_mirror($redirectorsAffiliatePath, 'Sheet P (redirectors-affiliate)', false) : [] as $d) $redirectorsAffiliate[$d] = true;
+$redirectorsAffiliateDropped = ['sheetA' => [], 'kadhosts' => [], 'trackers' => [], 'easylist' => []];
+
 // Download-sites allow lane (Sheet I as a SOURCE, user spec 2026-09-08): the compiler
 // VERIFIES the contract the curate stage promises before merging a single rule —
 //   · action is allow, priority PINNED to DL_ALLOW_PRIORITY (lib/util.php) — exact equality,
@@ -334,6 +346,7 @@ foreach (['sheetA' => array_keys($popupSheet), 'kadhosts' => array_keys($hostsFe
     foreach ($lane as $d) {
         if (isWhitelistCovered($d, $never)) { $popupNeverDropped++; continue; }   // H floor
         if (isWhitelistCovered($d, $curation)) { $popupExcluded[$d] = true; continue; }
+        if (isWhitelistCovered($d, $redirectorsAffiliate)) { $redirectorsAffiliateDropped[$laneTag][] = $d; continue; }   // Sheet P
         $popupLaneSets[$laneTag][$d] = true;
         $popupUnion[$d] = true;
     }
@@ -351,6 +364,7 @@ $popupExcluded = array_keys($popupExcluded);
 sort($popupExcluded, SORT_STRING);
 
 $carveSet = $curation + $never;   // carve-outs protect curated + never-block subdomains
+$redirCarveSet = $carveSet + $redirectorsAffiliate;   // navigation rules also carve Sheet P hosts under a listed parent
 $popupRules = [];
 $popupRuleLane = [];   // parallel to $popupRules — which source each chunk came from
 $popupLaneChunks = [];
@@ -364,7 +378,7 @@ foreach ($popupLaneSets as $laneTag => $set) {
             'requestDomains' => $domains,
             'resourceTypes'  => ['main_frame'],
         ];
-        $carve = carve_for_chunk($domains, $carveSet);
+        $carve = carve_for_chunk($domains, $redirCarveSet);
         if ($carve) $cond['excludedRequestDomains'] = $carve;
         $popupRules[] = [
             'id'       => 0,
@@ -410,8 +424,17 @@ foreach (array_chunk($trackerDomains, CHUNK) as $domains) {
         'action' => ['type' => 'block'],
         'condition' => $blockCond,
     ];
-    $redirCond = ['regexFilter' => '^http.+', 'requestDomains' => $domains, 'resourceTypes' => ['main_frame']];
-    if ($carve) $redirCond['excludedRequestDomains'] = $carve;
+    // The navigation twin skips Sheet P hosts — the block above still covers their
+    // sub-resources; only the user's click through them is let go.
+    $redirDomains = [];
+    foreach ($domains as $d) {
+        if (isWhitelistCovered($d, $redirectorsAffiliate)) { $redirectorsAffiliateDropped['trackers'][] = $d; continue; }
+        $redirDomains[] = $d;
+    }
+    if (!$redirDomains) continue;
+    $redirCond = ['regexFilter' => '^http.+', 'requestDomains' => $redirDomains, 'resourceTypes' => ['main_frame']];
+    $redirCarve = carve_for_chunk($redirDomains, $redirCarveSet);
+    if ($redirCarve) $redirCond['excludedRequestDomains'] = $redirCarve;
     $domainRules[] = [
         'id' => 0, 'priority' => 3,
         'action' => ['type' => 'redirect', 'redirect' => ['regexSubstitution' => REDIRECT_SUBSTITUTION]],
@@ -486,6 +509,44 @@ foreach ($filters as $rule) {
     $origin = $rule['_src'] ?? 'easylist';
     unset($rule['_src']);
     $type = $rule['action']['type'] ?? 'block';
+    // Sheet P: an UNSCOPED main_frame block ($popup / $document with no domain=) on a click
+    // redirector stops the user's own click — it leaves this rule (and so never gets a
+    // twin). A main_frame-only rule just loses the host; a mixed-type rule hands it to a
+    // copy without main_frame, so its sub-resources stay blocked. Initiator-scoped rules
+    // are real pop-up blocking (a pop-up FROM that site) and are left alone.
+    if ($type === 'block' && $redirectorsAffiliate
+        && !isset($rule['condition']['initiatorDomains'])
+        && in_array('main_frame', $rule['condition']['resourceTypes'] ?? [], true)
+        && is_array($rule['condition']['requestDomains'] ?? null)) {
+        $keep = [];
+        $moved = [];
+        foreach ($rule['condition']['requestDomains'] as $d) {
+            if (isWhitelistCovered(strtolower((string) $d), $redirectorsAffiliate)) $moved[] = $d; else $keep[] = $d;
+        }
+        if ($moved) {
+            $redirectorsAffiliateDropped['easylist'] = array_merge($redirectorsAffiliateDropped['easylist'], $moved);
+            $types = array_values(array_diff($rule['condition']['resourceTypes'], ['main_frame']));
+            if ($types) {
+                $copy = $rule;
+                $copy['condition']['requestDomains'] = $moved;
+                $copy['condition']['resourceTypes'] = $types;
+                unset($copy['condition']['excludedRequestDomains']);
+                $copy['id'] = $assignId('block');
+                $copy['priority'] = 1;
+                $rules[] = $copy;
+                $ruleOrigins[] = $origin;
+            }
+            if (!$keep) continue;
+            $rule['condition']['requestDomains'] = $keep;
+        }
+        if ($rule['condition']['resourceTypes'] === ['main_frame']) {
+            $carve = carve_for_chunk($rule['condition']['requestDomains'], $redirectorsAffiliate);
+            if ($carve) {
+                $rule['condition']['excludedRequestDomains'] = array_values(array_unique(array_merge(
+                    $rule['condition']['excludedRequestDomains'] ?? [], $carve)));
+            }
+        }
+    }
     $rule['id'] = $assignId($type);
     if ($type === 'block') {
         $rule['priority'] = 1;
@@ -580,6 +641,25 @@ foreach ($rules as $rule) {
     foreach ($rule['condition']['requestDomains'] ?? [] as $d) {
         if (isWhitelistCovered(strtolower($d), $never)) {
             fail("never-block violation survived the merge: $d (rule {$rule['id']})");
+        }
+    }
+    // Sheet P: no unscoped navigation rule may reach a click redirector — not by listing
+    // it, and not by listing its parent without carving it out.
+    $navRule = $type === 'redirect' || in_array('main_frame', $rule['condition']['resourceTypes'] ?? [], true);
+    if ($redirectorsAffiliate && $navRule && !isset($rule['condition']['initiatorDomains'])) {
+        foreach ($rule['condition']['requestDomains'] ?? [] as $d) {
+            if (isWhitelistCovered(strtolower($d), $redirectorsAffiliate)) {
+                fail("redirectors-affiliate host survived on unscoped navigation rule {$rule['id']}: $d");
+            }
+        }
+        if ($type === 'redirect' || ($rule['condition']['resourceTypes'] ?? []) === ['main_frame']) {
+            $exSet = [];
+            foreach ($rule['condition']['excludedRequestDomains'] ?? [] as $x) $exSet[strtolower($x)] = true;
+            foreach (carve_for_chunk($rule['condition']['requestDomains'] ?? [], $redirectorsAffiliate) as $w) {
+                if (!isWhitelistCovered($w, $exSet)) {
+                    fail("redirectors-affiliate host reachable via a listed parent on rule {$rule['id']}: $w");
+                }
+            }
         }
     }
     if ($type === 'redirect') {
@@ -975,6 +1055,14 @@ $review = [
         'rules' => $dupScopedDrops,
     ],
     'popup_excluded_by_whitelist' => $popupExcluded,
+    'redirectors_affiliate_dropped' => [
+        'note' => 'Sheet P click redirectors kept out of unscoped main_frame rules (navigation'
+            . ' redirect / $popup block). Their sub-resource blocks still ship.',
+        'sheetA'   => array_values(array_unique($redirectorsAffiliateDropped['sheetA'])),
+        'kadhosts' => array_values(array_unique($redirectorsAffiliateDropped['kadhosts'])),
+        'trackers' => count(array_unique($redirectorsAffiliateDropped['trackers'])),
+        'easylist' => array_values(array_unique($redirectorsAffiliateDropped['easylist'])),
+    ],
     'append_vs_whitelist_conflicts' => $appendConflicts,
     'append_parent_overrides' => $appendParentOverrides,
     'default_whitelist_vs_shipped' => [
@@ -1007,6 +1095,9 @@ foreach (['kadhosts', 'adguarddns', 'anudeep', 'peterlowe'] as $tag) {
         . ' (dead −' . $hostsDeadDropped[$tag] . ' · retained +' . $hostsRetained[$tag] . ')';
 }
 $rep[] = '| ③ lanes (internal) | ' . $feedCell . ' |';
+$rep[] = '| Sheet P redirectors-affiliate | ' . count($redirectorsAffiliate) . ' hosts · kept off navigation rules: Sheet A ' . count(array_unique($redirectorsAffiliateDropped['sheetA']))
+    . ' · KAD ' . count(array_unique($redirectorsAffiliateDropped['kadhosts'])) . ' · tracker twins ' . count(array_unique($redirectorsAffiliateDropped['trackers']))
+    . ' · easylist main_frame ' . count(array_unique($redirectorsAffiliateDropped['easylist'])) . ' |';
 $rep[] = '| ④ guards (post-curation leaks: retention re-adds, edge cases) | popup lane: curation ' . count($popupExcluded) . ' · H ' . $popupNeverDropped . ' · domains lane: curation ' . $trackerStats['excl'] . ' · H ' . $trackerStats['never'] . ' · retention blocked by curation: ' . $hostsRetainedCurated . ' · appends H −' . $appendNeverDropped . ' |';
 $rep[] = '| ④ veto (curated/vetoes.txt) | ' . $vetoed . ' block rules dropped |';
 $rep[] = '| ④ popup lane | ' . count($popupDomains) . ' domains → ' . count($popupRules)
