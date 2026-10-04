@@ -6178,6 +6178,9 @@
         ".center-add",
         ".news_adhide_device"
     ],
+    "digitalescapetools.com": [
+        ".det-promo-float-host"
+    ],
     "digitalfoundry.net": [
         "#nn_half",
         "#nn_mast",
@@ -26760,6 +26763,11 @@
         "[class]:has(>[data-type])",
         "[data-testid=\"ad-label\"]"
     ],
+    "wgme.com": [
+        "#deeper-dive-container-0",
+        ".StoryPage_taboolaDeeperDive__WKVX7",
+        "[data-testid=\"viewport-buffered-slot\"]"
+    ],
     "wgnsradio.com": [
         ".bw-special-image",
         ".bw-special-image-wrapper"
@@ -26857,7 +26865,8 @@
         "#leader_1"
     ],
     "whec.com": [
-        "#Header_1"
+        "#Header_1",
+        "[style*=\"min-height: 250px;\"]"
     ],
     "wheelofnames.com": [
         ".ad-declaration"
