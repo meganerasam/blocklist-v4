@@ -2834,6 +2834,15 @@
             "zenaps.com"
         ]
     },
+    "omit_from_cosmetic_dropped": {
+        "note": "Sheet Q hosts removed from cosmetic/specific.json + extended.json (host => selector count). unhide.json and generic.css are untouched by design.",
+        "specific": {
+            "search.yahoo.com": 2
+        },
+        "extended": {
+            "search.yahoo.com": 1
+        }
+    },
     "append_vs_whitelist_conflicts": [],
     "append_parent_overrides": [],
     "default_whitelist_vs_shipped": {
