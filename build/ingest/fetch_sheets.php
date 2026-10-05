@@ -71,6 +71,9 @@ const SPECS = [
     // A shrink sends users' affiliate/shortener clicks back to the self-closing block page —
     // warn on any change.
     'redirectors-affiliate'    => ['header' => ['domain'],       'kind' => 'domains', 'warn_on_change' => true,  'delta_pct' => null],
+    // Sheet Q (2026-10-05): hosts whose keys are dropped from the cosmetic specific/extended
+    // maps. A shrink re-enables element hiding on them — warn on any change.
+    'omit-from-cosmetic'       => ['header' => ['domain'],       'kind' => 'domains', 'warn_on_change' => true,  'delta_pct' => null],
     // standalone (K–O): mirrored + published on demand, never merged into rules
     'whitelisted-domains-injection-enabled' => ['header' => ['domain'], 'kind' => 'domains', 'warn_on_change' => false, 'delta_pct' => null],
     'tracking-whitelist'       => ['header' => ['domain'],       'kind' => 'domains', 'warn_on_change' => false, 'delta_pct' => null],

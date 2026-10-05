@@ -847,6 +847,31 @@ $cssSpecific = merge_css_maps($WORK, $CATS, 'css', 'specific.json');
 $cssExtended = merge_css_maps($WORK, $CATS, 'css', 'extended.json');
 $cssUnhide   = merge_css_maps($WORK, $CATS, 'allow', 'unhide.json');
 
+// Sheet Q — omit-from-cosmetic (2026-10-05, user decision). Hosts where the fleet must not
+// hide page content (search.yahoo.com + its country hosts): their keys leave the specific
+// and extended maps, domain + ALL subdomains (a listed search.yahoo.com never reaches the
+// parent yahoo.com — note the clients walk the hostname up, so yahoo.com's own entry still
+// applies on these hosts; only a client-side skip can stop that and generic.css).
+// unhide.json is deliberately untouched — a fallback for extensions whose bundled static
+// files carry the same hide rules. Fail-soft on an absent mirror, like Sheets E and P.
+$omitCosmeticPath = "$ROOT/sources/gsheet/omit-from-cosmetic.json";
+$omitCosmetic = [];
+foreach (is_file($omitCosmeticPath) ? load_mirror($omitCosmeticPath, 'Sheet Q (omit-from-cosmetic)', false) : [] as $d) $omitCosmetic[strtolower($d)] = true;
+$omitCosmeticDropped = ['specific' => [], 'extended' => []];
+foreach (['specific' => &$cssSpecific, 'extended' => &$cssExtended] as $map => &$entries) {
+    foreach (array_keys($entries) as $host) {
+        if (isWhitelistCovered(strtolower((string) $host), $omitCosmetic)) {
+            $omitCosmeticDropped[$map][$host] = count($entries[$host]);
+            unset($entries[$host]);
+        }
+    }
+    // final assert, same contract as Sheet P's: nothing listed may survive in the map
+    foreach (array_keys($entries) as $host) {
+        if (isWhitelistCovered(strtolower((string) $host), $omitCosmetic)) fail("omit-from-cosmetic host survived in cosmetic/$map.json: $host");
+    }
+}
+unset($entries);
+
 // ============================================================================
 // WHITELIST + TRAFFIC_QUALITY + NEVER-BLOCK ARTIFACTS
 // ============================================================================
@@ -1063,6 +1088,12 @@ $review = [
         'trackers' => count(array_unique($redirectorsAffiliateDropped['trackers'])),
         'easylist' => array_values(array_unique($redirectorsAffiliateDropped['easylist'])),
     ],
+    'omit_from_cosmetic_dropped' => [
+        'note' => 'Sheet Q hosts removed from cosmetic/specific.json + extended.json (host =>'
+            . ' selector count). unhide.json and generic.css are untouched by design.',
+        'specific' => $omitCosmeticDropped['specific'] ?: new stdClass(),
+        'extended' => $omitCosmeticDropped['extended'] ?: new stdClass(),
+    ],
     'append_vs_whitelist_conflicts' => $appendConflicts,
     'append_parent_overrides' => $appendParentOverrides,
     'default_whitelist_vs_shipped' => [
@@ -1098,6 +1129,9 @@ $rep[] = '| ③ lanes (internal) | ' . $feedCell . ' |';
 $rep[] = '| Sheet P redirectors-affiliate | ' . count($redirectorsAffiliate) . ' hosts · kept off navigation rules: Sheet A ' . count(array_unique($redirectorsAffiliateDropped['sheetA']))
     . ' · KAD ' . count(array_unique($redirectorsAffiliateDropped['kadhosts'])) . ' · tracker twins ' . count(array_unique($redirectorsAffiliateDropped['trackers']))
     . ' · easylist main_frame ' . count(array_unique($redirectorsAffiliateDropped['easylist'])) . ' |';
+$rep[] = '| Sheet Q omit-from-cosmetic | ' . count($omitCosmetic) . ' hosts · keys dropped: specific ' . count($omitCosmeticDropped['specific'])
+    . ' (' . array_sum($omitCosmeticDropped['specific']) . ' selectors) · extended ' . count($omitCosmeticDropped['extended'])
+    . ' (' . array_sum($omitCosmeticDropped['extended']) . ' rules) |';
 $rep[] = '| ④ guards (post-curation leaks: retention re-adds, edge cases) | popup lane: curation ' . count($popupExcluded) . ' · H ' . $popupNeverDropped . ' · domains lane: curation ' . $trackerStats['excl'] . ' · H ' . $trackerStats['never'] . ' · retention blocked by curation: ' . $hostsRetainedCurated . ' · appends H −' . $appendNeverDropped . ' |';
 $rep[] = '| ④ veto (curated/vetoes.txt) | ' . $vetoed . ' block rules dropped |';
 $rep[] = '| ④ popup lane | ' . count($popupDomains) . ' domains → ' . count($popupRules)

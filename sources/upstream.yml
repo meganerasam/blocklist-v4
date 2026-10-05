@@ -78,6 +78,18 @@ sheets:
       pop-up rules (a pop-up FROM a listed site) still apply. NOT a curation-set member, no
       allow lane. Columns: domain, category (category is sheet-side only). Matched domain +
       ALL subdomains.
+  Q_omit_from_cosmetic:
+    name: omit-from-cosmetic
+    mirror: sources/gsheet/omit-from-cosmetic.json
+    export_url: "https://docs.google.com/spreadsheets/d/1IS72yj64N7RVIT_kXOmE-67Q0dg1hqXgzY9Y6oSyA-0/export?format=csv&gid=917969914#gid=917969914" # NEW 2026-10-05 — search.yahoo.com + its country hosts
+    note: |
+      NEW 2026-10-05 (user decision). Hosts where the fleet must not hide page content.
+      Compile drops their keys from dist/cosmetic/specific.json + extended.json, matched
+      domain + ALL subdomains (search.yahoo.com covers fr.search.yahoo.com, never yahoo.com).
+      unhide.json is deliberately left alone (fallback for extensions whose static files carry
+      the same hide rules). generic.css has no domain dimension, so it cannot be filtered
+      here — only a client-side skip can keep it off these hosts. Not a curation-set member,
+      no effect on network rules.
 
   # ---- standalone sheets (K–O): mirrored + published as on-demand JSON, NEVER merged ----
   # These carry the remaining hardcoded arrays out of ninja-adb21.php; the backends fetch
