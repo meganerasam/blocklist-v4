@@ -2660,6 +2660,7 @@
         "[href^=\"https://www.adaptivesecurity.com/\"]",
         "[href^=\"https://www.bleepingcomputer.com/go/\"]",
         "[href^=\"https://www.threatlocker.com/\"]",
+        "[href^=\"https://www.wiz.io/\"]",
         "[href^=\"https://www.ztw.com/\"]",
         "[href^=\"https://ztw.com/\"]",
         "[src*=\"https://www.bleepstatic.com/c/t/threatlocker/\"]",
@@ -15534,10 +15535,9 @@
         ".ad-removal-info",
         ".app-body > div:has(> div[class*=\"is-desktop-ads-\"])",
         ".app-body > div[class]:has(> div[class] > .htlad-header_top)",
-        ".col-lg-4 > .clear",
         "[style=\"min-height: 600px;\"]",
-        "[style=\"min-height:327px;\"]",
-        "[style=\"min-height:600px;\"]"
+        "div[class*=\"is-desktop-ads-\"]",
+        "div[class^=\"htlad-film_box_\"]"
     ],
     "myevreview.com": [
         "#ad_aside_1",
@@ -17652,6 +17652,7 @@
         "[data-testid=\"column\"] [data-testid=\"item\"]:has(a[rel*=\"sponsored\"])",
         "div[class=\"RowItem_gridItem__OfhML RowItem_fullWidth__cIdtN RowItem_expand__TR5R6\"]",
         "div[class^=\"FullWidth_container_\"]:has(a[rel=\"sponsored noopener\"])",
+        "div[data-testid=\"item\"]:has(a[href*=\"/r/\"][rel~=\"nofollow\"][target=\"_blank\"])",
         "div[data-testid=\"item\"]:has(a[href^=\"https://www.pexels.com/g/\"])",
         "div[data-testid=\"item\"]:has(h4[data-heading][class*=\"inlineTitleText\"])",
         "div[data-testid=\"item\"]:has(h4[data-heading^=\"S\\00200cp\\00200co\\00200cn\\00200cs\\00200co\\00200cr\\00200ce\\00200cd\"])"
@@ -17870,6 +17871,7 @@
         "[class^=\"adsSection\"]",
         "[class^=\"gettySponsored\"]",
         "div[class]:has(> [class^=\"title--\"] a[href*=\"sponsored\"])",
+        "div[class]:has(> div > div > a[aria-label=\"Sponsored Images\"])",
         "div[class]:has(> div > span + a + button[aria-label=\"About this advertiser\"])",
         "div[class^=\"adSponsoredMediaContainer-\"]",
         "div[class^=\"cell--\"]:has(button[aria-label=\"About this advertiser\"])",
@@ -21721,6 +21723,10 @@
     "sportingnews.com": [
         ".top-mpu-container",
         "[data-testid=\"outbrain-block\"]"
+    ],
+    "sportplus.watch": [
+        ".page__aside-banner",
+        ".visible[ngskiphydration]:has(> a[target=\"_blank\"])"
     ],
     "sports-reference.com": [
         ".primis"
@@ -27216,9 +27222,9 @@
     ],
     "wolt.com": [
         "[data-test-id=\"MainDiscoveryContent\"] li[draggable]:has(a[aria-label*=\"Sponsored\"])",
-        "div[data-test-id=\"MainDiscoveryContent\"] li > div.cb-elevated:has(button[data-test-id=\"AdvertisingLabel\"])",
-        "div[data-test-id=\"SearchResultVenueSection\"] li > div.cb-elevated:has(button[data-test-id=\"AdvertisingLabel\"])",
-        "ul[data-test-id=\"VenueVerticalListGrid\"] > li > div.cb-elevated:has(button[data-test-id=\"AdvertisingLabel\"])"
+        "div[data-test-id=\"MainDiscoveryContent\"] li:has(> div.cb-elevated:has(button[data-test-id=\"AdvertisingLabel\"]))",
+        "div[data-test-id=\"SearchResultVenueSection\"] li:has(> div.cb-elevated button[data-test-id=\"AdvertisingLabel\"])",
+        "ul[data-test-id=\"VenueVerticalListGrid\"] > li:has( > div.cb-elevated button[data-test-id=\"AdvertisingLabel\"])"
     ],
     "womanandhome.com": [
         ".sponsored-card-centred"
