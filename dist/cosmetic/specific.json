@@ -4627,6 +4627,9 @@
     "cdw.com": [
         "#backToTopWrapper"
     ],
+    "celeb-stalker.com": [
+        ".custom-html-widget"
+    ],
     "celebdigs.com": [
         ".ad"
     ],
@@ -19611,6 +19614,7 @@
         ".desk_only"
     ],
     "netweather.tv": [
+        ".adholder-1",
         ".billheight",
         ".samsad-Leaderboard2"
     ],
@@ -21132,7 +21136,7 @@
     ],
     "outlook.live.com": [
         "[data-message-ad-id=\"MessageAdKeyOutlookUpSell0\"]",
-        "[data-viewport-type=\"element\"] > div:not([style]) > div[id*=\"-\"]:has(img[src$=\"/images/ads-olk-icon.png\"])"
+        "div[role=\"complementary\"][data-skip-link-name][id] div[id*=\"-\"]:has(> div:not([class]) > div[class] img[src$=\"/images/ads-olk-icon.png\"])"
     ],
     "outlookindia.com": [
         "#_snup-rtdx-ldgr1",
@@ -26830,9 +26834,11 @@
     ],
     "staples.com": [
         "#searchResultsContainer [data-id^=\"tile\"]:has(.standard-tile__sponsored_badge_holder)",
+        "#sponsored-sku",
         ".SearchRootUX2__bannerAndSkuContainer",
         ".flexible-banner-configurator__flexibleBannerWrapper:has(a[aria-label*=\"Sponsored by\"])",
         "[role=\"complementary\"] #observer-id-temp:has(> #SKU_FeaturedProductCarousel)",
+        "div:has(> div[class*=\"configurator-container__\"] .topsort-video-configurator__monetizationContainer)",
         "div[class^=\"sku-configurator__banner\"]:has([aria-label=\"Sponsored Products\"])"
     ],
     "star-history.com": [
@@ -27037,7 +27043,8 @@
     "stockx.com": [
         "[data-component=\"brand-tile\"]:has([data-testid=\"sponsored-tag\"])",
         "[data-component=\"product-tile\"]:has([data-testid=\"sponsored-tag\"])",
-        "[data-testid=\"banner-collage\"] .chakra-aspect-ratio:has(a[title*=\"Promo\"])"
+        "[data-testid=\"banner-collage\"] .chakra-aspect-ratio:has(a[title*=\"Promo\"])",
+        "div[data-sponsored-listing=\"true\"]"
     ],
     "stokesentinel.co.uk": [
         ".react-loading-skeleton",
