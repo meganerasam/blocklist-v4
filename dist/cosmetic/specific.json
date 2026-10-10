@@ -7541,6 +7541,8 @@
         ".footer-pop-up-ads-sec"
     ],
     "dhgate.com": [
+        ".gallery-content > ul > li:has(> .gallery-main > .gallery-ad-wrap > i.icon-ad)",
+        "div[spm-c=\"sponsored\"]",
         ".drainagebanner",
         ".new-pack-mask",
         ".new-pack-pop",
@@ -20961,20 +20963,11 @@
         ".duration-100.rounded-lg:has(a[href=\"/advertise\"])",
         ".relative.rounded-lg:has(a[href^=\"/advertise\"])",
         ".relative.rounded-lg:has(img[src*=\"cdn.revinel.com\"])",
-        "body > div.group:has(a[target=\"_blank\"])",
-        "body > div.outline-transparent:has(a[target=\"_blank\"])",
-        "body > div:has(> img):has(a[target=\"_blank\"])",
-        "div.fixed.z-49.bottom-4",
-        "div.group:has(> a[target=\"_blank\"])",
-        "div.outline-transparent:has(> a[target=\"_blank\"])",
-        "div.outline-transparent:has(> span[class*=\"group/button\"])",
-        "div:has(> a[target=\"_blank\"][rel=\"noopener\"]):has(button):not(:has(h1, h2, h3))",
+        "body > div:has(> div > a[href^=\"/advertise\"])",
+        "div:has(> div > a[href^=\"/advertise\"]):has(> a[target=\"_blank\"])",
         "div:has(> div > h2 > a[href=\"/advertise\"])",
-        "div:has(> p + a[target=\"_blank\"]:last-child)",
-        "div:has(> span[class*=\"group/button\"]):has(button)",
         "div[class=\"relative flex max-md:order-3\"]:has(a[href=\"/advertise\"])",
-        "div[class=\"relative flex\"]:has(a[href=\"/advertise\"])",
-        "div[style*=\"--brand-tint\"]"
+        "div[class=\"relative flex\"]:has(a[href=\"/advertise\"])"
     ],
     "openculture.com": [
         "#big-bottom-ad-single-posts"
@@ -22762,6 +22755,7 @@
     "producthunt.com": [
         ".cursor-pointer:has(img[alt=\"Promoted\"])",
         ".styles_item__hNPI1",
+        "[data-test=\"launch\"] > section:has(span.rounded-b-xl.bg-brand-500)",
         "[data-test^=\"homepage-section-\"] > section:not([class])",
         "article:has(> div.cursor-pointer > img)",
         "article:has(img[alt=\"Promoted\"])",
@@ -28149,6 +28143,8 @@
         ".awrapper"
     ],
     "temu.com": [
+        ".autoFitGoodsList > div:has([role=\"text\"][aria-label=\"AD\"])",
+        "li.splide__slide:has([role=\"text\"][aria-label=\"AD\"])",
         ".wrap-6ZxH0"
     ],
     "tenforums.com": [
