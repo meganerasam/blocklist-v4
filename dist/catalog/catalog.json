@@ -1,8 +1,8 @@
 {
     "schema": 1,
-    "version": "84147c26595b743f06eb0e63ffa1eda2053997642ff5d35807daa9df9f1f27cc",
+    "version": "6fe5293cec5f4f70a0c36a6f2d7bbe3e56c0868e0cc6b4dcdb79c2b140dfff72",
     "built_from": {
-        "dist_manifest_version": "35ba208658a8f6a0f1e1461cb4ddd6db7e66d42b85bbcc99ad25bdb187be764d"
+        "dist_manifest_version": "8abf4ee5ae95cf259980a9724e3ee5842263c7e977e56a7a355fe0eaee9aaf8f"
     },
     "contract": {
         "stages": {
@@ -353,7 +353,7 @@
             "curated": {
                 "domains": {
                     "path": "catalog/curated/extension-whitelist/domains.json",
-                    "count": 1027
+                    "count": 1029
                 },
                 "rules": {
                     "allow": {
@@ -370,7 +370,7 @@
             "raw": {
                 "domains": {
                     "path": "catalog/raw/extension-whitelist/domains.json",
-                    "count": 1794
+                    "count": 1813
                 },
                 "rules": {
                     "allow": {
@@ -902,15 +902,15 @@
         "domains": {
             "block": {
                 "path": "catalog/merged/domains/block.json",
-                "count": 204204
+                "count": 204080
             },
             "redirect": {
                 "path": "catalog/merged/domains/redirect.json",
-                "count": 156947
+                "count": 156258
             },
             "allow": {
                 "path": "catalog/merged/domains/allow.json",
-                "count": 1218
+                "count": 1220
             },
             "cosmetic": {
                 "path": "catalog/merged/domains/cosmetic.json",
@@ -1064,13 +1064,13 @@
             "count": 0
         },
         "catalog/curated/extension-whitelist/domains.json": {
-            "sha256": "272fbc95ff29960131e9f60f587acc403321d7f1f657a8c04e6a90519bc92ca7",
-            "bytes": 23014,
-            "count": 1027
+            "sha256": "a214dc7da944743e59875a7256d3d7904e711f89b5fb38910900e9fe9b7b79fc",
+            "bytes": 23040,
+            "count": 1029
         },
         "catalog/curated/extension-whitelist/rules/allow.json": {
-            "sha256": "8e011f505e7eb7752fef84b84e6219f649ab40d4ecd97d76cc45c2ca08089990",
-            "bytes": 17960,
+            "sha256": "4e2244e5496b3794fd76ae90f0346b8e5b67859864b2e13cf0ede848245353da",
+            "bytes": 17976,
             "count": 1
         },
         "catalog/curated/gsheet-default-blocklist/domains.json": {
@@ -1179,14 +1179,14 @@
             "count": 1
         },
         "catalog/merged/domains/allow.json": {
-            "sha256": "9ff3c3e248c928a3e458e495f0ea8c4b92d7a9d16bdbcf9d36bba050c3eb1e49",
-            "bytes": 21104,
-            "count": 1218
+            "sha256": "4b394c95ab8eeca8864133765d3f3eaa2f6f959ccba7863990cefd1bfec82590",
+            "bytes": 21120,
+            "count": 1220
         },
         "catalog/merged/domains/block.json": {
-            "sha256": "a60c3a53ea9dee00c01be48fb8f39dcfbc3ee9c37a7b9338d6e6dba2446a885b",
-            "bytes": 4775311,
-            "count": 204204
+            "sha256": "a3a0a6083bacc673dc94838ac21feda62cb3db9f9a8bd1372d69688792c595b4",
+            "bytes": 4772271,
+            "count": 204080
         },
         "catalog/merged/domains/cosmetic.json": {
             "sha256": "802084ce891f70b1ac98b47c5a6c2c96e7657f02e583975627e64a70069c786a",
@@ -1194,9 +1194,9 @@
             "count": 8966
         },
         "catalog/merged/domains/redirect.json": {
-            "sha256": "d088fe300426fb2c2292407f539c977f64aa2064b924b19e90ae7ab8b0262123",
-            "bytes": 3726455,
-            "count": 156947
+            "sha256": "a4e86535faef87f46e1901ef8abfef57bff8e207f72ea1331f75c77a9b866732",
+            "bytes": 3706936,
+            "count": 156258
         },
         "catalog/merged/rules/allow.json": {
             "sha256": "3d93d4b242bd37cf64296ab6782c702bd5f90cf2e34446bffaa479f3b4541f96",
@@ -1204,13 +1204,13 @@
             "count": 1132
         },
         "catalog/merged/rules/block.json": {
-            "sha256": "d88436cdd38b39281fa6ace27e2ff6a4719af7cbe2223a074328a423fa28cb52",
-            "bytes": 5900023,
+            "sha256": "7168bce001b7b8b322fa8d1e8a505d85cf94485e2b2e24fb9a2a0598c251d1d9",
+            "bytes": 5896983,
             "count": 9353
         },
         "catalog/merged/rules/redirect.json": {
-            "sha256": "1447ec0f0895a3c84867d720b6fc74f80cce623e892e4c9f528e76d50b35e9f1",
-            "bytes": 3755358,
+            "sha256": "08b875fc1cfec5d667c67bcc49c635a8724c1cc4216d8f797ea2f0983f1a8d28",
+            "bytes": 3735839,
             "count": 50
         },
         "catalog/raw/easylist-adult/cosmetic/unhide.json": {
@@ -1352,13 +1352,13 @@
             "count": 0
         },
         "catalog/raw/extension-whitelist/domains.json": {
-            "sha256": "9e8f5b429cf8a976bf513ec0fbfacb80e510ee6f614f609b97148a8d799aab5e",
-            "bytes": 40420,
-            "count": 1794
+            "sha256": "8975149a364c8bb1ef85555f09919aa69be6ee62e557950121e2cdd11496fe8b",
+            "bytes": 40841,
+            "count": 1813
         },
         "catalog/raw/extension-whitelist/rules/allow.json": {
-            "sha256": "5ae365d89630e9ef33b44a98464cc0118fd2a62348e3e7b00adf6bef428035b7",
-            "bytes": 31530,
+            "sha256": "2fa88761a4138eba4c23970ff89ea3353211e8e1bd0f0e2ea5c3f7b60f7a4246",
+            "bytes": 31856,
             "count": 1
         },
         "catalog/raw/gsheet-allow-request-domains/domains.json": {
