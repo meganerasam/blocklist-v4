@@ -5,7 +5,7 @@
  * These selectors hide annoyance/age-gate elements on ALL websites.
  * Inject via content_scripts with matches: ["<all_urls>"]
  *
- * Total selectors: 798
+ * Total selectors: 797
  */
 
 #ArrowToTop,
@@ -484,7 +484,6 @@
 .go-to-top-button,
 .go-to-top-desktop,
 .go-to-top-page,
-.go-top,
 .go-top-button,
 .go-top-footer-btn,
 .go-top-wrapper,
