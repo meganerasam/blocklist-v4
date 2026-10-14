@@ -1939,6 +1939,20 @@
             "type": "extended"
         }
     ],
+    "temu.com": [
+        {
+            "selector": ".autoFitGoodsList > div:has(._2QlTgZaA:has-text(/^AD$/))",
+            "type": "extended"
+        },
+        {
+            "selector": ".mainContent div:has(> .goods-container ._2QlTgZaA:has-text(/^AD$/))",
+            "type": "extended"
+        },
+        {
+            "selector": "li.splide__slide:has(._2QlTgZaA:has-text(/^AD$/))",
+            "type": "extended"
+        }
+    ],
     "theblock.co": [
         {
             "selector": ".py-4.my-6:has-text(Advertisement)",
@@ -2166,6 +2180,12 @@
     "wltreport.com": [
         {
             "selector": ".code-block:has-text(ADVERTISEMENT)",
+            "type": "extended"
+        }
+    ],
+    "wolt.com": [
+        {
+            "selector": "div[data-test-id=\"MainDiscoveryContent\"] div > div:has-text(/Polecane na Wolt|Sponsored|Gesponsert/)",
             "type": "extended"
         }
     ],
