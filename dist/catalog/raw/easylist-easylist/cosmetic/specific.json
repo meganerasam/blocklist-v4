@@ -951,8 +951,12 @@
         "a[href^=\"http://www.amazon.com/gp/product\"]"
     ],
     "amazon.*": [
+        "#cm_cr-rvw_summary-ads",
         "#desktop-ad-btf",
         "#faceoutContainer:has(> [class$=\"sponsored-label\"])",
+        "#hero-quick-promo_feature_div",
+        "#mobile-ads-bottom-dramabot_feature_div",
+        "#mobile-ads-middle-dramabot_feature_div",
         "#nav-swmslot",
         "#sc-rec-bottom",
         "#sc-rec-right",
@@ -966,6 +970,7 @@
         ".celwidget[data-ref_$=\"displayAds\"]",
         ".dp-widget-card-deck:has([data-ad-placement-metadata])",
         ".gwm-window-wrapper:has(> [data-ref_$=\"_displayAds\"])",
+        ".p13n-uf:has(> #faceoutContainer > [class$=\"sponsored-label\"])",
         ".s-result-item:has(.puis-sponsored-label-text)",
         ".s-result-item:has([data-ad-feedback-label-id])",
         ".s-result-item:has([data-ad-feedback])",
