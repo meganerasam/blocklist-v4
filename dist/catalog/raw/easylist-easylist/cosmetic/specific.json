@@ -1429,6 +1429,11 @@
     "archpaper.com": [
         ".an-ads"
     ],
+    "arealme.com": [
+        ".leader_ad_banner",
+        ".lowerad",
+        "div[style=\"margin:auto;width:100%;min-height:250px;\"]"
+    ],
     "arenaev.com": [
         "#subHeader"
     ],
@@ -5274,6 +5279,7 @@
         ".wrapper-au-popup"
     ],
     "csrep.gg": [
+        ".sticky:has(> div.w-full > a[target=\"_blank\"] img)",
         "div[data-ad-placement]"
     ],
     "css3generator.com": [
