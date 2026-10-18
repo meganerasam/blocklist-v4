@@ -10487,6 +10487,7 @@
         "[style=\"text-align:center; margin-bottom:30px;\"]"
     ],
     "forum.ragezone.com": [
+        ".MentaLBannerUnit",
         ".RZBannerUnit",
         "[data-widget-key=\"widget_partners\"]"
     ],
@@ -19153,7 +19154,8 @@
         ".app-body > div[class]:has(> div[class] > .htlad-header_top)",
         "[style=\"min-height: 600px;\"]",
         "div[class*=\"is-desktop-ads-\"]",
-        "div[class^=\"htlad-film_box_\"]"
+        "div[class^=\"htlad-film_box_\"]",
+        "div[style=\"min-height: 250px;\"]:has(> .ad-removal-info)"
     ],
     "myevreview.com": [
         "#ad_aside_1",
@@ -23725,7 +23727,7 @@
         ".post-nav"
     ],
     "rapidsave.com": [
-        ".alert.col-md-offset-2"
+        ".alert.col-md-offset-2:has(a[href^=\"https://docmost.com/\"])"
     ],
     "rapidtvnews.com": [
         ".bannergroup",
