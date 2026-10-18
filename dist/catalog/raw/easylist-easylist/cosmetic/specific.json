@@ -1435,7 +1435,8 @@
         "div[style=\"margin:auto;width:100%;min-height:250px;\"]"
     ],
     "arenaev.com": [
-        "#subHeader"
+        "#subHeader",
+        ".adv"
     ],
     "argonauts.ca": [
         ".top-banner"
@@ -4537,6 +4538,10 @@
         "[alt=\"AD DESCRIPTION\"]",
         "[href^=\"https://app.adjust.com/\"]",
         "img[fetchpriority]"
+    ],
+    "codex-resets.com": [
+        ".sponsor-mobile",
+        ".sponsor-rail"
     ],
     "coffeeordie.com": [
         ".BannerPromo-desktop",
@@ -10242,6 +10247,7 @@
         "figure[data-clickurl^=\"https://api.groupon.com/sponsored/\"]"
     ],
     "gsmarena.com": [
+        "#opt300x250",
         "#subHeader:has(> #topAdv)",
         ".adv",
         ".adv-mid",
@@ -13402,6 +13408,11 @@
     "libertyballers.com": [
         "[data-concert=\"desktop_leaderboard_variable\"]",
         "[data-concert=\"leaderboard_top_tablet_desktop\"]"
+    ],
+    "libertycity.net": [
+        ".banner_in_news",
+        ".lcnet.backgr42",
+        "[data-umami-event=\"Difmark Brand Click\"]"
     ],
     "libertyunlocked.com": [
         ".code-block"
@@ -24569,6 +24580,9 @@
     ],
     "tmo.report": [
         "#directad"
+    ],
+    "tmpmailer.com": [
+        ".ad-anchor"
     ],
     "tmz.com": [
         ".ad-container",
