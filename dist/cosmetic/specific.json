@@ -1428,6 +1428,7 @@
         ".hawk-multi-model-review-container",
         ".sponsored-card",
         ".vid-present",
+        "[data-bordeaux-hook-loaded]",
         "[data-component-name=\"JwPlayer:Carousel\"]"
     ],
     "androidcommunity.com": [
@@ -8715,6 +8716,9 @@
     "elystandard.co.uk": [
         ".advert"
     ],
+    "emailme.at": [
+        ".ad-250x250"
+    ],
     "emailnator.com": [
         "[href^=\"https://go.nordvpn.net/\"]"
     ],
@@ -13771,6 +13775,9 @@
     "iclarified.com": [
         ".article_footer"
     ],
+    "ico.org.uk": [
+        "#button-top"
+    ],
     "icodrops.com": [
         ".Feature-Line"
     ],
@@ -14084,7 +14091,9 @@
         ".subscribe"
     ],
     "independent.ie": [
+        "#leaderboard-observe-target",
         ".ad--articlerectangle",
+        ".mh-ad-label",
         ".slot1",
         ".slot4"
     ],
@@ -14634,6 +14643,7 @@
         ".ad-container"
     ],
     "irishmirror.ie": [
+        "[data-tmdatatrack-id]",
         ".swipe-prompt"
     ],
     "irishnews.com": [
@@ -21532,6 +21542,7 @@
         ".listingResult:has(> .sponsored-post)",
         ".sponsored-card",
         ".vid-present",
+        "[data-bordeaux-hook-loaded]",
         "[data-component-name=\"JwPlayer:Carousel\"]",
         "div[class*=\"ad-unit\"]"
     ],
@@ -22105,21 +22116,21 @@
         ".ads",
         ".grid-flow-dense > .aspect-square.overflow-hidden",
         ".grid-flow-dense > .col-span-full.overflow-hidden",
-        ".grid-flow-dense > div:has(> [style=\"display: block; width: 184px; height: 232px;\"] > iframe)",
-        ".gtm-toppage-thumbnail-illustration-recommend-works-zone > ul > li:has(> div > [style=\"display: block; width: 300px; height: 250px;\"])",
-        ".gtm-toppage-thumbnail-manga-recommend-works-zone li:has(> [style=\"display: block; width: 184px; height: 232px;\"])",
+        ".grid-flow-dense > div:has(> [style$=\"width: 184px; height: 232px;\"] > iframe)",
+        ".gtm-toppage-thumbnail-illustration-recommend-works-zone > ul > li:has(> div > [style$=\"width: 300px; height: 250px;\"])",
+        ".gtm-toppage-thumbnail-manga-recommend-works-zone li:has(> [style$=\"width: 184px; height: 232px;\"])",
         "[class*=\"style_ads_\"]",
         "[data-gtm-recommend-zone=\"index\"] li:has(> div > iframe[name$=\"rectangle\"])",
         "[span=\"1\"]:has(> div > div > div[style=\"display: block; width: 100%; height: 434px;\"])",
-        "[style=\"display: block; width: 100%; height: 520px;\"]",
         "[style=\"display: block; width: 300px; height: 250px;\"]",
         "[style=\"margin: 48px auto 8px; width: 728px; line-height: 0; font-size: 0px;\"]",
+        "[style^=\"display: block\"][style$=\"width: 100%; height: 520px;\"]",
         "[style^=\"display: block;\"]:has(> iframe[data-uid])",
         "div.relative > div.flex > div.w-full:has(a[href^=\"https://pixon.ads-pixiv.net/click\"])",
         "div[class^=\"sc-\"]:has(> [style^=\"display\"][style*=\"468px;\"][style*=\"60px\"])",
         "div[style=\"font-size: 0px;\"] a[target=\"premium_noads\"]",
         "div[style=\"height: 540px; opacity: 1;\"]",
-        "li.overflow-hidden:has(> .pt-0 > [style=\"display: block; width: 300px; height: 250px;\"])",
+        "li.overflow-hidden:has(> .pt-0 > [style$=\"width: 300px; height: 250px;\"])",
         "section:has(> div > div > iframe[name=\"illusttop_appeal\"])"
     ],
     "pixnoy.com": [
@@ -30234,6 +30245,7 @@
         ".hawk-root",
         ".sponsored-card",
         ".vid-present",
+        "[data-bordeaux-hook-loaded]",
         "[data-component-name=\"JwPlayer:Carousel\"]",
         "div[class*=\"ad-unit\"]",
         "#sticky-nav--floating",
@@ -30243,6 +30255,7 @@
         ".jwplayer__widthsetter",
         ".sponsored-card",
         ".vid-present",
+        "[data-bordeaux-hook-loaded]",
         "[data-component-name=\"JwPlayer:Carousel\"]",
         "div[class*=\"ad-unit\"]"
     ],
@@ -32932,7 +32945,8 @@
     ],
     "whathifi.com": [
         ".jwplayer__widthsetter",
-        ".vid-present"
+        ".vid-present",
+        "[data-bordeaux-hook-loaded]"
     ],
     "whatismybrowser.com": [
         ".fun-info-footer",
