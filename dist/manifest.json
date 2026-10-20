@@ -1,18 +1,18 @@
 {
     "schema": 1,
-    "version": "f2cb17329e07fadda33c3e5c199b240ad032c4664a172da5ce9e5ee44ee0d07c",
-    "generated_at": "2026-10-20T04:10:14+00:00",
-    "sanitized_provenance": "e042d0a0b6530d8c40c7a2ee1bd5f598bd0ff6d1f6329db634d5591401f894db",
+    "version": "74cc2889cd083ac6b11abcec285285ffd71ea432c7be56f69f6c20b1b8234d3a",
+    "generated_at": "2026-10-20T10:59:03+00:00",
+    "sanitized_provenance": "2d578a1409990882c0ec40f0d433aeadbb8dab4536647cfaed9f1eb9c3d39615",
     "counts": {
-        "network_rules_total": 10557,
+        "network_rules_total": 10559,
         "network_rules_by_action": {
-            "redirect": 52,
-            "block": 9370,
+            "redirect": 53,
+            "block": 9371,
             "allow": 1135
         },
-        "unsafe_rules": 52,
-        "regex_rules": 52,
-        "shipped_block_domains": 169176,
+        "unsafe_rules": 53,
+        "regex_rules": 53,
+        "shipped_block_domains": 169454,
         "curation_set": 86
     },
     "budgets": {
@@ -22,14 +22,14 @@
     },
     "artifacts": {
         "blocklist/popup-curated.json": {
-            "sha256": "c6be54c4328608c52e7d98415cde9469f452a2dd2ee836fd94755b09ec1e99cc",
-            "bytes": 1262444,
-            "count": 44313
+            "sha256": "dc0e6b8127090b060e48f642762ba551125875c6b44eae20d3d6339bc4acc97e",
+            "bytes": 1262554,
+            "count": 44321
         },
         "blocklist/popup.json": {
-            "sha256": "19864caf29e8d26c177fbe6d4254210f3b7129dbb90d9537072fea15cbf4eb9b",
-            "bytes": 56458,
-            "count": 2249
+            "sha256": "327d211e1db00686771f83b02890a2ebbc2ffc7eea26816e7216426cf2b0dece",
+            "bytes": 55949,
+            "count": 2229
         },
         "cosmetic/extended.json": {
             "sha256": "0f320a4a1c86e6814503495029ce10c3868ab22ff8a388696a7f3832ff7f6cd3",
@@ -52,9 +52,9 @@
             "count": 531
         },
         "derived/community.json": {
-            "sha256": "02c1bc66516dd85179b001dd2018ed38ede130fca1192ef29e7ebce1cdfe7653",
-            "bytes": 24099,
-            "count": 1076
+            "sha256": "751766e4834275619029f32307b2e2ee3463d0520fb401c7522f680fb5465f37",
+            "bytes": 24141,
+            "count": 1078
         },
         "derived/to-filter-out-domains-set.json": {
             "sha256": "6b213bd9aec6d6f04b3b2cd079f9916f6e7155ee76a20ce83a1047950755189b",
@@ -62,19 +62,19 @@
             "count": 86
         },
         "network/rules-easylist.json": {
-            "sha256": "cbbbae7463858da1328a5a4c5ac2cbe8f908c661798d096fc46af12e84077779",
+            "sha256": "71f9e8bfe158dccb374de825ec1b23f6e0abef7aaaacb6911c09c055fa944489",
             "bytes": 3412101,
             "count": 10446
         },
         "network/rules-hosts.json": {
-            "sha256": "04c4e2088059e54027cb5ea13e67ce69c5e03e7911dac114eb7052559898d77e",
-            "bytes": 6941667,
-            "count": 59
+            "sha256": "ee5a6b533cd57a7d332993598849d85bf7fc3d8fe44278203e34f6444c92fc2c",
+            "bytes": 6953836,
+            "count": 61
         },
         "network/rules.json": {
-            "sha256": "d4a8d08b5ef1d17f49fde6538c455c357e237b09e52472b626f42ba204271470",
-            "bytes": 10409004,
-            "count": 10557
+            "sha256": "0fe3d3c968d6ea993716a7766b0a6e1288b79b1f556f7f3496b6effbdb2e7380",
+            "bytes": 10420764,
+            "count": 10559
         },
         "standalone/allow-request-domains.json": {
             "sha256": "b2ed7e3d7cc9018045873fcd80228654e32570da5c5bceb0673fb9e648a84b6c",
@@ -933,9 +933,9 @@
             "bytes": 296
         },
         "whitelist/community.json": {
-            "sha256": "02c1bc66516dd85179b001dd2018ed38ede130fca1192ef29e7ebce1cdfe7653",
-            "bytes": 24099,
-            "count": 1076
+            "sha256": "751766e4834275619029f32307b2e2ee3463d0520fb401c7522f680fb5465f37",
+            "bytes": 24141,
+            "count": 1078
         },
         "whitelist/default.json": {
             "sha256": "3484520732ea64ccdf85f593a0ac5d7790b13691d8338071f5972f34a739f763",
