@@ -5965,10 +5965,13 @@
         ".css-3oqygl"
     ],
     "deliveroo.*": [
+        "#layout-next_category_layout_id_showcase_ads",
+        "#layout-next_category_layout_id_showcase_ads + div[class^=\"MenuUILayout\"]",
         ".splide__slide:has(p[data-testid=\"sponsored-label\"])",
         "[class^=\"Carousel\"] li[class^=\"Slide-\"]:has(div[style*=\"d815008c-8a59-40e3-9c64-79b841bf482c\"])",
         "div[class^=\"HomeFeedScrollTracker-\"]:has(div[data-testid=\"sponsored-badge\"] > p[data-testid=\"sponsored-tag\"])",
         "div[class^=\"HomeFeedScrollTracker-\"]:has(p[data-testid=\"sponsored-rating-distance\"] > span[data-testid=\"label-prefix\"])",
+        "li:has(> [class^=\"MenuItemCard\"] [data-testid=\"sponsored-ad-tag\"])",
         "li:not(:has(li)):has([data-testid=\"promotional-sponsor-label\"])",
         "li[class^=\"HomeFeedGrid\"]:has([data-testid=\"sponsored-tag\"])",
         "li[class^=\"Slide-\"]:has(div[data-testid=\"sponsored-tag\"] > p[data-testid=\"label\"])",
