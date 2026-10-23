@@ -21824,6 +21824,7 @@
         "div[data-testid=\"item\"]:has(a[href^=\"https://www.pexels.com/g/\"])",
         "div[data-testid=\"item\"]:has(h4[data-heading][class*=\"inlineTitleText\"])",
         "div[data-testid=\"item\"]:has(h4[data-heading^=\"S\\00200cp\\00200co\\00200cn\\00200cs\\00200co\\00200cr\\00200ce\\00200cd\"])",
+        "div[data-testid=\"item\"]:has(img[src*=\"media.istockphoto.com\"])",
         ".NameChangeBanner_container__GyQTG"
     ],
     "pgatour.com": [
@@ -22100,6 +22101,8 @@
         ".present-g-item",
         "[class^=\"adsSection\"]",
         "[class^=\"gettySponsored\"]",
+        "div[class*=\"SectionGroup\"] > div:has(a[href*=\"sponsored_\"])",
+        "div[class*=\"container--\"] > div:not([class*=\"--\"]):has(a[href*=\"sponsored_\"])",
         "div[class]:has(> [class^=\"title--\"] a[href*=\"sponsored\"])",
         "div[class]:has(> div > div > a[aria-label=\"Sponsored Images\"])",
         "div[class]:has(> div > span + a + button[aria-label=\"About this advertiser\"])",
