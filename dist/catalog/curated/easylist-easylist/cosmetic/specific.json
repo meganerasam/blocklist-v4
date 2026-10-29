@@ -977,6 +977,7 @@
         ".s-result-list > .a-section:has(.sbv-ad-content-container)",
         ".sbv-video-single-product",
         "[cel_widget_id*=\"-creative-desktop_loom-desktop-\"]",
+        "[data-card-metrics-id^=\"universal-detail-ilm-card_\"]",
         "[id^=\"sponsoredProducts\"][id$=\"_feature_div\"]",
         "div.s-inner-result-item > div.sg-col-inner:has(a.puis-sponsored-label-text)",
         "div[cel_widget_id*=\"Deals3Ads\"]",
@@ -6611,6 +6612,11 @@
         ".adt",
         ".advertisement"
     ],
+    "dpm.lol": [
+        ".h-\\[634px\\]",
+        ".h-\\[640px\\]",
+        ".min-h-\\[88px\\]"
+    ],
     "dpreview.com": [
         ".ad",
         ".connatixWrapper",
@@ -11886,6 +11892,9 @@
     ],
     "instapundit.com": [
         "#adspace_top > .widget-ad__content"
+    ],
+    "instructables.com": [
+        "._promoStickyContainer_19m79_13"
     ],
     "insurancebusinessmag.com": [
         ".ad-wrapper-billboard-v2"
@@ -22533,6 +22542,10 @@
     "swagger.io": [
         "img[width=\"250\"]"
     ],
+    "sweepstakesfanatics.com": [
+        "#railad1",
+        ".top-ad-container-parent"
+    ],
     "sweetalert2.github.io": [
         "img[width=\"728\"]"
     ],
@@ -25873,11 +25886,6 @@
         ".ad_left_box",
         ".ad_right_box"
     ],
-    "urlencoder.org.prettifycss.com": [
-        ".ad_header_box",
-        ".ad_left_box",
-        ".ad_right_box"
-    ],
     "usahealthcareguide.com": [
         ".banner-top"
     ],
@@ -26501,6 +26509,10 @@
     ],
     "warecracks.com": [
         "[rel=\"nofollow\"]"
+    ],
+    "warez-db.org": [
+        ".wd-promo",
+        ".wd-vpn"
     ],
     "warezload.net": [
         ".wrapper > center > center > [href]"
