@@ -31785,6 +31785,9 @@
     "vanguardngr.com": [
         ".ad-container"
     ],
+    "vanityfair.com": [
+        "[data-testid=\"sticky-hero-ad\"]"
+    ],
     "vanpur.com.pl": [
         "#age_box"
     ],
@@ -33920,7 +33923,8 @@
         "html[itemtype=\"http://schema.org/SearchResultsPage\"] #cnt div[class$=\"sh-sr__bau\"]",
         "html[itemtype=\"http://schema.org/SearchResultsPage\"] #cnt div[class$=\"sh-sr__tau\"][style]",
         "div.nD2EKb.VEELad",
-        "div[jscontroller=\"MaoVMd\"][jsdata*=\"nTLyye;\"]"
+        "div[jscontroller=\"MaoVMd\"][jsdata*=\"nTLyye;\"]",
+        "div[jsname=\"wA2P2b\"][data-li=\"\"]"
     ],
     "www.google.com": [
         "[jscontroller][data-limp] > .zQSHZb.cH2VZe[style^=\"right:\"] > .gLpFG",
