@@ -5,7 +5,7 @@
  * These selectors hide ad elements on ALL websites.
  * Inject via content_scripts with matches: ["<all_urls>"]
  *
- * Total selectors: 13634
+ * Total selectors: 13635
  */
 
 #AC_ad,
@@ -12939,6 +12939,7 @@
 .vf-conversation-starter__ad,
 .vf-promo-gtag,
 .vf-promo-wrapper,
+.vf-trending-articles__flex-wrapper,
 .vf3-conversations-list__promo,
 .vi-sticky-ad,
 .video--container--aniview,
