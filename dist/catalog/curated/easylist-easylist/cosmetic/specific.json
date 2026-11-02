@@ -461,6 +461,10 @@
         "embed[width=\"240\"]",
         "object[width=\"240\"]"
     ],
+    "adblock.turtlecute.org": [
+        "[role=\"link\"]",
+        "[src*=\"blob:\"]"
+    ],
     "adcash.com": [
         "HTML"
     ],
@@ -24439,7 +24443,8 @@
         ".widget_media_image"
     ],
     "thingiverse.com": [
-        ".AdBanner__adBanner--gSsno"
+        "div[class^=\"AdBanner\"]",
+        "div[class^=\"AdCard_\"]"
     ],
     "thingstodovalencia.com": [
         ".get-your-guide"
@@ -25515,7 +25520,8 @@
         ".adcon",
         ".center-tag-rightad",
         ".fusevidad",
-        ".tldrad"
+        ".tldrad",
+        ".tt-price-board"
     ],
     "twinfinite.net": [
         "#mvp-main-content-wrap",
@@ -27458,7 +27464,6 @@
         ".wpa-about"
     ],
     "wolt.com": [
-        "[data-test-id=\"MainDiscoveryContent\"] li[draggable]:has(a[aria-label*=\"Sponsored\"])",
         "div[data-test-id=\"MainDiscoveryContent\"] li:has(> div.cb-elevated:has(button[data-test-id=\"AdvertisingLabel\"]))",
         "div[data-test-id=\"SearchResultVenueSection\"] li:has(> div.cb-elevated button[data-test-id=\"AdvertisingLabel\"])",
         "ul[data-test-id=\"VenueVerticalListGrid\"] > li:has( > div.cb-elevated button[data-test-id=\"AdvertisingLabel\"])"
