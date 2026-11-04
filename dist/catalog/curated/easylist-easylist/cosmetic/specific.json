@@ -7124,6 +7124,10 @@
     "elystandard.co.uk": [
         ".advert"
     ],
+    "emag.*": [
+        ".card-item[data-url=\"ref=sponsored_\"]",
+        ".page-section:has([data-tracking-engine=\"rec-ads\"])"
+    ],
     "emailme.at": [
         ".ad-250x250"
     ],
@@ -14116,7 +14120,8 @@
     "makemytrip.com": [
         ".adtech-desktop",
         ".hotDeals",
-        ".hotelTileDt:has(.icSponsored)"
+        ".hotelTileDt:has(.icSponsored)",
+        "li:has(> [class=\"cardInteractive\"] img[src*=\"sponsoredtag\"])"
     ],
     "maketecheasier.com": [
         ".header-widget"
