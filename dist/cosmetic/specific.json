@@ -15725,6 +15725,7 @@
     "kohls.com": [
         "#PDP_monetization_HL",
         "#PMP_monetization_HL",
+        "#kmn-brand-spotlight",
         "#kmn-featured-carousel",
         "#kmn-more-to-consider",
         "#kmnbanner-pencil_bottom-anchor",
@@ -32331,7 +32332,8 @@
     "walgreens.com": [
         "#prod-sponsored",
         "#searchSponsoredProductContainer",
-        "li.owned-brands:has(figure.sponsored)"
+        "li.owned-brands:has(figure.sponsored)",
+        "li.product-grid-item:has(.sponsored-badge)"
     ],
     "wallapop.com": [
         "article[class^=\"retrieval-item-card-module_RetrievalItemCard\"]:has(span[class^=\"retrieval-item-card-module_RetrievalItemCard__promoted\"])",

@@ -1591,6 +1591,12 @@
             "type": "extended"
         }
     ],
+    "nordstromrack.com": [
+        {
+            "selector": "[data-container-type=\"product-grid\"] article:has-text(Sponsored)",
+            "type": "extended"
+        }
+    ],
     "nzherald.co.nz": [
         {
             "selector": "section.section-chain--triple-image:has-text(Property news from OneRoof)",
