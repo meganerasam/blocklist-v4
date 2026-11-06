@@ -567,6 +567,10 @@
         {
             "selector": "div[class*=\"flex-col\"]:has(>h2:has-text(Sponsored))",
             "type": "extended"
+        },
+        {
+            "selector": "div[id^=\"product-tile-\"]:has(div[dir=\"auto\"]:has-text(Sponsored))",
+            "type": "extended"
         }
     ],
     "cyberchef.org": [
@@ -2348,6 +2352,12 @@
     "vons.com": [
         {
             "selector": ".product-card-col:has-text(Sponsored)",
+            "type": "extended"
+        }
+    ],
+    "votes.decisiondeskhq.com": [
+        {
+            "selector": ".z-9999:has-text(free account)",
             "type": "extended"
         }
     ],
