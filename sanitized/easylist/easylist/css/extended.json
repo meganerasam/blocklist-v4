@@ -535,6 +535,10 @@
         {
             "selector": "div[class*=\"flex-col\"]:has(>h2:has-text(Sponsored))",
             "type": "extended"
+        },
+        {
+            "selector": "div[id^=\"product-tile-\"]:has(div[dir=\"auto\"]:has-text(Sponsored))",
+            "type": "extended"
         }
     ],
     "cyberchef.org": [

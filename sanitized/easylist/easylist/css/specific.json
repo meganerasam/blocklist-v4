@@ -7201,6 +7201,9 @@
     "endtimeheadlines.org": [
         ".endti-widget"
     ],
+    "eneba.com": [
+        ".site-sponsors-container"
+    ],
     "energyvanguard.com": [
         ".bannerListWidget"
     ],
@@ -7455,12 +7458,15 @@
     ],
     "euronews.com": [
         "#connatix-container",
+        ".as-site-main",
         ".c-ad",
         ".c-card-sponsor",
         ".enw-MPU",
         ".m-object:has(.m-object__spons-quote)",
+        ".optidigital-wrapper-div",
         ".qa-dfpLeaderBoard",
-        ".tp-outbrain"
+        ".tp-outbrain",
+        "div[data-twig-component=\"Advertising-default\"]"
     ],
     "europages.co.uk": [
         ".sponsor"
@@ -21358,6 +21364,7 @@
         "div[class^=\"ItineraryInlinePlusWrapper_\"]:has(button[class^=\"SponsoredInfoButton_\"])",
         "div[data-backpack-ds-component]:has(#inline-ad-button)",
         "div[id*=\"-first-result\" i]:has(button[class*=\"SponsoredInfoButton\" i])",
+        "div[role=\"listitem\"]:has(button[data-testid=\"adInfoBtn\"])",
         "section[data-testid=\"inline-ad-panel-desktop-layout\"]"
     ],
     "skysports.com": [
