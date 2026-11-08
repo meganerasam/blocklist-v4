@@ -1583,6 +1583,10 @@
         {
             "selector": "div[class=\"flex cursor-pointer items-start gap-4 rounded-lg bg-gray-50 p-4\"]:has-text(Promoted)",
             "type": "extended"
+        },
+        {
+            "selector": "[data-test^=\"homepage-section-\"] > section[data-container]:xpath(self::*[not(contains(\"0123456789\", substring(normalize-space(.),1,1)))])",
+            "type": "extended"
         }
     ],
     "property24.com": [
