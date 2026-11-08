@@ -1691,7 +1691,7 @@
             "type": "extended"
         },
         {
-            "selector": "[data-test^=\"homepage-section-\"] > section[data-container]:xpath(self::*[not(contains(\"0123456789\", substring(normalize-space(.),1,1)))])",
+            "selector": "[data-test^=\"homepage-section-\"] > section[data-container]:xpath(self::*[.//img[@alt=\"Promoted\"]/@src != //div[starts-with(@data-test,\"homepage-section-\")]/section[@data-container][substring(normalize-space(.),1,1) != \"\"][contains(\"0123456789\", substring(normalize-space(.),1,1))]//img[@alt=\"Promoted\"]/@src])",
             "type": "extended"
         }
     ],
