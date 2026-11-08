@@ -3507,6 +3507,7 @@
     ],
     "canadiantire.ca": [
         ".ad-banner",
+        ".nl-product__content[id^=\"ad\"]",
         ".sponsoredproductcarousel",
         "li[data-testid=\"product-grids\"]:has(.nl-product-card__sponsored)"
     ],
@@ -18635,6 +18636,8 @@
         "article:has(> div.cursor-pointer > img)",
         "article:has(img[alt=\"Promoted\"])",
         "div.cursor-pointer.overflow-hidden:has(> img.object-contain)",
+        "div.my-4.flex-1.rounded-md.border-2.border-gray-200",
+        "div.rounded-lg.bg-gray-50.p-3",
         "div[class=\"my-2 flex cursor-pointer flex-row items-center gap-4 rounded-lg bg-gray-50 p-3\"]:has(a[href=\"/sponsor\"])",
         "div[class=\"my-2 flex cursor-pointer flex-row items-center gap-4 rounded-lg bg-gray-50 p-3\"]:has(img[src=\"/i/33b26ee8f2668842e38841253cfde42aa203585e395ff731f21aebffbb38c8e5\"])",
         "div[class=\"my-2 flex cursor-pointer flex-row items-center gap-4 rounded-lg bg-gray-50 p-3\"]:has(img[src^=\"/i/\"])",
@@ -18644,6 +18647,7 @@
         "div[data-test] > section:has(img[src=\"/i/299a62819c7092e196f7fc2c331cc11ef4f93a0f32c3b3069c4fd974cda0cb4c\"])",
         "div[data-test]:not([data-test^=\"homepage-section-\"]) > section[data-test^=\"post-item-\"]",
         "div[data-test^=\"ad-slot-\"]",
+        "main > div:has(> div.-mt-px.justify-end.pr-4)",
         "section.group + div > section.group",
         "section:has(> div > div > span.rounded-b-xl.bg-brand-500)"
     ],
