@@ -3824,6 +3824,7 @@
         ".widget_sp_image"
     ],
     "brighteon.com": [
+        ".sidebar-content-wrapper > div:has(.main-ad)",
         "[href^=\"https://ams.brighteon.com/\"]",
         "[href^=\"https://support.brighteon.com/\"]",
         ".index_top_banner"
@@ -6036,8 +6037,12 @@
         "[style*=\"position:absolute;top:20px;\"]",
         "a[href*=\"srv.Buysellads.com\"]"
     ],
+    "copilot.com": [
+        "div[aria-live=\"polite\"][aria-atomic=\"true\"]:has(span[data-ad-part=\"title\"])"
+    ],
     "copilot.microsoft.com": [
         ".b_ad",
+        "div[aria-live=\"polite\"][aria-atomic=\"true\"]:has(span[data-ad-part=\"title\"])",
         "div[data-testid=\"ads-card\"]"
     ],
     "copykat.com": [
@@ -8752,6 +8757,7 @@
         ".advert"
     ],
     "emag.*": [
+        ".card-item[data-aid]",
         ".card-item[data-url=\"ref=sponsored_\"]",
         ".page-section:has([data-tracking-engine=\"rec-ads\"])"
     ],
@@ -16158,6 +16164,9 @@
         ".tonefuze",
         ".mpu-subscription-upsell"
     ],
+    "lastampausa.com": [
+        "img[alt^=\"Static banner\"]"
+    ],
     "lastmomenttuitions.com": [
         "#preload"
     ],
@@ -21887,6 +21896,7 @@
     ],
     "pexels.com": [
         ".inline-ads",
+        "[class*=\"GridLayout_item\"]:has(img[src*=\"media.istockphoto.com/\"])",
         "[data-testid=\"column\"] [data-testid=\"item\"]:has([class*=\"AIGCAdShared\"])",
         "[data-testid=\"column\"] [data-testid=\"item\"]:has([data-heading*=\"Sponsored\"])",
         "[data-testid=\"column\"] [data-testid=\"item\"]:has([data-text=\"Sponsored Photos\"])",
@@ -22173,8 +22183,10 @@
         ".external-media",
         ".gettyImagesContainer--7sZnR",
         ".present-g-item",
+        "[class*=\"cell--\"]:has([role=\"link\"]:not(a))",
         "[class^=\"adsSection\"]",
         "[class^=\"gettySponsored\"]",
+        "div:has(> div > button):has(> div > div > [role=\"link\"] > img)",
         "div[class*=\"SectionGroup\"] > div:has(a[href*=\"sponsored_\"])",
         "div[class*=\"container--\"] > div:not([class*=\"--\"]):has(a[href*=\"sponsored_\"])",
         "div[class]:has(> [class^=\"title--\"] a[href*=\"sponsored\"])",
@@ -22511,6 +22523,7 @@
     "pons.com": [
         "#pons-ad-footer",
         "#pons-ad-leaderboard__container",
+        ".idm_topslot_container",
         ".parallax-container"
     ],
     "pontiactalk.com": [
@@ -34480,7 +34493,6 @@
         "#shorts-inner-container > .ytd-shorts:has(> .ytd-reel-video-renderer > ytd-ad-slot-renderer)",
         "#sticker-layer",
         ".grid.ytd-browse > #primary > .style-scope > .ytd-rich-grid-renderer > .ytd-rich-grid-renderer > .ytd-ad-slot-renderer",
-        ".ytReelMetapanelViewModelHost > .ytReelMetapanelViewModelMetapanelItem > .ytShortsSuggestedActionViewModelStaticHost",
         ".ytd-rich-item-renderer.style-scope > .ytd-rich-item-renderer > .ytd-ad-slot-renderer.style-scope",
         ".ytd-section-list-renderer > .ytd-item-section-renderer > ytd-search-pyv-renderer.ytd-item-section-renderer",
         ".ytd-two-column-browse-results-renderer > ytd-rich-grid-renderer > #masthead-ad.ytd-rich-grid-renderer",
