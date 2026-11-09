@@ -3975,6 +3975,7 @@ ice.hockey##.ice_ner
 ice.hockey##.ice_werbung
 darkreader.org##.icons8
 timesofisrael.com##.idfwo-widget-wrapper
+pons.com##.idm_topslot_container
 indianexpress.com##.ie-ads-block-frontend
 indianexpress.com##.ie-adsbox
 indianexpress.com##.ie-adtext
@@ -5479,6 +5480,7 @@ kanogoma.com##.sidebar-aside
 dailycoffeenews.com##.sidebar-box
 coingape.com##.sidebar-btn-container
 ixbt.games##.sidebar-c
+brighteon.com##.sidebar-content-wrapper > div:has(.main-ad)
 makeuseof.com,polygon.com##.sidebar-default
 nfcw.com##.sidebar-display
 thehustle.co##.sidebar-feed-trends
@@ -7207,6 +7209,7 @@ informer.com##div[align="center"][style="margin:10px"]
 yandex.com##div[aria-label="Ad"]
 lifehacker.com##div[aria-label="Products List"]
 videocardz.com##div[aria-label="Shop"]
+copilot.com,copilot.microsoft.com##div[aria-live="polite"][aria-atomic="true"]:has(span[data-ad-part="title"])
 imginn.com##div[class$="-money"]
 tribuna.com##div[class$="_ads-container"]
 azuremagazine.com##div[class$="azoa"]
@@ -7616,6 +7619,7 @@ newagebd.net##img[alt="ads space"]
 framed.wtf##img[alt="prime gaming banner"]
 majorgeeks.com##img[alt="tip"]
 majorgeeks.com##img[alt="tip"] + b
+lastampausa.com##img[alt^="Static banner"]
 pasty.info##img[aria-label="Aliexpress partner network affiliate Link"]
 pasty.info##img[aria-label="Ebay partner network affiliate Link"]
 inkbotdesign.com##img[decoding="async"]
@@ -7747,6 +7751,7 @@ bier-universum.*##.abc-wrapper
 leroymerlin.*##.arm-dss-content-sponsored
 flashscore.*,flashscoreusa.com,livescore.*,soccer24.com##.banner
 yandex.*##.business-card-title-view__advert
+emag.*##.card-item[data-aid]
 emag.*##.card-item[data-url="ref=sponsored_"]
 douglas.*##.cms-container:has([data-testid="CriteoAdFormatCategoryView"])
 douglas.*##.criteo-product-carousel
@@ -8097,10 +8102,12 @@ beaumontenterprise.com,chron.com,ctinsider.com,ctpost.com,expressnews.com,greenw
 realnarrativenews.com##[aria-label="Advertisement"]
 cars.com##[aria-label="Listings"] li:has(card-gallery[card-link*="?attribution_type"])
 tiktok.com##[class*="ArticleItemContainer"]:has([data-e2e="ad-tag"])
+pexels.com##[class*="GridLayout_item"]:has(img[src*="media.istockphoto.com/"])
 priceline.com##[class*="ListingCardWrapper"]:has([class*="PromoText"])
 freshdirect.com##[class*="ProductsGrid_grid_item"]:has([data-testid="marketing tag"])
 petco.com##[class*="atapult-styled"]:has([data-ad-source])
 livejournal.com##[class*="categories"] + div[class]:has(> [class*="-commercial"])
+pixabay.com##[class*="cell--"]:has([role="link"]:not(a))
 noon.com##[class*="container"]:has(> [class*="adModuleWrapper"])
 noon.com##[class*="container"]:has([data-qa="widget_adBannerModule"])
 petco.com##[class*="rmn-banner"]:has([class*="SponsoredText"])
@@ -8213,6 +8220,7 @@ fandomwire.com##div:has(> [data-openweb-ad])
 doordash.com##div:has(> a[data-anchor-id="SponsoredStoreCard"])
 regex101.com##div:has(> div > a > div[style*="/static/assets/sponsors/"])
 openalternative.co##div:has(> div > a[href^="/advertise"]):has(> a[target="_blank"])
+pixabay.com##div:has(> div > button):has(> div > div > [role="link"] > img)
 tripadvisor.*##div:has(> div > div[class="ui_column ovNFo is-3"])
 openalternative.co##div:has(> div > h2 > a[href="/advertise"])
 producthunt.com##div:has(> div.-mt-px.justify-end.pr-4)
@@ -8824,7 +8832,6 @@ youtube.com###description-inner > ytd-merch-shelf-renderer > #main.ytd-merch-she
 youtube.com###shopping-timely-shelf
 youtube.com###shorts-inner-container > .ytd-shorts:has(> .ytd-reel-video-renderer > ytd-ad-slot-renderer)
 youtube.com###sticker-layer
-youtube.com##.ytReelMetapanelViewModelHost > .ytReelMetapanelViewModelMetapanelItem > .ytShortsSuggestedActionViewModelStaticHost
 youtube.com##.ytd-section-list-renderer > .ytd-item-section-renderer > ytd-search-pyv-renderer.ytd-item-section-renderer
 youtube.com##.ytd-two-column-browse-results-renderer > ytd-rich-grid-renderer > #masthead-ad.ytd-rich-grid-renderer
 youtube.com##.ytd-watch-flexy > .ytd-watch-next-secondary-results-renderer > ytd-ad-slot-renderer.ytd-watch-next-secondary-results-renderer
