@@ -632,8 +632,9 @@
 ||dubz.live/analytics/
 ||duckduckgo.com/t/
 ||dumpster.cam4.com^
-||duolingo.com/2017-06-30/tracking-status
+||duolingo.com/api/1/sync/batch
 ||dynatrace.att.com^
+||e.muckrack.com^
 ||e.quizlet.com^
 ||e.used.ca/event
 ||e2ma.net/track/
@@ -726,10 +727,8 @@
 ||everywatch.com/ingest/
 ||evs.icy-lake.kickstarter.com^
 ||evs.sgmt.loom.com^$script
-||excess.duolingo.com/batch
 ||exp.notion.so^
 ||expedia.*/cl/
-||experiences.wyng.com/api/*/event-api/events
 ||experte.com/t/events
 ||exporntoons.net/api/stats?
 ||expressvpn.com/__px.gif?
@@ -737,7 +736,6 @@
 ||extendoffice.com/analytics.js
 ||extremetech.com/js/ga.js
 ||ezoicanalytics.com/analytics.js
-||f.cdngeek.com^$domain=edugeek.net
 ||f.pie.org^
 ||f362.nola.com^
 ||facebook.com/a/bz?
@@ -809,8 +807,6 @@
 ||fpt.microsoft.com^
 ||freedownloadmanager.org/ajax/th_hit.php
 ||freedownloadmanager.org/ajax/th_view.php
-||freepik.*/download.gif?
-||freepik.com/_ga?
 ||freeplayervideo.com/cdn-cgi/trace
 ||freeprivacypolicy.com/track/
 ||fresnel-events.vimeocdn.com^
@@ -822,6 +818,7 @@
 ||futureparty.com/nectar_analytics
 ||futureparty.com/page_view
 ||g-scale.org/scripts/EventLog.js
+||g.cdngeek.com^$domain=edugeek.net
 ||g.ign.com^
 ||g.mashable.com^
 ||g.newtimes.com^
@@ -1824,6 +1821,7 @@
 ||stats2.helpmonks.com^
 ||stats2.mytuner.mobi^
 ||statsegg.cdngeek.com^
+||statseggs.cdngeek.com^$domain=edugeek.net
 ||stayforlong.com/api/kafka/tracking
 ||stayz.com.au/cl/data/omgpixel.json
 ||stirr.com/api/stats
@@ -2277,6 +2275,7 @@
 ||wheregoes.com/api/event
 ||whistleout.com.au/track
 ||wikihow.com/x/collect?
+||wikily.gg/api/event
 ||wikimonde.com/matom.js
 ||wikipedia.org/beacon/
 ||wikipedia.org/ins-502b/v2/events
