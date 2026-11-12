@@ -176,12 +176,8 @@
         "div[class^=\"games-predictions-widget_container_\"]"
     ],
     "3addedminutes.com": [
-        ".banner",
-        "[data-type=\"AdRowBillboard\"]",
-        "div[class^=\"AdLoadingText\"]",
-        "div[class^=\"SidebarAds_\"]",
-        "div[class^=\"helper__AdContainer\"]",
-        "div[data-ads-params]"
+        "#topBanner",
+        ".exco-video-player"
     ],
     "3dprint.com": [
         ".lap-block-items"
@@ -1493,12 +1489,8 @@
         "#top-link"
     ],
     "anguscountyworld.co.uk": [
-        ".banner",
-        "[data-type=\"AdRowBillboard\"]",
-        "div[class^=\"AdLoadingText\"]",
-        "div[class^=\"SidebarAds_\"]",
-        "div[class^=\"helper__AdContainer\"]",
-        "div[data-ads-params]"
+        "#topBanner",
+        ".exco-video-player"
     ],
     "anikuro.to": [
         "div[style=\"position: absolute; z-index: 99999\"]"
@@ -1714,8 +1706,8 @@
         ".widget_media_image"
     ],
     "apponic.com": [
-        ".ad-container-atf",
-        ".ad-container-compact"
+        ".ads-container-middle",
+        ".ads-container-top"
     ],
     "apps.jeurissen.co": [
         ".cja-landing__content > .cja-sqrimage"
@@ -2554,12 +2546,8 @@
         ".style_k8mr7b-o_O-style_1ts1q2h"
     ],
     "banburyguardian.co.uk": [
-        ".banner",
-        "[data-type=\"AdRowBillboard\"]",
-        "div[class^=\"AdLoadingText\"]",
-        "div[class^=\"SidebarAds_\"]",
-        "div[class^=\"helper__AdContainer\"]",
-        "div[data-ads-params]"
+        "#topBanner",
+        ".exco-video-player"
     ],
     "banggood.com": [
         ".exclick.top-item",
@@ -2783,12 +2771,8 @@
         "section[class^=\"showcaseAds_container\"]"
     ],
     "bedfordtoday.co.uk": [
-        ".banner",
-        "[data-type=\"AdRowBillboard\"]",
-        "div[class^=\"AdLoadingText\"]",
-        "div[class^=\"SidebarAds_\"]",
-        "div[class^=\"helper__AdContainer\"]",
-        "div[data-ads-params]"
+        "#topBanner",
+        ".exco-video-player"
     ],
     "beeradvocate.com": [
         ".ad-container"
@@ -2995,12 +2979,8 @@
         "img[width=\"300\"]"
     ],
     "biggleswadetoday.co.uk": [
-        ".banner",
-        "[data-type=\"AdRowBillboard\"]",
-        "div[class^=\"AdLoadingText\"]",
-        "div[class^=\"SidebarAds_\"]",
-        "div[class^=\"helper__AdContainer\"]",
-        "div[data-ads-params]"
+        "#topBanner",
+        ".exco-video-player"
     ],
     "bigislandnow.com": [
         ".adBreak",
@@ -3257,13 +3237,9 @@
         ".bhw-banners"
     ],
     "blackpoolgazette.co.uk": [
-        ".banner",
+        "#topBanner",
         ".billboard",
-        "[data-type=\"AdRowBillboard\"]",
-        "div[class^=\"AdLoadingText\"]",
-        "div[class^=\"SidebarAds_\"]",
-        "div[class^=\"helper__AdContainer\"]",
-        "div[data-ads-params]"
+        ".exco-video-player"
     ],
     "blackview.hk": [
         ".blog-ad-banner"
@@ -3952,12 +3928,9 @@
         ".promoted-block"
     ],
     "bucksherald.co.uk": [
+        "#topBanner",
         ".banner",
-        "[data-type=\"AdRowBillboard\"]",
-        "div[class^=\"AdLoadingText\"]",
-        "div[class^=\"SidebarAds_\"]",
-        "div[class^=\"helper__AdContainer\"]",
-        "div[data-ads-params]"
+        ".exco-video-player"
     ],
     "budapester.hu": [
         "#scrollup"
@@ -4012,12 +3985,8 @@
         ".promoted-block"
     ],
     "burnleyexpress.net": [
-        ".banner",
-        "[data-type=\"AdRowBillboard\"]",
-        "div[class^=\"AdLoadingText\"]",
-        "div[class^=\"SidebarAds_\"]",
-        "div[class^=\"helper__AdContainer\"]",
-        "div[data-ads-params]"
+        "#topBanner",
+        ".exco-video-player"
     ],
     "burymercury.co.uk": [
         ".advert"
@@ -4119,12 +4088,8 @@
         ".topButton"
     ],
     "buxtonadvertiser.co.uk": [
-        ".banner",
-        "[data-type=\"AdRowBillboard\"]",
-        "div[class^=\"AdLoadingText\"]",
-        "div[class^=\"SidebarAds_\"]",
-        "div[class^=\"helper__AdContainer\"]",
-        "div[data-ads-params]"
+        "#topBanner",
+        ".exco-video-player"
     ],
     "buyee.jp": [
         ".jump"
@@ -4614,6 +4579,7 @@
         ".ad-zone-sidebar-first",
         ".ad-zone-size-container-content-above-latest",
         ".no-badge.video.display-card",
+        ".w-display-card-vignette",
         "[class*=\"ad-zone-container-content-character-count-repeatable\"]",
         "[id^=\"adsninja-ad-zone-adsninja-ad-unit-footer\"]"
     ],
@@ -4785,12 +4751,8 @@
         ".ad"
     ],
     "chad.co.uk": [
-        ".banner",
-        "[data-type=\"AdRowBillboard\"]",
-        "div[class^=\"AdLoadingText\"]",
-        "div[class^=\"SidebarAds_\"]",
-        "div[class^=\"helper__AdContainer\"]",
-        "div[data-ads-params]"
+        "#topBanner",
+        ".exco-video-player"
     ],
     "chairmanlol.com": [
         ".leaderboard"
@@ -6572,6 +6534,9 @@
         "a.tbox-thumb[href^=\"https://www.sunlu.com/\"]",
         "div[data-zone-bsa]"
     ],
+    "culturealberta.com": [
+        ".mv-video-target"
+    ],
     "culturemap.com": [
         ".z-ad"
     ],
@@ -7152,12 +7117,8 @@
         "#age-verification-container"
     ],
     "daventryexpress.co.uk": [
-        ".banner",
-        "[data-type=\"AdRowBillboard\"]",
-        "div[class^=\"AdLoadingText\"]",
-        "div[class^=\"SidebarAds_\"]",
-        "div[class^=\"helper__AdContainer\"]",
-        "div[data-ads-params]"
+        "#topBanner",
+        ".exco-video-player"
     ],
     "davidjones.com": [
         ".criteo-carousel-wrapper"
@@ -7413,24 +7374,17 @@
         ".tdi_66"
     ],
     "derbyshiretimes.co.uk": [
-        ".banner",
-        "[data-type=\"AdRowBillboard\"]",
-        "div[class^=\"AdLoadingText\"]",
-        "div[class^=\"SidebarAds_\"]",
-        "div[class^=\"helper__AdContainer\"]",
-        "div[data-ads-params]"
+        "#topBanner",
+        ".exco-video-player"
     ],
     "derbytelegraph.co.uk": [
         ".topbox-cls-placeholder",
         ".swipe-prompt"
     ],
     "derbyworld.co.uk": [
+        "#topBanner",
         ".banner",
-        "[data-type=\"AdRowBillboard\"]",
-        "div[class^=\"AdLoadingText\"]",
-        "div[class^=\"SidebarAds_\"]",
-        "div[class^=\"helper__AdContainer\"]",
-        "div[data-ads-params]"
+        ".exco-video-player"
     ],
     "dereeze.com": [
         ".ai-track"
@@ -7452,12 +7406,9 @@
         "li.sponsoredProductsList"
     ],
     "derryjournal.com": [
+        "#topBanner",
         ".banner",
-        "[data-type=\"AdRowBillboard\"]",
-        "div[class^=\"AdLoadingText\"]",
-        "div[class^=\"SidebarAds_\"]",
-        "div[class^=\"helper__AdContainer\"]",
-        "div[data-ads-params]"
+        ".exco-video-player"
     ],
     "desdelinux.net": [
         ".publi"
@@ -7562,12 +7513,9 @@
         ".swipe-prompt"
     ],
     "dewsburyreporter.co.uk": [
+        "#topBanner",
         ".banner",
-        "[data-type=\"AdRowBillboard\"]",
-        "div[class^=\"AdLoadingText\"]",
-        "div[class^=\"SidebarAds_\"]",
-        "div[class^=\"helper__AdContainer\"]",
-        "div[data-ads-params]"
+        ".exco-video-player"
     ],
     "dexerto.com": [
         "#player-wrapper",
@@ -7924,12 +7872,9 @@
         ".adv"
     ],
     "doncasterfreepress.co.uk": [
+        "#topBanner",
         ".banner",
-        "[data-type=\"AdRowBillboard\"]",
-        "div[class^=\"AdLoadingText\"]",
-        "div[class^=\"SidebarAds_\"]",
-        "div[class^=\"helper__AdContainer\"]",
-        "div[data-ads-params]"
+        ".exco-video-player"
     ],
     "donedeal.ie": [
         "div[class^=\"DFP__StyledAdSlot-\"]"
@@ -8593,6 +8538,8 @@
         ".topbar"
     ],
     "edugeek.net": [
+        "#ipsLayout_mainArea > .ipsResponsive_hidePhone",
+        "#rev-0-1",
         ".eg-ics-rss-64px"
     ],
     "edutopia.org": [
@@ -9526,12 +9473,9 @@
         "#itemz"
     ],
     "falkirkherald.co.uk": [
+        "#topBanner",
         ".banner",
-        "[data-type=\"AdRowBillboard\"]",
-        "div[class^=\"AdLoadingText\"]",
-        "div[class^=\"SidebarAds_\"]",
-        "div[class^=\"helper__AdContainer\"]",
-        "div[data-ads-params]"
+        ".exco-video-player"
     ],
     "falmouthpacket.co.uk": [
         ".promoted-block"
@@ -9819,13 +9763,10 @@
         ".t1-ad-slot"
     ],
     "fifetoday.co.uk": [
+        "#topBanner",
         ".banner",
-        ".iehxDO",
-        "[data-type=\"AdRowBillboard\"]",
-        "div[class^=\"AdLoadingText\"]",
-        "div[class^=\"SidebarAds_\"]",
-        "div[class^=\"helper__AdContainer\"]",
-        "div[data-ads-params]"
+        ".exco-video-player",
+        ".iehxDO"
     ],
     "fifplay.com": [
         ".sponsored"
@@ -11899,12 +11840,9 @@
         ".mar-leaderboard--top"
     ],
     "glasgowworld.com": [
+        "#topBanner",
         ".banner",
-        "[data-type=\"AdRowBillboard\"]",
-        "div[class^=\"AdLoadingText\"]",
-        "div[class^=\"SidebarAds_\"]",
-        "div[class^=\"helper__AdContainer\"]",
-        "div[data-ads-params]"
+        ".exco-video-player"
     ],
     "glassalmanac.com": [
         ".code-block"
@@ -12710,12 +12648,9 @@
         "#prompt-background"
     ],
     "halifaxcourier.co.uk": [
+        "#topBanner",
         ".banner",
-        "[data-type=\"AdRowBillboard\"]",
-        "div[class^=\"AdLoadingText\"]",
-        "div[class^=\"SidebarAds_\"]",
-        "div[class^=\"helper__AdContainer\"]",
-        "div[data-ads-params]"
+        ".exco-video-player"
     ],
     "halifaxexaminer.ca": [
         "#gallery-1"
@@ -12763,12 +12698,9 @@
         "[height=\"300\"]"
     ],
     "harboroughmail.co.uk": [
+        "#topBanner",
         ".banner",
-        "[data-type=\"AdRowBillboard\"]",
-        "div[class^=\"AdLoadingText\"]",
-        "div[class^=\"SidebarAds_\"]",
-        "div[class^=\"helper__AdContainer\"]",
-        "div[data-ads-params]"
+        ".exco-video-player"
     ],
     "hard-drive.net": [
         ".ai_widget",
@@ -12802,12 +12734,9 @@
         ".add_wrapper"
     ],
     "harrogateadvertiser.co.uk": [
+        "#topBanner",
         ".banner",
-        "[data-type=\"AdRowBillboard\"]",
-        "div[class^=\"AdLoadingText\"]",
-        "div[class^=\"SidebarAds_\"]",
-        "div[class^=\"helper__AdContainer\"]",
-        "div[data-ads-params]"
+        ".exco-video-player"
     ],
     "harrowonline.org": [
         ".code-block"
@@ -12816,12 +12745,9 @@
         ".promoted-block"
     ],
     "hartlepoolmail.co.uk": [
+        "#topBanner",
         ".banner",
-        "[data-type=\"AdRowBillboard\"]",
-        "div[class^=\"AdLoadingText\"]",
-        "div[class^=\"SidebarAds_\"]",
-        "div[class^=\"helper__AdContainer\"]",
-        "div[data-ads-params]"
+        ".exco-video-player"
     ],
     "harvard.edu": [
         "[x-data^=\"alpine_scroll_to_top\"]"
@@ -13029,12 +12955,9 @@
         "#desc"
     ],
     "hemeltoday.co.uk": [
+        "#topBanner",
         ".banner",
-        "[data-type=\"AdRowBillboard\"]",
-        "div[class^=\"AdLoadingText\"]",
-        "div[class^=\"SidebarAds_\"]",
-        "div[class^=\"helper__AdContainer\"]",
-        "div[data-ads-params]"
+        ".exco-video-player"
     ],
     "hentaihaven.icu": [
         ".script_manager_video_master"
@@ -13221,9 +13144,6 @@
     ],
     "historycollection.com": [
         "div[class^=\"cis_add_block\"]"
-    ],
-    "historydefined.net": [
-        ".mv-ad-box"
     ],
     "historyextra.com": [
         ".stitcher-ad--dai-placeholder"
@@ -13648,12 +13568,8 @@
         ".ad"
     ],
     "hucknalldispatch.co.uk": [
-        ".banner",
-        "[data-type=\"AdRowBillboard\"]",
-        "div[class^=\"AdLoadingText\"]",
-        "div[class^=\"SidebarAds_\"]",
-        "div[class^=\"helper__AdContainer\"]",
-        "div[data-ads-params]"
+        "#topBanner",
+        ".exco-video-player"
     ],
     "huddle.today": [
         ".huddle-big-box-placement"
@@ -16049,12 +15965,8 @@
         ".promoted-block"
     ],
     "lancasterguardian.co.uk": [
-        ".banner",
-        "[data-type=\"AdRowBillboard\"]",
-        "div[class^=\"AdLoadingText\"]",
-        "div[class^=\"SidebarAds_\"]",
-        "div[class^=\"helper__AdContainer\"]",
-        "div[data-ads-params]"
+        "#topBanner",
+        ".exco-video-player"
     ],
     "lancs.live": [
         ".swipe-prompt"
@@ -16364,12 +16276,8 @@
         ".promoted-block"
     ],
     "leightonbuzzardonline.co.uk": [
-        ".banner",
-        "[data-type=\"AdRowBillboard\"]",
-        "div[class^=\"AdLoadingText\"]",
-        "div[class^=\"SidebarAds_\"]",
-        "div[class^=\"helper__AdContainer\"]",
-        "div[data-ads-params]"
+        "#topBanner",
+        ".exco-video-player"
     ],
     "leithbottleshop.co.uk": [
         "#agp__root"
@@ -16389,13 +16297,9 @@
         ".fdn-support-us-button-block"
     ],
     "lep.co.uk": [
-        ".banner",
+        "#topBanner",
         ".billboard",
-        "[data-type=\"AdRowBillboard\"]",
-        "div[class^=\"AdLoadingText\"]",
-        "div[class^=\"SidebarAds_\"]",
-        "div[class^=\"helper__AdContainer\"]",
-        "div[data-ads-params]"
+        ".exco-video-player"
     ],
     "lepratiquedugabon.com": [
         "#btn-top"
@@ -16582,13 +16486,8 @@
         ".swipe-prompt"
     ],
     "lincolnshireworld.com": [
-        ".banner",
-        ".helper__AdContainer-sc-12ggaoi-0",
-        "[data-type=\"AdRowBillboard\"]",
-        "div[class^=\"AdLoadingText\"]",
-        "div[class^=\"SidebarAds_\"]",
-        "div[class^=\"helper__AdContainer\"]",
-        "div[data-ads-params]"
+        "#topBanner",
+        ".exco-video-player"
     ],
     "lindaikejisblog.com": [
         ".da"
@@ -16791,12 +16690,8 @@
         "div[align=\"center\"] > a[href]"
     ],
     "liverpoolworld.uk": [
-        ".banner",
-        "[data-type=\"AdRowBillboard\"]",
-        "div[class^=\"AdLoadingText\"]",
-        "div[class^=\"SidebarAds_\"]",
-        "div[class^=\"helper__AdContainer\"]",
-        "div[data-ads-params]"
+        "#topBanner",
+        ".exco-video-player"
     ],
     "livescience.com": [
         "#widgetArea100",
@@ -16938,12 +16833,8 @@
         ".londo-target"
     ],
     "londonworld.com": [
-        ".banner",
-        "[data-type=\"AdRowBillboard\"]",
-        "div[class^=\"AdLoadingText\"]",
-        "div[class^=\"SidebarAds_\"]",
-        "div[class^=\"helper__AdContainer\"]",
-        "div[data-ads-params]"
+        "#topBanner",
+        ".exco-video-player"
     ],
     "lonestarlive.com": [
         ".ad",
@@ -17055,12 +16946,8 @@
         "#dialog-partner"
     ],
     "lutontoday.co.uk": [
-        ".banner",
-        "[data-type=\"AdRowBillboard\"]",
-        "div[class^=\"AdLoadingText\"]",
-        "div[class^=\"SidebarAds_\"]",
-        "div[class^=\"helper__AdContainer\"]",
-        "div[data-ads-params]"
+        "#topBanner",
+        ".exco-video-player"
     ],
     "luxa.org": [
         ".MuiContainer-root:has(> ins.adsbygoogle)"
@@ -17380,12 +17267,8 @@
         ".swipe-prompt"
     ],
     "manchesterworld.uk": [
-        ".banner",
-        "[data-type=\"AdRowBillboard\"]",
-        "div[class^=\"AdLoadingText\"]",
-        "div[class^=\"SidebarAds_\"]",
-        "div[class^=\"helper__AdContainer\"]",
-        "div[data-ads-params]"
+        "#topBanner",
+        ".exco-video-player"
     ],
     "mandohangout.com": [
         ".premiere-sponsors"
@@ -17408,12 +17291,6 @@
     ],
     "mangahentai.me": [
         ".c-top-sidebar"
-    ],
-    "mangakakalot.gg": [
-        "#fly_chapter_01",
-        ".ads-contain-v2",
-        ".pinned-ad-popular",
-        "[href^=\"https://bit.ly/\"]"
     ],
     "mangapill.com": [
         ".mx-auto.m-3.z-0"
@@ -17910,12 +17787,8 @@
         ".bounceInup"
     ],
     "meltontimes.co.uk": [
-        ".banner",
-        "[data-type=\"AdRowBillboard\"]",
-        "div[class^=\"AdLoadingText\"]",
-        "div[class^=\"SidebarAds_\"]",
-        "div[class^=\"helper__AdContainer\"]",
-        "div[data-ads-params]"
+        "#topBanner",
+        ".exco-video-player"
     ],
     "memeburn.com": [
         ".wrapper--grey"
@@ -18213,12 +18086,9 @@
         "#custom_html-2"
     ],
     "miltonkeynes.co.uk": [
+        "#topBanner",
         ".banner",
-        "[data-type=\"AdRowBillboard\"]",
-        "div[class^=\"AdLoadingText\"]",
-        "div[class^=\"SidebarAds_\"]",
-        "div[class^=\"helper__AdContainer\"]",
-        "div[data-ads-params]"
+        ".exco-video-player"
     ],
     "milwaukeeindependent.com": [
         "#back_to_top"
@@ -19534,8 +19404,7 @@
         ".Dailymotion__Inner-sc-gmjr3r-1",
         ".banner",
         ".bfQGof",
-        ".dmpu-item",
-        ".helper__AdContainer-sc-12ggaoi-0"
+        ".dmpu-item"
     ],
     "nationofchange.org": [
         ".jetpack-lazy-image--handled"
@@ -19809,13 +19678,9 @@
         ".ad"
     ],
     "newcastleworld.com": [
-        ".banner",
-        ".helper__DesktopAdContainer-sc-12ggaoi-1",
-        "[data-type=\"AdRowBillboard\"]",
-        "div[class^=\"AdLoadingText\"]",
-        "div[class^=\"SidebarAds_\"]",
-        "div[class^=\"helper__AdContainer\"]",
-        "div[data-ads-params]"
+        "#topBanner",
+        ".exco-video-player",
+        ".helper__DesktopAdContainer-sc-12ggaoi-1"
     ],
     "newcountry963.com": [
         "#simpleimage-3"
@@ -19862,12 +19727,9 @@
         ".upArrow"
     ],
     "newryreporter.com": [
+        "#topBanner",
         ".banner",
-        "[data-type=\"AdRowBillboard\"]",
-        "div[class^=\"AdLoadingText\"]",
-        "div[class^=\"SidebarAds_\"]",
-        "div[class^=\"helper__AdContainer\"]",
-        "div[data-ads-params]"
+        ".exco-video-player"
     ],
     "news-daily.com": [
         "#_snup-rtdx-ldgr1"
@@ -20078,12 +19940,9 @@
         ".newsk-target"
     ],
     "newsletter.co.uk": [
+        "#topBanner",
         ".banner",
-        "[data-type=\"AdRowBillboard\"]",
-        "div[class^=\"AdLoadingText\"]",
-        "div[class^=\"SidebarAds_\"]",
-        "div[class^=\"helper__AdContainer\"]",
-        "div[data-ads-params]"
+        ".exco-video-player"
     ],
     "newsmax.com": [
         ".nmsponsorlink",
@@ -20458,21 +20317,15 @@
         ".has-promo"
     ],
     "northamptonchron.co.uk": [
+        "#topBanner",
         ".banner",
         ".billboard",
-        "[data-type=\"AdRowBillboard\"]",
-        "div[class^=\"AdLoadingText\"]",
-        "div[class^=\"SidebarAds_\"]",
-        "div[class^=\"helper__AdContainer\"]",
-        "div[data-ads-params]"
+        ".exco-video-player"
     ],
     "northantstelegraph.co.uk": [
+        "#topBanner",
         ".banner",
-        "[data-type=\"AdRowBillboard\"]",
-        "div[class^=\"AdLoadingText\"]",
-        "div[class^=\"SidebarAds_\"]",
-        "div[class^=\"helper__AdContainer\"]",
-        "div[data-ads-params]"
+        ".exco-video-player"
     ],
     "northcentralpa.com": [
         ".asset-paging-container"
@@ -20490,12 +20343,9 @@
         ".vc_single_image-wrapper"
     ],
     "northernirelandworld.com": [
+        "#topBanner",
         ".banner",
-        "[data-type=\"AdRowBillboard\"]",
-        "div[class^=\"AdLoadingText\"]",
-        "div[class^=\"SidebarAds_\"]",
-        "div[class^=\"helper__AdContainer\"]",
-        "div[data-ads-params]"
+        ".exco-video-player"
     ],
     "northernsentinel.com": [
         ".one_by_one_group"
@@ -20523,12 +20373,8 @@
         ".advert"
     ],
     "northumberlandgazette.co.uk": [
-        ".banner",
-        "[data-type=\"AdRowBillboard\"]",
-        "div[class^=\"AdLoadingText\"]",
-        "div[class^=\"SidebarAds_\"]",
-        "div[class^=\"helper__AdContainer\"]",
-        "div[data-ads-params]"
+        "#topBanner",
+        ".exco-video-player"
     ],
     "northwichguardian.co.uk": [
         ".promoted-block"
@@ -20569,12 +20415,9 @@
         ".swipe-prompt"
     ],
     "nottinghamworld.com": [
+        "#topBanner",
         ".banner",
-        "[data-type=\"AdRowBillboard\"]",
-        "div[class^=\"AdLoadingText\"]",
-        "div[class^=\"SidebarAds_\"]",
-        "div[class^=\"helper__AdContainer\"]",
-        "div[data-ads-params]"
+        ".exco-video-player"
     ],
     "notus.org": [
         ".ad-placement"
@@ -21852,12 +21695,9 @@
         "[data-widget-type^=\"rmn-\"]"
     ],
     "peterboroughtoday.co.uk": [
+        "#topBanner",
         ".banner",
-        "[data-type=\"AdRowBillboard\"]",
-        "div[class^=\"AdLoadingText\"]",
-        "div[class^=\"SidebarAds_\"]",
-        "div[class^=\"helper__AdContainer\"]",
-        "div[data-ads-params]"
+        ".exco-video-player"
     ],
     "petersenshunting.com": [
         ".video-detail-player",
@@ -22046,25 +21886,29 @@
         ".up"
     ],
     "pickleball.com": [
+        ".justify-center.flex.w-full:has([name])",
         ".pickleball-com_ATF_leaderboard",
         ".pickleball-com_incontent_728_reusable",
         ".pickleball-com_siderail_left_atf",
         ".pickleball-com_siderail_right_atf"
     ],
     "pickleballclubs.com": [
+        ".justify-center.flex.w-full:has([name])",
         ".pickleballclubs-com_incontent_970_reusable",
         ".pickleballclubs-com_leaderboard_atf"
     ],
     "pickleballleagues.com": [
-        ".min-\\[500px\\]\\:col-span-2.justify-center.flex.w-full:has(.pickleballleagues-com_incontent_300x250_reusable)",
+        ".justify-center.flex.w-full:has([name])",
         ".pickleballleagues-com_incontent_728_reusable",
         ".pickleballleagues-com_leaderboard_atf"
     ],
     "pickleballteamleagues.com": [
+        ".justify-center.flex.w-full:has([name])",
         ".pickleballteamleagues-com_incontent_970_reusable",
         ".pickleballteamleagues-com_leaderboard_atf"
     ],
     "pickleballtournaments.com": [
+        ".justify-center.flex.w-full:has([name])",
         ".pickleballtournaments-com_incontent_728_reusable",
         ".pickleballtournaments-com_incontent_970_reusable",
         ".pickleballtournaments-com_leaderboard_atf"
@@ -22611,13 +22455,9 @@
         ".one_by_one_group"
     ],
     "portsmouth.co.uk": [
+        "#topBanner",
         ".banner",
-        ".exco-video-player",
-        "[data-type=\"AdRowBillboard\"]",
-        "div[class^=\"AdLoadingText\"]",
-        "div[class^=\"SidebarAds_\"]",
-        "div[class^=\"helper__AdContainer\"]",
-        "div[data-ads-params]"
+        ".exco-video-player"
     ],
     "posemaniacs.com": [
         ".h-\\[250px\\]",
@@ -22916,29 +22756,8 @@
         ".top-cont"
     ],
     "producthunt.com": [
-        ".cursor-pointer:has(img[alt=\"Promoted\"])",
-        ".styles_item__hNPI1",
-        "[data-test=\"launch\"] > section:has(span.rounded-b-xl.bg-brand-500)",
-        "[data-test^=\"homepage-section-\"] > section:not([class])",
-        "article:has(> div.cursor-pointer > img)",
-        "article:has(img[alt=\"Promoted\"])",
-        "div.cursor-pointer.overflow-hidden:has(> img.object-contain)",
-        "div.my-4.flex-1.rounded-md.border-2.border-gray-200",
-        "div.rounded-lg.bg-gray-50.p-3",
-        "div:has(> div.-mt-px.justify-end.pr-4)",
-        "div[class=\"my-2 flex cursor-pointer flex-row items-center gap-4 rounded-lg bg-gray-50 p-3\"]:has(a[href=\"/sponsor\"])",
-        "div[class=\"my-2 flex cursor-pointer flex-row items-center gap-4 rounded-lg bg-gray-50 p-3\"]:has(img[src=\"/i/33b26ee8f2668842e38841253cfde42aa203585e395ff731f21aebffbb38c8e5\"])",
-        "div[class=\"my-2 flex cursor-pointer flex-row items-center gap-4 rounded-lg bg-gray-50 p-3\"]:has(img[src^=\"/i/\"])",
-        "div[class=\"my-4 flex flex-1 cursor-pointer items-center justify-center overflow-hidden rounded-md border-2 border-gray-200\"]:has(img[srcset^=\"https://ph-files.imgix.net/\"])",
-        "div[class=\"my-4 flex flex-1 cursor-pointer items-center justify-center overflow-hidden rounded-md border-2 border-gray-200\"]:has(video[poster^=\"https://ph-files.imgix.net/\"])",
-        "div[data-test] > section:has(a[href^=\"/r/ad/\"])",
-        "div[data-test] > section:has(img[src=\"/i/299a62819c7092e196f7fc2c331cc11ef4f93a0f32c3b3069c4fd974cda0cb4c\"])",
-        "div[data-test]:not([data-test^=\"homepage-section-\"]) > section[data-test^=\"post-item-\"]",
-        "div[data-test^=\"ad-slot-\"]",
-        "li:has(> div.relative.isolate.grid img[alt=\"Promoted\"])",
-        "main > div:has(> div.-mt-px.justify-end.pr-4)",
-        "section.group + div > section.group",
-        "section:has(> div > div > span.rounded-b-xl.bg-brand-500)"
+        ".dark\\:border-\\[--contest-border\\].border-gray-200",
+        "div[data-test^=\"ad-slot-\"]"
     ],
     "productreview.com.au": [
         "div[style=\"line-height:0\"]"
@@ -24917,12 +24736,9 @@
         ".one_by_one_group"
     ],
     "rotherhamadvertiser.co.uk": [
+        "#topBanner",
         ".banner",
-        "[data-type=\"AdRowBillboard\"]",
-        "div[class^=\"AdLoadingText\"]",
-        "div[class^=\"SidebarAds_\"]",
-        "div[class^=\"helper__AdContainer\"]",
-        "div[data-ads-params]"
+        ".exco-video-player"
     ],
     "rotowire.com": [
         ".gdcg-oplist"
@@ -25021,6 +24837,11 @@
     ],
     "runechat.com": [
         "[height=\"90\"]"
+    ],
+    "runguides.com": [
+        ".ad-container",
+        ".feature-your-event-button-container",
+        "app-list-your-run"
     ],
     "runnerstribe.com": [
         ".td-post-content a[href^=\"https://tarkine.com/\"]",
@@ -25481,16 +25302,12 @@
     "scotsman.com": [
         "#sidebarMPU1",
         "#sidebarMPU2",
-        ".banner",
+        "#topBanner",
         ".billboard",
         ".dmpu-item",
+        ".exco-video-player",
         ".sc-igwadP",
-        "[data-type=\"AdRowBillboard\"]",
-        "div[class^=\"AdLoadingText\"]",
-        "div[class^=\"SidebarAds_\"]",
-        "div[class^=\"TopBanner\"]",
-        "div[class^=\"helper__AdContainer\"]",
-        "div[data-ads-params]"
+        "div[class^=\"TopBanner\"]"
     ],
     "scrabble-solver.com": [
         "#Upper",
@@ -25912,13 +25729,8 @@
         ".content-ad"
     ],
     "shieldsgazette.com": [
-        ".banner",
-        ".billboard",
-        "[data-type=\"AdRowBillboard\"]",
-        "div[class^=\"AdLoadingText\"]",
-        "div[class^=\"SidebarAds_\"]",
-        "div[class^=\"helper__AdContainer\"]",
-        "div[data-ads-params]"
+        "#topBanner",
+        ".exco-video-player"
     ],
     "shinyshiny.tv": [
         ".leaderboard"
@@ -27295,12 +27107,8 @@
         ".style_k8mr7b-o_O-style_1ts1q2h"
     ],
     "stornowaygazette.co.uk": [
-        ".banner",
-        "[data-type=\"AdRowBillboard\"]",
-        "div[class^=\"AdLoadingText\"]",
-        "div[class^=\"SidebarAds_\"]",
-        "div[class^=\"helper__AdContainer\"]",
-        "div[data-ads-params]"
+        "#topBanner",
+        ".exco-video-player"
     ],
     "storyboard18.com": [
         ".ad-container"
@@ -27519,12 +27327,8 @@
         "a[href*=\"/sponsored-content/\"]"
     ],
     "sunderlandecho.com": [
-        ".banner",
-        "[data-type=\"AdRowBillboard\"]",
-        "div[class^=\"AdLoadingText\"]",
-        "div[class^=\"SidebarAds_\"]",
-        "div[class^=\"helper__AdContainer\"]",
-        "div[data-ads-params]"
+        "#topBanner",
+        ".exco-video-player"
     ],
     "sunherald.com": [
         ".zone",
@@ -27615,12 +27419,8 @@
         ".one_by_one_group"
     ],
     "surreyworld.co.uk": [
-        ".banner",
-        "[data-type=\"AdRowBillboard\"]",
-        "div[class^=\"AdLoadingText\"]",
-        "div[class^=\"SidebarAds_\"]",
-        "div[class^=\"helper__AdContainer\"]",
-        "div[data-ads-params]"
+        "#topBanner",
+        ".exco-video-player"
     ],
     "surveymonkey.com": [
         ".homepage-banner"
@@ -27737,6 +27537,7 @@
         ".banner"
     ],
     "syfy.com": [
+        ".ad-block--midbanner",
         ".blog-post-section__zergnet"
     ],
     "symbaloo.com": [
@@ -28574,6 +28375,7 @@
         ".td-more-articles-box"
     ],
     "theautopian.com": [
+        ".code-block",
         ".code-block:has(.htlad-InContent)",
         "[data-widget_type=\"html.default\"]"
     ],
@@ -28923,10 +28725,6 @@
     "thefilmhq.com": [
         ".fhq-home-ad",
         ".fhq-news-sidebar-ad"
-    ],
-    "thefinancialexpress.com.bd": [
-        "#innerAds",
-        ".ads-carousel-container"
     ],
     "thefintechtimes.com": [
         ".penci-widget-sidebar",
@@ -29642,12 +29440,8 @@
         "[id^=\"tco\"]"
     ],
     "thescarboroughnews.co.uk": [
-        ".banner",
-        "[data-type=\"AdRowBillboard\"]",
-        "div[class^=\"AdLoadingText\"]",
-        "div[class^=\"SidebarAds_\"]",
-        "div[class^=\"helper__AdContainer\"]",
-        "div[data-ads-params]"
+        "#topBanner",
+        ".exco-video-player"
     ],
     "thescore.com": [
         ".Ad__container--MeQWT"
@@ -29693,12 +29487,8 @@
         ".wpnp_anchor_js"
     ],
     "thesouthernreporter.co.uk": [
-        ".banner",
-        "[data-type=\"AdRowBillboard\"]",
-        "div[class^=\"AdLoadingText\"]",
-        "div[class^=\"SidebarAds_\"]",
-        "div[class^=\"helper__AdContainer\"]",
-        "div[data-ads-params]"
+        "#topBanner",
+        ".exco-video-player"
     ],
     "thespec.com": [
         ".adLabelWrapper",
@@ -29747,14 +29537,10 @@
         ".background-cover"
     ],
     "thestar.co.uk": [
-        ".banner",
+        "#topBanner",
         ".billboard",
-        ".gOoqzH",
-        "[data-type=\"AdRowBillboard\"]",
-        "div[class^=\"AdLoadingText\"]",
-        "div[class^=\"SidebarAds_\"]",
-        "div[class^=\"helper__AdContainer\"]",
-        "div[data-ads-params]"
+        ".exco-video-player",
+        ".gOoqzH"
     ],
     "thestar.com": [
         "#sticky-ad-2",
@@ -30555,12 +30341,9 @@
         ".custombanner"
     ],
     "totallysnookered.com": [
+        "#topBanner",
         ".banner",
-        "[data-type=\"AdRowBillboard\"]",
-        "div[class^=\"AdLoadingText\"]",
-        "div[class^=\"SidebarAds_\"]",
-        "div[class^=\"helper__AdContainer\"]",
-        "div[data-ads-params]"
+        ".exco-video-player"
     ],
     "totalprosports.com": [
         ".tps-top-leaderboard",
@@ -32344,12 +32127,8 @@
         ".article-navbar"
     ],
     "wakefieldexpress.co.uk": [
-        ".banner",
-        "[data-type=\"AdRowBillboard\"]",
-        "div[class^=\"AdLoadingText\"]",
-        "div[class^=\"SidebarAds_\"]",
-        "div[class^=\"helper__AdContainer\"]",
-        "div[data-ads-params]"
+        "#topBanner",
+        ".exco-video-player"
     ],
     "wakingtimes.com": [
         "#media_image-2",
@@ -32517,12 +32296,9 @@
         ".ui-widget-overlay"
     ],
     "warwickshireworld.com": [
+        "#topBanner",
         ".banner",
-        "[data-type=\"AdRowBillboard\"]",
-        "div[class^=\"AdLoadingText\"]",
-        "div[class^=\"SidebarAds_\"]",
-        "div[class^=\"helper__AdContainer\"]",
-        "div[data-ads-params]"
+        ".exco-video-player"
     ],
     "washingtonblade.com": [
         ".code-block"
@@ -33278,12 +33054,9 @@
         "table[height=\"260\"]"
     ],
     "wigantoday.net": [
+        "#topBanner",
         ".banner",
-        "[data-type=\"AdRowBillboard\"]",
-        "div[class^=\"AdLoadingText\"]",
-        "div[class^=\"SidebarAds_\"]",
-        "div[class^=\"helper__AdContainer\"]",
-        "div[data-ads-params]"
+        ".exco-video-player"
     ],
     "wiki-topia.com": [
         ".widget_block",
@@ -33313,7 +33086,11 @@
         ".widget-area"
     ],
     "wikily.gg": [
-        "#right-rail"
+        "#right-rail",
+        ".wiki-top-takeover",
+        ".wiki-venatus-sticky",
+        "[aria-label=\"Advertisement\"]",
+        "[data-venatus-placement]"
     ],
     "wikipedia.org": [
         "#centralNotice",
@@ -33694,12 +33471,8 @@
         "#inner-top-ad"
     ],
     "worksopguardian.co.uk": [
-        ".banner",
-        "[data-type=\"AdRowBillboard\"]",
-        "div[class^=\"AdLoadingText\"]",
-        "div[class^=\"SidebarAds_\"]",
-        "div[class^=\"helper__AdContainer\"]",
-        "div[data-ads-params]"
+        "#topBanner",
+        ".exco-video-player"
     ],
     "world-nuclear-news.org": [
         ".Advert"
@@ -34407,20 +34180,12 @@
         ".promoted-block"
     ],
     "yorkshireeveningpost.co.uk": [
-        ".banner",
-        "[data-type=\"AdRowBillboard\"]",
-        "div[class^=\"AdLoadingText\"]",
-        "div[class^=\"SidebarAds_\"]",
-        "div[class^=\"helper__AdContainer\"]",
-        "div[data-ads-params]"
+        "#topBanner",
+        ".exco-video-player"
     ],
     "yorkshirepost.co.uk": [
-        ".banner",
-        "[data-type=\"AdRowBillboard\"]",
-        "div[class^=\"AdLoadingText\"]",
-        "div[class^=\"SidebarAds_\"]",
-        "div[class^=\"helper__AdContainer\"]",
-        "div[data-ads-params]"
+        "#topBanner",
+        ".exco-video-player"
     ],
     "yoshuabengio.org": [
         "#scroll-to-top"
