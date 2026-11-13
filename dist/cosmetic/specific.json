@@ -1978,6 +1978,10 @@
     "ask.com": [
         ".PartialKelkooResults"
     ],
+    "askai.glarity.app": [
+        "aside[aria-label=\"Advertisement\"]",
+        "div[aria-label=\"Sponsored\"]"
+    ],
     "askapache.com": [
         ".GAD"
     ],
@@ -21242,6 +21246,7 @@
         ".cd-top"
     ],
     "pahe.ink": [
+        "[href^=\"https://theshorten.net/\"]",
         "[style=\"padding-top: 0; padding-bottom: 90px;\"]"
     ],
     "pajiba.com": [
@@ -30018,7 +30023,6 @@
         ".paisa-wrapper",
         ".relatedVideoWrapper",
         ".topBand_adwrapper",
-        "[class]:has(> .wdt-taboola)",
         "[data-sp-click=\"stpPgtn(event)\"]",
         "[onclick=\"stpPgtn(event)\"]"
     ],
