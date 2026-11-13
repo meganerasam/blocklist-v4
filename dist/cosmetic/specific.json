@@ -32155,7 +32155,10 @@
         "li.product-grid-item:has(.sponsored-badge)"
     ],
     "wallapop.com": [
+        "[class*=\"__adSlot\"]",
+        "[class*=\"__topSky\"]",
         "article[class^=\"retrieval-item-card-module_RetrievalItemCard\"]:has(span[class^=\"retrieval-item-card-module_RetrievalItemCard__promoted\"])",
+        "div:has(> article[class*=\"RetrievalItemCard\"] [class*=\"RetrievalItemCard__highlighted\"])",
         "div[class^=\"search-page_SearchPage__topSky_\"]",
         "section[class*=\"_adSlot_\"]"
     ],
