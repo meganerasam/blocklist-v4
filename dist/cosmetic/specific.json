@@ -30024,11 +30024,13 @@
         ".Wqeee",
         ".ctn-workaround-div",
         ".d_jsH.mPws3",
+        ".js_tbl_article ~ div[class]:not([id]):has(> div.wdt-taboola[onclick=\"stpPgtn(event)\"])",
         ".l0TBl",
         ".mgid_second_mrec_parent",
         ".paisa-wrapper",
         ".relatedVideoWrapper",
         ".topBand_adwrapper",
+        ".wrapperclearfix > div[class] > div[class]:not([id]) > div[data-translate-id=\"cw\"]:has(> div:is(div[id^=\"div-gpt-ad\"], .taboolaBtmVsAd))",
         "[data-sp-click=\"stpPgtn(event)\"]",
         "[onclick=\"stpPgtn(event)\"]"
     ],
