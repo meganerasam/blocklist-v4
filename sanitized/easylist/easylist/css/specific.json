@@ -4283,6 +4283,9 @@
     "clashofstats.com": [
         ".adContainer_Y58xc"
     ],
+    "clashreport.com": [
+        ".border-masthead-border.bg-off-white"
+    ],
     "classcentral.com": [
         ".cmpt-ad",
         "li:has(iframe[src^=\"/catalog-iframe?\"])",
@@ -16557,8 +16560,11 @@
         "[data-qa=\"plp-product-box\"]:has([class^=\"SponsoredTag\"])",
         "[data-qa=\"widget_recommendedProducts\"]:has(svg[width=\"20\"] > path[d])",
         "[id*=\"adMultiProductsBanner\"]",
+        "div[class*=\"_emblaSlide_\"]:has(div[class*=\"_labelContainer_\"])",
         "div[data-qa=\"plp-product-box\"]:has(div[class^=\"STag-module-\"])",
-        "div[id*=\"-adProductsListBanner-\"]"
+        "div[id*=\"-adProductsListBanner-\"]",
+        "div[id^=\"v-sensor-component-\"]:has(> div[class*=\"_dynamicBannerWrapper_\"] > div[class*=\"_dynamicBannerContainer_\"] > div[class*=\"_labelContainer_\"])",
+        "div[id^=\"v-sensor-component-\"]:has(> div[class*=\"_labelContainer_\"])"
     ],
     "nordot.app": [
         ".main__ad"
@@ -17496,6 +17502,7 @@
         ".upcoming-releases.home-card:first-child"
     ],
     "pcguide.com": [
+        ".rdads",
         ".wepc-takeover-sides",
         ".wepc-takeover-top"
     ],
@@ -18494,8 +18501,11 @@
         ".top-cont"
     ],
     "producthunt.com": [
+        "#content > div:has(> img):not(:has(a))",
         ".dark\\:border-\\[--contest-border\\].border-gray-200",
-        "div[data-test^=\"ad-slot-\"]"
+        "[data-test^=\"homepage-section-\"] > section[data-container]:has(a[href=\"#\"])",
+        "div[data-test^=\"ad-slot-\"]",
+        "main > div[style*=\"cursor\"]:has(> div > span[style])"
     ],
     "productreview.com.au": [
         "div[style=\"line-height:0\"]"
