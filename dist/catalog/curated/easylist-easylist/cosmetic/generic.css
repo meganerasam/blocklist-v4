@@ -5,7 +5,7 @@
  * These selectors hide ad elements on ALL websites.
  * Inject via content_scripts with matches: ["<all_urls>"]
  *
- * Total selectors: 13635
+ * Total selectors: 13636
  */
 
 #AC_ad,
@@ -13639,6 +13639,7 @@ in-page-message[doskip],
 ins.adsbygoogle[data-ad-client],
 ins.adsbygoogle[data-ad-slot],
 ps-connatix-module,
+sellwild-widget,
 span[data-ez-ph-id],
 span[id^="ezoic-pub-ad-placeholder-"],
 topadblock,
