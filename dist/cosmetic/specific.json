@@ -31816,6 +31816,7 @@
     "videocardz.com": [
         ".s7k2m9qx",
         ".s7k2m9qx-adhesive",
+        "[rel*=\"sponsored\"]",
         "div[aria-label=\"Shop\"]"
     ],
     "videocelebs.net": [
@@ -33840,7 +33841,7 @@
         ".promotion",
         ".stream-item-group-start[label=\"promoted\"]",
         ".tweet:has(.promo)",
-        "[id^=\"urt\"]>ul>li:has([class*=\"data-ad-disclosure\"])",
+        "[id^=\"urt\"] > ul > li:has([class^=\"group-has-\\[\\[data-ad-disclosure\"])",
         "a[href*=\"src=promoted_trend_click\"]",
         "a[href*=\"src=promoted_trend_click\"] + div",
         "div[data-testid=\"UserCell\"]:has(path[d$=\"10H8.996V8h7v7z\"])",
