@@ -3968,6 +3968,7 @@
         "a[rel][target=\"_blank\"][href*=\"?utm_\"][href*=\"&oppref=\"]",
         "aside[data-assistant-ads-unit]",
         "div.opacity-100.transition-opacity.ease-out:has(button[aria-label=\"Sponsored options\"], button[aria-label=\"Ad options\"])",
+        "div[class^=\"scope-\"]:has(button[aria-haspopup=\"menu\"][aria-labelledby]):has(div[role=\"link\"]):has(img[inert][src^=\"data:image/\"], img[inert][src^=\"https://bzrcdn.openai.com/\"])",
         "div[data-assistant-ads]",
         "div[data-message-supplement]:has(aside[data-partial-island=\"assistant-ads\"])",
         "div[data-testid=\"bazaar-single-card-container\"]",
@@ -16562,6 +16563,7 @@
         "[id*=\"adMultiProductsBanner\"]",
         "div[class*=\"_emblaSlide_\"]:has(div[class*=\"_labelContainer_\"])",
         "div[data-qa=\"plp-product-box\"]:has(div[class^=\"STag-module-\"])",
+        "div[id*=\"-adBrandVideo-\"]",
         "div[id*=\"-adProductsListBanner-\"]",
         "div[id^=\"v-sensor-component-\"]:has(> div[class*=\"_dynamicBannerWrapper_\"] > div[class*=\"_dynamicBannerContainer_\"] > div[class*=\"_labelContainer_\"])",
         "div[id^=\"v-sensor-component-\"]:has(> div[class*=\"_labelContainer_\"])"
