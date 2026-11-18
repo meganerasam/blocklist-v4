@@ -519,6 +519,10 @@
         ".master-product-carousel:has([data-carousel-api*=\"search/sponsored-carousel\"])",
         ".master-product-carousel:has([data-carousel-driven=\"sponsored-products\"])"
     ],
+    "acode.app": [
+        ".sponsors-section",
+        ".announcement-banner"
+    ],
     "acronymfinder.com": [
         ".ts",
         "tr:has(.ts)"
@@ -4847,7 +4851,8 @@
         "div[data-message-supplement]:has(aside[data-partial-island=\"assistant-ads\"])",
         "div[data-testid=\"bazaar-single-card-container\"]",
         "div[role=\"complementary\"]:has(a[href*=\"oppref=\"])",
-        "section:has(> [aria-label=\"Sponsored\"])"
+        "section:has(> [aria-label=\"Sponsored\"])",
+        "section[data-conversation-ads-supplement]"
     ],
     "chatnewstoday.ca": [
         "#banner-header",
@@ -19788,6 +19793,9 @@
     "news.ki.se": [
         "#backtotop"
     ],
+    "news.lavx.hu": [
+        ".sponsor-slot"
+    ],
     "news.mingpao.com": [
         "#return_top_2023"
     ],
@@ -22234,6 +22242,7 @@
         ".header__right"
     ],
     "pngtree.com": [
+        "[data-ad-status]",
         "#__lazy > astro-island + div[class^=\"_\"][style^=\"color:\"]",
         "[data-huejs=\"couponside-nologin-click\"]"
     ],
@@ -25719,6 +25728,12 @@
     ],
     "sharonherald.com": [
         ".asset-paging-container"
+    ],
+    "shattered.io": [
+        ".sh-ad-ia",
+        ".sh-ad-leaderboard",
+        ".sh-ad-rail",
+        ".sh-eng-adslot"
     ],
     "shawlocal.com": [
         "#top-leaderboard",
@@ -30909,6 +30924,9 @@
     ],
     "tucsonweekly.com": [
         ".Ad"
+    ],
+    "tukif.porn": [
+        ".disclaimer_parent_wrapper"
     ],
     "tuko.co.ke": [
         ".c-adv",
