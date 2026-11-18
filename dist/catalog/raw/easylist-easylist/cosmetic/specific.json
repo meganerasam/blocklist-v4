@@ -426,6 +426,9 @@
         ".master-product-carousel:has([data-carousel-api*=\"search/sponsored-carousel\"])",
         ".master-product-carousel:has([data-carousel-driven=\"sponsored-products\"])"
     ],
+    "acode.app": [
+        ".sponsors-section"
+    ],
     "acronymfinder.com": [
         ".ts",
         "tr:has(.ts)"
@@ -3973,7 +3976,8 @@
         "div[data-message-supplement]:has(aside[data-partial-island=\"assistant-ads\"])",
         "div[data-testid=\"bazaar-single-card-container\"]",
         "div[role=\"complementary\"]:has(a[href*=\"oppref=\"])",
-        "section:has(> [aria-label=\"Sponsored\"])"
+        "section:has(> [aria-label=\"Sponsored\"])",
+        "section[data-conversation-ads-supplement]"
     ],
     "chatnewstoday.ca": [
         "#banner-header",
@@ -16120,6 +16124,9 @@
     "news.com.au": [
         ".ad"
     ],
+    "news.lavx.hu": [
+        ".sponsor-slot"
+    ],
     "news.mydramalist.com": [
         "#content > .app-body > div:has(.htlad-header_top)",
         ".spnsr-row"
@@ -18081,6 +18088,9 @@
     "png2jpg.com": [
         ".ha",
         ".header__right"
+    ],
+    "pngtree.com": [
+        "[data-ad-status]"
     ],
     "pnn.ps": [
         "a[href*=\"/partners/\"]"
@@ -21015,6 +21025,12 @@
     ],
     "sharktankblog.com": [
         "[height=\"60\"]"
+    ],
+    "shattered.io": [
+        ".sh-ad-ia",
+        ".sh-ad-leaderboard",
+        ".sh-ad-rail",
+        ".sh-eng-adslot"
     ],
     "shawlocal.com": [
         "#top-leaderboard",
