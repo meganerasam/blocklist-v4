@@ -4151,6 +4151,7 @@ stackoverflow.com##.js-sidebar-zone
 theguardian.com##.js-top-banner
 extratv.com##.js-track-link
 chewy.com##.js-tracked-ad-product
+stackexchange.com##.js-zone-container
 khaleejtimes.com##.js_ad_st
 iobroker.net##.jss125
 paycalculator.com.au##.jss336
@@ -7032,6 +7033,7 @@ facebook.com,facebookwkhpilnemxj7asaniu7vnjjbiltxjqhye3mhbshg7kx5tfyd.onion##a[a
 facebook.com,facebookwkhpilnemxj7asaniu7vnjjbiltxjqhye3mhbshg7kx5tfyd.onion##a[aria-label="Advertiser"]
 themainewire.com##a[aria-label^="The Maine Wire Banner Ad"]
 alibaba.com##a[campaignid][target="_blank"]
+videocardz.com##a[class][href^="https://www.amazon.com"][target]
 bernama.com##a[class^="banner_photo_"]
 probuilds.net##a[class^="dl-blitz-"]
 zerohedge.com##a[class^="endorsement"]
@@ -7831,6 +7833,7 @@ tripadvisor.*##[data-sponsored="sponsored"]:has(.txxUo)
 walmart.*##[data-testid="carousel-ad"]
 skyscanner.*##[data-testid="inline-ad-panel-desktop-layout"]:has([data-testid="adInfoBtn"])
 douglas.*##[data-testid="product-overview-content-slot"]:has(.criteo-teaser-gold__sponsored)
+pinterest.*##[role="listitem"]:has(.rounding0_j.fullWidth_1f .subtle_1h.lineClamp_1q)
 wayfair.*##a[data-enzyme-id="WssBannerContainer"]
 walmart.*##a[href*=".criteo.com/"]
 manomano.*##a[href^="/"][href*="?product_id="][title]:has(span > .svg_tamagoshi)
@@ -7858,7 +7861,7 @@ walmart.*##div[data-automation^="HookLogicCarouses"]
 skyscanner.*##div[data-backpack-ds-component]:has(#inline-ad-button)
 tripadvisor.*##div[data-curated-shelf-id]:has(a[rel="sponsored"])
 wayfair.*##div[data-enzyme-id="WssBannerContainer"]
-pinterest.com##div[data-grid-item]:has([data-test-pin-id] [data-test-id^="one-tap-desktop"] > a[href^="http"][rel="nofollow"]):not(body > div)
+pinterest.*##div[data-grid-item]:has([data-test-pin-id] [data-test-id^="one-tap-desktop"] > a[href^="http"][rel="nofollow"]):not(body > div)
 wayfair.*##div[data-hb-id="Grid.Item"]:has(a[href*="&sponsoredid="])
 wayfair.*##div[data-name="DisplayAd"]
 wayfair.*##div[data-node-id^="SponsoredListingCollectionItem"]
@@ -8049,6 +8052,7 @@ justwatch.com##.offer-container:has(.promotion-row_container)
 pollunit.com##.owl-carousel:has(.carousel-ad)
 nicomanga.com##.owl-stage > .owl-item:has([title="ADS Support"])
 property24.com##.p24_tileContainer:has([src^="/Content/images/Optimized/Icons/icon_tag_tile.svg?"])
+gamepadla.com##.panel-container:has(img[src*="/upload/slider/"])
 thefederal.com##.pb-3 > .col-xl-3.col-lg-6.col-md-6:has(> [id^="ad_slot"])
 andronicos.com,haggen.com,randalls.com##.pc-grid-prdItem:has(span[data-qa="prd-itm-spnsrd"])
 sainsburys.co.uk##.pd-merchandising-product:has(.product-header--citrus[data-testid="product-header"])
@@ -8970,6 +8974,7 @@ msn.com##.galleryPage_eoabNativeAd_new-DS-EntryPoint1-1
 msn.com##.gem-display-ad-wrapper
 msn.com##.intra-article-ad-full
 msn.com##.intra-article-ad-half
+msn.com##.me-stripe-tile-content:has(> a[href^="https://temuaffiliateprogram.pxf.io/"])
 msn.com##.me-stripe-tile-content:has(a[href*="?"] .me-stripe-title-subtitle)
 msn.com##.modernRightRail_stickyTopBannerAd-DS-EntryPoint1-1
 msn.com##.modernRightRail_topAd_container_2col_newRR-DS-EntryPoint1-1
