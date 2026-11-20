@@ -9184,6 +9184,7 @@
     ],
     "gamepadla.com": [
         ".gpPartnerCard",
+        ".panel-container:has(img[src*=\"/upload/slider/\"])",
         "div:has(> div > div > a[href^=\"/visit/\"][href*=\"cmp=slider\"])"
     ],
     "gamepix.com": [
@@ -15439,6 +15440,7 @@
         ".gem-display-ad-wrapper",
         ".intra-article-ad-full",
         ".intra-article-ad-half",
+        ".me-stripe-tile-content:has(> a[href^=\"https://temuaffiliateprogram.pxf.io/\"])",
         ".me-stripe-tile-content:has(a[href*=\"?\"] .me-stripe-title-subtitle)",
         ".modernRightRail_stickyTopBannerAd-DS-EntryPoint1-1",
         ".modernRightRail_topAd_container_2col_newRR-DS-EntryPoint1-1",
@@ -17909,10 +17911,13 @@
         "#skinnerAdClosebtn",
         ".skinnerAd"
     ],
+    "pinterest.*": [
+        "[role=\"listitem\"]:has(.rounding0_j.fullWidth_1f .subtle_1h.lineClamp_1q)",
+        "div[data-grid-item]:has([data-test-pin-id] [data-test-id^=\"one-tap-desktop\"] > a[href^=\"http\"][rel=\"nofollow\"]):not(body > div)"
+    ],
     "pinterest.com": [
         "[data-grid-item=\"true\"]:has([data-test-id=\"pinrep-footer\"] a[rel=\"nofollow\"])",
-        "a[href*=\"&epik=\"]",
-        "div[data-grid-item]:has([data-test-pin-id] [data-test-id^=\"one-tap-desktop\"] > a[href^=\"http\"][rel=\"nofollow\"]):not(body > div)"
+        "a[href*=\"&epik=\"]"
     ],
     "pintprice.com": [
         "#adspace"
@@ -21938,6 +21943,9 @@
         "#ad-snigel-3",
         "#ad-snigel-4",
         "a[rel^=\"sponsored\"]"
+    ],
+    "stackexchange.com": [
+        ".js-zone-container"
     ],
     "stackoverflow.com": [
         "#hireme",
@@ -26084,6 +26092,7 @@
         ".s7k2m9qx",
         ".s7k2m9qx-adhesive",
         "[rel*=\"sponsored\"]",
+        "a[class][href^=\"https://www.amazon.com\"][target]",
         "div[aria-label=\"Shop\"]"
     ],
     "videocelebs.net": [
