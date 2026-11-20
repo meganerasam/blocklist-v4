@@ -5,7 +5,7 @@
  * These selectors hide ad elements on ALL websites.
  * Inject via content_scripts with matches: ["<all_urls>"]
  *
- * Total selectors: 13634
+ * Total selectors: 13636
  */
 
 #AC_ad,
@@ -9636,6 +9636,8 @@
 .da-custom-ad-box,
 .dac__banner__wrapper,
 .daily-adlabel,
+.dappier-ad-chain,
+.dappier-ads-top,
 .dart-ad,
 .dart-ad-content,
 .dart-ad-grid,

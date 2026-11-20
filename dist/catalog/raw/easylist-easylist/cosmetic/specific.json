@@ -750,6 +750,9 @@
     "albernivalleynews.com": [
         ".one_by_one_group"
     ],
+    "albertleatribune.com": [
+        ".ad-indicator-text"
+    ],
     "albertsons.com": [
         ".abs-carousel-proxy > [aria-label=\"Promo or Ad Banner\"]",
         ".master-product-carousel:has([data-carousel-driven=\"sponsored-products\"])"
@@ -2309,6 +2312,9 @@
     "belloflostsouls.net": [
         ".vm-placement",
         "div[id^=\"ad-container-\"]"
+    ],
+    "beloitdailynews.com": [
+        "#sticky-right-rail-spacer"
     ],
     "benzinga.com": [
         ".banner-wrapper",
@@ -11656,6 +11662,14 @@
     ],
     "indianhealthyrecipes.com": [
         ".code-block"
+    ],
+    "indianmasterminds.com": [
+        ".bodyAds",
+        ".elementor > .elementor-element:has(> div.e-con-inner > div.elementor-widget-html div.bodyAds)",
+        ".elementor-element > .elementor-widget-container > div:not([id]):has(> div.lazyloadads)",
+        ".elementor-widget-html > .elementor-widget-container > div:not([id]):has(> div[id^=\"div-gpt-ad\"][data-adcode])",
+        ".elementor-widget-image > .elementor-widget-container:has(a:not([href^=\"https://indianmasterminds.com/\"])[target=\"_blank\"])",
+        ".ftrstkyad"
     ],
     "indiatimes.com": [
         "#adslot_wrapper",
@@ -27027,6 +27041,12 @@
     ],
     "whio.com": [
         ".arcad_feature"
+    ],
+    "whispersinthecorridors.in": [
+        ".wh-ad-slot",
+        ".wh-after-header-ad",
+        ".wh-rail-ad",
+        ".wh-slider-banner-ad"
     ],
     "whistleout.com.au": [
         ".has-hover"
