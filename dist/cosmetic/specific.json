@@ -921,6 +921,9 @@
     "albernivalleynews.com": [
         ".one_by_one_group"
     ],
+    "albertleatribune.com": [
+        ".ad-indicator-text"
+    ],
     "albertsons.com": [
         ".abs-carousel-proxy > [aria-label=\"Promo or Ad Banner\"]",
         ".master-product-carousel:has([data-carousel-driven=\"sponsored-products\"])",
@@ -2842,6 +2845,9 @@
         ".vm-placement",
         "div[id^=\"ad-container-\"]"
     ],
+    "beloitdailynews.com": [
+        "#sticky-right-rail-spacer"
+    ],
     "bentspokebrewing.com.au": [
         ".splash"
     ],
@@ -3898,6 +3904,9 @@
         ".comp-content-keepfreebannercontent",
         ".fdn-support-us-block",
         ".fundraising-thermometer-block"
+    ],
+    "brownfieldagnews.com": [
+        "#back_to_top"
     ],
     "browserhow.com": [
         ".ai_widget",
@@ -14141,6 +14150,14 @@
     "indianhealthyrecipes.com": [
         ".code-block"
     ],
+    "indianmasterminds.com": [
+        ".bodyAds",
+        ".elementor > .elementor-element:has(> div.e-con-inner > div.elementor-widget-html div.bodyAds)",
+        ".elementor-element > .elementor-widget-container > div:not([id]):has(> div.lazyloadads)",
+        ".elementor-widget-html > .elementor-widget-container > div:not([id]):has(> div[id^=\"div-gpt-ad\"][data-adcode])",
+        ".elementor-widget-image > .elementor-widget-container:has(a:not([href^=\"https://indianmasterminds.com/\"])[target=\"_blank\"])",
+        ".ftrstkyad"
+    ],
     "indiatimes.com": [
         "#adslot_wrapper",
         ".ads",
@@ -15345,9 +15362,6 @@
     ],
     "kcrw.com": [
         "#global-message"
-    ],
-    "kcur.org": [
-        ".PromoD"
     ],
     "kdnuggets.com": [
         ".a2t-link",
@@ -24261,6 +24275,11 @@
     "recipes.timesofindia.com": [
         ".flipkartbanner"
     ],
+    "record-eagle.com": [
+        "#ta_background",
+        "#ta_invisible",
+        ".asset-paging-container"
+    ],
     "recorder.ca": [
         ".pmd-ad-content"
     ],
@@ -33046,6 +33065,12 @@
     "whiskysite.nl": [
         ".apopup",
         ".apopup-bg"
+    ],
+    "whispersinthecorridors.in": [
+        ".wh-ad-slot",
+        ".wh-after-header-ad",
+        ".wh-rail-ad",
+        ".wh-slider-banner-ad"
     ],
     "whistleout.com.au": [
         ".has-hover"
