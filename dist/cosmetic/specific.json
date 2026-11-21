@@ -13883,8 +13883,14 @@
         ".twenty-questions-widget"
     ],
     "igorslab.de": [
+        "#extras > #single-sticky + div:has(img)",
+        ".entry-content > a:has(> img):has(+ aside.ilab-ad-privacy-footer)",
         ".herald-sidebar",
-        "a[href*=\"/linkout/\"]"
+        ".widget_custom_html:has(> .widget-title + .textwidget:empty)",
+        "[data-igorslab-trackid]",
+        "a[href*=\"/linkout/\"]",
+        "body > div:has(> [data-igorslab-trackid])",
+        "div[id^=\"advads_ad_widget-\"]"
     ],
     "igraal.com": [
         "[data-ig-ga-cat=\"Ad\"]"
@@ -14171,6 +14177,7 @@
     ],
     "indiatimes.com": [
         "#adslot_wrapper",
+        "#custom_ad_wrapper_0",
         ".ads",
         ".amazonProductSidebar",
         ".article_first_ad",
@@ -14180,6 +14187,9 @@
         ".ecom-widget",
         ".product-cont",
         ".rmfp",
+        "div:has(> div[id^=\"div-gpt-ad-\"][id*=\"-atf\"])",
+        "div[data-type=\"in_view\"]:has(> span + div .adWrapperPlaceholder > div[id^=\"div-gpt-ad-mrec\"])",
+        "li:has(> .adInv:only-child)",
         "#scrollTop"
     ],
     "indiatoday.in": [
