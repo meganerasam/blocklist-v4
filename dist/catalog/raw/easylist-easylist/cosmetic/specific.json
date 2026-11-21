@@ -1527,6 +1527,9 @@
         "[href^=\"https://www.artificialintelligence-news.com/go/\"]",
         "[width=\"728\"]"
     ],
+    "artnews.com": [
+        ".boomerang"
+    ],
     "artscanvas.org": [
         ".funders"
     ],
@@ -5882,6 +5885,9 @@
     "dead-frog.com": [
         "#site_top"
     ],
+    "deadline.com": [
+        ".boomerang"
+    ],
     "dealnews.com": [
         ".ad"
     ],
@@ -9974,7 +9980,8 @@
         ".prom"
     ],
     "goldderby.com": [
-        ".adma"
+        ".adma",
+        ".boomerang"
     ],
     "goldenstateofmind.com": [
         "[data-concert=\"desktop_leaderboard_variable\"]",
@@ -10981,6 +10988,7 @@
     ],
     "hollywoodreporter.com": [
         ".above-header-ad",
+        ".boomerang",
         "[id^=\"jwplayer\"]"
     ],
     "hollywoodunlocked.com": [
@@ -23355,13 +23363,12 @@
         ".ad"
     ],
     "thedailybeast.com": [
-        ".CheatSheetList__placeholder",
-        ".Cheat__top-ad",
-        ".Footer__coupons-wrapper",
-        ".Sizer",
-        ".ad-container",
-        ".mobiledoc-sizer",
-        ".tdb-ads-block"
+        "#ad--pre-comments",
+        "#header-ad__wrapper",
+        "#outstream-video-ad-wrap",
+        ".ad-slot-shell",
+        ".body-ad",
+        ".tdb-ad"
     ],
     "thedailydigest.com": [
         ".promocion_celda"
@@ -25958,6 +25965,7 @@
     "variety.com": [
         "#jwplayer_xH3PjHXT_plsZnDJi_div",
         "#leaderboard-no-padding",
+        ".boomerang",
         ".vip-banner"
     ],
     "varsity.co.uk": [
@@ -26060,6 +26068,9 @@
     ],
     "viamichelin.ie": [
         ".ads"
+    ],
+    "vibe.com": [
+        ".boomerang"
     ],
     "vibilagare.se": [
         ".banner"
