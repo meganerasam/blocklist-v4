@@ -12402,6 +12402,7 @@
     ],
     "gridinsoft.com": [
         "#modal-leave",
+        ".am-report-anchor",
         ".banner",
         "[data-report-ad]"
     ],
@@ -33981,7 +33982,8 @@
         ".promotion",
         ".stream-item-group-start[label=\"promoted\"]",
         ".tweet:has(.promo)",
-        "[id^=\"urt\"]>ul>li:has([class*=\"data-ad-disclosure\"])",
+        "[id^=\"urt\"] > ul > li:has([class*=\"data-ad-disclosure\"])",
+        "[id^=\"urt\"] > ul > li:has([target=\"_blank\"][href*=\"?twclid=\"])",
         "a[href*=\"src=promoted_trend_click\"]",
         "a[href*=\"src=promoted_trend_click\"] + div",
         "div[data-testid=\"UserCell\"]:has(path[d$=\"10H8.996V8h7v7z\"])",
