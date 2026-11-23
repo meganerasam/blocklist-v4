@@ -1558,7 +1558,9 @@
         ".text-center.mb-3"
     ],
     "ascopost.com": [
-        ".ad-text"
+        ".ad-text",
+        ".banner-ad",
+        ".section--full-width-ad"
     ],
     "asheville.com": [
         ".injected-ads"
@@ -2475,6 +2477,9 @@
     "bikeroar.com": [
         ".lower-panel",
         "[href^=\"https://www.roaradventures.com/\"]"
+    ],
+    "billboard.com": [
+        ".boomerang"
     ],
     "binaries4all.com": [
         "#payserver"
@@ -7479,6 +7484,9 @@
     "europeantimes.news": [
         ".tdi_71"
     ],
+    "europeantour.com": [
+        ".advertisement"
+    ],
     "eurosport.com": [
         ".ad"
     ],
@@ -9335,6 +9343,7 @@
     "gamertweak.com": [
         "#nn_mpu1",
         "#nn_mpu2",
+        ".ad-fixed-container",
         ".adcontainer",
         ".bannerdiv",
         ".code-block",
@@ -15925,6 +15934,7 @@
         ".sponsored"
     ],
     "navalnews.com": [
+        ".code-block",
         ".pubLateral"
     ],
     "navyamedia.com": [
@@ -17741,12 +17751,15 @@
     "pexels.com": [
         ".inline-ads",
         "[class*=\"GridLayout_item\"]:has(img[src*=\"media.istockphoto.com/\"])",
+        "[data-testid=\"cell\"]:has(a[href*=\"/k/eyJ\"])",
         "[data-testid=\"column\"] [data-testid=\"item\"]:has([class*=\"AIGCAdShared\"])",
         "[data-testid=\"column\"] [data-testid=\"item\"]:has([data-heading*=\"Sponsored\"])",
         "[data-testid=\"column\"] [data-testid=\"item\"]:has([data-text=\"Sponsored Photos\"])",
         "[data-testid=\"column\"] [data-testid=\"item\"]:has([data-title*=\"Sponsored\"])",
         "[data-testid=\"column\"] [data-testid=\"item\"]:has(a[rel*=\"sponsored\"])",
+        "[data-testid=\"item\"]:has(a[href*=\"utm_campaign=aigc_pexelscampaign\"])",
         "div[class=\"RowItem_gridItem__OfhML RowItem_fullWidth__cIdtN RowItem_expand__TR5R6\"]",
+        "div[class^=\"AfterDownloadModal_adContainer\"]",
         "div[class^=\"FullWidth_container_\"]:has(a[rel=\"sponsored noopener\"])",
         "div[data-testid=\"item\"]:has(a[href*=\"/r/\"][rel~=\"nofollow\"][target=\"_blank\"])",
         "div[data-testid=\"item\"]:has(a[href^=\"https://www.pexels.com/g/\"])",
@@ -21842,6 +21855,9 @@
     ],
     "sportfishingbc.com": [
         ".samBannerUnit"
+    ],
+    "sportico.com": [
+        ".boomerang"
     ],
     "sporticos.com": [
         "div[style^=\"height:250px\"]"
@@ -27700,6 +27716,9 @@
     "wvtm13.com": [
         "[class]:has(>[data-type])",
         "[data-testid=\"ad-label\"]"
+    ],
+    "wwd.com": [
+        ".boomerang"
     ],
     "wwe.com": [
         ".l-hybrid-col-frame_rail-wrap"
