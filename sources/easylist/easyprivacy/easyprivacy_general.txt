@@ -98,6 +98,7 @@
 /?swift-performance-tracking
 /_/api/v2/analytics/?
 /_/lite/performance/*
+/__activity.gif?
 /__core/metrics.js
 /__imp_apg__/*
 /__rmn.gif?
@@ -356,6 +357,7 @@
 /api/datafast/*
 /api/drpStats
 /api/event-rfkj/*
+/api/event/collect|
 /api/front/v2/observability$ping
 /api/internal/pixel?
 /api/log-visit
@@ -600,6 +602,7 @@
 /chartbeat.min.js
 /chcounter/counter.php
 /check.php?referrer=
+/checkout/offer/trackShow
 /chicken.gif?*=
 /cklink.gif?
 /cklog.js
@@ -2754,6 +2757,7 @@
 /vendor/analytics.js
 /vendor/analytics/*
 /vendor/cedexis/*
+/vendor/snowplow-
 /vestigo/v1/measure
 /vglnk.js
 /video-ga.js
