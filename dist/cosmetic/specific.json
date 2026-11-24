@@ -1607,7 +1607,8 @@
     "aol.com": [
         "#m-games-overlay-main-right-rail-ads",
         ".m-gam__container",
-        ".m-healthgrades"
+        ".m-healthgrades",
+        ".swiper-slide:has(.dl__slide--ad)"
     ],
     "aorus.com": [
         "#gotop",
@@ -33984,6 +33985,7 @@
         ".tweet:has(.promo)",
         "[id^=\"urt\"] > ul > li:has([class*=\"data-ad-disclosure\"])",
         "[id^=\"urt\"] > ul > li:has([target=\"_blank\"][href*=\"?twclid=\"])",
+        "[id^=\"urt\"] > ul > li[data-index]:has(.x-link+button [href=\"#icon-more-dots-hor\"])",
         "a[href*=\"src=promoted_trend_click\"]",
         "a[href*=\"src=promoted_trend_click\"] + div",
         "div[data-testid=\"UserCell\"]:has(path[d$=\"10H8.996V8h7v7z\"])",
