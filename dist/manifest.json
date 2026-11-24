@@ -1,18 +1,18 @@
 {
     "schema": 1,
-    "version": "e0d3769ce9f74b8fde1b1ed49419a9e0f9890334a1537b214e2e8511f3b6af5b",
-    "generated_at": "2026-11-24T09:09:09+00:00",
-    "sanitized_provenance": "b6f66e655c4d4368f47237d68a1b2d106dba83fa39283254d2b11939e68351bd",
+    "version": "c11dcb782a0f25d45a3909f310c412e6f158e37873cb253c0ec7e77cdc9069d8",
+    "generated_at": "2026-11-24T17:00:53+00:00",
+    "sanitized_provenance": "307894f6827a5df6bfe30e93f30fbdd2321b413593a1a12d9f39e5c22cbb353a",
     "counts": {
-        "network_rules_total": 10729,
+        "network_rules_total": 10727,
         "network_rules_by_action": {
-            "redirect": 59,
+            "redirect": 57,
             "block": 9535,
             "allow": 1135
         },
-        "unsafe_rules": 59,
-        "regex_rules": 59,
-        "shipped_block_domains": 198790,
+        "unsafe_rules": 57,
+        "regex_rules": 57,
+        "shipped_block_domains": 188865,
         "curation_set": 88
     },
     "budgets": {
@@ -22,14 +22,14 @@
     },
     "artifacts": {
         "blocklist/popup-curated.json": {
-            "sha256": "d1c944d0741b138215e2bfce6b8c34e92147770e9e6f8dfae47059bcc253e72c",
-            "bytes": 2049989,
-            "count": 70764
+            "sha256": "e63d37b68a41f1286b778a618240ca36c6b725963e0120327a305437a68678eb",
+            "bytes": 1725613,
+            "count": 60850
         },
         "blocklist/popup.json": {
-            "sha256": "25e32cd5d729ad0abb49db98b6308f545f211b29b308a7c1601fa7ea8850f8f8",
-            "bytes": 55771,
-            "count": 2225
+            "sha256": "dab290a30f14a0d87994a9dc72de723d932872245ae963fcaad766ca728117c8",
+            "bytes": 55288,
+            "count": 2205
         },
         "cosmetic/extended.json": {
             "sha256": "8718b7819bc03d446552ba3939487a49b6f9f36b2574553e91cccc921ca31316",
@@ -52,9 +52,9 @@
             "count": 536
         },
         "derived/community.json": {
-            "sha256": "50ebd10365dce5bb478913f54b4837e44d40488d58997d32a34db1a79304cd76",
-            "bytes": 28721,
-            "count": 1287
+            "sha256": "10fba0c21dc7a27d26bde7055b6c596b794fdc7a7f4ba50b85213afcf6a05401",
+            "bytes": 28865,
+            "count": 1294
         },
         "derived/to-filter-out-domains-set.json": {
             "sha256": "cc7d449f06dc8aedd7fa4978f2fa18c5afdcf60ec13d6aac7d219f9ef39ae6a0",
@@ -62,19 +62,19 @@
             "count": 88
         },
         "network/rules-easylist.json": {
-            "sha256": "b8fea4f67b1bf6f014aa118955ace1ecc76238b0574566a5c698c19509858660",
+            "sha256": "756efc3348492852a89150cd9452e3f7a50d7ba43e662dd9ddda847567946407",
             "bytes": 3289708,
             "count": 10611
         },
         "network/rules-hosts.json": {
-            "sha256": "aaf24efe5dd982a369b5d1f85c374301e39f5be348a62f612b5a769319118b1a",
-            "bytes": 7759633,
-            "count": 66
+            "sha256": "5fd36a9cbc13aa211c75d895f2026d83d32174762e64158d897b4c06c5d880e7",
+            "bytes": 7484500,
+            "count": 64
         },
         "network/rules.json": {
-            "sha256": "282332cb920cb14c62c8421b114cb59fbbf780702ac79c66fca1192b5cc49c40",
-            "bytes": 11104010,
-            "count": 10729
+            "sha256": "b615ad0dc5fe8997e034c3538ba099ee7d64befae45cd6d51839569839cbbcda",
+            "bytes": 10828494,
+            "count": 10727
         },
         "standalone/allow-request-domains.json": {
             "sha256": "b2ed7e3d7cc9018045873fcd80228654e32570da5c5bceb0673fb9e648a84b6c",
@@ -957,9 +957,9 @@
             "bytes": 755
         },
         "whitelist/community.json": {
-            "sha256": "50ebd10365dce5bb478913f54b4837e44d40488d58997d32a34db1a79304cd76",
-            "bytes": 28721,
-            "count": 1287
+            "sha256": "10fba0c21dc7a27d26bde7055b6c596b794fdc7a7f4ba50b85213afcf6a05401",
+            "bytes": 28865,
+            "count": 1294
         },
         "whitelist/default.json": {
             "sha256": "3484520732ea64ccdf85f593a0ac5d7790b13691d8338071f5972f34a739f763",
