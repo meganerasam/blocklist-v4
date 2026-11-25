@@ -815,6 +815,12 @@
             "type": "extended"
         }
     ],
+    "gamepadla.com": [
+        {
+            "selector": ".pMain:has(> .relative > script:has-text(gpdl_hb_all))",
+            "type": "extended"
+        }
+    ],
     "gamersnexus.net": [
         {
             "selector": ".moduleContent:has-text(Advertisement)",
