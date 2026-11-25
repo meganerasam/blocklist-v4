@@ -12480,7 +12480,8 @@
         ".top_rail_shell",
         ".tpd-ob-reserve",
         ".tpd-tcm-widget",
-        ".widget_tpd_ad_widget"
+        ".widget_tpd_ad_widget",
+        "ad-component"
     ],
     "justjaredjr.com": [
         ".top_rail_shell"
@@ -21237,14 +21238,17 @@
         ".ad"
     ],
     "simpleflying.com": [
+        ".ad-zone",
         ".ad-zone-container-sidebar-default",
         ".ad-zone-sidebar-default",
         ".ad-zone-sidebar-first",
         ".ad-zone-size-container-content-above-latest",
         ".an-injected",
         ".no-badge.video.display-card",
+        ".sidebar-default",
         "[class*=\"ad-zone-container-content-character-count-repeatable\"]",
-        "[id^=\"adsninja-ad-zone-adsninja-ad-unit-footer\"]"
+        "[id^=\"adsninja-ad-zone-adsninja-ad-unit-footer\"]",
+        "a[rel*=\"sponsored\"]"
     ],
     "simracingsetup.com": [
         ".ad-fixed-bottom",
@@ -23282,7 +23286,8 @@
     "theblast.com": [
         ".tpd-incontent-ad-container",
         ".tpd-tcm-widget",
-        ".widget_tpd_ad_widget"
+        ".widget_tpd_ad_widget",
+        "ad-component"
     ],
     "theblaze.com": [
         "[data-category=\"SPONSORED\"]"
