@@ -11167,6 +11167,7 @@
     ],
     "gamepadla.com": [
         ".gpPartnerCard",
+        ".pMain + div:not([class])[style*=\"aspect-ratio\"]",
         ".panel-container:has(img[src*=\"/upload/slider/\"])",
         "div:has(> div > div > a[href^=\"/visit/\"][href*=\"cmp=slider\"])"
     ],
@@ -13892,6 +13893,7 @@
     ],
     "ign.com": [
         ".background-image.content-block",
+        ".pgOutstream",
         ".wiki-bobble",
         ".zad",
         ".twenty-questions-widget"
@@ -26917,7 +26919,6 @@
         ".actions-scroll-to-top"
     ],
     "stackexchange.com": [
-        ".js-zone-container",
         ".hero-box",
         ".js-dismissable-hero",
         ".js-freemium-cta"
