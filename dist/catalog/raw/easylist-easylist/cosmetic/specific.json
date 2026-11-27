@@ -2344,6 +2344,7 @@
     ],
     "bestbuy.ca": [
         ".pencilAd_EE9DV",
+        ".superLeaderboard_dvejh",
         ".x-productListItem:has([data-automation=\"sponsoredProductLabel\"])",
         "[class^=\"sponsoredProdBoxGridArea\"]",
         "[id^=\"atwb-ninja-carousel\"]",
@@ -8013,6 +8014,9 @@
     "filecatchers.com": [
         ".code-block"
     ],
+    "filecrypt.*": [
+        ".butt1ns :is(button, a):has(> svg):not(form *), :has(> [name=\"hidden_cnl_id\"]) :is(button, a):has(> svg):not(form *), [onclick*=\"/Link/\"], :has(> svg:is(.hghdsp, .hghspd, .hghsdp))"
+    ],
     "filecrypt.cc": [
         "[onclick*=\"/linkonclick.com/\"]",
         "[style*=\"background:url(https://static.filecrypt.to/images/\"]"
@@ -11475,6 +11479,7 @@
     "igorslab.de": [
         "#extras > #single-sticky + div:has(img)",
         ".entry-content > a:has(> img):has(+ aside.ilab-ad-privacy-footer)",
+        ".entry-content > a:has(> img):not([href*=\"igorslab.de\"]):has(~ aside.ilab-ad-privacy-footer)",
         ".herald-sidebar",
         ".widget_custom_html:has(> .widget-title + .textwidget:empty)",
         "[data-igorslab-trackid]",
@@ -17841,6 +17846,9 @@
     ],
     "phonescoop.com": [
         "#top"
+    ],
+    "phoronix.com": [
+        "[name=\"phoronix_desktop_leaderboard_header\"]"
     ],
     "photofilters.com": [
         ".banner"
